@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="144" height="48" viewBox="0 0 144 48" fill="none">
+  <rect x="6" y="9" width="28" height="30" rx="3" stroke="#BE1E2D" stroke-width="2.2"/>
+  <path d="M6 24H34M15 9V24M25 24V39" stroke="#BE1E2D" stroke-width="1.7"/>
+  <text x="48" y="25" dominant-baseline="central" font-family="Be Vietnam Pro, Arial, Helvetica, sans-serif" font-size="18" font-weight="700" fill="#17191D">Court Pro</text>
+</svg>

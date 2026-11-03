@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="155" height="48" viewBox="0 0 155 48" fill="none">
+  <ellipse cx="18" cy="18" rx="10" ry="12" stroke="#1F6F6A" stroke-width="2.3"/>
+  <path d="M18 8V28" stroke="#1F6F6A" stroke-width="1.4"/>
+  <rect x="15.5" y="28" width="5" height="12" rx="1.6" fill="#1F6F6A"/>
+  <text x="42" y="25" dominant-baseline="central" font-family="Be Vietnam Pro, Arial, Helvetica, sans-serif" font-size="18" font-weight="700" fill="#17191D">Paddle One</text>
+</svg>

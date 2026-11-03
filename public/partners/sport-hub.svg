@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="147" height="48" viewBox="0 0 147 48" fill="none">
+  <path d="M20 12V21M20 27V36M12 24H19M21 24H28" stroke="#18232E" stroke-width="1.8" stroke-linecap="round"/>
+  <circle cx="20" cy="24" r="4" fill="#18232E"/>
+  <circle cx="20" cy="9" r="3" fill="#F7941D"/>
+  <circle cx="31" cy="24" r="3" fill="#18232E"/>
+  <circle cx="20" cy="39" r="3" fill="#18232E"/>
+  <circle cx="9" cy="24" r="3" fill="#18232E"/>
+  <text x="48" y="25" dominant-baseline="central" font-family="Be Vietnam Pro, Arial, Helvetica, sans-serif" font-size="18" font-weight="700" fill="#17191D">Sport Hub</text>
+</svg>
