@@ -4,6 +4,7 @@ import { formatViDate } from "../../lib/format"
 import { newsCategories, newsPath, type NewsCategory, type NewsSort } from "../../lib/news"
 import { sitePath } from "../../lib/site"
 import { Badge } from "../Badge"
+import { Select } from "../Select"
 
 export function NewsToolbar({
   category,
@@ -45,14 +46,14 @@ export function NewsToolbar({
         </label>
         <label className="sm:w-44">
           <span className="sr-only">Sắp xếp</span>
-          <select
+          <Select
             value={sort}
             onChange={(event) => onSort(event.target.value as NewsSort)}
             className="h-12 w-full rounded-[10px] border border-line bg-white px-3 text-[15px] text-ink"
           >
             <option value="newest">Mới nhất</option>
             <option value="oldest">Cũ nhất</option>
-          </select>
+          </Select>
         </label>
       </form>
       <div className="news-categories" role="tablist" aria-label="Danh mục tin">

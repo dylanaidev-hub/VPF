@@ -102,7 +102,7 @@ export function Header({
         Đi tới nội dung
       </a>
       <div className="page-wrap flex h-[76px] items-center justify-between gap-4">
-        <a href="#dau-trang" className="shrink-0" aria-label="Về đầu trang">
+        <a href={sitePath("/index.html")} className="brand-home shrink-0" aria-label="Về trang chủ VPF">
           <Logo />
         </a>
         <nav className="hidden items-center gap-4 min-[1200px]:flex" aria-label="Chính">

@@ -4,6 +4,7 @@ import { formatEventDate } from "../../lib/format"
 import { sitePath } from "../../lib/site"
 import { statusLabel, tournamentStatusFilters, type TournamentSort, type TournamentStatusFilter } from "../../lib/tournaments"
 import { Badge } from "../Badge"
+import { Select } from "../Select"
 
 const tone = {
   upcoming: "upcoming",
@@ -67,14 +68,14 @@ export function TournamentToolbar({
         </label>
         <label className="sm:w-52">
           <span className="sr-only">Sắp xếp theo thời gian</span>
-          <select
+          <Select
             value={sort}
             onChange={(event) => onSort(event.target.value as TournamentSort)}
             className="h-12 w-full rounded-[10px] border border-line bg-white px-3 text-[15px] text-ink"
           >
             <option value="latest">Mới nhất</option>
             <option value="soonest">Cũ nhất</option>
-          </select>
+          </Select>
         </label>
       </form>
 
@@ -103,7 +104,7 @@ export function TournamentToolbar({
       <div className="grid gap-3 sm:grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)_auto]">
         <label>
           <span className="sr-only">Năm</span>
-          <select
+          <Select
             value={year}
             onChange={(event) => onYear(event.target.value)}
             className="h-12 w-full rounded-[10px] border border-line bg-white px-3 text-[15px] text-ink"
@@ -114,11 +115,11 @@ export function TournamentToolbar({
                 {item}
               </option>
             ))}
-          </select>
+          </Select>
         </label>
         <label>
           <span className="sr-only">Địa điểm</span>
-          <select
+          <Select
             value={location}
             onChange={(event) => onLocation(event.target.value)}
             className="h-12 w-full rounded-[10px] border border-line bg-white px-3 text-[15px] text-ink"
@@ -129,7 +130,7 @@ export function TournamentToolbar({
                 {item}
               </option>
             ))}
-          </select>
+          </Select>
         </label>
         {dirty ? (
           <button

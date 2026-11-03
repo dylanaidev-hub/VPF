@@ -2,6 +2,7 @@ import { useState, type FormEvent } from "react"
 import { partnershipTypeOptions } from "../../data/partnership.mock"
 import { cx } from "../../lib/cx"
 import { useReveal } from "../../lib/useReveal"
+import { Select } from "../Select"
 
 type Field = "name" | "organization" | "email" | "phone" | "type" | "message"
 
@@ -103,7 +104,7 @@ export function PartnershipForm() {
                   {labels.type}
                   <RequiredMark />
                 </label>
-                <select
+                <Select
                   id={fieldId("type")}
                   name="type"
                   value={values.type}
@@ -117,7 +118,7 @@ export function PartnershipForm() {
                       {option}
                     </option>
                   ))}
-                </select>
+                </Select>
                 {errors.type ? (
                   <p id={errorId("type")} className="partnership-error">
                     {errors.type}

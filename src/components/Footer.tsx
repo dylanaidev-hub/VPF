@@ -2,6 +2,7 @@ import { Mail, MapPin, Phone } from "lucide-react"
 import { navigation } from "../data/navigation"
 import { sitePath } from "../lib/site"
 import { site, socialChannels } from "../data/site"
+import { BackToTop } from "./BackToTop"
 import { Logo } from "./Logo"
 
 const discoverIds = ["home", "federation", "news", "tournaments", "partners"]
@@ -24,11 +25,12 @@ export function Footer() {
   const addressUnpublished = !office || office.address.includes("sẽ được công bố")
 
   return (
+    <>
     <footer className="bg-[#18191C] text-white">
       <div className="page-wrap py-16 min-[1200px]:py-20">
         <div className="footer-grid">
           <div id="lien-doan">
-            <a href="#dau-trang" aria-label="Về đầu trang">
+            <a href={sitePath("/index.html")} className="brand-home" aria-label="Về trang chủ VPF">
               <Logo variant="white" />
             </a>
             <p className="mt-5 text-base font-semibold">{site.name}</p>
@@ -111,6 +113,8 @@ export function Footer() {
         </div>
       </div>
     </footer>
+    <BackToTop />
+    </>
   )
 }
 

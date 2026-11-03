@@ -6,6 +6,7 @@ import { sitePath } from "../../lib/site"
 import { foldText } from "../../lib/format"
 import { useReveal } from "../../lib/useReveal"
 import { Dialog } from "../Dialog"
+import { Select } from "../Select"
 
 function fold(value: string) {
   return foldText(value).replace(/đ/g, "d")
@@ -65,7 +66,7 @@ export function ClubDiscovery({ query, city, kind, onQuery, onCity, onKind, onRe
         </label>
         <label className="block min-w-0">
           <span className="sr-only">Tỉnh hoặc thành phố</span>
-          <select
+          <Select
             value={city}
             onChange={(event) => onCity(event.target.value)}
             className="h-12 w-full rounded-[10px] border border-line bg-white px-3 text-[15px] text-ink"
@@ -75,11 +76,11 @@ export function ClubDiscovery({ query, city, kind, onQuery, onCity, onKind, onRe
                 {item === "Tất cả" ? "Tất cả tỉnh / thành phố" : item}
               </option>
             ))}
-          </select>
+          </Select>
         </label>
         <label className="block min-w-0">
           <span className="sr-only">Loại hình câu lạc bộ</span>
-          <select
+          <Select
             value={kind}
             onChange={(event) => onKind(event.target.value as ClubKind)}
             className="h-12 w-full rounded-[10px] border border-line bg-white px-3 text-[15px] text-ink"
@@ -89,7 +90,7 @@ export function ClubDiscovery({ query, city, kind, onQuery, onCity, onKind, onRe
                 {item === "Tất cả" ? "Tất cả loại hình" : item}
               </option>
             ))}
-          </select>
+          </Select>
         </label>
       </form>
 

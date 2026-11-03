@@ -1,24 +1,14 @@
 import { useEffect, useRef } from "react"
-import { BadgeCheck, Eye, Globe, Sprout, Target, Users, type LucideIcon } from "lucide-react"
-import { aboutVision, type ValueIcon } from "../../data/aboutVision.mock"
+import { aboutVision } from "../../data/aboutVision.mock"
 import { sitePath } from "../../lib/site"
-
-const valueIcons: Record<ValueIcon, LucideIcon> = {
-  users: Users,
-  badge: BadgeCheck,
-  eye: Eye,
-  sprout: Sprout,
-  globe: Globe,
-}
 
 export function VisionMission() {
   const rootRef = useRef<HTMLElement>(null)
-  const parallaxRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const root = rootRef.current
     if (!root) return
-    const nodes = root.querySelectorAll<HTMLElement>("[data-reveal]")
+    const nodes = [...root.querySelectorAll<HTMLElement>("[data-reveal]")]
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches
     if (reduce || nodes.length === 0) {
       nodes.forEach((node) => node.classList.add("is-in"))
@@ -34,7 +24,7 @@ export function VisionMission() {
     const inView = (node: HTMLElement) => {
       const rect = node.getBoundingClientRect()
       const view = window.innerHeight || document.documentElement.clientHeight
-      return rect.bottom > view * 0.08 && rect.top < view * 0.92
+      return rect.bottom > view * 0.06 && rect.top < view * 0.94
     }
     const scan = () => {
       pending.forEach((node) => {
@@ -48,128 +38,102 @@ export function VisionMission() {
           reveal(entry.target as HTMLElement)
         })
       },
-      { threshold: 0.2, rootMargin: "0px 0px -8% 0px" },
+      { threshold: 0.15, rootMargin: "0px 0px -6% 0px" },
     )
     nodes.forEach((node) => observer.observe(node))
     scan()
     window.addEventListener("scroll", scan, { passive: true })
     window.addEventListener("resize", scan)
 
-    const parallax = parallaxRef.current
-    let frame = 0
-    const onScroll = () => {
-      if (!parallax) return
-      cancelAnimationFrame(frame)
-      frame = requestAnimationFrame(() => {
-        if (window.innerWidth < 768) {
-          parallax.style.transform = ""
-          return
-        }
-        const rect = parallax.parentElement?.getBoundingClientRect()
-        if (!rect) return
-        const progress = (window.innerHeight - rect.top) / (window.innerHeight + rect.height)
-        const shift = Math.max(-10, Math.min(10, (progress - 0.5) * 20))
-        parallax.style.transform = `translate3d(0, ${shift}px, 0)`
-      })
-    }
-    onScroll()
-    window.addEventListener("scroll", onScroll, { passive: true })
-
     return () => {
       observer.disconnect()
       window.removeEventListener("scroll", scan)
       window.removeEventListener("resize", scan)
-      window.removeEventListener("scroll", onScroll)
-      cancelAnimationFrame(frame)
     }
   }, [])
 
   return (
-    <section ref={rootRef} className="bg-white" aria-labelledby="tam-nhin-tieu-de">
-      <div className="page-wrap py-16 min-[1200px]:py-24">
-        <header data-reveal className="vision-reveal mb-10 max-w-3xl min-[1200px]:mb-14">
-          <p className="flex items-center gap-3 text-[13px] font-medium text-brand-strong">
-            <span className="h-px w-8 bg-brand" aria-hidden />
-            {aboutVision.eyebrow}
-          </p>
-          <h2 id="tam-nhin-tieu-de" className="vision-title text-ink">
-            {aboutVision.title}
-          </h2>
-        </header>
-
-        <div className="vision-showcase">
-          <article data-reveal className="vision-card">
-            <div className="vision-photo">
-              <div ref={parallaxRef} className="vision-parallax">
-                <img
-                  src={sitePath(aboutVision.image)}
-                  alt={aboutVision.imageAlt}
-                  width={1333}
-                  height={2000}
-                  loading="lazy"
-                  decoding="async"
-                  className="h-full w-full object-cover object-[center_24%]"
-                />
-              </div>
-              <span className="absolute inset-x-0 bottom-0 h-1 bg-brand" aria-hidden />
-            </div>
-            <div className="vision-copy">
-              <p className="text-[12px] font-semibold tracking-[0.16em] text-white/75 uppercase">
-                {aboutVision.vision.label}
-              </p>
-              <h3 className="mt-3 text-2xl font-bold leading-tight text-white min-[1200px]:text-[1.85rem]">
-                {aboutVision.vision.title}
-              </h3>
-              <p className="mt-3 max-w-md text-sm leading-relaxed text-white/80 sm:text-[15px]">
-                {aboutVision.vision.description}
-              </p>
-            </div>
-          </article>
-
-          <article data-reveal className="vision-reveal vision-reveal-x vision-mission">
-            <div>
-              <p className="text-[12px] font-semibold tracking-[0.16em] text-brand-strong uppercase">
-                {aboutVision.mission.label}
-              </p>
-              <Target className="mt-6 size-10 text-brand" aria-hidden />
-            </div>
-            <div>
-              <h3 className="vision-mission-title text-ink">
-                {aboutVision.mission.title}
-              </h3>
-              <p className="mt-4 max-w-sm text-sm leading-relaxed text-ink/80 sm:text-[15px]">
-                {aboutVision.mission.description}
-              </p>
-            </div>
-          </article>
+    <section ref={rootRef} className="vision-manifesto" aria-labelledby="tam-nhin-tieu-de">
+      <div className="vision-stage">
+        <div className="vision-media" data-reveal>
+          <img
+            src={sitePath(aboutVision.image)}
+            alt={aboutVision.imageAlt}
+            width={2000}
+            height={1333}
+            loading="lazy"
+            decoding="async"
+            className="vision-media-img"
+          />
+          <div className="vision-shade" aria-hidden />
+          <CourtLines />
         </div>
 
-        <div className="mt-12 min-[1200px]:mt-16">
-          <h3
-            id="gia-tri-tieu-de"
-            data-reveal
-            className="vision-reveal mb-5 text-xl font-bold tracking-tight text-ink min-[1200px]:mb-6 min-[1200px]:text-2xl"
-          >
-            {aboutVision.valuesTitle}
-          </h3>
-          <ul className="vision-values" aria-labelledby="gia-tri-tieu-de">
-            {aboutVision.values.map((value, index) => {
-              const Icon = valueIcons[value.icon]
-              return (
+        <div className="vision-manifesto-inner page-wrap">
+          <p data-reveal className="vision-kicker vision-reveal" style={{ transitionDelay: "0ms" }}>
+            {aboutVision.eyebrow}
+          </p>
+          <h2 id="tam-nhin-tieu-de" className="vision-headline">
+            <span data-reveal className="vision-line vision-reveal" style={{ transitionDelay: "80ms" }}>
+              {aboutVision.headline}
+            </span>
+            <span data-reveal className="vision-line vision-accent vision-reveal" style={{ transitionDelay: "200ms" }}>
+              {aboutVision.accent}
+            </span>
+          </h2>
+
+          <div className="vision-statements">
+            <article data-reveal className="vision-statement vision-reveal" style={{ transitionDelay: "320ms" }}>
+              <p className="vision-meta">
+                <span className="vision-num">{aboutVision.vision.number}</span>
+                <span className="vision-label">{aboutVision.vision.label}</span>
+              </p>
+              <h3 className="vision-statement-title">{aboutVision.vision.title}</h3>
+              <p className="vision-statement-body">{aboutVision.vision.description}</p>
+            </article>
+            <article data-reveal className="vision-statement vision-reveal" style={{ transitionDelay: "460ms" }}>
+              <p className="vision-meta">
+                <span className="vision-num">{aboutVision.mission.number}</span>
+                <span className="vision-label">{aboutVision.mission.label}</span>
+              </p>
+              <h3 className="vision-statement-title">{aboutVision.mission.title}</h3>
+              <p className="vision-statement-body">{aboutVision.mission.description}</p>
+            </article>
+          </div>
+
+          <div className="vision-values-wrap">
+            <p data-reveal className="vision-values-label vision-reveal" style={{ transitionDelay: "520ms" }}>
+              {aboutVision.valuesTitle}
+            </p>
+            <ol className="vision-values" aria-label={aboutVision.valuesTitle}>
+              {aboutVision.values.map((value, index) => (
                 <li
                   key={value.id}
                   data-reveal
-                  className="vision-reveal vision-reveal-y vision-value"
-                  style={{ transitionDelay: `${index * 100}ms` }}
+                  className="vision-value vision-reveal"
+                  style={{ transitionDelay: `${560 + index * 70}ms` }}
                 >
-                  <Icon className="vision-value-icon size-6 text-brand" aria-hidden />
-                  <p className="mt-4 text-sm font-semibold leading-snug text-ink">{value.title}</p>
+                  <span className="vision-num">{String(index + 1).padStart(2, "0")}</span>
+                  <p className="vision-value-title">{value.title}</p>
                 </li>
-              )
-            })}
-          </ul>
+              ))}
+            </ol>
+          </div>
         </div>
       </div>
     </section>
+  )
+}
+
+function CourtLines() {
+  return (
+    <svg className="vision-court" viewBox="0 0 200 440" aria-hidden>
+      <rect x="10" y="10" width="180" height="420" />
+      <line x1="10" y1="220" x2="190" y2="220" />
+      <line x1="10" y1="148" x2="190" y2="148" />
+      <line x1="10" y1="292" x2="190" y2="292" />
+      <line x1="100" y1="10" x2="100" y2="148" />
+      <line x1="100" y1="292" x2="100" y2="430" />
+    </svg>
   )
 }

@@ -1,21 +1,61 @@
-import { Building2, ClipboardList, Globe2, Megaphone, Trophy, Users, type LucideIcon } from "lucide-react"
-import { organization, type OrgIcon } from "../../data/organization.mock"
+import { useEffect, useRef } from "react"
+import { organization } from "../../data/organization.mock"
 import { Container } from "../Container"
 import { SectionHeading } from "../SectionHeading"
 
-const icons: Record<OrgIcon, LucideIcon> = {
-  building: Building2,
-  clipboard: ClipboardList,
-  trophy: Trophy,
-  users: Users,
-  globe: Globe2,
-  megaphone: Megaphone,
-}
-
 export function OrganizationChart() {
+  const rootRef = useRef<HTMLElement>(null)
+
+  useEffect(() => {
+    const root = rootRef.current
+    if (!root) return
+    const nodes = [...root.querySelectorAll<HTMLElement>("[data-org-reveal]")]
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    if (reduce || nodes.length === 0) {
+      nodes.forEach((node) => node.classList.add("is-in"))
+      return
+    }
+
+    const pending = new Set(nodes)
+    const reveal = (node: HTMLElement) => {
+      node.classList.add("is-in")
+      pending.delete(node)
+      observer.unobserve(node)
+    }
+    const inView = (node: HTMLElement) => {
+      const rect = node.getBoundingClientRect()
+      const view = window.innerHeight || document.documentElement.clientHeight
+      return rect.bottom > view * 0.06 && rect.top < view * 0.94
+    }
+    const scan = () => {
+      pending.forEach((node) => {
+        if (inView(node)) reveal(node)
+      })
+    }
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return
+          reveal(entry.target as HTMLElement)
+        })
+      },
+      { threshold: 0.2, rootMargin: "0px 0px -6% 0px" },
+    )
+    nodes.forEach((node) => observer.observe(node))
+    scan()
+    window.addEventListener("scroll", scan, { passive: true })
+    window.addEventListener("resize", scan)
+
+    return () => {
+      observer.disconnect()
+      window.removeEventListener("scroll", scan)
+      window.removeEventListener("resize", scan)
+    }
+  }, [])
+
   return (
-    <section className="bg-paper" aria-labelledby="co-cau-tieu-de">
-      <Container className="py-16 min-[1200px]:py-24">
+    <section ref={rootRef} className="bg-paper" aria-labelledby="co-cau-tieu-de">
+      <Container className="py-20 min-[1200px]:py-24">
         <SectionHeading
           id="co-cau-tieu-de"
           eyebrow={organization.eyebrow}
@@ -23,62 +63,39 @@ export function OrganizationChart() {
           subtitle={organization.description}
         />
         <p className="-mt-4 mb-8 text-sm text-muted">{organization.note}</p>
-        <div className="relative overflow-hidden rounded-2xl bg-white px-4 py-10 sm:px-8">
-          <PickleballMark />
-          <div className="relative mx-auto flex max-w-5xl flex-col items-center">
-            <p className="max-w-md rounded-xl bg-signal px-6 py-3.5 text-center text-sm font-semibold text-white shadow-sm sm:text-base">
-              {organization.congress}
-            </p>
-            <span className="h-8 w-px bg-[#C9C9C6]" aria-hidden />
-            <p className="rounded-xl bg-brand px-8 py-3.5 text-center text-sm font-semibold text-ink shadow-sm sm:text-base">
-              {organization.board}
-            </p>
-            <span className="h-8 w-px bg-[#C9C9C6]" aria-hidden />
 
-            <div className="hidden w-full min-[1200px]:block">
-              <div className="relative h-px bg-[#C9C9C6]" style={{ marginInline: "8.333%" }} />
-              <ul className="grid grid-cols-6">
-                {organization.units.map((unit) => (
-                  <li key={unit.id} className="flex flex-col items-center px-1.5">
-                    <span className="h-6 w-px bg-[#C9C9C6]" aria-hidden />
-                    <UnitCard title={unit.title} icon={unit.icon} />
-                  </li>
-                ))}
-              </ul>
-            </div>
+        <div className="org-architecture">
+          <article data-org-reveal className="org-reveal org-tier org-tier-congress" style={{ transitionDelay: "0ms" }}>
+            <p className="org-tier-label">Cấp 01</p>
+            <h3>{organization.congress}</h3>
+          </article>
 
-            <ul className="grid w-full max-w-3xl grid-cols-1 gap-3 sm:grid-cols-2 min-[1200px]:hidden">
-              {organization.units.map((unit) => (
-                <li key={unit.id}>
-                  <UnitCard title={unit.title} icon={unit.icon} />
-                </li>
-              ))}
-            </ul>
-          </div>
+          <div className="org-link" aria-hidden />
+
+          <article data-org-reveal className="org-reveal org-tier org-tier-board" style={{ transitionDelay: "140ms" }}>
+            <p className="org-tier-label">Cấp 02</p>
+            <h3>{organization.board}</h3>
+          </article>
+
+          <div className="org-link org-link-short" aria-hidden />
+
+          <ol className="org-units" aria-label="Đơn vị trực thuộc Ban Chấp hành">
+            {organization.units.map((unit, index) => (
+              <li
+                key={unit.id}
+                data-org-reveal
+                className="org-reveal org-unit"
+                style={{ transitionDelay: `${260 + index * 60}ms` }}
+              >
+                <span className="org-unit-index" aria-hidden>
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+                <p>{unit.title}</p>
+              </li>
+            ))}
+          </ol>
         </div>
       </Container>
     </section>
-  )
-}
-
-function UnitCard({ title, icon }: { title: string; icon: OrgIcon }) {
-  const Icon = icons[icon]
-  return (
-    <div className="flex h-full w-full flex-col items-center rounded-xl border border-line bg-white px-3 py-4 text-center shadow-sm transition-colors duration-200 hover:border-brand motion-reduce:transition-none">
-      <span className="grid size-10 place-items-center rounded-full bg-brand/15 text-brand">
-        <Icon className="size-5" aria-hidden />
-      </span>
-      <p className="mt-3 text-sm font-semibold leading-snug text-ink">{title}</p>
-    </div>
-  )
-}
-
-function PickleballMark() {
-  return (
-    <svg viewBox="0 0 200 200" className="pointer-events-none absolute -right-8 top-6 w-56 text-ink/5" aria-hidden>
-      <circle cx="100" cy="100" r="78" fill="none" stroke="currentColor" strokeWidth="8" />
-      <circle cx="100" cy="100" r="28" fill="none" stroke="currentColor" strokeWidth="6" />
-      <path d="M100 22v156M22 100h156M44 44l112 112M156 44 44 156" fill="none" stroke="currentColor" strokeWidth="4" />
-    </svg>
   )
 }

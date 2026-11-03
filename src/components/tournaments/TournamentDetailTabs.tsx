@@ -2,6 +2,7 @@ import { useState, type KeyboardEvent } from "react"
 import type { TournamentScheduleStatus, TournamentView } from "../../types"
 import { formatViDate } from "../../lib/format"
 import { sitePath } from "../../lib/site"
+import { Select } from "../Select"
 
 const tabs = [
   { id: "tong-quan", label: "Tổng quan" },
@@ -154,7 +155,7 @@ function Schedule({ tournament }: { tournament: TournamentView }) {
       {days.length > 1 ? (
         <label className="mb-4 block max-w-xs">
           <span className="sr-only">Lọc lịch theo ngày</span>
-          <select
+          <Select
             value={day}
             onChange={(event) => setDay(event.target.value)}
             className="h-12 w-full rounded-[10px] border border-line bg-white px-3 text-[15px] text-ink"
@@ -165,7 +166,7 @@ function Schedule({ tournament }: { tournament: TournamentView }) {
                 {formatViDate(item)}
               </option>
             ))}
-          </select>
+          </Select>
         </label>
       ) : null}
       <div className="tournament-schedule-table overflow-hidden rounded-2xl border border-line">

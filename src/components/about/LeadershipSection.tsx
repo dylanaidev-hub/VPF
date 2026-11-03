@@ -63,7 +63,7 @@ function LeaderCard({ leader, featured = false }: { leader: Leader; featured?: b
   return (
     <article
       className={cx(
-        "flex h-full flex-col overflow-hidden rounded-2xl transition duration-200 motion-reduce:transition-none",
+        "leader-card flex h-full flex-col overflow-hidden rounded-2xl transition duration-200 motion-reduce:transition-none",
         featured
           ? "bg-signal text-white"
           : "border border-line bg-white hover:-translate-y-0.5 hover:border-brand motion-reduce:hover:translate-y-0",
@@ -71,7 +71,18 @@ function LeaderCard({ leader, featured = false }: { leader: Leader; featured?: b
     >
       <div className={cx("relative min-h-48 flex-[2]", featured ? "bg-signal" : "bg-paper")}>
         {leader.image ? (
-          <img src={sitePath(leader.image)} alt="" className="absolute inset-0 h-full w-full object-cover" />
+          <div className="absolute inset-0 overflow-hidden">
+            <img
+              src={sitePath(leader.image)}
+              alt={leader.imageAlt}
+              width={933}
+              height={1400}
+              loading="lazy"
+              decoding="async"
+              className="leader-photo h-full w-full object-cover"
+              style={{ objectPosition: leader.objectPosition ?? "center 20%" }}
+            />
+          </div>
         ) : (
           <Silhouette light={featured} />
         )}

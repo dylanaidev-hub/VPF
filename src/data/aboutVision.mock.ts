@@ -7,18 +7,21 @@ export type CoreValue = {
 }
 
 export const aboutVision = {
-  eyebrow: "Tầm nhìn – Sứ mệnh",
-  title: "Kiến tạo tương lai Pickleball Việt Nam",
-  image: "/images/player.jpg",
-  imageAlt: "Vận động viên pickleball trên sân ngoài trời.",
+  eyebrow: "Tầm nhìn & sứ mệnh",
+  headline: "Không chỉ phát triển một môn thể thao.",
+  accent: "Mà kiến tạo một phong trào.",
+  image: "/images/match.jpg",
+  imageAlt: "Các trận đấu đôi pickleball trên cụm sân trong nhà, nhìn từ trên khán đài. Ảnh minh họa.",
   vision: {
-    label: "01 / Tầm nhìn",
-    title: "Dẫn dắt sự phát triển của Pickleball",
+    number: "01",
+    label: "Tầm nhìn",
+    title: "Vươn tầm khu vực.",
     description:
       "Hướng đến một cộng đồng thể thao phổ biến, chuyên nghiệp và có vị thế trong khu vực.",
   },
   mission: {
-    label: "02 / Sứ mệnh",
+    number: "02",
+    label: "Sứ mệnh",
     title: "Kết nối. Phát triển. Hội nhập.",
     description:
       "Kết nối cộng đồng, nâng cao chuyên môn và phát triển phong trào Pickleball trên toàn quốc.",
