@@ -37,6 +37,6 @@ export const navigation: NavItem[] = [
     href: "/congdong.html",
     children: [{ id: "members", label: "Hội viên và câu lạc bộ", href: "/congdong.html" }],
   },
-  { id: "media", label: "Media", href: "/media.html" },
+  { id: "library", label: "Thư viện & Cộng đồng", href: "/thu-vien-cong-dong.html" },
   { id: "partners", label: "Hợp tác", href: "/hoptac.html" },
 ]

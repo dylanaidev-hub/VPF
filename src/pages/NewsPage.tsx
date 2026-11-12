@@ -1,9 +1,9 @@
 import { useMemo, useState } from "react"
 import { news } from "../data/news"
 import { filterNews, NEWS_PAGE_SIZE, selectSpotlight, type NewsCategory, type NewsSort } from "../lib/news"
-import { Breadcrumb } from "../components/Breadcrumb"
 import { NewsEmpty, NewsGrid, NewsPagination, NewsToolbar } from "../components/news/NewsArchive"
 import { NewsSpotlight } from "../components/news/NewsSpotlight"
+import { PageHeader } from "../components/PageHeader"
 import { SiteLayout } from "../components/SiteLayout"
 
 export function NewsPage() {
@@ -38,22 +38,14 @@ export function NewsPage() {
   return (
     <SiteLayout>
       <article className="bg-white">
-        <header className="page-wrap pt-10 pb-6 min-[1200px]:pt-14">
-          <Breadcrumb items={[{ label: "Trang chủ", href: "/index.html" }, { label: "Tin tức" }]} />
-          <p className="mt-6 flex items-center gap-3 text-[13px] font-medium text-brand-strong">
-            <span className="h-px w-8 bg-brand" aria-hidden />
-            Tin tức
-          </p>
-          <h1 id="tin-tuc-trang" className="news-page-title mt-3 text-ink">
-            Tin tức Pickleball
-          </h1>
-          <p className="mt-3 max-w-2xl text-[15px] leading-relaxed text-muted md:text-base">
-            Cập nhật những thông tin mới nhất từ Liên đoàn và cộng đồng Pickleball Việt Nam.
-          </p>
-          <p className="mt-2 max-w-2xl text-sm text-muted">
-            Các bài viết đang hiển thị là dữ liệu minh họa, không phải thông cáo chính thức.
-          </p>
-        </header>
+        <PageHeader
+          breadcrumb={[{ label: "Trang chủ", href: "/index.html" }, { label: "Tin tức" }]}
+          eyebrow="Tin tức"
+          title="Tin tức Pickleball"
+          titleId="tin-tuc-trang"
+          description="Cập nhật những thông tin mới nhất từ Liên đoàn và cộng đồng Pickleball Việt Nam."
+          disclaimer="Các bài viết đang hiển thị là dữ liệu minh họa, không phải thông cáo chính thức."
+        />
 
         <div className="page-wrap pb-8">
           <NewsToolbar

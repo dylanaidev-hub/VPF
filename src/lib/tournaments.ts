@@ -1,12 +1,20 @@
-import type { Tournament, TournamentStatus, TournamentView } from "../types"
+import type { Tournament, TournamentScope, TournamentStatus, TournamentView } from "../types"
 import { foldText, parseIsoDate } from "./format"
 
-export const TOURNAMENT_PAGE_SIZE = 9
+export const TOURNAMENT_PAGE_SIZE = 6
+export const TOURNAMENT_LOAD_MORE = 6
 
 export const tournamentStatusFilters = ["Tất cả", "Đang diễn ra", "Sắp diễn ra", "Đã kết thúc"] as const
+export const tournamentScopeFilters = ["Tất cả", "Trong nước", "Quốc tế"] as const
 
 export type TournamentStatusFilter = (typeof tournamentStatusFilters)[number]
-export type TournamentSort = "soonest" | "latest"
+export type TournamentScopeFilter = (typeof tournamentScopeFilters)[number]
+export type TournamentSort = "soonest" | "latest" | "name"
+
+const scopeByFilter: Record<Exclude<TournamentScopeFilter, "Tất cả">, TournamentScope> = {
+  "Trong nước": "domestic",
+  "Quốc tế": "international",
+}
 
 const statusByFilter: Record<Exclude<TournamentStatusFilter, "Tất cả">, TournamentStatus> = {
   "Đang diễn ra": "ongoing",
@@ -75,6 +83,67 @@ export const statusLabel: Record<TournamentStatus, string> = {
   finished: "Đã kết thúc",
 }
 
+const TOURNAMENT_ZONE = "Asia/Ho_Chi_Minh"
+
+function clockParts(time: string) {
+  return [...time.matchAll(/(\d{1,2}):(\d{2})/g)].map(
+    (match) => [Number(match[1]), Number(match[2])] as const,
+  )
+}
+
+/** Giờ tường Việt Nam → mốc UTC. Không phụ thuộc múi giờ của máy. */
+function vietnamWallClock(isoDate: string, hours: number, minutes: number) {
+  const [year, month, day] = isoDate.split("-").map(Number)
+  const utcGuess = Date.UTC(year, month - 1, day, hours, minutes, 0)
+  const parts = new Intl.DateTimeFormat("en-US", {
+    timeZone: TOURNAMENT_ZONE,
+    hourCycle: "h23",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+  }).formatToParts(new Date(utcGuess))
+  const pick = (type: Intl.DateTimeFormatPartTypes) =>
+    Number(parts.find((part) => part.type === type)?.value)
+  const zonedAsUtc = Date.UTC(
+    pick("year"),
+    pick("month") - 1,
+    pick("day"),
+    pick("hour"),
+    pick("minute"),
+    pick("second"),
+  )
+  return new Date(utcGuess - (zonedAsUtc - utcGuess))
+}
+
+/** Mốc giờ bắt đầu từ ngày giải và khung giờ, ví dụ "08:00 – 17:00". */
+export function tournamentStart(item: Pick<Tournament, "startDate" | "time">) {
+  const [hour, minute] = clockParts(item.time)[0] ?? [0, 0]
+  return vietnamWallClock(item.startDate, hour, minute)
+}
+
+/** Mốc giờ kết thúc: giờ sau trong khung giờ, trên ngày kết thúc. */
+export function tournamentEnd(item: Pick<Tournament, "endDate" | "time">) {
+  const clocks = clockParts(item.time)
+  const [hour, minute] = clocks[clocks.length - 1] ?? [23, 59]
+  return vietnamWallClock(item.endDate, hour, minute)
+}
+
+/** Phần còn lại tới mốc bắt đầu. Null khi mốc đã qua — không trả số âm. */
+export function countdownUntil(target: Date, now: Date) {
+  const diff = target.getTime() - now.getTime()
+  if (diff <= 0) return null
+  const totalSeconds = Math.floor(diff / 1000)
+  return {
+    days: Math.floor(totalSeconds / 86_400),
+    hours: Math.floor((totalSeconds % 86_400) / 3_600),
+    minutes: Math.floor((totalSeconds % 3_600) / 60),
+    seconds: totalSeconds % 60,
+  }
+}
+
 export function tournamentPath(slug: string) {
   return `/chitiet-giaidau.html?slug=${encodeURIComponent(slug)}`
 }
@@ -100,23 +169,77 @@ export function filterTournaments(
     query: string
     year: string
     location: string
+    scope?: TournamentScopeFilter
+    category?: string
     sort: TournamentSort
   },
   now = new Date(),
 ) {
   const needle = foldQuery(options.query.trim())
+  const scope = options.scope ?? "Tất cả"
+  const category = options.category ?? "Tất cả"
   const seen = new Set<string>()
   const matched = withStatus(items, now).filter((item) => {
     if (seen.has(item.id)) return false
     seen.add(item.id)
     if (options.status !== "Tất cả" && item.status !== statusByFilter[options.status]) return false
+    if (scope !== "Tất cả" && item.scope !== scopeByFilter[scope]) return false
     if (options.year !== "Tất cả" && !item.startDate.startsWith(options.year)) return false
     if (options.location !== "Tất cả" && item.location !== options.location) return false
+    if (category !== "Tất cả" && !item.categories.some((entry) => entry.name === category)) return false
     if (!needle) return true
-    return foldQuery(`${item.name} ${item.description} ${item.summary} ${item.location} ${item.venue}`).includes(needle)
+    return foldQuery(
+      `${item.name} ${item.description} ${item.summary} ${item.location} ${item.venue} ${item.country ?? ""}`,
+    ).includes(needle)
   })
   return matched.sort((a, b) => {
+    if (options.sort === "name") return a.name.localeCompare(b.name, "vi")
     const order = a.startDate.localeCompare(b.startDate) || a.name.localeCompare(b.name, "vi")
     return options.sort === "latest" ? -order : order
   })
+}
+
+export function tournamentCategoryOptions(items: Tournament[]) {
+  return [...new Set(items.flatMap((item) => item.categories.map((entry) => entry.name)))].sort((a, b) =>
+    a.localeCompare(b, "vi"),
+  )
+}
+
+export function tournamentEmptyMessage(status: TournamentStatusFilter, query: string) {
+  if (query.trim()) return "Không tìm thấy giải đấu phù hợp với từ khóa tìm kiếm."
+  if (status === "Đang diễn ra") return "Hiện không có giải đang diễn ra."
+  if (status === "Sắp diễn ra") return "Hiện không có giải sắp diễn ra."
+  if (status === "Đã kết thúc") return "Hiện không có giải đã kết thúc trong bộ lọc này."
+  return "Không tìm thấy giải đấu phù hợp."
+}
+
+export function tournamentsByScope(
+  items: TournamentView[],
+  scope: TournamentScope,
+  limit?: number,
+) {
+  const list = items.filter((item) => item.scope === scope)
+  return typeof limit === "number" ? list.slice(0, limit) : list
+}
+
+export function activeTournaments(items: TournamentView[], limit?: number) {
+  const list = items
+    .filter((item) => item.status === "ongoing" || item.status === "upcoming")
+    .sort(
+      (a, b) =>
+        STATUS_RANK[a.status] - STATUS_RANK[b.status] ||
+        a.startDate.localeCompare(b.startDate),
+    )
+  return typeof limit === "number" ? list.slice(0, limit) : list
+}
+
+export function finishedTournaments(items: TournamentView[], limit?: number) {
+  const list = items
+    .filter((item) => item.status === "finished")
+    .sort((a, b) => b.endDate.localeCompare(a.endDate) || a.name.localeCompare(b.name, "vi"))
+  return typeof limit === "number" ? list.slice(0, limit) : list
+}
+
+export function primaryCategory(item: Pick<Tournament, "categories">) {
+  return item.categories[0]?.name ?? "Pickleball"
 }

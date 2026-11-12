@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react"
 import { aboutVision } from "../../data/aboutVision.mock"
 import { sitePath } from "../../lib/site"
+import { StarPattern } from "../StarPattern"
 
 export function VisionMission() {
   const rootRef = useRef<HTMLElement>(null)
@@ -66,7 +67,7 @@ export function VisionMission() {
             className="vision-media-img"
           />
           <div className="vision-shade" aria-hidden />
-          <CourtLines />
+          <StarPattern />
         </div>
 
         <div className="vision-manifesto-inner page-wrap">
@@ -125,15 +126,3 @@ export function VisionMission() {
   )
 }
 
-function CourtLines() {
-  return (
-    <svg className="vision-court" viewBox="0 0 200 440" aria-hidden>
-      <rect x="10" y="10" width="180" height="420" />
-      <line x1="10" y1="220" x2="190" y2="220" />
-      <line x1="10" y1="148" x2="190" y2="148" />
-      <line x1="10" y1="292" x2="190" y2="292" />
-      <line x1="100" y1="10" x2="100" y2="148" />
-      <line x1="100" y1="292" x2="100" y2="430" />
-    </svg>
-  )
-}

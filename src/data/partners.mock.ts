@@ -6,7 +6,7 @@ export const partnership = {
   description:
     "Cùng VPF kết nối cộng đồng yêu thể thao, thúc đẩy phong trào Pickleball và tạo ra những giá trị hợp tác bền vững.",
   cta: "Trở thành đối tác",
-  href: "#lien-he",
+  href: "/hoptac.html#lien-he-hop-tac",
   image: "/images/player.jpg",
   imageAlt: "Vận động viên pickleball trên sân ngoài trời.",
 }

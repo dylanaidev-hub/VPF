@@ -1,21 +1,22 @@
-import { useMemo, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
+import { liveArena } from "../data/live"
 import { tournaments } from "../data/tournaments"
 import {
   filterTournaments,
   selectFeaturedTournament,
+  TOURNAMENT_LOAD_MORE,
   TOURNAMENT_PAGE_SIZE,
+  tournamentCategoryOptions,
+  tournamentEmptyMessage,
+  type TournamentScopeFilter,
   type TournamentSort,
   type TournamentStatusFilter,
 } from "../lib/tournaments"
-import { Breadcrumb } from "../components/Breadcrumb"
+import { LiveSection } from "../components/LiveSection"
+import { PageHeader } from "../components/PageHeader"
 import { SiteLayout } from "../components/SiteLayout"
-import {
-  TournamentEmpty,
-  TournamentGrid,
-  TournamentPagination,
-  TournamentToolbar,
-} from "../components/tournaments/TournamentArchive"
-import { TournamentSpotlight } from "../components/tournaments/TournamentSpotlight"
+import { FeaturedTournament } from "../components/FeaturedTournament"
+import { TournamentEmpty, TournamentGrid, TournamentToolbar } from "../components/tournaments/TournamentArchive"
 
 export function TournamentsPage() {
   const featured = useMemo(() => selectFeaturedTournament(tournaments), [])
@@ -27,110 +28,155 @@ export function TournamentsPage() {
     () => [...new Set(tournaments.map((item) => item.location))].sort((a, b) => a.localeCompare(b, "vi")),
     [],
   )
+  const categories = useMemo(() => tournamentCategoryOptions(tournaments), [])
   const [status, setStatus] = useState<TournamentStatusFilter>("Tất cả")
   const [query, setQuery] = useState("")
   const [year, setYear] = useState("Tất cả")
   const [location, setLocation] = useState("Tất cả")
+  const [scope, setScope] = useState<TournamentScopeFilter>("Tất cả")
+  const [category, setCategory] = useState("Tất cả")
   const [sort, setSort] = useState<TournamentSort>("latest")
-  const [page, setPage] = useState(1)
+  const [visibleCount, setVisibleCount] = useState(TOURNAMENT_PAGE_SIZE)
 
-  const browsing = status === "Tất cả" && query.trim() === "" && year === "Tất cả" && location === "Tất cả"
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search)
+    const nextScope = params.get("scope")
+    if (nextScope === "Trong nước" || nextScope === "Quốc tế") setScope(nextScope)
+  }, [])
+
+  const dropdownsDefault =
+    year === "Tất cả" && location === "Tất cả" && scope === "Tất cả" && category === "Tất cả"
+  const browsing = status === "Tất cả" && query.trim() === "" && dropdownsDefault
+
   const filtered = useMemo(
-    () => filterTournaments(tournaments, { status, query, year, location, sort }),
-    [status, query, year, location, sort],
+    () => filterTournaments(tournaments, { status, query, year, location, scope, category, sort }),
+    [status, query, year, location, scope, category, sort],
   )
+
   const archive = useMemo(() => {
     if (!browsing || !featured) return filtered
     return filtered.filter((item) => item.id !== featured.id)
   }, [browsing, featured, filtered])
-  const pageCount = Math.ceil(archive.length / TOURNAMENT_PAGE_SIZE)
-  const currentPage = pageCount === 0 ? 1 : Math.min(page, pageCount)
-  const showFeatured = Boolean(browsing && currentPage === 1 && featured)
-  const visible = archive.slice((currentPage - 1) * TOURNAMENT_PAGE_SIZE, currentPage * TOURNAMENT_PAGE_SIZE)
-  const dirty = !browsing || sort !== "latest"
 
-  const resetPage = () => setPage(1)
+  const visible = archive.slice(0, visibleCount)
+  const canLoadMore = visibleCount < archive.length
+  /** Chỉ hiện khi dropdown (khu vực / năm / địa điểm / nội dung) khác mặc định — không vì status chip. */
+  const dirty = !dropdownsDefault
+  const showFeatured = Boolean(browsing && featured)
+  const emptyCopy = tournamentEmptyMessage(status, query)
+
+  const resetVisible = () => setVisibleCount(TOURNAMENT_PAGE_SIZE)
   const clearFilters = () => {
     setStatus("Tất cả")
     setQuery("")
     setYear("Tất cả")
     setLocation("Tất cả")
+    setScope("Tất cả")
+    setCategory("Tất cả")
     setSort("latest")
-    resetPage()
+    resetVisible()
   }
 
   return (
     <SiteLayout>
       <article className="bg-white">
-        <header className="page-wrap pt-10 pb-6 min-[1200px]:pt-14">
-          <Breadcrumb items={[{ label: "Trang chủ", href: "/index.html" }, { label: "Giải đấu" }]} />
-          <p className="mt-6 flex items-center gap-3 text-[13px] font-medium text-brand-strong">
-            <span className="h-px w-8 bg-brand" aria-hidden />
-            Giải đấu
-          </p>
-          <h1 id="giai-dau-trang" className="tournament-page-title mt-3 text-ink">
-            Hệ thống giải đấu
-          </h1>
-          <p className="mt-3 max-w-2xl text-[15px] leading-relaxed text-muted md:text-base">
-            Khám phá các giải đấu Pickleball trên toàn quốc, cập nhật lịch thi đấu và kết quả.
-          </p>
-          <p className="mt-2 max-w-2xl text-sm text-muted">
-            Các giải đang hiển thị là dữ liệu minh họa, không phải lịch thi đấu chính thức.
-          </p>
-        </header>
+        <PageHeader
+          breadcrumb={[{ label: "Trang chủ", href: "/index.html" }, { label: "Giải đấu" }]}
+          eyebrow="Giải đấu"
+          title="Hệ thống giải đấu"
+          titleId="giai-dau-trang"
+          description="Khám phá các giải đấu Pickleball trên toàn quốc, cập nhật lịch thi đấu và kết quả."
+          disclaimer="Các giải đang hiển thị là dữ liệu minh họa, không phải lịch thi đấu chính thức."
+        />
 
-        <div className="page-wrap pb-8">
-          <TournamentToolbar
-            query={query}
-            status={status}
-            year={year}
-            location={location}
-            sort={sort}
-            years={years}
-            locations={locations}
-            dirty={dirty}
-            onQuery={(next) => {
-              setQuery(next)
-              resetPage()
-            }}
-            onStatus={(next) => {
-              setStatus(next)
-              resetPage()
-            }}
-            onYear={(next) => {
-              setYear(next)
-              resetPage()
-            }}
-            onLocation={(next) => {
-              setLocation(next)
-              resetPage()
-            }}
-            onSort={(next) => {
-              setSort(next)
-              resetPage()
-            }}
-            onReset={clearFilters}
-          />
-        </div>
+        <LiveSection arena={liveArena} />
 
         {showFeatured && featured ? (
-          <div className="page-wrap pb-10">
-            <TournamentSpotlight tournament={featured} />
+          <div className="page-wrap py-6 min-[1200px]:py-8">
+            <FeaturedTournament tournament={featured} variant="tournament" showCountdown />
           </div>
         ) : null}
 
-        <section className="border-t border-line" aria-labelledby="giai-tat-ca">
-          <div className="page-wrap py-10 min-[1200px]:py-12">
-            <h2 id="giai-tat-ca" className="text-[1.75rem] font-bold tracking-tight text-ink">
-              Tất cả giải đấu
-            </h2>
-            <p className="mt-2 text-sm text-muted" aria-live="polite">
-              {archive.length} giải đấu
-            </p>
-            <div key={`${status}-${query}-${year}-${location}-${sort}-${currentPage}`} className="tournament-results mt-6">
-              {visible.length === 0 ? <TournamentEmpty onClear={clearFilters} /> : <TournamentGrid tournaments={visible} />}
+        <section className="border-t border-line" aria-labelledby="kham-pha-giai-dau">
+          <div className="page-wrap py-8 min-[1200px]:py-10">
+            <div className="tournament-explorer-head">
+              <div>
+                <h2 id="kham-pha-giai-dau" className="text-[1.65rem] font-bold tracking-tight text-ink min-[1200px]:text-[1.85rem]">
+                  Khám phá giải đấu
+                </h2>
+                <p className="mt-1 text-sm text-muted" aria-live="polite">
+                  {archive.length} giải đấu
+                </p>
+              </div>
             </div>
-            <TournamentPagination page={currentPage} pageCount={pageCount} onPage={setPage} />
+
+            <div className="mt-5">
+              <TournamentToolbar
+                query={query}
+                status={status}
+                year={year}
+                location={location}
+                scope={scope}
+                category={category}
+                sort={sort}
+                years={years}
+                locations={locations}
+                categories={categories}
+                dirty={dirty}
+                onQuery={(next) => {
+                  setQuery(next)
+                  resetVisible()
+                }}
+                onStatus={(next) => {
+                  setStatus(next)
+                  resetVisible()
+                }}
+                onYear={(next) => {
+                  setYear(next)
+                  resetVisible()
+                }}
+                onLocation={(next) => {
+                  setLocation(next)
+                  resetVisible()
+                }}
+                onScope={(next) => {
+                  setScope(next)
+                  resetVisible()
+                }}
+                onCategory={(next) => {
+                  setCategory(next)
+                  resetVisible()
+                }}
+                onSort={(next) => {
+                  setSort(next)
+                  resetVisible()
+                }}
+                onReset={clearFilters}
+              />
+            </div>
+
+            <div
+              key={`${status}-${query}-${year}-${location}-${scope}-${category}-${sort}`}
+              className="tournament-results mt-6"
+            >
+              {visible.length === 0 ? (
+                <TournamentEmpty message={emptyCopy} onClear={clearFilters} />
+              ) : (
+                <TournamentGrid tournaments={visible} />
+              )}
+            </div>
+
+            {canLoadMore ? (
+              <div className="mt-8 flex justify-center">
+                <button
+                  type="button"
+                  className="inline-flex min-h-12 items-center rounded-[10px] border border-line bg-white px-6 text-[15px] font-medium text-ink hover:border-brand hover:bg-brand"
+                  onClick={() => setVisibleCount((count) => count + TOURNAMENT_LOAD_MORE)}
+                >
+                  Xem thêm giải đấu
+                </button>
+              </div>
+            ) : null}
           </div>
         </section>
       </article>

@@ -6,6 +6,7 @@ import { cx } from "../lib/cx"
 import { sitePath } from "../lib/site"
 import { useReducedMotion } from "../lib/useReducedMotion"
 import { Button } from "./Button"
+import { StarPattern } from "./StarPattern"
 
 const INTERVAL = 7000
 
@@ -57,7 +58,7 @@ export function HeroSlider({
 
   return (
     <section
-      className="relative h-[560px] overflow-hidden bg-ink text-white sm:h-[600px] min-[1200px]:h-[640px]"
+      className="relative h-[560px] overflow-hidden bg-signal text-white sm:h-[600px] min-[1200px]:h-[640px]"
       aria-roledescription="trình chiếu"
       aria-label="Sự kiện nổi bật"
     >
@@ -79,21 +80,19 @@ export function HeroSlider({
         />
       ))}
       <div
-        className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,rgba(23,25,29,0.9)_0%,rgba(23,25,29,0.72)_28%,rgba(23,25,29,0.28)_58%,rgba(23,25,29,0.12)_100%)]"
+        className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,rgba(174,48,51,0.9)_0%,rgba(174,48,51,0.72)_28%,rgba(174,48,51,0.28)_58%,rgba(174,48,51,0.12)_100%)]"
         aria-hidden
       />
       <div
-        className="pointer-events-none absolute inset-x-0 bottom-0 h-48 bg-[linear-gradient(180deg,transparent,rgba(23,25,29,0.72))]"
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-48 bg-[linear-gradient(180deg,transparent,rgba(174,48,51,0.72))]"
         aria-hidden
       />
+      <StarPattern className="vpf-star-mark-hero" />
 
       <div className="absolute inset-0 z-10 flex items-end">
         <div key={slide.id} className="page-wrap w-full pb-24 sm:pb-28">
           <div className="max-w-[680px]">
-          <p className="flex items-center gap-3 text-[13px] font-medium text-brand">
-            <span className="h-px w-8 bg-brand" aria-hidden />
-            {slide.category}
-          </p>
+          <p className="text-[13px] font-medium text-brand">{slide.category}</p>
           <h1 className="mt-4 max-w-xl text-[2rem] font-bold leading-[1.08] tracking-tight sm:text-5xl min-[1200px]:text-[4rem]">
             {slide.title}
           </h1>
@@ -178,7 +177,7 @@ function ControlButton({
       aria-label={label}
       aria-pressed={pressed}
       onClick={onClick}
-      className="grid size-11 place-items-center rounded-full border border-white/40 bg-ink/25 text-white hover:bg-white hover:text-ink"
+      className="grid size-11 place-items-center rounded-full border border-white/40 bg-white/15 text-white hover:bg-white hover:text-ink"
     >
       {children}
     </button>

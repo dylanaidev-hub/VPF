@@ -3,6 +3,7 @@ import type { NewsArticle } from "../types"
 import { formatViDate } from "../lib/format"
 import { Badge } from "./Badge"
 import { NewsImage } from "./NewsImage"
+import { StarPattern } from "./StarPattern"
 
 export function FeaturedNewsCard({
   article,
@@ -20,7 +21,7 @@ export function FeaturedNewsCard({
         event.preventDefault()
         onOpen(article)
       }}
-      className="group relative isolate flex h-full min-h-[440px] overflow-hidden rounded-2xl bg-ink min-[1200px]:min-h-[520px]"
+      className="group relative isolate flex h-full min-h-[440px] overflow-hidden rounded-2xl bg-signal min-[1200px]:min-h-[520px]"
     >
       <NewsImage
         src={article.image}
@@ -31,17 +32,10 @@ export function FeaturedNewsCard({
         className={`absolute inset-0 h-full w-full object-cover transition-transform duration-200 group-hover:scale-[1.03] motion-reduce:transition-none motion-reduce:group-hover:scale-100 ${article.imagePosition ?? "object-center"}`}
       />
       <div
-        className="absolute inset-0 bg-[linear-gradient(180deg,rgba(23,25,29,0.08)_0%,rgba(23,25,29,0.12)_38%,rgba(23,25,29,0.88)_100%)]"
+        className="absolute inset-0 bg-[linear-gradient(180deg,rgba(174,48,51,0.08)_0%,rgba(174,48,51,0.12)_38%,rgba(174,48,51,0.88)_100%)]"
         aria-hidden
       />
-      <span
-        className="pointer-events-none absolute -bottom-10 -right-10 size-36 rounded-full bg-brand"
-        aria-hidden
-      />
-      <span
-        className="pointer-events-none absolute bottom-8 right-8 size-8 rounded-full bg-signal"
-        aria-hidden
-      />
+      <StarPattern className="vpf-star-mark-card" />
       <div className="absolute left-4 top-4 z-10 sm:left-6 sm:top-6">
         <Badge tone={important ? "important" : "neutral"}>{article.category}</Badge>
       </div>

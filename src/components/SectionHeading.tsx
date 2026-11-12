@@ -25,10 +25,7 @@ export function SectionHeading({
     >
       <div className="max-w-2xl">
         {eyebrow ? (
-          <p className="mb-3 flex items-center gap-3 text-[13px] font-medium text-brand-strong">
-            <span className="h-px w-8 bg-brand" aria-hidden />
-            {eyebrow}
-          </p>
+          <p className="mb-3 text-[13px] font-medium text-brand-strong">{eyebrow}</p>
         ) : null}
         <h2
           id={id}

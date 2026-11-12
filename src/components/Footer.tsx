@@ -6,7 +6,7 @@ import { BackToTop } from "./BackToTop"
 import { Logo } from "./Logo"
 
 const discoverIds = ["home", "federation", "news", "tournaments", "partners"]
-const categoryIds = ["expertise", "community", "media"]
+const categoryIds = ["expertise", "community", "library"]
 
 const discoverLinks = linksById(discoverIds)
 const categoryLinks = [
@@ -17,7 +17,7 @@ const categoryLinks = [
 const anchorId: Record<string, string> = {
   expertise: "chuyen-mon",
   community: "cong-dong",
-  media: "media",
+  library: "thu-vien-cong-dong",
 }
 
 export function Footer() {
@@ -26,7 +26,7 @@ export function Footer() {
 
   return (
     <>
-    <footer className="bg-[#18191C] text-white">
+    <footer className="bg-signal text-white">
       <div className="page-wrap py-16 min-[1200px]:py-20">
         <div className="footer-grid">
           <div id="lien-doan">
@@ -34,8 +34,8 @@ export function Footer() {
               <Logo variant="white" />
             </a>
             <p className="mt-5 text-base font-semibold">{site.name}</p>
-            <p className="mt-1 text-sm text-[#B6B8BD]">{site.englishName}</p>
-            <p className="mt-3 text-sm leading-relaxed text-[#B6B8BD]">
+            <p className="mt-1 text-sm text-vpf-gold-wash">{site.englishName}</p>
+            <p className="mt-3 text-sm leading-relaxed text-vpf-gold-wash">
               Kết nối cộng đồng, phát triển phong trào và đồng hành cùng Pickleball Việt Nam.
             </p>
             <ul className="mt-5 flex gap-2" aria-label="Mạng xã hội">
@@ -45,7 +45,7 @@ export function Footer() {
                     role="img"
                     aria-label={`${channel.label} — đường dẫn chính thức chưa được công bố`}
                     title="Đường dẫn chính thức chưa được công bố"
-                    className="grid size-9 place-items-center rounded-lg border border-[#35373B] text-white transition-colors duration-200 hover:bg-brand/15 motion-reduce:transition-none"
+                    className="grid size-9 place-items-center rounded-lg border border-white/25 text-white transition-colors duration-200 hover:bg-brand/15 motion-reduce:transition-none"
                   >
                     <SocialGlyph name={channel.id} />
                   </span>
@@ -61,7 +61,7 @@ export function Footer() {
 
           <div id="lien-he">
             <h2 className="text-[15px] font-semibold">Liên hệ</h2>
-            <ul className="mt-4 space-y-3 text-sm text-[#B6B8BD]">
+            <ul className="mt-4 space-y-3 text-sm text-vpf-gold-wash">
               <li className="flex gap-2.5">
                 <MapPin className="mt-0.5 size-4 shrink-0 text-white" aria-hidden />
                 <span>
@@ -91,8 +91,8 @@ export function Footer() {
         </div>
       </div>
 
-      <div className="border-t border-[#35373B]">
-        <div className="page-wrap flex flex-col gap-3 py-5 text-[13px] leading-relaxed text-[#B6B8BD] md:flex-row md:items-center md:justify-between">
+      <div className="border-t border-white/25">
+        <div className="page-wrap flex flex-col gap-3 py-5 text-[13px] leading-relaxed text-vpf-gold-wash md:flex-row md:items-center md:justify-between">
           <div>
             <p>© 2026 {site.englishName}. All rights reserved.</p>
             <p className="mt-1 text-xs">
@@ -134,7 +134,7 @@ function FooterNav({
             <a
               id={anchorId[item.id]}
               href={sitePath(item.href)}
-              className="text-sm text-[#B6B8BD] transition-colors duration-200 hover:text-brand motion-reduce:transition-none"
+              className="text-sm text-vpf-gold-wash transition-colors duration-200 hover:text-brand motion-reduce:transition-none"
             >
               {item.label}
             </a>

@@ -98,7 +98,7 @@ function LeaderCard({ leader, featured = false }: { leader: Leader; featured?: b
 }
 
 function Silhouette({ light }: { light: boolean }) {
-  const fill = light ? "#FFFFFF" : "#18232E"
+  const fill = light ? "var(--vpf-white)" : "var(--vpf-red-700)"
   return (
     <svg viewBox="0 0 200 240" className="absolute inset-0 m-auto h-[78%] w-auto" aria-hidden>
       <circle cx="100" cy="86" r="36" fill={fill} opacity="0.92" />

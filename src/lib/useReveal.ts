@@ -1,27 +1,29 @@
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
+import { useReducedMotion } from "./useReducedMotion"
 
-export function useReveal<T extends HTMLElement>() {
-  const [node, setNode] = useState<T | null>(null)
+export function useReveal<T extends HTMLElement = HTMLElement>() {
+  const ref = useRef<T>(null)
+  const reduce = useReducedMotion()
   const [shown, setShown] = useState(false)
 
   useEffect(() => {
+    const node = ref.current
     if (!node) return
-    const mark = () => setShown(true)
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      mark()
+    if (reduce) {
+      setShown(true)
       return
     }
-    const rect = node.getBoundingClientRect()
-    if (rect.top < window.innerHeight && rect.bottom > 0 && rect.height > 0) mark()
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry?.isIntersecting) mark()
+        if (!entry?.isIntersecting) return
+        setShown(true)
+        observer.disconnect()
       },
-      { threshold: 0, rootMargin: "0px 0px -8% 0px" },
+      { threshold: 0.18 },
     )
     observer.observe(node)
     return () => observer.disconnect()
-  }, [node])
+  }, [reduce])
 
-  return { ref: setNode, shown }
+  return { ref, shown }
 }

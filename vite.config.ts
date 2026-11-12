@@ -20,6 +20,7 @@ function newsArticlePages(root: string): Plugin {
       server.middlewares.use((req, _res, next) => {
         const pathname = req.url?.split("?")[0] ?? ""
         if (/^\/tin-tuc\/[^/]+\/?$/.test(pathname)) req.url = "/article.html"
+        if (/^\/hop-tac\/[^/]+\/?$/.test(pathname)) req.url = "/hop-tac.html"
         next()
       })
     },
@@ -45,6 +46,28 @@ function newsArticlePages(root: string): Plugin {
           )
         writeFileSync(resolve(dir, "index.html"), html)
       }
+
+      const sponsorTemplatePath = resolve(root, "dist/hop-tac.html")
+      const sponsorTemplate = readFileSync(sponsorTemplatePath, "utf8")
+      const sponsorSource = readFileSync(resolve(root, "src/data/partnership.mock.ts"), "utf8")
+      const sponsorMatches = [
+        ...sponsorSource.matchAll(/slug:\s*"([^"]+)"[\s\S]*?name:\s*"([^"]+)"[\s\S]*?intro:\s*"([^"]+)"/g),
+      ].map((match) => ({ slug: match[1], name: match[2], intro: match[3] }))
+      if (sponsorMatches.length === 0) throw new Error("Không đọc được slug nhà tài trợ từ partnership.mock.ts")
+      for (const sponsor of sponsorMatches) {
+        const dir = resolve(root, "dist/hop-tac", sponsor.slug)
+        mkdirSync(dir, { recursive: true })
+        const html = sponsorTemplate
+          .replace(
+            "<title data-sponsor-title>Nhà tài trợ – Liên đoàn Pickleball Việt Nam</title>",
+            `<title>${escapeHtml(sponsor.name)} – Liên đoàn Pickleball Việt Nam</title>`,
+          )
+          .replace(
+            'content="Hồ sơ nhà tài trợ minh họa của Liên đoàn Pickleball Việt Nam."',
+            `content="${escapeHtml(sponsor.intro)}"`,
+          )
+        writeFileSync(resolve(dir, "index.html"), html)
+      }
     },
   }
 }
@@ -65,6 +88,7 @@ const pages = [
   "giaidau",
   "chuyenmon",
   "congdong",
+  "thu-vien-cong-dong",
   "media",
   "hoptac",
 ]
@@ -78,6 +102,7 @@ export default defineConfig({
       input: {
         ...Object.fromEntries(pages.map((name) => [name, resolve(root, `${name}.html`)])),
         article: resolve(root, "article.html"),
+        "hop-tac": resolve(root, "hop-tac.html"),
         "chitiet-giaidau": resolve(root, "chitiet-giaidau.html"),
       },
     },

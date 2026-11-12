@@ -1,12 +1,20 @@
 import { useState, type FormEvent } from "react"
-import { partnershipTypeOptions } from "../../data/partnership.mock"
+import { contactSection, partnershipTypeOptions } from "../../data/partnership.mock"
 import { cx } from "../../lib/cx"
 import { useReveal } from "../../lib/useReveal"
 import { Select } from "../Select"
 
-type Field = "name" | "organization" | "email" | "phone" | "type" | "message"
+type Field = "name" | "organization" | "email" | "phone" | "type" | "message" | "consent"
 
-type Values = Record<Field, string>
+type Values = {
+  name: string
+  organization: string
+  email: string
+  phone: string
+  type: string
+  message: string
+  consent: boolean
+}
 
 const empty: Values = {
   name: "",
@@ -15,56 +23,72 @@ const empty: Values = {
   phone: "",
   type: "",
   message: "",
+  consent: false,
 }
 
-const labels: Record<Field, string> = {
-  name: "Họ và tên",
-  organization: "Doanh nghiệp / Tổ chức",
+const labels: Record<Exclude<Field, "consent">, string> = {
+  name: "Họ tên",
+  organization: "Doanh nghiệp/Tổ chức",
   email: "Email",
   phone: "Số điện thoại",
-  type: "Hình thức hợp tác",
-  message: "Nội dung đề xuất",
+  type: "Hình thức quan tâm",
+  message: "Nội dung quan tâm",
 }
 
 export function PartnershipForm() {
   const [values, setValues] = useState<Values>(empty)
   const [errors, setErrors] = useState<Partial<Record<Field, string>>>({})
-  const [status, setStatus] = useState("")
+  const [status, setStatus] = useState<"idle" | "processing" | "demo-ok">("idle")
+  const [statusMessage, setStatusMessage] = useState("")
   const { ref, shown } = useReveal<HTMLDivElement>()
+  const processing = status === "processing"
 
-  const setField = (field: Field, value: string) => {
+  const setField = <K extends keyof Values>(field: K, value: Values[K]) => {
     setValues((current) => ({ ...current, [field]: value }))
     setErrors((current) => ({ ...current, [field]: undefined }))
-    setStatus("")
+    if (status !== "idle") {
+      setStatus("idle")
+      setStatusMessage("")
+    }
   }
 
   const onSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
+    if (processing) return
     const next = validate(values)
     setErrors(next)
     const first = (Object.keys(next) as Field[]).find((field) => next[field])
     if (first) {
-      setStatus("")
+      setStatus("idle")
+      setStatusMessage("")
       document.getElementById(fieldId(first))?.focus()
       return
     }
-    setStatus(
-      "Chưa thể gửi đề xuất. Kênh tiếp nhận đang chờ tích hợp. Nội dung vừa nhập không được chuyển đến VPF và không được lưu trên trình duyệt.",
-    )
+
+    setStatus("processing")
+    setStatusMessage("Đang kiểm tra biểu mẫu minh họa…")
+    window.setTimeout(() => {
+      setStatus("demo-ok")
+      setStatusMessage(
+        "Biểu mẫu đã được kiểm tra thành công ở chế độ minh họa. Dữ liệu không được gửi đến VPF và không được lưu trên trình duyệt.",
+      )
+    }, 650)
   }
 
   return (
-    <section id="de-xuat" className="bg-paper py-14 md:py-16" aria-labelledby="gui-de-xuat">
+    <section
+      id={contactSection.id}
+      className="partner-section partner-contact"
+      aria-labelledby="lien-he-hop-tac-tieu-de"
+    >
       <div className="page-wrap">
-        <div ref={ref} className={cx("partnership-form-panel partnership-rise", shown && "is-in")}>
-          <h2 id="gui-de-xuat" className="text-3xl font-semibold tracking-tight text-ink md:text-4xl">
-            Gửi đề xuất hợp tác
+        <div ref={ref} className={cx("partnership-form-panel partner-rise", shown && "is-in")}>
+          <h2 id="lien-he-hop-tac-tieu-de" className="partner-section-title">
+            {contactSection.title}
           </h2>
-          <p className="mt-3 max-w-2xl text-base leading-relaxed text-muted">
-            Chia sẻ thông tin và nhu cầu hợp tác để VPF có thể xem xét đề xuất.
-          </p>
+          <p className="partner-section-lead mt-3">{contactSection.description}</p>
           <p className="partnership-notice" role="note">
-            Chức năng gửi đang chờ tích hợp. Biểu mẫu kiểm tra thông tin tại chỗ. Dữ liệu không được gửi đi và không được lưu.
+            {contactSection.note}
           </p>
 
           <form className="mt-8" noValidate onSubmit={onSubmit}>
@@ -74,6 +98,8 @@ export function PartnershipForm() {
                 value={values.name}
                 error={errors.name}
                 autoComplete="name"
+                required
+                disabled={processing}
                 onChange={(value) => setField("name", value)}
               />
               <Field
@@ -81,6 +107,8 @@ export function PartnershipForm() {
                 value={values.organization}
                 error={errors.organization}
                 autoComplete="organization"
+                required
+                disabled={processing}
                 onChange={(value) => setField("organization", value)}
               />
               <Field
@@ -89,6 +117,8 @@ export function PartnershipForm() {
                 value={values.email}
                 error={errors.email}
                 autoComplete="email"
+                required
+                disabled={processing}
                 onChange={(value) => setField("email", value)}
               />
               <Field
@@ -97,9 +127,10 @@ export function PartnershipForm() {
                 value={values.phone}
                 error={errors.phone}
                 autoComplete="tel"
+                disabled={processing}
                 onChange={(value) => setField("phone", value)}
               />
-              <div className="partnership-field">
+              <div className="partnership-field sm:col-span-2">
                 <label htmlFor={fieldId("type")}>
                   {labels.type}
                   <RequiredMark />
@@ -108,9 +139,11 @@ export function PartnershipForm() {
                   id={fieldId("type")}
                   name="type"
                   value={values.type}
+                  disabled={processing}
                   aria-invalid={errors.type ? true : undefined}
                   aria-describedby={errors.type ? errorId("type") : undefined}
                   onChange={(event) => setField("type", event.target.value)}
+                  className="h-12 w-full rounded-[10px] border border-line bg-white px-3 text-[15px] text-ink"
                 >
                   <option value="">Chọn hình thức</option>
                   {partnershipTypeOptions.map((option) => (
@@ -128,15 +161,13 @@ export function PartnershipForm() {
             </div>
 
             <div className="partnership-field mt-4">
-              <label htmlFor={fieldId("message")}>
-                {labels.message}
-                <RequiredMark />
-              </label>
+              <label htmlFor={fieldId("message")}>{labels.message}</label>
               <textarea
                 id={fieldId("message")}
                 name="message"
-                rows={6}
+                rows={5}
                 value={values.message}
+                disabled={processing}
                 aria-invalid={errors.message ? true : undefined}
                 aria-describedby={errors.message ? errorId("message") : undefined}
                 onChange={(event) => setField("message", event.target.value)}
@@ -148,13 +179,37 @@ export function PartnershipForm() {
               ) : null}
             </div>
 
+            <div className="mt-5">
+              <label className="partner-consent" htmlFor={fieldId("consent")}>
+                <input
+                  id={fieldId("consent")}
+                  name="consent"
+                  type="checkbox"
+                  checked={values.consent}
+                  disabled={processing}
+                  aria-invalid={errors.consent ? true : undefined}
+                  aria-describedby={errors.consent ? errorId("consent") : undefined}
+                  onChange={(event) => setField("consent", event.target.checked)}
+                />
+                <span>{contactSection.consentLabel}</span>
+              </label>
+              {errors.consent ? (
+                <p id={errorId("consent")} className="partnership-error">
+                  {errors.consent}
+                </p>
+              ) : null}
+            </div>
+
             <div className="mt-6 flex flex-col gap-4 sm:flex-row sm:items-center">
-              <button type="submit" className="partnership-submit">
-                Gửi đề xuất
+              <button type="submit" className="partnership-submit" disabled={processing || status === "demo-ok"}>
+                {processing ? "Đang xử lý…" : contactSection.ctaLabel}
               </button>
-              {status ? (
-                <p className="text-sm leading-relaxed text-ink" role="status">
-                  {status}
+              {statusMessage ? (
+                <p
+                  className={cx("text-sm leading-relaxed", status === "demo-ok" ? "text-ink" : "text-muted")}
+                  role="status"
+                >
+                  {statusMessage}
                 </p>
               ) : null}
             </div>
@@ -172,19 +227,23 @@ function Field({
   onChange,
   type = "text",
   autoComplete,
+  required,
+  disabled,
 }: {
-  id: Field
+  id: Exclude<Field, "consent" | "type" | "message">
   value: string
   error?: string
   onChange: (value: string) => void
   type?: "text" | "email" | "tel"
   autoComplete: string
+  required?: boolean
+  disabled?: boolean
 }) {
   return (
     <div className="partnership-field">
       <label htmlFor={fieldId(id)}>
         {labels[id]}
-        <RequiredMark />
+        {required ? <RequiredMark /> : null}
       </label>
       <input
         id={fieldId(id)}
@@ -192,6 +251,7 @@ function Field({
         type={type}
         value={value}
         autoComplete={autoComplete}
+        disabled={disabled}
         aria-invalid={error ? true : undefined}
         aria-describedby={error ? errorId(id) : undefined}
         onChange={(event) => onChange(event.target.value)}
@@ -227,24 +287,26 @@ function validate(values: Values): Partial<Record<Field, string>> {
   const name = values.name.trim()
   const organization = values.organization.trim()
   const email = values.email.trim()
-  const phone = values.phone.replace(/[\s.-]/g, "")
+  const phoneRaw = values.phone.trim()
+  const phone = phoneRaw.replace(/[\s.-]/g, "")
   const message = values.message.trim()
 
-  if (name.length < 2 || name.length > 80) errors.name = "Họ và tên cần từ 2 đến 80 ký tự."
+  if (name.length < 2 || name.length > 80) errors.name = "Họ tên cần từ 2 đến 80 ký tự."
   if (organization.length < 2 || organization.length > 120) {
     errors.organization = "Tên doanh nghiệp hoặc tổ chức cần từ 2 đến 120 ký tự."
   }
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || email.length > 120) {
     errors.email = "Email chưa đúng định dạng."
   }
-  if (!/^(?:\+84|84|0)\d{9}$/.test(phone)) {
+  if (phoneRaw && !/^(?:\+84|84|0)\d{9}$/.test(phone)) {
     errors.phone = "Số điện thoại cần 10 số bắt đầu bằng 0, hoặc dạng +84."
   }
   if (!partnershipTypeOptions.includes(values.type as (typeof partnershipTypeOptions)[number])) {
-    errors.type = "Vui lòng chọn hình thức hợp tác."
+    errors.type = "Vui lòng chọn hình thức quan tâm."
   }
-  if (message.length < 20 || message.length > 1500) {
-    errors.message = "Nội dung đề xuất cần từ 20 đến 1500 ký tự."
+  if (message && (message.length < 10 || message.length > 1500)) {
+    errors.message = "Nội dung quan tâm cần từ 10 đến 1500 ký tự khi điền."
   }
+  if (!values.consent) errors.consent = "Vui lòng đồng ý với chính sách bảo mật để tiếp tục."
   return errors
 }

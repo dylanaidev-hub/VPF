@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { heroSlides } from "../data/hero"
+import { liveArena } from "../data/live"
 import { news } from "../data/news"
 import { partners, partnersIllustrativeNote } from "../data/partners"
 import { statistics } from "../data/stats"
@@ -11,6 +12,7 @@ import { Dialog } from "../components/Dialog"
 import { Footer } from "../components/Footer"
 import { Header } from "../components/Header"
 import { HeroSlider } from "../components/HeroSlider"
+import { LiveSection } from "../components/LiveSection"
 import { NewsSection } from "../components/NewsSection"
 import { PartnershipBanner } from "../components/PartnershipBanner"
 import { SearchDialog } from "../components/SearchDialog"
@@ -29,6 +31,8 @@ export function HomePage() {
       <main id="noi-dung">
         <HeroSlider slides={heroSlides} suspended={suspended} />
         <StatsSection items={statistics} />
+
+        <LiveSection arena={liveArena} />
 
         <NewsSection articles={news} onOpen={setArticle} />
 

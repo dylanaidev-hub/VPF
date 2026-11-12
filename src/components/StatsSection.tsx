@@ -1,9 +1,20 @@
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import type { Statistic } from "../types"
 import { cx } from "../lib/cx"
 import { useReducedMotion } from "../lib/useReducedMotion"
 
-function useCountUp(target: number | null) {
+const COUNT_MS = 1800
+
+function easeInOutCubic(progress: number) {
+  return progress < 0.5 ? 4 * progress ** 3 : 1 - (-2 * progress + 2) ** 3 / 2
+}
+
+function formatStat(value: number | null, suffix?: string) {
+  if (value === null) return "—"
+  return `${value.toLocaleString("vi-VN")}${suffix ?? ""}`
+}
+
+function useCountUp(target: number | null, active: boolean) {
   const reduce = useReducedMotion()
   const [current, setCurrent] = useState<number | null>(target === null || reduce ? target : 0)
 
@@ -12,27 +23,26 @@ function useCountUp(target: number | null) {
       setCurrent(target)
       return
     }
+    if (!active) return
 
     let frame = 0
     const start = performance.now()
-    const duration = 900
     const tick = (now: number) => {
-      const progress = Math.min(1, (now - start) / duration)
-      const eased = 1 - (1 - progress) ** 3
-      setCurrent(Math.round(target * eased))
+      const progress = Math.min(1, (now - start) / COUNT_MS)
+      setCurrent(Math.round(target * easeInOutCubic(progress)))
       if (progress < 1) frame = requestAnimationFrame(tick)
     }
     frame = requestAnimationFrame(tick)
     return () => cancelAnimationFrame(frame)
-  }, [target, reduce])
+  }, [target, reduce, active])
 
   return current
 }
 
-function StatFigure({ stat }: { stat: Statistic }) {
-  const current = useCountUp(stat.value)
-  const figure =
-    current === null ? "—" : `${current.toLocaleString("vi-VN")}${stat.suffix ?? ""}`
+function StatFigure({ stat, active }: { stat: Statistic; active: boolean }) {
+  const current = useCountUp(stat.value, active)
+  const figure = formatStat(current, stat.suffix)
+  const finalFigure = formatStat(stat.value, stat.suffix)
   const label =
     current === null
       ? `${stat.label}, chưa có số liệu`
@@ -41,8 +51,9 @@ function StatFigure({ stat }: { stat: Statistic }) {
   return (
     <div className="px-1 py-8 sm:px-6 lg:px-8" aria-label={label}>
       <span className="block h-0.5 w-7 bg-brand" aria-hidden />
-      <p className="mt-4 text-[clamp(1.85rem,7vw,3.5rem)] font-bold leading-none tracking-tight text-ink" aria-hidden>
-        {figure}
+      <p className="relative mt-4 text-[clamp(1.85rem,7vw,3.5rem)] font-bold leading-none tracking-tight text-ink tabular-nums" aria-hidden>
+        <span className="invisible">{finalFigure}</span>
+        <span className="absolute inset-x-0 top-0">{figure}</span>
       </p>
       <p className="mt-3 text-sm font-medium text-ink">{stat.label}</p>
       <p className="mt-1 text-[13px] text-muted">{stat.note}</p>
@@ -51,14 +62,56 @@ function StatFigure({ stat }: { stat: Statistic }) {
 }
 
 export function StatsSection({ items }: { items: Statistic[] }) {
+  const reduce = useReducedMotion()
+  const sectionRef = useRef<HTMLElement>(null)
+  const [active, setActive] = useState(false)
+
+  useEffect(() => {
+    const node = sectionRef.current
+    if (!node || reduce) return
+
+    let started = false
+    let inView = false
+
+    const start = () => {
+      if (started) return
+      started = true
+      setActive(true)
+      observer.disconnect()
+      window.removeEventListener("scroll", onScroll)
+    }
+
+    const onScroll = () => {
+      if (window.scrollY > 0 && inView) start()
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        inView = entries.some((entry) => entry.isIntersecting && entry.intersectionRatio >= 0.25)
+        if (inView && window.scrollY > 0) start()
+      },
+      { threshold: [0.25, 0.3] },
+    )
+
+    observer.observe(node)
+    window.addEventListener("scroll", onScroll, { passive: true })
+    return () => {
+      observer.disconnect()
+      window.removeEventListener("scroll", onScroll)
+    }
+  }, [reduce])
+
   return (
-    <section id="so-lieu" data-section aria-labelledby="so-lieu-tieu-de" className="border-b border-line bg-paper">
-      <div className="page-wrap py-10 md:py-12">
+    <section
+      ref={sectionRef}
+      id="so-lieu"
+      data-section
+      aria-labelledby="so-lieu-tieu-de"
+      className="border-b border-line bg-paper py-20 md:py-[140px]"
+    >
+      <div className="page-wrap">
         <div className="max-w-2xl">
-          <p className="flex items-center gap-3 text-[13px] font-medium text-brand-strong">
-            <span className="h-px w-8 bg-brand" aria-hidden />
-            Số liệu minh họa
-          </p>
+          <p className="text-[13px] font-medium text-brand-strong">Số liệu minh họa</p>
           <h2 id="so-lieu-tieu-de" className="mt-3 text-[2rem] font-bold leading-tight tracking-tight text-ink">
             Quy mô hoạt động
           </h2>
@@ -76,7 +129,7 @@ export function StatsSection({ items }: { items: Statistic[] }) {
                 index < items.length - 1 && "md:border-r md:border-line",
               )}
             >
-              <StatFigure stat={item} />
+              <StatFigure stat={item} active={active || reduce} />
             </li>
           ))}
         </ul>

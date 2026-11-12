@@ -1,6 +1,7 @@
 import { useEffect, useId, useRef } from "react"
 import type { ReactNode } from "react"
 import { X } from "lucide-react"
+import { useRegisterModalPresence } from "../lib/modalPresence"
 
 type DialogProps = {
   open: boolean
@@ -12,6 +13,7 @@ type DialogProps = {
 export function Dialog({ open, title, onClose, children }: DialogProps) {
   const titleId = useId()
   const panelRef = useRef<HTMLDivElement>(null)
+  useRegisterModalPresence(open)
 
   useEffect(() => {
     if (!open) return
@@ -66,7 +68,7 @@ export function Dialog({ open, title, onClose, children }: DialogProps) {
       <button
         type="button"
         aria-label="Đóng hộp thoại"
-        className="absolute inset-0 bg-ink/55"
+        className="absolute inset-0 bg-signal/55"
         onClick={onClose}
       />
       <div

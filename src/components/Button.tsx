@@ -22,7 +22,7 @@ type LinkProps = Common &
 
 const variants: Record<Variant, string> = {
   primary:
-    "min-h-12 rounded-[10px] bg-brand px-5 text-[15px] text-ink hover:bg-[#de8414] focus-visible:outline-ink",
+    "min-h-12 rounded-[10px] bg-brand px-5 text-[15px] text-ink hover:bg-vpf-gold-soft focus-visible:outline-ink",
   outline:
     "min-h-12 rounded-[10px] border border-white/85 bg-transparent px-5 text-[15px] text-white hover:bg-white hover:text-ink",
   text: "text-sm text-ink hover:text-brand-strong",

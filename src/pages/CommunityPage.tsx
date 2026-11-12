@@ -2,9 +2,9 @@ import { useState } from "react"
 import { ClubDiscovery } from "../components/community/ClubDiscovery"
 import { CommunityActivities } from "../components/community/CommunityActivities"
 import { CommunityCTA } from "../components/community/CommunityCTA"
-import { CommunityHero } from "../components/community/CommunityHero"
 import { CommunityNetwork } from "../components/community/CommunityNetwork"
 import { CommunityStats } from "../components/community/CommunityStats"
+import { PageHeader } from "../components/PageHeader"
 import { SiteLayout } from "../components/SiteLayout"
 import type { ClubKind } from "../data/clubs.mock"
 
@@ -15,7 +15,14 @@ export function CommunityPage() {
 
   return (
     <SiteLayout>
-      <CommunityHero />
+      <PageHeader
+        breadcrumb={[{ label: "Trang chủ", href: "/index.html" }, { label: "Cộng đồng" }]}
+        eyebrow="Cộng đồng"
+        title="Cộng đồng Pickleball Việt Nam"
+        titleId="cong-dong-tieu-de"
+        description="Kết nối người chơi, câu lạc bộ và các hoạt động phát triển phong trào Pickleball."
+        disclaimer="Thông tin câu lạc bộ và hoạt động đang hiển thị là dữ liệu minh họa."
+      />
       <CommunityStats />
       <ClubDiscovery
         query={query}

@@ -1,20 +1,24 @@
-import { AboutCTA } from "../components/about/AboutCTA"
-import { AboutHero } from "../components/about/AboutHero"
-import { HistoryTimeline } from "../components/about/HistoryTimeline"
-import { LeadershipSection } from "../components/about/LeadershipSection"
-import { OrganizationChart } from "../components/about/OrganizationChart"
-import { VisionMission } from "../components/about/VisionMission"
+import { FedCharter, FedDecision } from "../components/about/FedDocuments"
+import { FedCommittee } from "../components/about/FedCommittee"
+import { FedContact } from "../components/about/FedContact"
+import { FedIntro } from "../components/about/FedIntro"
+import { FedMandate } from "../components/about/FedMandate"
+import { FedTimeline } from "../components/about/FedTimeline"
+import { FedVision } from "../components/about/FedVision"
 import { SiteLayout } from "../components/SiteLayout"
+import "../components/about/federation.css"
 
 export function AboutPage() {
   return (
     <SiteLayout>
-      <AboutHero />
-      <HistoryTimeline />
-      <VisionMission />
-      <OrganizationChart />
-      <LeadershipSection />
-      <AboutCTA />
+      <FedIntro />
+      <FedTimeline />
+      <FedDecision />
+      <FedVision />
+      <FedMandate />
+      <FedCharter />
+      <FedCommittee />
+      <FedContact />
     </SiteLayout>
   )
 }

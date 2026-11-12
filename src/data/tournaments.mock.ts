@@ -6,8 +6,12 @@ const note =
 
 const organizer = "Ban tổ chức minh họa"
 
-type TournamentSource = Omit<Tournament, "thumbnail" | "thumbnailAlt" | "detailUrl" | "summary"> & {
+type TournamentSource = Omit<
+  Tournament,
+  "thumbnail" | "thumbnailAlt" | "detailUrl" | "summary" | "scope"
+> & {
   summary: string
+  scope?: Tournament["scope"]
 }
 
 /**
@@ -334,15 +338,98 @@ const source: TournamentSource[] = [
         round: "Chung kết đôi nam",
       },
     ],
+    champion: "Vận động viên minh họa 1 · Đội minh họa A",
     regulations: {
       summary: "Điều lệ minh họa của giải đã kết thúc: set đến 11, cách biệt 2, không có tài liệu tải về.",
       documents: [{ id: "hue-dieu-le", title: "Điều lệ giao hữu minh họa — Huế 2026" }],
+    },
+  },
+  {
+    id: "open-bangkok-2026",
+    slug: "open-bangkok-2026",
+    name: "Bangkok Pickleball Open 2026",
+    summary: "Giải quốc tế minh họa tại Bangkok, chỉ để phân tách mục Giải đấu quốc tế trên trang.",
+    description:
+      "Giải quốc tế minh họa tại Bangkok. Tên giải, lịch và địa điểm không phải lịch thi đấu chính thức của VPF.",
+    objective: "Minh họa mục giải quốc tế trên trang Giải đấu.",
+    coverImage: "/images/match.jpg",
+    coverImageAlt: "Trận đấu pickleball trong nhà. Ảnh minh họa cho giải quốc tế giả định.",
+    startDate: "2026-12-05",
+    endDate: "2026-12-07",
+    location: "Bangkok",
+    country: "Thái Lan",
+    venue: "Indoor arena minh họa Bangkok",
+    organizer,
+    scope: "international",
+    time: "09:00 – 18:00",
+    isFeatured: false,
+    illustrative: true,
+    note,
+    categories: [
+      { id: "ms", name: "Men's Singles", level: "Open", ageGroup: "Open", format: "Single elimination" },
+      { id: "md", name: "Men's Doubles", level: "Open", ageGroup: "Open", format: "Single elimination" },
+    ],
+    schedule: [
+      {
+        id: "bkk-1",
+        date: "2026-12-05",
+        time: "10:00",
+        court: "Court 1",
+        event: "Men's Singles",
+        participants: "Player A – Player B",
+        status: "scheduled",
+      },
+    ],
+    results: [],
+    regulations: {
+      summary: "Điều lệ minh họa cho giải quốc tế demo. Không phải quy chế chính thức.",
+      documents: [{ id: "bkk-dieu-le", title: "Illustrative regulations — Bangkok 2026" }],
+    },
+  },
+  {
+    id: "singapore-masters-2026",
+    slug: "singapore-masters-2026",
+    name: "Singapore Pickleball Masters 2026",
+    summary: "Giải quốc tế minh họa đã kết thúc tại Singapore, dùng để xem mục kết quả quốc tế.",
+    description:
+      "Giải quốc tế minh họa đã kết thúc tại Singapore. Nhà vô địch trong dữ liệu chỉ phục vụ giao diện.",
+    objective: "Bổ sung một giải quốc tế đã kết thúc trong bộ dữ liệu demo.",
+    coverImage: "/images/outdoor.jpg",
+    coverImageAlt: "Pha bóng pickleball ngoài trời. Ảnh minh họa cho giải quốc tế giả định.",
+    startDate: "2026-09-20",
+    endDate: "2026-09-22",
+    location: "Singapore",
+    country: "Singapore",
+    venue: "Sports hub minh họa Singapore",
+    organizer,
+    scope: "international",
+    time: "08:30 – 17:30",
+    isFeatured: false,
+    illustrative: true,
+    note,
+    categories: [{ id: "xd", name: "Mixed Doubles", level: "Open", ageGroup: "Open", format: "Round robin" }],
+    schedule: [],
+    results: [
+      {
+        id: "sg-r1",
+        sideA: "Pair minh họa X",
+        sideB: "Pair minh họa Y",
+        score: "11–6, 11–9",
+        winner: "Pair minh họa X",
+        round: "Final",
+      },
+    ],
+    champion: "Pair minh họa X",
+    regulations: {
+      summary: "Điều lệ minh họa của giải quốc tế đã kết thúc.",
+      documents: [{ id: "sg-dieu-le", title: "Illustrative regulations — Singapore 2026" }],
     },
   },
 ]
 
 export const tournaments: Tournament[] = source.map((item) => ({
   ...item,
+  scope: item.scope ?? "domestic",
   thumbnail: item.coverImage,
   thumbnailAlt: item.coverImageAlt,
   detailUrl: tournamentPath(item.slug),

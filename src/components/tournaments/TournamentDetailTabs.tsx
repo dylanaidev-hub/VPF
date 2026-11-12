@@ -82,6 +82,11 @@ export function TournamentDetailTabs({ tournament }: { tournament: TournamentVie
 }
 
 function Overview({ tournament }: { tournament: TournamentView }) {
+  const place =
+    tournament.scope === "international" && tournament.country
+      ? `${tournament.venue}, ${tournament.location}, ${tournament.country}`
+      : `${tournament.venue}, ${tournament.location}`
+
   return (
     <div className="max-w-3xl space-y-6">
       <p className="text-[15px] leading-relaxed text-ink md:text-base">{tournament.description}</p>
@@ -92,14 +97,34 @@ function Overview({ tournament }: { tournament: TournamentView }) {
       <dl className="grid gap-4 sm:grid-cols-2">
         <div>
           <dt className="text-sm font-medium text-ink">Địa điểm</dt>
-          <dd className="mt-1 text-sm leading-relaxed text-muted">
-            {tournament.venue}, {tournament.location}
-          </dd>
+          <dd className="mt-1 text-sm leading-relaxed text-muted">{place}</dd>
         </div>
         <div>
           <dt className="text-sm font-medium text-ink">Đơn vị tổ chức</dt>
           <dd className="mt-1 text-sm leading-relaxed text-muted">{tournament.organizer}</dd>
         </div>
+        <div>
+          <dt className="text-sm font-medium text-ink">Phạm vi</dt>
+          <dd className="mt-1 text-sm leading-relaxed text-muted">
+            {tournament.scope === "international" ? "Quốc tế" : "Trong nước"}
+          </dd>
+        </div>
+        {tournament.champion ? (
+          <div>
+            <dt className="text-sm font-medium text-ink">Nhà vô địch (minh họa)</dt>
+            <dd className="mt-1 text-sm leading-relaxed text-muted">{tournament.champion}</dd>
+          </div>
+        ) : null}
+        {tournament.livestreamUrl ? (
+          <div className="sm:col-span-2">
+            <dt className="text-sm font-medium text-ink">Livestream</dt>
+            <dd className="mt-1 text-sm leading-relaxed text-muted">
+              <a href={tournament.livestreamUrl} className="font-medium text-brand-strong underline-offset-2 hover:underline">
+                Xem phát sóng
+              </a>
+            </dd>
+          </div>
+        ) : null}
       </dl>
       <p className="text-sm leading-relaxed text-muted">Thông tin liên hệ chưa được công bố trong dữ liệu minh họa.</p>
     </div>

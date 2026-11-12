@@ -15,7 +15,7 @@ export function AboutHero() {
         decoding="async"
         className="absolute inset-0 h-full w-full object-cover"
       />
-      <div className="absolute inset-0 bg-gradient-to-r from-ink/88 via-ink/60 to-ink/30" />
+      <div className="absolute inset-0 bg-gradient-to-r from-signal/88 via-signal/60 to-signal/30" />
       <div className="absolute -bottom-16 -right-10 size-52 rounded-full bg-brand" aria-hidden />
       <div className="absolute -bottom-24 right-24 size-40 rounded-full bg-signal" aria-hidden />
       <Container className="relative flex h-full flex-col justify-end pb-8 sm:pb-10">

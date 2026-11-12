@@ -1,19 +1,14 @@
-import { useState } from "react"
-import { ArrowUpRight } from "lucide-react"
-import type { Tournament } from "../types"
+import { ArrowRight, ArrowUpRight } from "lucide-react"
+import type { Tournament, TournamentView } from "../types"
 import { formatEventDate } from "../lib/format"
 import { sitePath } from "../lib/site"
-import { selectTournamentSpotlight, statusLabel } from "../lib/tournaments"
-import { Badge } from "./Badge"
-import { Dialog } from "./Dialog"
-import { FeaturedTournamentCard } from "./FeaturedTournamentCard"
-import { TournamentTimeline } from "./TournamentTimeline"
+import { selectTournamentSpotlight, statusLabel, tournamentStart } from "../lib/tournaments"
+import { cx } from "../lib/cx"
+import { FeaturedTournament, useTournamentClock } from "./FeaturedTournament"
 
-const tone = {
-  upcoming: "upcoming",
-  ongoing: "live",
-  finished: "finished",
-} as const
+function phaseOf(item: Pick<Tournament, "startDate" | "time">, now: Date) {
+  return now.getTime() >= tournamentStart(item).getTime() ? "ongoing" : "upcoming"
+}
 
 export function UpcomingTournamentsSection({
   tournaments,
@@ -22,95 +17,75 @@ export function UpcomingTournamentsSection({
   tournaments: Tournament[]
   illustrative?: boolean
 }) {
-  const [calendarOpen, setCalendarOpen] = useState(false)
-  const { featured, timeline, calendar } = selectTournamentSpotlight(tournaments)
+  const now = useTournamentClock()
+  const { featured, timeline } = selectTournamentSpotlight(tournaments, now)
 
   return (
-    <section id="giai-dau" data-section className="bg-paper py-12 md:py-[88px] min-[1200px]:py-28">
+    <section id="giai-dau" data-section className="vpf-hub" aria-labelledby="giai-dau-tieu-de">
       <div className="page-wrap">
-        <div className="mb-8 flex flex-col gap-5 md:mb-10 md:flex-row md:items-end md:justify-between">
+        <div className="vpf-hub-head">
           <div className="max-w-2xl">
-            <div className="mb-3 flex flex-wrap items-center gap-3">
-              <p className="flex items-center gap-3 text-[13px] font-medium text-brand-strong">
-                <span className="h-px w-8 bg-brand" aria-hidden />
-                Lịch thi đấu
-              </p>
-              {illustrative ? (
-                <span className="rounded-md bg-white px-2 py-1 text-[12px] font-medium text-muted">
-                  Dữ liệu minh họa
-                </span>
-              ) : null}
-            </div>
-            <h2
-              id="giai-dau-tieu-de"
-              className="text-[2rem] font-bold leading-[1.15] tracking-tight text-ink min-[1200px]:text-[2.75rem]"
-            >
-              Giải đấu sắp diễn ra
-            </h2>
-            <p className="mt-3 max-w-xl text-[15px] leading-relaxed text-muted md:text-base">
-              Theo dõi lịch thi đấu và khám phá những giải đấu Pickleball đáng chú ý.
+            <p className="vpf-hub-eyebrow">UPCOMING TOURNAMENTS</p>
+            <h2 id="giai-dau-tieu-de">Đấu trường Pickleball</h2>
+            <p className="vpf-hub-lead">
+              Khám phá những giải đấu và sự kiện Pickleball sắp diễn ra trên toàn quốc.
             </p>
+            {illustrative ? (
+              <p className="vpf-hub-note">Các giải đang hiển thị là dữ liệu minh họa, không phải lịch chính thức.</p>
+            ) : null}
           </div>
-          <button
-            type="button"
-            className="inline-flex min-h-12 shrink-0 items-center justify-center gap-2 self-start rounded-[10px] border border-line bg-white px-5 text-[15px] font-medium text-ink transition-colors duration-200 hover:border-brand hover:bg-brand md:self-auto"
-            onClick={() => setCalendarOpen(true)}
-          >
+          <a className="vpf-hub-calendar" href={sitePath("/giaidau.html")}>
             Xem lịch giải đấu
             <ArrowUpRight className="size-4" aria-hidden />
-          </button>
+          </a>
         </div>
 
         {featured ? (
-          <div
-            className={
-              timeline.length > 0
-                ? "grid items-stretch gap-6 min-[1200px]:grid-cols-[minmax(0,3fr)_minmax(0,2fr)]"
-                : ""
-            }
-          >
-            <FeaturedTournamentCard tournament={featured} fill={timeline.length > 0} />
-            <TournamentTimeline items={timeline} />
-          </div>
+          <>
+            <FeaturedTournament tournament={featured} variant="home" showCountdown now={now} />
+            {timeline.length > 0 ? (
+              <div>
+                <h3 className="vpf-hub-next">Tiếp theo trên lịch</h3>
+                <ol className="vpf-hub-timeline">
+                  {timeline.map((item) => (
+                    <li key={item.id}>
+                      <TimelineEvent tournament={item} now={now} />
+                    </li>
+                  ))}
+                </ol>
+              </div>
+            ) : null}
+          </>
         ) : (
-          <div className="rounded-2xl border border-dashed border-line bg-white px-6 py-16 text-center">
-            <p className="text-lg font-semibold text-ink">Chưa có giải đấu sắp diễn ra</p>
-            <p className="mx-auto mt-2 max-w-md text-sm leading-relaxed text-muted">
-              Khi lịch được cập nhật, giải gần nhất sẽ xuất hiện tại đây.
-            </p>
+          <div className="vpf-hub-empty">
+            <p>Chưa có giải đấu sắp diễn ra</p>
+            <p>Khi lịch được cập nhật, giải gần nhất sẽ xuất hiện tại đây.</p>
           </div>
         )}
       </div>
-
-      <Dialog open={calendarOpen} title="Lịch giải đấu" onClose={() => setCalendarOpen(false)}>
-        {illustrative ? (
-          <p className="mb-4 text-sm leading-relaxed text-muted">
-            Lịch dưới đây là dữ liệu minh họa, không phải lịch thi đấu chính thức.
-          </p>
-        ) : null}
-        <ul className="divide-y divide-line">
-          {calendar.map((item) => {
-            const date = formatEventDate(item.startDate, item.endDate)
-            return (
-              <li key={item.id}>
-                <a
-                  href={sitePath(item.detailUrl)}
-                  className="flex w-full items-start justify-between gap-4 py-4 text-left"
-                  onClick={() => setCalendarOpen(false)}
-                >
-                  <span>
-                    <span className="block text-[12px] font-medium text-muted">
-                      {date.rangeLabel} · {item.location}
-                    </span>
-                    <span className="mt-1 block text-base font-semibold leading-snug text-ink">{item.name}</span>
-                  </span>
-                  <Badge tone={tone[item.status]}>{statusLabel[item.status]}</Badge>
-                </a>
-              </li>
-            )
-          })}
-        </ul>
-      </Dialog>
     </section>
+  )
+}
+
+function TimelineEvent({ tournament, now }: { tournament: TournamentView; now: Date }) {
+  const date = formatEventDate(tournament.startDate, tournament.endDate)
+  const phase = phaseOf(tournament, now)
+
+  return (
+    <a className={cx("vpf-hub-event", phase === "ongoing" && "is-live")} href={sitePath(tournament.detailUrl)}>
+      <span className="vpf-hub-date">
+        <span className="vpf-hub-day">{date.day}</span>
+        <span className="vpf-hub-month">{date.month}</span>
+        <span className="vpf-hub-year">{date.year}</span>
+      </span>
+      <span className="vpf-hub-event-copy">
+        <span className="vpf-hub-event-name">{tournament.name}</span>
+        <span className="vpf-hub-event-city">{tournament.location}</span>
+        <span className={cx("vpf-hub-event-status", phase === "ongoing" ? "is-live" : "is-upcoming")}>
+          {statusLabel[phase]}
+        </span>
+      </span>
+      <ArrowRight className="vpf-hub-arrow size-4" aria-hidden />
+    </a>
   )
 }

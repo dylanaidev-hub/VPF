@@ -51,6 +51,9 @@ export type NewsArticle = {
 
 export type TournamentStatus = "upcoming" | "ongoing" | "finished"
 
+/** Phạm vi giải — WordPress: taxonomy hoặc ACF select. */
+export type TournamentScope = "domestic" | "international"
+
 /** Nội dung thi đấu. Khi chuyển WordPress: nhóm field của CPT `tournament`. */
 export type TournamentCategory = {
   id: string
@@ -105,9 +108,14 @@ export type Tournament = {
   coverImageAlt: string
   startDate: string
   endDate: string
+  /** Tỉnh/thành (trong nước) hoặc thành phố (quốc tế). */
   location: string
   venue: string
   organizer: string
+  /** Trong nước / quốc tế — quản lý qua WordPress Admin. */
+  scope: TournamentScope
+  /** Quốc gia khi scope = international. */
+  country?: string
   categories: TournamentCategory[]
   schedule: TournamentScheduleItem[]
   results: TournamentResult[]
@@ -115,6 +123,9 @@ export type Tournament = {
     summary: string
     documents: TournamentDocument[]
   }
+  /** Nhà vô địch minh họa khi giải đã kết thúc và có dữ liệu. */
+  champion?: string
+  livestreamUrl?: string
   isFeatured: boolean
   illustrative: boolean
   time: string

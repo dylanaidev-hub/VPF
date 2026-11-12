@@ -1,0 +1,2696 @@
+.fed-kicker {
+  margin: 0 0 0.75rem;
+  color: var(--vpf-red-700);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.fed-kicker-light {
+  color: var(--vpf-gold-300);
+}
+
+.fed-band h2,
+.fed-section h2,
+.fed-charter h2,
+.fed-contact h2,
+.fed-vision h2,
+.fed-vision h3 {
+  margin: 0;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.12;
+}
+
+.fed-band h2,
+.fed-section h2,
+.fed-contact h2 {
+  font-size: clamp(2rem, 4vw, 2.75rem);
+  color: var(--vpf-ink);
+}
+
+.fed-lead,
+.fed-charter p {
+  margin: 1rem 0 0;
+  color: var(--vpf-ink-soft);
+  font-size: 1.05rem;
+  line-height: 1.7;
+}
+
+.fed-note {
+  margin: 0.85rem 0 0;
+  color: var(--vpf-ink-soft);
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.fed-section,
+.fed-contact {
+  padding: 4.5rem 0;
+}
+
+.fed-band {
+  padding: 72px 0;
+}
+
+@media (min-width: 768px) {
+  .fed-band {
+    padding-top: 100px;
+    padding-bottom: 100px;
+  }
+}
+
+@media (min-width: 1025px) {
+  .fed-band {
+    padding-top: 140px;
+    padding-bottom: 140px;
+  }
+}
+
+.fed-band,
+.fed-contact {
+  background: var(--vpf-canvas);
+}
+
+.fed-reveal {
+  transition: opacity 700ms ease, translate 700ms ease;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .fed-reveal:not(.is-in) {
+    opacity: 0;
+    translate: 0 18px;
+  }
+}
+
+.fed-contact-grid,
+.fed-charter-grid,
+.fed-mandate {
+  display: grid;
+  gap: 2rem;
+}
+
+.fed-lead-photo img,
+.fed-lead-roster-photo img,
+.fed-modal-photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.fed-brand {
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  background: var(--vpf-red-500);
+  color: var(--vpf-white);
+  padding: 2.75rem 0;
+}
+
+.fed-brand-grid {
+  display: grid;
+  gap: 2rem;
+  width: 100%;
+  align-items: center;
+}
+
+.fed-brand-kicker {
+  margin: 0 0 0.7rem;
+  color: var(--vpf-gold-100);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.fed-brand h1 {
+  margin: 0;
+  max-width: 14ch;
+  color: var(--vpf-white);
+  font-size: clamp(2rem, 4vw, 3.15rem);
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  line-height: 1.08;
+}
+
+.fed-brand-copy p {
+  max-width: 38rem;
+  margin: 1rem 0 0;
+  color: rgb(255 255 255 / 84%);
+  font-size: 1.02rem;
+  line-height: 1.65;
+}
+
+.fed-brand-copy span {
+  color: var(--vpf-gold-100);
+  font-weight: 700;
+}
+
+.fed-brand-cta {
+  display: inline-flex;
+  gap: 0.4rem;
+  align-items: center;
+  min-height: 2.85rem;
+  margin-top: 1.35rem;
+  padding: 0 1.05rem;
+  border-radius: 10px;
+  background: var(--vpf-gold-500);
+  color: var(--vpf-ink);
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.fed-brand-cta svg {
+  width: 1.05rem;
+  height: 1.05rem;
+}
+
+.fed-brand-cta:hover {
+  background: var(--vpf-gold-300);
+}
+
+.fed-brand-stage {
+  position: relative;
+  display: grid;
+  width: min(100%, 22rem);
+  margin-inline: auto;
+  aspect-ratio: 1;
+  place-items: center;
+}
+
+.fed-brand-stage::before,
+.fed-brand-stage::after {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.fed-brand-stage::before {
+  inset: 22%;
+  background: radial-gradient(circle, rgb(232 148 60 / 0.28), transparent 70%);
+  opacity: 0.45;
+  scale: 0.92;
+  transition: opacity 800ms ease, scale 1100ms ease-in-out;
+}
+
+.fed-brand-stage::after {
+  inset: 6%;
+  background: radial-gradient(circle, rgb(248 231 207 / 0.28) 0%, transparent 58%);
+  opacity: 0;
+  scale: 0.4;
+  transition: opacity 700ms ease, scale 1100ms ease-in-out;
+}
+
+.fed-brand-star {
+  position: absolute;
+  z-index: 0;
+  width: 84%;
+  height: auto;
+  pointer-events: none;
+  overflow: visible;
+}
+
+.fed-star-layer,
+.fed-star-pulse {
+  transform-box: view-box;
+  transform-origin: center center;
+}
+
+.fed-star-layer {
+  transition: scale 1.05s ease-in-out;
+  transition-delay: calc(var(--i) * 90ms);
+}
+
+.fed-brand-logo {
+  position: relative;
+  z-index: 1;
+  width: min(62%, 17.5rem);
+  height: auto;
+}
+
+@media (min-width: 768px) {
+  .fed-brand {
+    padding: 2.25rem 0;
+  }
+
+  .fed-brand-grid {
+    grid-template-columns: minmax(0, 1.15fr) minmax(16rem, 0.85fr);
+    gap: 1.5rem;
+  }
+
+  .fed-brand-stage {
+    width: min(100%, 26rem);
+  }
+}
+
+@media (min-width: 1100px) {
+  .fed-brand {
+    height: 560px;
+    padding: 1.25rem 0;
+  }
+
+  .fed-brand-stage {
+    width: min(100%, 32rem);
+  }
+
+  .fed-brand-logo {
+    width: min(58%, 18rem);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .fed-brand .fed-brand-copy {
+    opacity: 0;
+    translate: 0 16px;
+    transition: opacity 700ms ease, translate 700ms ease;
+  }
+
+  .fed-brand.is-in .fed-brand-copy {
+    opacity: 1;
+    translate: 0;
+  }
+
+  .fed-brand.is-hot .fed-star-layer {
+    scale: var(--swell);
+  }
+
+  .fed-brand.is-hot .fed-star-pulse {
+    animation: fed-star-breathe 2.8s ease-in-out infinite;
+    animation-delay: calc(var(--i) * 90ms);
+  }
+
+  .fed-brand.is-hot .fed-brand-stage::before {
+    opacity: 0.85;
+    scale: 1.12;
+    animation: fed-glow-breathe 2.8s ease-in-out infinite;
+  }
+
+  .fed-brand.is-hot .fed-brand-stage::after {
+    animation: fed-star-wave 2.8s ease-in-out infinite;
+  }
+}
+
+@keyframes fed-star-breathe {
+  0%,
+  100% {
+    scale: 1;
+  }
+  50% {
+    scale: 1.028;
+  }
+}
+
+@keyframes fed-glow-breathe {
+  0%,
+  100% {
+    opacity: 0.5;
+    scale: 1;
+  }
+  50% {
+    opacity: 0.9;
+    scale: 1.16;
+  }
+}
+
+@keyframes fed-star-wave {
+  0% {
+    opacity: 0.12;
+    scale: 0.42;
+  }
+  68% {
+    opacity: 0.5;
+    scale: 1.18;
+  }
+  100% {
+    opacity: 0;
+    scale: 1.32;
+  }
+}
+
+.fed-track {
+  display: grid;
+  gap: 1.5rem;
+  margin: 2rem 0 0;
+  padding: 0 0 0 1.4rem;
+  list-style: none;
+}
+
+.fed-track li {
+  position: relative;
+  padding-top: 0.15rem;
+}
+
+.fed-track li::before {
+  content: "";
+  position: absolute;
+  top: 0.45rem;
+  bottom: -1.5rem;
+  left: -1.05rem;
+  width: 2px;
+  background: var(--vpf-line);
+}
+
+.fed-track li:last-child::before {
+  bottom: auto;
+  height: 0.9rem;
+}
+
+.fed-node {
+  position: absolute;
+  top: 0.2rem;
+  left: -1.4rem;
+  z-index: 1;
+  width: 14px;
+  height: 14px;
+  border: 3px solid var(--vpf-gold-500);
+  border-radius: 50%;
+  background: var(--vpf-white);
+}
+
+.fed-track time {
+  color: var(--vpf-red-700);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.fed-track h3,
+.fed-mandate h3 {
+  margin: 0.35rem 0 0;
+  color: var(--vpf-ink);
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+.fed-track p {
+  margin: 0.4rem 0 0;
+  color: var(--vpf-ink-soft);
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.fed-journey {
+  position: relative;
+}
+
+.fed-track li {
+  cursor: pointer;
+}
+
+.fed-track li:focus-visible {
+  outline: 2px solid var(--vpf-gold-500);
+  outline-offset: 4px;
+  border-radius: 8px;
+}
+
+.fed-track li.is-hot time {
+  color: var(--vpf-red-500);
+}
+
+.fed-track li.is-hot h3 {
+  color: var(--vpf-red-700);
+}
+
+.fed-track li.is-landed .fed-node {
+  box-shadow:
+    0 0 0 5px rgba(232, 148, 60, 0.32),
+    0 0 14px rgba(232, 148, 60, 0.62);
+}
+
+.fed-ball {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 3;
+  width: 26px;
+  height: 26px;
+  transform-origin: center center;
+  pointer-events: none;
+  opacity: 0;
+  filter: drop-shadow(0 1px 1px rgba(64, 64, 64, 0.35));
+}
+
+.fed-ball img {
+  display: block;
+  width: 26px;
+  height: 26px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .fed-node,
+  .fed-track time,
+  .fed-track h3 {
+    transition: box-shadow 280ms ease, color 240ms ease;
+  }
+}
+
+.fed-decree {
+  padding-top: 64px;
+  padding-bottom: 64px;
+  background: var(--vpf-white);
+}
+
+.fed-decree-grid {
+  display: grid;
+  gap: 2rem;
+  align-items: center;
+}
+
+.fed-decree-stage {
+  display: flex;
+  justify-content: center;
+  padding: 1.25rem 0.5rem;
+}
+
+.fed-decree-paper {
+  position: relative;
+  width: min(68%, 220px);
+  aspect-ratio: 1 / 1.414;
+  padding: 1.35rem 1.15rem 1.1rem;
+  border-radius: 2px;
+  background: var(--vpf-white);
+  box-shadow:
+    0 0 0 1px rgb(24 35 46 / 6%),
+    0 14px 32px rgb(24 35 46 / 8%);
+  opacity: 0;
+  transform: translateY(24px) rotate(-3deg);
+  transform-origin: center center;
+  transition:
+    opacity 600ms ease,
+    transform 600ms ease,
+    box-shadow 600ms ease;
+}
+
+.fed-decree-paper::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 4px;
+  background: var(--vpf-logo-red);
+}
+
+.fed-decree.is-in .fed-decree-paper {
+  opacity: 1;
+  transform: none;
+}
+
+.fed-decree-dochead {
+  display: flex;
+  gap: 0.55rem;
+  align-items: center;
+  color: var(--vpf-logo-red);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+}
+
+.fed-decree-mark {
+  display: grid;
+  width: 1.75rem;
+  height: 1.75rem;
+  place-items: center;
+  border-radius: 6px;
+  background: var(--vpf-logo-red);
+  color: var(--vpf-white);
+}
+
+.fed-decree-mark svg {
+  width: 0.95rem;
+  height: 0.95rem;
+}
+
+.fed-decree-paper > p {
+  margin: 1rem 0 0;
+  color: #18232e;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  line-height: 1.35;
+  text-transform: uppercase;
+}
+
+.fed-decree-lines {
+  display: grid;
+  gap: 0.55rem;
+  margin-top: 1.15rem;
+}
+
+.fed-decree-lines span {
+  display: block;
+  height: 6px;
+  border-radius: 99px;
+  background: var(--vpf-canvas);
+}
+
+.fed-decree-lines span:nth-child(2) {
+  width: 92%;
+}
+
+.fed-decree-lines span:nth-child(4) {
+  width: 74%;
+}
+
+.fed-decree-lines span:nth-child(5) {
+  width: 58%;
+}
+
+.fed-decree-stamp {
+  position: absolute;
+  right: 0.95rem;
+  bottom: 1rem;
+  display: grid;
+  width: 4.25rem;
+  height: 4.25rem;
+  place-items: center;
+  border: 1.5px solid var(--vpf-logo-orange);
+  border-radius: 50%;
+  color: #18232e;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transform: rotate(-12deg);
+}
+
+.fed-decree-stamp::before {
+  content: "";
+  position: absolute;
+  inset: 4px;
+  border: 1px dashed var(--vpf-logo-orange);
+  border-radius: 50%;
+}
+
+.fed-decree-copy > * {
+  opacity: 0;
+  transform: translateY(16px);
+  transition:
+    opacity 560ms ease,
+    transform 560ms ease;
+}
+
+.fed-decree.is-in .fed-decree-copy > * {
+  opacity: 1;
+  transform: none;
+}
+
+.fed-decree.is-in .fed-decree-copy > *:nth-child(1) {
+  transition-delay: 80ms;
+}
+
+.fed-decree.is-in .fed-decree-copy > *:nth-child(2) {
+  transition-delay: 150ms;
+}
+
+.fed-decree.is-in .fed-decree-copy > *:nth-child(3) {
+  transition-delay: 220ms;
+}
+
+.fed-decree.is-in .fed-decree-copy > *:nth-child(4) {
+  transition-delay: 290ms;
+}
+
+.fed-decree.is-in .fed-decree-copy > *:nth-child(5) {
+  transition-delay: 360ms;
+}
+
+.fed-decree-kicker {
+  margin: 0;
+  color: var(--vpf-logo-red);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.fed-decree-lead {
+  max-width: 38rem;
+  margin: 1rem 0 0;
+  color: var(--vpf-ink-soft);
+  font-size: 1.02rem;
+  line-height: 1.65;
+}
+
+.fed-decree-meta {
+  display: grid;
+  gap: 1.15rem;
+  margin: 1.75rem 0 0;
+}
+
+.fed-decree-meta dt,
+.fed-charter dt,
+.fed-contact-list span span {
+  color: var(--vpf-ink-soft);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.fed-decree-meta dd,
+.fed-charter dd {
+  margin: 0.2rem 0 0;
+  color: var(--vpf-ink);
+  font-weight: 600;
+}
+
+.fed-charter dl {
+  display: grid;
+  gap: 0.85rem;
+  margin: 1rem 0 0;
+}
+
+.fed-decree-status {
+  margin: 1.5rem 0 0;
+  color: var(--vpf-red-700);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.fed-decree .fed-button {
+  margin-top: 1.5rem;
+}
+
+.fed-decree .fed-button:focus-visible {
+  outline: 2px solid var(--vpf-logo-red);
+  outline-offset: 3px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .fed-decree.is-in .fed-decree-stage:hover .fed-decree-paper {
+    box-shadow:
+      0 0 0 1px rgb(24 35 46 / 8%),
+      0 22px 42px rgb(24 35 46 / 14%);
+    transform: translateY(-8px) scale(1.02);
+  }
+}
+
+@media (min-width: 768px) {
+  .fed-decree {
+    padding-top: 88px;
+    padding-bottom: 88px;
+  }
+
+  .fed-decree-grid {
+    grid-template-columns: minmax(11rem, 0.82fr) minmax(0, 1.18fr);
+    gap: 2rem;
+  }
+
+  .fed-decree-paper {
+    width: min(100%, 250px);
+  }
+
+  .fed-decree-meta {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem 1.25rem;
+  }
+}
+
+@media (min-width: 1025px) {
+  .fed-decree {
+    padding-top: 120px;
+    padding-bottom: 120px;
+  }
+
+  .fed-decree-grid {
+    grid-template-columns: 45fr 55fr;
+    gap: 4.5rem;
+  }
+
+  .fed-decree-paper {
+    width: min(100%, 340px);
+  }
+}
+
+.fed-button {
+  display: inline-flex;
+  min-height: 3rem;
+  align-items: center;
+  justify-content: center;
+  padding: 0 1.15rem;
+  border-radius: 10px;
+  background: var(--vpf-gold-500);
+  color: var(--vpf-ink);
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.fed-button:hover {
+  background: var(--vpf-gold-300);
+}
+
+.fed-button-gold {
+  background: var(--vpf-gold-500);
+  color: var(--vpf-ink);
+}
+
+.fed-button-gold:hover {
+  background: var(--vpf-gold-300);
+}
+
+.fed-vision {
+  padding: 72px 0 64px;
+  overflow-x: clip;
+  background: #18232e;
+  color: white;
+}
+
+.fed-constellation-head {
+  max-width: 44rem;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.fed-constellation-head > * {
+  opacity: 0;
+  transform: translateY(14px);
+  transition:
+    opacity 500ms ease,
+    transform 500ms ease;
+}
+
+.fed-vision.is-in .fed-constellation-head > * {
+  opacity: 1;
+  transform: none;
+}
+
+.fed-vision.is-in .fed-constellation-head > *:nth-child(2) {
+  transition-delay: 70ms;
+}
+
+.fed-vision.is-in .fed-constellation-head > *:nth-child(3) {
+  transition-delay: 140ms;
+}
+
+.fed-constellation-kicker {
+  margin: 0;
+  color: var(--vpf-gold-300);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.fed-constellation-head h2 {
+  margin-top: 0.7rem;
+  color: white;
+  font-size: clamp(2.15rem, 5vw, 3.45rem);
+}
+
+.fed-constellation-head > p:last-child {
+  margin: 0.85rem 0 0;
+  color: rgb(255 255 255 / 72%);
+  font-size: 1.05rem;
+  line-height: 1.6;
+}
+
+.fed-constellation {
+  --star-grow: 1;
+  margin-top: 5rem;
+  overflow: visible;
+}
+
+.fed-constellation-stage {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  margin-inline: auto;
+  padding-bottom: 3.75rem;
+  overflow: visible;
+}
+
+.fed-constellation-frame {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 17.5rem);
+  height: auto;
+  margin-inline: auto;
+  aspect-ratio: 1;
+  overflow: visible;
+}
+
+.fed-constellation-visual {
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  transform: translate(-50%, -50%);
+  transform-origin: center center;
+  pointer-events: none;
+  transition:
+    width 420ms cubic-bezier(0.22, 1, 0.36, 1),
+    height 420ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.fed-constellation.is-story .fed-constellation-visual {
+  width: calc(var(--star-grow) * 100%);
+  height: calc(var(--star-grow) * 100%);
+}
+
+.fed-constellation.is-shrink .fed-constellation-visual {
+  width: 100%;
+  height: 100%;
+}
+
+.fed-constellation-svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.fed-constellation-layer {
+  transform-box: view-box;
+  transform-origin: center;
+  opacity: 0;
+  scale: 0.9;
+  transition:
+    opacity 640ms ease,
+    scale 640ms ease;
+  transition-delay: calc(160ms + var(--i) * 80ms);
+}
+
+.fed-vision.is-in .fed-constellation-layer {
+  opacity: 1;
+  scale: 1;
+}
+
+.fed-constellation-layer path {
+  fill: none;
+  stroke: var(--vpf-gold-500);
+  stroke-width: 1.85;
+  stroke-linejoin: miter;
+  stroke-miterlimit: 8;
+  stroke-opacity: var(--ink);
+  vector-effect: non-scaling-stroke;
+  transition: stroke 320ms ease;
+}
+
+.fed-vision.is-hot .fed-constellation-layer path {
+  stroke: var(--vpf-gold-300);
+}
+
+.fed-constellation-logo {
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  left: 50%;
+  width: 30%;
+  height: auto;
+  opacity: 0;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  transition: opacity 600ms ease 420ms;
+}
+
+.fed-vision.is-in .fed-constellation-logo {
+  opacity: 1;
+}
+
+.fed-constellation-pin {
+  position: absolute;
+  z-index: 2;
+  display: grid;
+  width: 2rem;
+  height: 2rem;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: white;
+  left: var(--tip-x);
+  top: var(--tip-y);
+  opacity: 0;
+  transform: translate(-50%, -50%) translate(calc(var(--ix) * -1px), calc(var(--iy) * -1px));
+  transition:
+    opacity 500ms ease,
+    transform 500ms ease;
+  transition-delay: calc(760ms + var(--i) * 120ms);
+  cursor: pointer;
+}
+
+.fed-vision.is-in .fed-constellation-pin {
+  opacity: 1;
+  transform: translate(-50%, -50%);
+}
+
+.fed-constellation-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--vpf-gold-500);
+  box-shadow: 0 0 0 0 rgb(247 148 29 / 0);
+  transition:
+    background 280ms ease,
+    box-shadow 280ms ease;
+}
+
+.fed-vision.is-in .fed-constellation-dot {
+  animation: fed-tip-arrive 700ms ease calc(760ms + var(--i) * 120ms) both;
+}
+
+.fed-constellation-pin.is-active .fed-constellation-dot {
+  background: var(--vpf-logo-orange);
+  animation: fed-tip-pulse 1.6s ease-in-out infinite;
+}
+
+.fed-constellation-word {
+  display: inline-block;
+}
+
+.fed-constellation-label {
+  position: absolute;
+  width: max-content;
+  max-width: 12rem;
+  color: white;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.3;
+  white-space: nowrap;
+  transition: color 280ms ease;
+}
+
+.fed-constellation-pin.is-active .fed-constellation-label {
+  color: var(--vpf-logo-orange);
+}
+
+.fed-constellation-pin[data-place="top"] .fed-constellation-label {
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+}
+
+.fed-constellation-pin[data-place="right"] .fed-constellation-label {
+  top: 50%;
+  left: calc(100% + 10px);
+  transform: translateY(-50%);
+}
+
+.fed-constellation-pin[data-place="down-right"] .fed-constellation-label {
+  top: calc(100% + 6px);
+  left: calc(100% - 4px);
+}
+
+.fed-constellation-pin[data-place="down-left"] .fed-constellation-label {
+  top: calc(100% + 6px);
+  right: calc(100% - 4px);
+  text-align: right;
+}
+
+.fed-constellation-pin[data-place="left"] .fed-constellation-label {
+  top: 50%;
+  right: calc(100% + 10px);
+  transform: translateY(-50%);
+  text-align: right;
+}
+
+.fed-constellation-pin:focus-visible {
+  outline: none;
+}
+
+.fed-constellation-pin:focus-visible .fed-constellation-label {
+  outline: 2px solid var(--vpf-gold-300);
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+.fed-constellation.is-story .fed-constellation-pin:focus-visible .fed-constellation-label {
+  outline: none;
+}
+
+.fed-constellation-layer:last-child {
+  filter:
+    drop-shadow(0 0 0 rgb(232 148 60 / 0%))
+    drop-shadow(0 0 0 rgb(247 148 29 / 0%));
+}
+
+.fed-constellation.is-story .fed-constellation-layer:not(:last-child) {
+  opacity: 0;
+  transition: opacity 420ms cubic-bezier(0.22, 1, 0.36, 1) 40ms;
+}
+
+.fed-constellation.is-story .fed-constellation-layer:last-child {
+  filter:
+    drop-shadow(0 0 6px rgb(232 148 60 / 58%))
+    drop-shadow(0 0 14px rgb(247 148 29 / 34%));
+  transition: filter 420ms cubic-bezier(0.22, 1, 0.36, 1) 80ms;
+}
+
+.fed-constellation.is-story .fed-constellation-layer:last-child path {
+  stroke: var(--vpf-gold-300);
+}
+
+.fed-star-media {
+  opacity: 0;
+  transition: opacity 400ms cubic-bezier(0.22, 1, 0.36, 1) 200ms;
+}
+
+.fed-constellation.is-story .fed-star-media {
+  opacity: 1;
+}
+
+.fed-star-zoom {
+  transform-box: view-box;
+  transform-origin: center;
+  scale: 1.08;
+  transition: scale 640ms cubic-bezier(0.22, 1, 0.36, 1) 180ms;
+}
+
+.fed-constellation.is-story .fed-star-zoom {
+  scale: 1;
+}
+
+.fed-star-shot {
+  opacity: 0;
+  transition: opacity 280ms ease;
+}
+
+.fed-star-shot.is-on {
+  opacity: 1;
+}
+
+.fed-star-shade {
+  fill: #18232e;
+  opacity: 0.6;
+}
+
+.fed-constellation.is-story .fed-constellation-logo,
+.fed-constellation.is-return .fed-constellation-logo,
+.fed-constellation.is-shrink .fed-constellation-logo {
+  opacity: 0;
+  scale: 0.95;
+  transition:
+    opacity 300ms cubic-bezier(0.22, 1, 0.36, 1),
+    scale 300ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.fed-constellation.is-tips .fed-constellation-logo {
+  opacity: 1;
+  scale: 1;
+  transition:
+    opacity 400ms cubic-bezier(0.22, 1, 0.36, 1) 160ms,
+    scale 400ms cubic-bezier(0.22, 1, 0.36, 1) 160ms;
+}
+
+.fed-constellation.is-played .fed-constellation-logo {
+  transition: opacity 280ms ease;
+}
+
+.fed-constellation.is-played .fed-constellation-pin {
+  transition-delay: 0ms;
+}
+
+.fed-constellation.is-story .fed-constellation-pin,
+.fed-constellation.is-return .fed-constellation-pin,
+.fed-constellation.is-shrink .fed-constellation-pin {
+  opacity: 0;
+  scale: 0.95;
+  pointer-events: none;
+  transition:
+    opacity 300ms cubic-bezier(0.22, 1, 0.36, 1),
+    scale 300ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: 0ms;
+}
+
+.fed-constellation.is-tips .fed-constellation-pin {
+  opacity: 1;
+  scale: 1;
+  pointer-events: auto;
+  transition:
+    opacity 340ms cubic-bezier(0.22, 1, 0.36, 1),
+    scale 340ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: calc(var(--i) * 80ms);
+}
+
+.fed-constellation.is-tips .fed-constellation-label {
+  animation: fed-word-reveal 360ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc(var(--i) * 80ms);
+}
+
+.fed-constellation.is-shrink .fed-constellation-layer {
+  transition:
+    opacity 360ms cubic-bezier(0.22, 1, 0.36, 1),
+    filter 360ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: 0ms;
+}
+
+.fed-constellation.is-return .fed-star-media,
+.fed-constellation.is-shrink .fed-star-media {
+  opacity: 0;
+  transition-delay: 0ms;
+}
+
+.fed-constellation.is-story .fed-constellation-list,
+.fed-constellation.is-return .fed-constellation-list,
+.fed-constellation.is-shrink .fed-constellation-list {
+  pointer-events: none;
+}
+
+.fed-constellation.is-story .fed-constellation-list button,
+.fed-constellation.is-return .fed-constellation-list button,
+.fed-constellation.is-shrink .fed-constellation-list button {
+  opacity: 0;
+  scale: 0.95;
+  transition:
+    opacity 300ms cubic-bezier(0.22, 1, 0.36, 1),
+    scale 300ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.fed-constellation.is-tips .fed-constellation-list {
+  pointer-events: auto;
+}
+
+.fed-constellation.is-tips .fed-constellation-list button {
+  opacity: 1;
+  scale: 1;
+  animation: fed-word-reveal 360ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc(var(--i) * 80ms);
+}
+
+.fed-star-readout {
+  position: absolute;
+  z-index: 5;
+  top: 50%;
+  left: 50%;
+  width: min(16.25rem, 78%);
+  transform: translate(-50%, -50%);
+  text-align: center;
+  pointer-events: none;
+}
+
+.fed-star-title {
+  margin: 0;
+  color: white;
+  font-size: 1.375rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.2;
+  opacity: 0;
+  clip-path: inset(50% 50% 50% 50%);
+  scale: 0.96;
+}
+
+.fed-constellation.is-open .fed-star-title {
+  opacity: 1;
+  clip-path: inset(0 0 0 0);
+  scale: 1;
+  transition:
+    opacity 460ms cubic-bezier(0.22, 1, 0.36, 1),
+    clip-path 460ms cubic-bezier(0.22, 1, 0.36, 1),
+    scale 460ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.fed-star-blurb {
+  margin: 0.55rem 0 0;
+  color: rgb(255 255 255 / 92%);
+  font-size: 0.875rem;
+  line-height: 1.5;
+  opacity: 0;
+  clip-path: inset(50% 50% 50% 50%);
+  scale: 0.98;
+}
+
+.fed-constellation.is-open .fed-star-blurb {
+  opacity: 1;
+  clip-path: inset(0 0 0 0);
+  scale: 1;
+  transition:
+    opacity 350ms cubic-bezier(0.22, 1, 0.36, 1) 420ms,
+    clip-path 350ms cubic-bezier(0.22, 1, 0.36, 1) 420ms,
+    scale 350ms cubic-bezier(0.22, 1, 0.36, 1) 420ms;
+}
+
+.fed-constellation.is-return .fed-star-title,
+.fed-constellation.is-return .fed-star-blurb,
+.fed-constellation.is-return .fed-star-note {
+  opacity: 0;
+  clip-path: inset(50% 50% 50% 50%);
+  scale: 0.96;
+  transition:
+    opacity 360ms cubic-bezier(0.22, 1, 0.36, 1),
+    clip-path 360ms cubic-bezier(0.22, 1, 0.36, 1),
+    scale 360ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: 0ms;
+}
+
+.fed-star-note {
+  margin: 0.55rem 0 0;
+  color: rgb(255 255 255 / 68%);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  opacity: 0;
+}
+
+.fed-constellation.is-open .fed-star-note {
+  opacity: 1;
+  transition: opacity 280ms ease 90ms;
+}
+
+.fed-star-title.is-swap,
+.fed-star-blurb.is-swap {
+  animation: fed-star-in 280ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.fed-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.fed-star-tools {
+  position: absolute;
+  z-index: 6;
+  left: 50%;
+  bottom: 0;
+  display: flex;
+  gap: 0.7rem;
+  opacity: 0;
+  transform: translate(-50%, 10px);
+  pointer-events: none;
+  transition:
+    opacity 280ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 280ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.fed-constellation.is-story .fed-star-tools {
+  opacity: 1;
+  transform: translate(-50%, 0);
+  pointer-events: auto;
+  transition-delay: 240ms;
+}
+
+.fed-constellation.is-return .fed-star-tools {
+  opacity: 0;
+  transform: translate(-50%, 10px);
+  pointer-events: none;
+  transition-delay: 0ms;
+}
+
+.fed-star-tools button {
+  display: grid;
+  width: 40px;
+  height: 40px;
+  place-items: center;
+  padding: 0;
+  border: 1px solid rgb(255 255 255 / 42%);
+  border-radius: 999px;
+  background: transparent;
+  color: white;
+  cursor: pointer;
+  transition:
+    background 200ms ease,
+    border-color 200ms ease,
+    color 200ms ease;
+}
+
+.fed-star-tools button:hover:not(:disabled) {
+  border-color: var(--vpf-logo-orange);
+  background: var(--vpf-logo-orange);
+  color: white;
+}
+
+.fed-star-tools button:focus-visible {
+  outline: 2px solid var(--vpf-gold-300);
+  outline-offset: 3px;
+}
+
+.fed-star-tools button:disabled {
+  opacity: 0.38;
+  cursor: default;
+}
+
+@keyframes fed-star-in {
+  from {
+    opacity: 0;
+    clip-path: inset(50% 50% 50% 50%);
+    scale: 0.96;
+  }
+  to {
+    opacity: 1;
+    clip-path: inset(0 0 0 0);
+    scale: 1;
+  }
+}
+
+@keyframes fed-word-reveal {
+  from {
+    opacity: 0;
+    clip-path: inset(50% 50% 50% 50%);
+    scale: 0.95;
+  }
+  to {
+    opacity: 1;
+    clip-path: inset(0 0 0 0);
+    scale: 1;
+  }
+}
+
+.fed-constellation-list {
+  display: grid;
+  gap: 0.35rem;
+  margin: 1.35rem 0 0;
+  padding: 0;
+  list-style: none;
+  transition: opacity 180ms ease;
+}
+
+.fed-constellation-list button {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  width: 100%;
+  padding: 0.4rem 0;
+  border: 0;
+  background: transparent;
+  color: white;
+  font: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+}
+
+.fed-constellation-list button span {
+  color: var(--vpf-gold-500);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.fed-constellation-list button.is-active,
+.fed-constellation-list button.is-active span {
+  color: var(--vpf-logo-orange);
+}
+
+.fed-constellation-list button:focus-visible {
+  outline: 2px solid var(--vpf-gold-300);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+.fed-story {
+  max-width: 980px;
+  margin: 0.35rem auto 0;
+}
+
+.fed-story-stem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 44px;
+}
+
+.fed-story-stem span {
+  width: 1px;
+  flex: 1;
+  background: var(--vpf-logo-orange);
+  opacity: 0.8;
+  transform: scaleY(0);
+  transform-origin: top center;
+  transition: transform 560ms ease;
+}
+
+.fed-story-stem i {
+  display: block;
+  width: 7px;
+  height: 7px;
+  margin-top: -3px;
+  border-radius: 50%;
+  background: var(--vpf-logo-orange);
+  opacity: 0;
+  transition: opacity 400ms ease 240ms;
+}
+
+.fed-story.is-in .fed-story-stem span {
+  transform: scaleY(1);
+}
+
+.fed-story.is-in .fed-story-stem i {
+  opacity: 1;
+}
+
+.fed-story-grid {
+  display: grid;
+  gap: 2.25rem;
+  margin-top: 0.85rem;
+}
+
+.fed-story-grid article {
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity 560ms ease,
+    transform 560ms ease;
+}
+
+.fed-story.is-in .fed-story-grid article {
+  opacity: 1;
+  transform: none;
+}
+
+.fed-story.is-in .fed-story-grid article:nth-child(2) {
+  transition-delay: 120ms;
+}
+
+.fed-story-index {
+  margin: 0;
+  color: var(--vpf-logo-orange);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+}
+
+.fed-story-grid .fed-constellation-kicker {
+  margin-top: 0.45rem;
+}
+
+.fed-story-grid h3 {
+  margin: 0.4rem 0 0;
+  color: white;
+  font-size: clamp(1.75rem, 2.5vw, 2.125rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+}
+
+.fed-story-grid p:last-child {
+  margin: 0.7rem 0 0;
+  color: rgb(255 255 255 / 76%);
+  font-size: clamp(15px, 1.05vw, 17px);
+  line-height: 1.6;
+}
+
+@keyframes fed-tip-arrive {
+  0% {
+    box-shadow: 0 0 0 0 rgb(247 148 29 / 0);
+  }
+  45% {
+    box-shadow:
+      0 0 0 6px rgb(247 148 29 / 24%),
+      0 0 14px rgb(247 148 29 / 55%);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgb(247 148 29 / 0);
+  }
+}
+
+@keyframes fed-tip-pulse {
+  0%,
+  100% {
+    box-shadow:
+      0 0 0 5px rgb(247 148 29 / 22%),
+      0 0 12px rgb(247 148 29 / 50%);
+  }
+  50% {
+    box-shadow:
+      0 0 0 9px rgb(247 148 29 / 8%),
+      0 0 16px rgb(247 148 29 / 70%);
+  }
+}
+
+@media (max-width: 767px) {
+  .fed-constellation {
+    --star-grow: 1.08;
+    margin-top: 4.25rem;
+  }
+
+  .fed-constellation-stage {
+    padding-bottom: 3.5rem;
+  }
+
+  .fed-constellation-frame {
+    width: min(78%, 16.5rem);
+  }
+
+  .fed-constellation-pin .fed-constellation-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+  }
+
+  .fed-star-readout {
+    width: min(15.5rem, 78%);
+  }
+
+  .fed-star-title {
+    font-size: 1.375rem;
+  }
+
+  .fed-star-blurb {
+    margin-top: 0.4rem;
+    font-size: 0.8125rem;
+  }
+
+  .fed-star-tools {
+    gap: 0.65rem;
+  }
+
+  .fed-star-tools button {
+    width: 38px;
+    height: 38px;
+  }
+
+  .fed-constellation-dot {
+    display: grid;
+    width: 1.4rem;
+    height: 1.4rem;
+    place-items: center;
+    color: #18232e;
+    font-size: 11px;
+    font-weight: 800;
+  }
+}
+
+@media (min-width: 768px) {
+  .fed-vision {
+    padding: 88px 0 72px;
+  }
+
+  .fed-constellation {
+    --star-grow: 1.18;
+  }
+
+  .fed-constellation-stage {
+    padding-bottom: 6.25rem;
+  }
+
+  .fed-constellation-frame {
+    width: min(62%, 24rem);
+  }
+
+  .fed-star-readout {
+    width: min(17.5rem, 58%);
+  }
+
+  .fed-star-title {
+    font-size: 1.5625rem;
+  }
+
+  .fed-star-blurb {
+    font-size: 0.875rem;
+  }
+
+  .fed-story-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+  }
+}
+
+@media (min-width: 1025px) {
+  .fed-vision {
+    padding: 104px 0 84px;
+  }
+
+  .fed-constellation {
+    --star-grow: 1.3;
+    margin-top: 5.75rem;
+  }
+
+  .fed-constellation-stage {
+    max-width: min(68%, 32rem);
+    min-height: 36.25rem;
+    padding-bottom: 8.5rem;
+  }
+
+  .fed-constellation-frame {
+    width: 100%;
+  }
+
+  .fed-star-readout {
+    width: min(20.5rem, 56%);
+  }
+
+  .fed-star-title {
+    font-size: clamp(1.625rem, 2vw, 1.875rem);
+    font-weight: 800;
+  }
+
+  .fed-star-blurb {
+    font-size: 0.9375rem;
+  }
+
+  .fed-star-tools {
+    bottom: 0.4rem;
+  }
+
+  .fed-constellation-label {
+    max-width: none;
+  }
+
+  .fed-story-grid {
+    gap: 4rem;
+  }
+}
+
+.fed-mandate {
+  margin-top: 1.75rem;
+}
+
+.fed-mandate article {
+  padding-top: 0.25rem;
+}
+
+.fed-mandate h3 {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-size: 1.35rem;
+}
+
+.fed-mandate h3 svg {
+  width: 1.25rem;
+  height: 1.25rem;
+  color: var(--vpf-red-500);
+}
+
+.fed-mandate ul,
+.fed-modal ul {
+  margin: 1rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.fed-mandate li,
+.fed-modal li {
+  position: relative;
+  padding: 0.7rem 0 0.7rem 1rem;
+  border-top: 1px solid var(--vpf-line);
+  color: var(--vpf-ink);
+  line-height: 1.55;
+}
+
+.fed-mandate li::before,
+.fed-modal li::before {
+  content: "";
+  position: absolute;
+  top: 1.15rem;
+  left: 0;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--vpf-gold-500);
+}
+
+.fed-charter {
+  padding: 4.5rem 0;
+  background: var(--vpf-red-500);
+  color: white;
+}
+
+.fed-charter h2 {
+  color: white;
+  font-size: clamp(1.8rem, 3vw, 2.5rem);
+}
+
+.fed-charter p,
+.fed-charter dt {
+  color: rgb(255 255 255 / 78%);
+}
+
+.fed-charter dd {
+  color: white;
+}
+
+.fed-lead-board {
+  padding-top: 3.5rem;
+  padding-bottom: 3.5rem;
+  overflow-x: clip;
+}
+
+.fed-lead-board > .page-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.fed-lead-board .fed-note {
+  max-width: 40rem;
+}
+
+.fed-lead-actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 1.35rem;
+}
+
+.fed-lead-marquee {
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+  margin-top: 1.75rem;
+  padding: 1.35rem 0;
+  overflow: visible;
+  cursor: grab;
+  touch-action: pan-y;
+  --lead-fade: 1.25rem;
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent,
+    #000 var(--lead-fade),
+    #000 calc(100% - var(--lead-fade)),
+    transparent
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    #000 var(--lead-fade),
+    #000 calc(100% - var(--lead-fade)),
+    transparent
+  );
+}
+
+.fed-lead-marquee.is-dragging {
+  cursor: grabbing;
+  user-select: none;
+}
+
+.fed-lead-marquee.is-static {
+  overflow-x: auto;
+  overflow-y: visible;
+  -webkit-mask-image: none;
+  mask-image: none;
+  cursor: default;
+  touch-action: pan-x;
+  scrollbar-width: thin;
+}
+
+.fed-lead-track {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+}
+
+.fed-lead-marquee.is-static .fed-lead-track {
+  will-change: auto;
+  transform: none !important;
+}
+
+.fed-lead-set {
+  display: flex;
+  flex: none;
+  gap: 1rem;
+  margin: 0;
+  padding: 0.35rem 1rem 0.35rem 0;
+  list-style: none;
+}
+
+.fed-lead-set > li {
+  position: relative;
+  flex: none;
+}
+
+.fed-lead-card {
+  display: grid;
+  gap: 0.65rem;
+  width: 13.75rem;
+  padding: 0.75rem;
+  border: 1px solid var(--vpf-line);
+  border-radius: 12px;
+  background: white;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  transform: translateZ(0) scale(1);
+  transform-origin: center center;
+  transition:
+    border-color 300ms ease,
+    box-shadow 300ms ease,
+    transform 300ms ease;
+  will-change: transform;
+}
+
+.fed-lead-card:hover,
+.fed-lead-card:focus-visible {
+  z-index: 3;
+  border-color: var(--vpf-gold-500);
+  box-shadow: 0 14px 28px rgb(23 36 50 / 14%);
+  transform: translateZ(0) scale(1.07);
+}
+
+.fed-lead-card:focus-visible {
+  outline: 2px solid var(--vpf-gold-300);
+  outline-offset: 3px;
+}
+
+.fed-lead-photo,
+.fed-modal-photo,
+.fed-lead-roster-photo {
+  overflow: hidden;
+  border-radius: 10px;
+  background: #172432;
+}
+
+.fed-lead-photo {
+  aspect-ratio: 4 / 5;
+}
+
+.fed-lead-avatar {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  min-height: 10rem;
+  place-items: center;
+  background: var(--vpf-gold-100);
+  color: #8c4a12;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.fed-lead-name,
+.fed-lead-role,
+.fed-lead-dept {
+  display: block;
+}
+
+.fed-lead-name {
+  color: var(--vpf-ink);
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.fed-lead-role {
+  color: var(--vpf-red-700);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.fed-lead-dept {
+  color: var(--vpf-ink-soft);
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.fed-org-dialog {
+  width: min(100%, 68rem);
+  height: min(85vh, 52.5rem);
+  max-height: 85vh;
+  border: 1px solid var(--vpf-line);
+  box-shadow: 0 24px 48px rgb(23 36 50 / 18%);
+}
+
+.fed-org-dialog-head {
+  display: flex;
+  flex-shrink: 0;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.15rem 1.25rem;
+  border-bottom: 1px solid var(--vpf-line);
+  background: white;
+}
+
+.fed-org-dialog-head h2 {
+  margin: 0;
+  color: var(--vpf-ink);
+  font-size: clamp(1.25rem, 2.4vw, 1.55rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+}
+
+.fed-org-dialog-head p {
+  margin: 0.4rem 0 0;
+  max-width: 40rem;
+  color: var(--vpf-ink-soft);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.fed-org-close {
+  display: grid;
+  width: 2.5rem;
+  height: 2.5rem;
+  flex-shrink: 0;
+  place-items: center;
+  border: 1px solid var(--vpf-line);
+  border-radius: 10px;
+  background: white;
+  color: var(--vpf-ink);
+  cursor: pointer;
+}
+
+.fed-org-close:hover {
+  border-color: var(--vpf-gold-500);
+  background: var(--vpf-gold-100);
+}
+
+.fed-org-dialog-body {
+  flex: 1;
+  min-height: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+/* Two equal panes sized to the body width (not the track).
+   translateX(-100%) then shifts exactly one viewport. */
+.fed-org-stage {
+  display: grid;
+  grid-template-columns: 100% 100%;
+  width: 100%;
+  transition: transform 300ms ease;
+  will-change: transform;
+}
+
+.fed-org-stage.is-detail {
+  transform: translate3d(-100%, 0, 0);
+}
+
+.fed-org-stage.is-reduced {
+  transition: none;
+}
+
+.fed-org-pane {
+  box-sizing: border-box;
+  min-width: 0;
+  max-width: 100%;
+  padding: 1.15rem 1.25rem 1.5rem;
+}
+
+.fed-org-detail {
+  width: 100%;
+  max-width: 100%;
+}
+
+.fed-org-board {
+  position: relative;
+  margin-top: 1rem;
+}
+
+.fed-org-board-rail {
+  position: absolute;
+  top: -0.35rem;
+  left: 50%;
+  width: 2px;
+  height: 0.7rem;
+  background: var(--vpf-line);
+  transform: translateX(-50%);
+}
+
+.fed-org-board-card {
+  display: grid;
+  gap: 0.45rem;
+  align-content: center;
+  justify-items: center;
+  width: 100%;
+  min-height: 9.5rem;
+  padding: 1.35rem 1.5rem;
+  border: 1px solid var(--vpf-line);
+  border-radius: 16px;
+  background: linear-gradient(180deg, #fff 0%, #f7f8fa 100%);
+  color: inherit;
+  text-align: center;
+  cursor: pointer;
+  transition:
+    border-color 200ms ease,
+    background-color 200ms ease,
+    box-shadow 200ms ease;
+}
+
+.fed-org-board-card:hover,
+.fed-org-board-card:focus-visible {
+  border-color: var(--vpf-gold-500);
+  background: linear-gradient(180deg, #fff 0%, var(--vpf-gold-100) 100%);
+  box-shadow: 0 12px 28px rgb(23 36 50 / 10%);
+}
+
+.fed-org-board-card:focus-visible {
+  outline: 2px solid var(--vpf-gold-300);
+  outline-offset: 3px;
+}
+
+.fed-org-board-label {
+  margin: 0;
+  color: var(--vpf-red-700);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.fed-org-board-card h3 {
+  margin: 0;
+  color: var(--vpf-ink);
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.fed-org-board-desc {
+  margin: 0;
+  max-width: 28rem;
+  color: var(--vpf-ink-soft);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.fed-org-board-meta {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0.55rem 1rem;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0.45rem;
+  color: var(--vpf-ink-soft);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.fed-org-board-cta {
+  display: inline-flex;
+  gap: 0.3rem;
+  align-items: center;
+  color: var(--vpf-red-700);
+}
+
+.fed-org-member-photo {
+  overflow: hidden;
+  border-radius: 10px;
+  background: #172432;
+}
+
+.fed-org-member-photo img,
+.fed-org-avatar-fallback {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.fed-org-avatar-fallback {
+  display: grid;
+  place-items: center;
+  background: var(--vpf-gold-100);
+  color: #8c4a12;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.fed-org-member-copy h4 {
+  display: block;
+  color: var(--vpf-ink);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.fed-org-member-role {
+  display: block;
+  color: var(--vpf-red-700);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.fed-org-link {
+  width: 2px;
+  height: 1.25rem;
+  margin: 0 auto;
+  background: var(--vpf-line);
+}
+
+.fed-org-units-head {
+  display: grid;
+  gap: 0.25rem;
+  margin-bottom: 0.85rem;
+}
+
+.fed-org-units-head h3 {
+  margin: 0;
+  color: var(--vpf-ink);
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.fed-org-units-head p {
+  margin: 0;
+  color: var(--vpf-ink-soft);
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.fed-org-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+.fed-org-node {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 0.75rem;
+  align-items: start;
+  width: 100%;
+  min-height: 5.5rem;
+  padding: 0.9rem;
+  border: 1px solid var(--vpf-line);
+  border-radius: 14px;
+  background: white;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition:
+    border-color 200ms ease,
+    box-shadow 200ms ease,
+    transform 200ms ease;
+}
+
+.fed-org-node:hover,
+.fed-org-node:focus-visible {
+  border-color: var(--vpf-gold-500);
+  box-shadow: 0 10px 22px rgb(23 36 50 / 10%);
+  transform: translateY(-1px);
+}
+
+.fed-org-node:focus-visible {
+  outline: 2px solid var(--vpf-gold-300);
+  outline-offset: 2px;
+}
+
+.fed-org-node-icon {
+  display: grid;
+  width: 2rem;
+  height: 2rem;
+  place-items: center;
+  border-radius: 999px;
+  background: var(--vpf-gold-100);
+  color: #8c4a12;
+}
+
+.fed-org-node-body {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.fed-org-node-name {
+  color: var(--vpf-ink);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.fed-org-node-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 0.75rem;
+  color: var(--vpf-ink-soft);
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.fed-org-node-cta {
+  color: var(--vpf-red-700);
+  font-weight: 600;
+}
+
+.fed-org-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin-bottom: 1rem;
+  padding: 0.55rem 0.8rem;
+  border: 1px solid var(--vpf-line);
+  border-radius: 999px;
+  background: white;
+  color: var(--vpf-ink);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.fed-org-back:hover,
+.fed-org-back:focus-visible {
+  border-color: var(--vpf-gold-500);
+  background: var(--vpf-gold-100);
+}
+
+.fed-org-back:focus-visible {
+  outline: 2px solid var(--vpf-gold-300);
+  outline-offset: 2px;
+}
+
+.fed-org-detail-head {
+  display: grid;
+  gap: 0.45rem;
+  margin-bottom: 1rem;
+}
+
+.fed-org-detail-head h3 {
+  margin: 0;
+  color: var(--vpf-ink);
+  font-size: clamp(1.2rem, 2.2vw, 1.45rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.fed-org-detail-head p {
+  margin: 0;
+  color: var(--vpf-ink-soft);
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.fed-org-members {
+  display: grid;
+  gap: 0.75rem;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.fed-org-member {
+  display: grid;
+  grid-template-columns: 4.25rem minmax(0, 1fr);
+  gap: 0.85rem;
+  align-items: center;
+  width: 100%;
+  max-width: 100%;
+  padding: 0.75rem;
+  border: 1px solid var(--vpf-line);
+  border-radius: 12px;
+  background: white;
+}
+
+.fed-org-member-photo {
+  aspect-ratio: 4 / 5;
+}
+
+.fed-org-member-copy {
+  display: grid;
+  gap: 0.2rem;
+}
+
+.fed-org-member-copy h4 {
+  margin: 0;
+  font-size: 15px;
+}
+
+.fed-org-member-duty {
+  margin: 0;
+  color: var(--vpf-ink-soft);
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.fed-org-empty {
+  margin: 0;
+  padding: 1.5rem 1rem;
+  border: 1px dashed var(--vpf-line);
+  border-radius: 12px;
+  color: var(--vpf-ink-soft);
+  font-size: 14px;
+  line-height: 1.5;
+  text-align: center;
+}
+
+@media (max-width: 639px) {
+  .fed-org-dialog {
+    width: 100%;
+    height: 100%;
+    max-height: 100dvh;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .fed-org-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .fed-org-node:hover {
+    transform: none;
+  }
+}
+
+.fed-lead-roster {
+  display: grid;
+  gap: 0.75rem;
+  margin: 1rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.fed-lead-roster button {
+  display: grid;
+  grid-template-columns: 4.5rem minmax(0, 1fr);
+  gap: 0.85rem;
+  align-items: center;
+  width: 100%;
+  padding: 0.65rem;
+  border: 1px solid var(--vpf-line);
+  border-radius: 12px;
+  background: white;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.fed-lead-roster-photo {
+  aspect-ratio: 4 / 5;
+}
+
+.fed-modal {
+  display: grid;
+  gap: 1rem;
+}
+
+.fed-modal-photo {
+  aspect-ratio: 4 / 5;
+  max-height: 16rem;
+  border-radius: 12px;
+}
+
+.fed-modal-photo .fed-lead-avatar {
+  min-height: 100%;
+  font-size: 2rem;
+}
+
+.fed-modal h3 {
+  margin: 1rem 0 0;
+  font-size: 1rem;
+}
+
+.fed-modal .fed-lead-role {
+  margin: 0;
+}
+
+.fed-modal .fed-lead-dept {
+  margin-top: 0.2rem;
+}
+
+.fed-contact-list {
+  display: grid;
+  gap: 0.9rem;
+  margin: 1.25rem 0 1.5rem;
+  padding: 0;
+  list-style: none;
+}
+
+.fed-contact-list li {
+  display: grid;
+  grid-template-columns: 1.5rem minmax(0, 1fr);
+  gap: 0.75rem;
+  align-items: start;
+  color: var(--vpf-ink);
+  line-height: 1.5;
+}
+
+.fed-contact-list svg {
+  margin-top: 0.15rem;
+  color: var(--vpf-red-500);
+}
+
+.fed-map {
+  overflow: hidden;
+  min-height: 18rem;
+  border-radius: 16px;
+  background: var(--vpf-line);
+}
+
+.fed-map iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 18rem;
+  border: 0;
+}
+
+@media (min-width: 768px) {
+  .fed-contact-grid,
+  .fed-mandate {
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+  }
+
+  .fed-charter-grid {
+    grid-template-columns: minmax(0, 1.4fr) auto auto;
+    align-items: end;
+  }
+
+  .fed-charter dl {
+    margin: 0;
+  }
+
+  .fed-lead-board {
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+  }
+
+  .fed-lead-marquee {
+    --lead-fade: 2.5rem;
+  }
+
+  .fed-lead-set {
+    gap: 1.1rem;
+  }
+
+  .fed-lead-card {
+    width: 14rem;
+  }
+
+  .fed-org-dialog-head,
+  .fed-org-pane {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+
+  .fed-org-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .fed-modal {
+    grid-template-columns: 11rem minmax(0, 1fr);
+  }
+
+  .fed-map,
+  .fed-map iframe {
+    min-height: 22rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .fed-track {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1.5rem;
+    padding: 0;
+  }
+
+  .fed-track li {
+    padding-top: 2rem;
+  }
+
+  .fed-track li::before {
+    top: 6px;
+    right: -1.5rem;
+    bottom: auto;
+    left: 0;
+    width: auto;
+    height: 2px;
+  }
+
+  .fed-track li:last-child::before {
+    display: none;
+  }
+
+  .fed-node {
+    top: 0;
+    left: 0;
+  }
+
+  .fed-lead-marquee {
+    --lead-fade: 3.5rem;
+  }
+
+  .fed-lead-card {
+    width: 14.25rem;
+  }
+
+  .fed-org-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .fed-org-members {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1200px) {
+  .fed-lead-marquee {
+    --lead-fade: 4.5rem;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .fed-section > .fixed {
+    animation: fed-fade 180ms ease;
+  }
+
+  .fed-section [role="dialog"] {
+    animation: fed-rise 240ms ease;
+  }
+}
+
+@keyframes fed-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fed-rise {
+  from {
+    opacity: 0;
+    translate: 0 12px;
+  }
+  to {
+    opacity: 1;
+    translate: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fed-reveal,
+  .fed-lead-card,
+  .fed-org-stage,
+  .fed-org-node,
+  .fed-org-board-card,
+  .fed-star-layer,
+  .fed-star-pulse,
+  .fed-brand-stage::before,
+  .fed-brand-stage::after,
+  .fed-node,
+  .fed-track time,
+  .fed-track h3,
+  .fed-ball,
+  .fed-decree-paper,
+  .fed-decree-copy > *,
+  .fed-section > .fixed,
+  .fed-section [role="dialog"] {
+    transition: none;
+    animation: none;
+  }
+
+  .fed-decree-paper,
+  .fed-decree.is-in .fed-decree-paper,
+  .fed-decree.is-in .fed-decree-stage:hover .fed-decree-paper,
+  .fed-decree-copy > *,
+  .fed-decree.is-in .fed-decree-copy > * {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .fed-constellation-head > *,
+  .fed-constellation-layer,
+  .fed-constellation-logo,
+  .fed-constellation-pin,
+  .fed-constellation-dot,
+  .fed-story-grid article,
+  .fed-story-stem i {
+    opacity: 1;
+    animation: none;
+    transition: none;
+  }
+
+  .fed-story-stem span,
+  .fed-story.is-in .fed-story-stem span {
+    transform: none;
+    transition: none;
+  }
+
+  .fed-constellation-layer {
+    scale: 1;
+  }
+
+  .fed-constellation-head > *,
+  .fed-story-grid article,
+  .fed-story.is-in .fed-story-grid article {
+    transform: none;
+    transition: none;
+  }
+
+  .fed-constellation-pin {
+    transform: translate(-50%, -50%);
+  }
+
+  .fed-constellation-logo {
+    transform: translate(-50%, -50%);
+  }
+
+  .fed-vision.is-in .fed-constellation-logo,
+  .fed-constellation.is-played .fed-constellation-logo,
+  .fed-vision.is-in .fed-constellation-pin,
+  .fed-constellation.is-played .fed-constellation-pin {
+    opacity: 1;
+    transition: none;
+    animation: none;
+  }
+
+  .fed-constellation.is-story .fed-constellation-layer:not(:last-child),
+  .fed-constellation.is-story .fed-constellation-logo,
+  .fed-constellation.is-return .fed-constellation-logo,
+  .fed-constellation.is-shrink .fed-constellation-logo,
+  .fed-constellation.is-story .fed-constellation-pin,
+  .fed-constellation.is-return .fed-constellation-pin,
+  .fed-constellation.is-shrink .fed-constellation-pin,
+  .fed-constellation.is-story .fed-constellation-list button,
+  .fed-constellation.is-return .fed-constellation-list button,
+  .fed-constellation.is-shrink .fed-constellation-list button {
+    opacity: 0;
+    clip-path: none;
+    scale: 1;
+    transition: none;
+    animation: none;
+  }
+
+  .fed-constellation.is-story .fed-star-media,
+  .fed-constellation.is-open .fed-star-title,
+  .fed-constellation.is-open .fed-star-blurb,
+  .fed-constellation.is-open .fed-star-note,
+  .fed-constellation.is-story .fed-star-tools {
+    opacity: 1;
+    clip-path: none;
+    scale: 1;
+    transition: none;
+    animation: none;
+  }
+
+  .fed-star-title.is-swap,
+  .fed-star-blurb.is-swap,
+  .fed-star-zoom,
+  .fed-star-media,
+  .fed-star-shot,
+  .fed-constellation-svg,
+  .fed-constellation-visual,
+  .fed-star-tools,
+  .fed-constellation.is-story .fed-constellation-frame,
+  .fed-constellation.is-story,
+  .fed-constellation.is-shrink {
+    transition: none;
+    animation: none;
+  }
+
+  .fed-constellation.is-story .fed-constellation-visual {
+    width: calc(var(--star-grow) * 100%);
+    height: calc(var(--star-grow) * 100%);
+  }
+}

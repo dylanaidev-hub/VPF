@@ -1,16 +1,13 @@
 import { partnership } from "../data/partners"
-import { sitePath } from "../lib/site"
 import { Button } from "./Button"
+import { vpfStarPaths } from "./vpfStarPaths"
 
 export function PartnershipBanner() {
   return (
-    <section id="hop-tac" data-section className="bg-ink text-white" aria-labelledby="hop-tac-tieu-de">
-      <div className="page-wrap grid items-center gap-10 py-16 md:py-20 min-[1200px]:grid-cols-2 min-[1200px]:gap-16 min-[1200px]:py-28">
+    <section id="hop-tac" data-section className="partner-banner relative overflow-hidden bg-signal text-white" aria-labelledby="hop-tac-tieu-de">
+      <div className="page-wrap grid items-center gap-10 py-13 md:py-15 min-[1200px]:grid-cols-2 min-[1200px]:gap-16">
         <div>
-          <p className="flex items-center gap-3 text-[13px] font-medium text-brand">
-            <span className="h-px w-8 bg-brand" aria-hidden />
-            {partnership.eyebrow}
-          </p>
+          <p className="text-[13px] font-medium text-brand">{partnership.eyebrow}</p>
           <h2
             id="hop-tac-tieu-de"
             className="mt-4 max-w-[14ch] text-[2rem] font-bold leading-[1.12] tracking-tight sm:text-4xl min-[1200px]:text-[2.75rem]"
@@ -24,15 +21,17 @@ export function PartnershipBanner() {
             <Button href={partnership.href}>{partnership.cta}</Button>
           </div>
         </div>
-        <div className="overflow-hidden rounded-2xl min-[1200px]:justify-self-end">
-          <img
-            src={sitePath(partnership.image)}
-            alt={partnership.imageAlt}
-            width={1333}
-            height={2000}
-            loading="lazy"
-            className="aspect-[4/3] w-full object-cover object-[center_22%] min-[1200px]:aspect-[4/5] min-[1200px]:max-h-[520px] min-[1200px]:w-[460px]"
-          />
+        <div className="partner-star" aria-hidden>
+          <svg className="partner-star-svg" viewBox="0 0 800 800" fill="none">
+            <g className="partner-star-shape">
+              {vpfStarPaths.map((d) => (
+                <g key={d} className="partner-star-ring">
+                  <path className="partner-star-stroke" d={d} />
+                  <path className="partner-star-glow" d={d} pathLength={100} />
+                </g>
+              ))}
+            </g>
+          </svg>
         </div>
       </div>
     </section>

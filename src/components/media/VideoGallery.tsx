@@ -31,7 +31,7 @@ export function VideoGallery() {
       </div>
 
       {active && playing ? (
-        <div className="fixed inset-0 z-[90] flex items-center justify-center bg-ink/80 p-4">
+        <div className="fixed inset-0 z-[90] flex items-center justify-center bg-signal/80 p-4">
           <div className="w-full max-w-4xl" role="dialog" aria-modal="true" aria-label={active.title}>
             <div className="mb-3 flex justify-end">
               <button type="button" className="rounded-[10px] border border-white/30 px-4 py-2 text-sm text-white" onClick={() => setActive(null)}>
@@ -78,7 +78,7 @@ function VideoPoster({
         loading="lazy"
         className={cx("aspect-video w-full object-cover", video.imagePosition)}
       />
-      <span className="absolute inset-0 flex items-end bg-ink/25 p-4">
+      <span className="absolute inset-0 flex items-end bg-signal/25 p-4">
         <span>
           <span className="block text-sm font-semibold text-white">{video.title}</span>
           {video.duration ? <span className="mt-1 block text-xs text-white/80">{video.duration}</span> : null}

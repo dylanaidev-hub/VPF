@@ -10,10 +10,7 @@ export function ContentPage({ page }: { page: PageContent }) {
         <Container className="py-14 md:py-20 min-[1200px]:py-24">
           <Breadcrumb items={[{ label: "Trang chủ", href: "/index.html" }, { label: page.crumb }]} />
           <div className="mt-10 max-w-3xl">
-            <p className="flex items-center gap-3 text-[13px] font-medium text-brand-strong">
-              <span className="h-px w-8 bg-brand" aria-hidden />
-              {page.eyebrow}
-            </p>
+            <p className="text-[13px] font-medium text-brand-strong">{page.eyebrow}</p>
             <h1
               id="tieu-de-trang"
               className="mt-4 text-[2rem] font-bold leading-[1.12] tracking-tight text-ink sm:text-4xl min-[1200px]:text-[2.75rem]"

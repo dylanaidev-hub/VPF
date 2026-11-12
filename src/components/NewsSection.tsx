@@ -26,10 +26,7 @@ export function NewsSection({
         <div className="relative mb-8 flex flex-col gap-5 md:mb-10 md:flex-row md:items-end md:justify-between">
           <div className="relative max-w-2xl">
             <PickleballMark />
-            <p className="relative mb-3 flex items-center gap-3 text-[13px] font-medium text-brand-strong">
-              <span className="h-px w-8 bg-brand" aria-hidden />
-              Tin tức
-            </p>
+            <p className="relative mb-3 text-[13px] font-medium text-brand-strong">Tin tức</p>
             <h2
               id="tin-tuc-tieu-de"
               className="relative text-[2rem] font-bold leading-[1.15] tracking-tight text-ink min-[1200px]:text-[2.75rem]"

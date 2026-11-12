@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tệp chưa được công bố – VPF</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        margin: 0;
+        background: #f1f1f2;
+        color: #404040;
+        font-family: "Be Vietnam Pro", sans-serif;
+      }
+      main {
+        max-width: 40rem;
+        margin: 0 auto;
+        padding: 4rem 1.25rem;
+      }
+      p {
+        line-height: 1.6;
+      }
+      h1 {
+        font-size: 1.75rem;
+        line-height: 1.25;
+      }
+      .tag {
+        color: #8e2428;
+        font-size: 0.8rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <p class="tag">Chưa có tệp chính thức</p>
+      <h1 id="tieu-de">Tài liệu chưa được công bố</h1>
+      <p>
+        Liên đoàn Pickleball Việt Nam chưa đăng tệp PDF cho văn bản này. Trang này chỉ để nút trên hồ sơ
+        liên đoàn mở được một tab mới, không phải quyết định hay điều lệ đã ban hành.
+      </p>
+    </main>
+    <script>
+      const kind = new URLSearchParams(location.search).get("van-ban")
+      const title = document.getElementById("tieu-de")
+      if (kind === "quyet-dinh") title.textContent = "Quyết định thành lập chưa có tệp PDF"
+      if (kind === "dieu-le") title.textContent = "Điều lệ chưa có tệp PDF"
+    </script>
+  </body>
+</html>

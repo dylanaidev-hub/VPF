@@ -1,0 +1,252 @@
+/*
+  VPF Brand Identity — quy chuẩn ấn phẩm nhận diện.
+  Màu đo từ file gốc. Font lấy từ font nhúng trong PDF.
+  SVN-Gotham là font display của ấn phẩm in. Bản web dùng Be Vietnam Pro.
+*/
+
+:root {
+  /* Primitive — color */
+  --vpf-red-500: #ae3033;
+  --vpf-red-700: #8e2428;
+  --vpf-gold-500: #e8943c;
+  --vpf-gold-300: #f0b457;
+  --vpf-gold-100: #f8e7cf;
+  --vpf-white: #ffffff;
+  --vpf-canvas: #f1f1f2;
+  --vpf-ink: #404040;
+  --vpf-ink-soft: #6b6b6b;
+  --vpf-line: #d5d5d7;
+
+  /* Logo file /public/brand — khác nhẹ so với nền in */
+  --vpf-logo-red: #be1e2d;
+  --vpf-logo-orange: #f7941d;
+
+  /* Primitive — type. Một family cho toàn site. */
+  --font-primary: "Be Vietnam Pro", sans-serif;
+  --vpf-font-display: var(--font-primary);
+  --vpf-font-body: var(--font-primary);
+
+  /* Primitive — space, from the print layouts */
+  --vpf-space-2: 0.5rem;
+  --vpf-space-3: 0.75rem;
+  --vpf-space-4: 1rem;
+  --vpf-space-6: 1.5rem;
+  --vpf-space-8: 2rem;
+  --vpf-space-12: 3rem;
+
+  /* Semantic */
+  --vpf-color-field: var(--vpf-red-500);
+  --vpf-color-field-deep: var(--vpf-red-700);
+  --vpf-color-accent: var(--vpf-gold-500);
+  --vpf-color-accent-soft: var(--vpf-gold-300);
+  --vpf-color-on-field: var(--vpf-white);
+  --vpf-color-on-accent: var(--vpf-ink);
+  --vpf-color-canvas: var(--vpf-canvas);
+  --vpf-color-surface: var(--vpf-white);
+  --vpf-color-text: var(--vpf-ink);
+  --vpf-color-text-soft: var(--vpf-ink-soft);
+  --vpf-color-rule: var(--vpf-gold-500);
+  --vpf-color-border: var(--vpf-line);
+
+  /* Typography roles */
+  --vpf-size-display: clamp(2rem, 4vw, 3.25rem);
+  --vpf-size-headline: clamp(1.35rem, 2vw, 1.75rem);
+  --vpf-size-title: 1.125rem;
+  --vpf-size-body: 1rem;
+  --vpf-size-caption: 0.75rem;
+  --vpf-leading-display: 1.05;
+  --vpf-leading-body: 1.65;
+  --vpf-tracking-display: 0.04em;
+  --vpf-tracking-caption: 0.08em;
+
+  /* Pattern — file: /public/brand/pattern-star.svg */
+  --vpf-pattern-star: url("/brand/pattern-star.svg");
+}
+
+.vpf-star-mark {
+  position: absolute;
+  z-index: 1;
+  width: 10.5rem;
+  height: auto;
+  right: 1.25rem;
+  top: 50%;
+  translate: 0 -50%;
+  pointer-events: none;
+  user-select: none;
+}
+
+.vpf-star-mark-hero {
+  width: 77.6%;
+  max-width: none;
+  height: auto;
+  left: -40%;
+  right: auto;
+  top: 50%;
+  translate: 0 -50%;
+  opacity: 0.78;
+}
+
+.vpf-star-mark-card {
+  width: 9.5rem;
+  right: 1rem;
+  bottom: 1rem;
+  top: auto;
+  translate: none;
+  opacity: 0.9;
+}
+
+.vpf-star-mark-field {
+  right: auto;
+  left: 1.25rem;
+  width: min(40%, 18rem);
+  opacity: 0.85;
+}
+
+@media (max-width: 1023px) {
+  .vpf-star-mark-hero {
+    width: 62%;
+    left: -36%;
+    right: auto;
+    opacity: 0.5;
+  }
+}
+
+@media (max-width: 767px) {
+  .vpf-star-mark-hero {
+    display: none;
+  }
+
+  .vpf-star-mark-card {
+    width: 7.5rem;
+    right: 0.65rem;
+    bottom: 0.65rem;
+    top: auto;
+    translate: none;
+  }
+
+  .vpf-star-mark-field {
+    right: auto;
+    left: 0.75rem;
+    top: 50%;
+    width: 9rem;
+    translate: 0 -50%;
+  }
+}
+
+.vpf-display {
+  margin: 0;
+  color: var(--vpf-color-on-field);
+  font-family: var(--vpf-font-display);
+  font-size: var(--vpf-size-display);
+  font-weight: 700;
+  line-height: var(--vpf-leading-display);
+  letter-spacing: var(--vpf-tracking-display);
+  text-transform: uppercase;
+}
+
+.vpf-headline {
+  margin: 0;
+  color: var(--vpf-color-text);
+  font-family: var(--vpf-font-display);
+  font-size: var(--vpf-size-headline);
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.vpf-title {
+  margin: 0;
+  color: var(--vpf-color-accent);
+  font-family: var(--vpf-font-display);
+  font-size: var(--vpf-size-title);
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.vpf-body {
+  margin: 0;
+  color: var(--vpf-color-text);
+  font-family: var(--vpf-font-body);
+  font-size: var(--vpf-size-body);
+  font-weight: 400;
+  line-height: var(--vpf-leading-body);
+}
+
+.vpf-caption {
+  margin: 0;
+  color: var(--vpf-color-accent);
+  font-family: var(--vpf-font-display);
+  font-size: var(--vpf-size-caption);
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: var(--vpf-tracking-caption);
+  text-transform: uppercase;
+}
+
+.vpf-chip {
+  display: inline-flex;
+  align-items: center;
+  margin: 0;
+  padding: 0.55rem 1.35rem 0.55rem 1rem;
+  background: linear-gradient(90deg, var(--vpf-white) 0%, var(--vpf-gold-300) 78%);
+  color: var(--vpf-ink);
+  font-family: var(--vpf-font-display);
+  font-size: 1.05rem;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.vpf-rule {
+  height: 2px;
+  border: 0;
+  background: var(--vpf-color-rule);
+}
+
+.vpf-field {
+  position: relative;
+  overflow: hidden;
+  background: var(--vpf-color-field);
+  color: var(--vpf-color-on-field);
+}
+
+.vpf-field::after {
+  content: "";
+  position: absolute;
+  top: -12%;
+  right: -8%;
+  width: min(58%, 28rem);
+  aspect-ratio: 1;
+  background: var(--vpf-pattern-star) center / contain no-repeat;
+  pointer-events: none;
+}
+
+.vpf-star-light {
+  background-color: var(--vpf-color-surface);
+  background-image: var(--vpf-pattern-star);
+  background-position: right top;
+  background-repeat: no-repeat;
+  background-size: min(46%, 18rem);
+}
+
+.vpf-band {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--vpf-space-4);
+  min-height: 4.5rem;
+  padding: 0.85rem 1.25rem;
+  background: var(--vpf-color-field) var(--vpf-pattern-star) right center / 7.5rem no-repeat;
+  color: var(--vpf-color-on-field);
+}
+
+.vpf-frame {
+  background: var(--vpf-color-surface);
+  border-top: 2px solid var(--vpf-color-rule);
+}
+
+.vpf-frame .vpf-title {
+  padding: 0.85rem 1rem 0;
+}
+
+.vpf-frame .vpf-body {
+  padding: 0.45rem 1rem 1rem;
+}

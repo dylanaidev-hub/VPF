@@ -2,7 +2,15 @@ import { ArrowUpRight, MapPin, X } from "lucide-react"
 import type { TournamentView } from "../../types"
 import { formatEventDate } from "../../lib/format"
 import { sitePath } from "../../lib/site"
-import { statusLabel, tournamentStatusFilters, type TournamentSort, type TournamentStatusFilter } from "../../lib/tournaments"
+import {
+  primaryCategory,
+  statusLabel,
+  tournamentScopeFilters,
+  tournamentStatusFilters,
+  type TournamentScopeFilter,
+  type TournamentSort,
+  type TournamentStatusFilter,
+} from "../../lib/tournaments"
 import { Badge } from "../Badge"
 import { Select } from "../Select"
 
@@ -17,13 +25,18 @@ export function TournamentToolbar({
   status,
   year,
   location,
+  scope,
+  category,
   sort,
   years,
   locations,
+  categories,
   onQuery,
   onStatus,
   onYear,
   onLocation,
+  onScope,
+  onCategory,
   onSort,
   onReset,
   dirty,
@@ -32,19 +45,24 @@ export function TournamentToolbar({
   status: TournamentStatusFilter
   year: string
   location: string
+  scope: TournamentScopeFilter
+  category: string
   sort: TournamentSort
   years: string[]
   locations: string[]
+  categories: string[]
   onQuery: (query: string) => void
   onStatus: (status: TournamentStatusFilter) => void
   onYear: (year: string) => void
   onLocation: (location: string) => void
+  onScope: (scope: TournamentScopeFilter) => void
+  onCategory: (category: string) => void
   onSort: (sort: TournamentSort) => void
   onReset: () => void
   dirty: boolean
 }) {
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-3">
       <form className="flex flex-col gap-3 sm:flex-row" role="search" onSubmit={(event) => event.preventDefault()}>
         <label className="relative min-w-0 flex-1">
           <span className="sr-only">Tìm kiếm giải đấu</span>
@@ -53,7 +71,7 @@ export function TournamentToolbar({
             value={query}
             placeholder="Tìm kiếm giải đấu..."
             onChange={(event) => onQuery(event.target.value)}
-            className="h-12 w-full rounded-[10px] border border-line bg-white px-4 pr-12 text-[15px] text-ink outline-none [&::-webkit-search-cancel-button]:hidden"
+            className="h-11 w-full rounded-[10px] border border-line bg-white px-4 pr-12 text-[15px] text-ink outline-none [&::-webkit-search-cancel-button]:hidden"
           />
           {query ? (
             <button
@@ -66,15 +84,16 @@ export function TournamentToolbar({
             </button>
           ) : null}
         </label>
-        <label className="sm:w-52">
-          <span className="sr-only">Sắp xếp theo thời gian</span>
+        <label className="sm:w-48">
+          <span className="sr-only">Sắp xếp</span>
           <Select
             value={sort}
             onChange={(event) => onSort(event.target.value as TournamentSort)}
-            className="h-12 w-full rounded-[10px] border border-line bg-white px-3 text-[15px] text-ink"
+            className="h-11 w-full rounded-[10px] border border-line bg-white px-3 text-[15px] text-ink"
           >
             <option value="latest">Mới nhất</option>
             <option value="soonest">Cũ nhất</option>
+            <option value="name">Tên A–Z</option>
           </Select>
         </label>
       </form>
@@ -101,13 +120,27 @@ export function TournamentToolbar({
         })}
       </div>
 
-      <div className="grid gap-3 sm:grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)_auto]">
+      <div className="grid gap-3 sm:grid-cols-2 min-[1200px]:grid-cols-4">
+        <label>
+          <span className="sr-only">Khu vực</span>
+          <Select
+            value={scope}
+            onChange={(event) => onScope(event.target.value as TournamentScopeFilter)}
+            className="h-11 w-full rounded-[10px] border border-line bg-white px-3 text-[15px] text-ink"
+          >
+            {tournamentScopeFilters.map((item) => (
+              <option key={item} value={item}>
+                {item === "Tất cả" ? "Tất cả khu vực" : item}
+              </option>
+            ))}
+          </Select>
+        </label>
         <label>
           <span className="sr-only">Năm</span>
           <Select
             value={year}
             onChange={(event) => onYear(event.target.value)}
-            className="h-12 w-full rounded-[10px] border border-line bg-white px-3 text-[15px] text-ink"
+            className="h-11 w-full rounded-[10px] border border-line bg-white px-3 text-[15px] text-ink"
           >
             <option value="Tất cả">Tất cả năm</option>
             {years.map((item) => (
@@ -122,7 +155,7 @@ export function TournamentToolbar({
           <Select
             value={location}
             onChange={(event) => onLocation(event.target.value)}
-            className="h-12 w-full rounded-[10px] border border-line bg-white px-3 text-[15px] text-ink"
+            className="h-11 w-full rounded-[10px] border border-line bg-white px-3 text-[15px] text-ink"
           >
             <option value="Tất cả">Tất cả địa điểm</option>
             {locations.map((item) => (
@@ -132,25 +165,53 @@ export function TournamentToolbar({
             ))}
           </Select>
         </label>
-        {dirty ? (
+        <label>
+          <span className="sr-only">Nội dung</span>
+          <Select
+            value={category}
+            onChange={(event) => onCategory(event.target.value)}
+            className="h-11 w-full rounded-[10px] border border-line bg-white px-3 text-[15px] text-ink"
+          >
+            <option value="Tất cả">Tất cả nội dung</option>
+            {categories.map((item) => (
+              <option key={item} value={item}>
+                {item}
+              </option>
+            ))}
+          </Select>
+        </label>
+      </div>
+
+      {dirty ? (
+        <div>
           <button
             type="button"
-            className="h-12 rounded-[10px] border border-line px-4 text-sm font-medium text-ink hover:border-ink/20"
+            className="h-11 rounded-[10px] border border-line px-4 text-sm font-medium text-ink hover:border-ink/20"
             onClick={onReset}
           >
             Xóa bộ lọc
           </button>
-        ) : null}
-      </div>
+        </div>
+      ) : null}
     </div>
   )
 }
 
-export function TournamentGrid({ tournaments }: { tournaments: TournamentView[] }) {
+export function TournamentGrid({
+  tournaments,
+  cta = "Xem chi tiết",
+}: {
+  tournaments: TournamentView[]
+  cta?: string
+}) {
   return (
     <ul className="tournament-grid">
       {tournaments.map((tournament) => {
         const date = formatEventDate(tournament.startDate, tournament.endDate)
+        const place =
+          tournament.scope === "international" && tournament.country
+            ? `${tournament.location}, ${tournament.country}`
+            : tournament.location
         return (
           <li key={tournament.id}>
             <a href={sitePath(tournament.detailUrl)} className="group flex h-full flex-col">
@@ -175,10 +236,14 @@ export function TournamentGrid({ tournaments }: { tournaments: TournamentView[] 
               </h3>
               <p className="mt-2 flex items-center gap-1.5 text-sm text-muted">
                 <MapPin className="size-4 shrink-0 text-ink" aria-hidden />
-                {tournament.location}
+                {place}
               </p>
+              <p className="mt-1 text-sm text-muted">{primaryCategory(tournament)}</p>
+              {tournament.status === "finished" && tournament.champion ? (
+                <p className="mt-2 text-sm font-medium text-ink">Nhà vô địch: {tournament.champion}</p>
+              ) : null}
               <span className="mt-3 inline-flex items-center gap-1.5 text-sm font-medium text-ink">
-                Xem chi tiết
+                {cta}
                 <ArrowUpRight
                   className="size-4 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 motion-reduce:transition-none"
                   aria-hidden
@@ -192,10 +257,16 @@ export function TournamentGrid({ tournaments }: { tournaments: TournamentView[] 
   )
 }
 
-export function TournamentEmpty({ onClear }: { onClear: () => void }) {
+export function TournamentEmpty({
+  onClear,
+  message = "Không tìm thấy giải đấu phù hợp.",
+}: {
+  onClear: () => void
+  message?: string
+}) {
   return (
-    <div className="rounded-2xl border border-dashed border-line bg-paper px-6 py-14 text-center">
-      <p className="text-lg font-semibold text-ink">Không tìm thấy giải đấu phù hợp.</p>
+    <div className="rounded-2xl border border-dashed border-line bg-paper px-6 py-10 text-center sm:py-12">
+      <p className="text-lg font-semibold text-ink">{message}</p>
       <button
         type="button"
         className="mt-4 inline-flex min-h-11 items-center rounded-[10px] bg-brand px-5 text-sm font-medium text-ink"

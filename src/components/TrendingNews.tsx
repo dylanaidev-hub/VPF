@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react"
 import type { ReactNode } from "react"
-import { ArrowUpRight, ChevronLeft, ChevronRight, Flame } from "lucide-react"
+import { ArrowUpRight, ChevronLeft, ChevronRight } from "lucide-react"
 import type { NewsArticle } from "../types"
 import { formatViDate } from "../lib/format"
 import { trendingLabel } from "../lib/news"
@@ -58,8 +58,7 @@ export function TrendingNews({
     <div className="mt-12 min-[1200px]:mt-16">
       <div className="mb-5 flex items-end justify-between gap-4">
         <div>
-          <h3 id="tin-quan-tam" className="flex items-center gap-2 text-xl font-bold tracking-tight text-ink sm:text-2xl">
-            <Flame className="size-5 text-brand" aria-hidden />
+          <h3 id="tin-quan-tam" className="text-xl font-bold tracking-tight text-ink sm:text-2xl">
             Tin tức đang được quan tâm
           </h3>
           <p className="mt-1 text-[13px] leading-relaxed text-muted">
