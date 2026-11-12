@@ -14,8 +14,8 @@ export const aboutHero = {
 export const aboutCta = {
   title: "Đồng hành cùng sự phát triển của Pickleball Việt Nam",
   description: "Kết nối – Phát triển – Hội nhập",
-  cta: "Khám phá cộng đồng",
-  href: "/congdong.html",
+  cta: "Thư viện & Cộng đồng",
+  href: "/thu-vien-cong-dong.html",
   image: "/images/outdoor.jpg",
   imageAlt: "Vợt và bóng pickleball trên sân ngoài trời.",
 }

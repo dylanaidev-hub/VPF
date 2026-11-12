@@ -87,9 +87,9 @@ const pages = [
   "tintuc",
   "giaidau",
   "chuyenmon",
-  "congdong",
   "thu-vien-cong-dong",
   "media",
+  "congdong",
   "hoptac",
 ]
 

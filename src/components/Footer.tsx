@@ -6,7 +6,7 @@ import { BackToTop } from "./BackToTop"
 import { Logo } from "./Logo"
 
 const discoverIds = ["home", "federation", "news", "tournaments", "partners"]
-const categoryIds = ["expertise", "community", "library"]
+const categoryIds = ["expertise", "library"]
 
 const discoverLinks = linksById(discoverIds)
 const categoryLinks = [
@@ -16,7 +16,6 @@ const categoryLinks = [
 
 const anchorId: Record<string, string> = {
   expertise: "chuyen-mon",
-  community: "cong-dong",
   library: "thu-vien-cong-dong",
 }
 

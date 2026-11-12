@@ -50,15 +50,6 @@ export const pages = {
     description: "Luật thi đấu, hệ thống trọng tài, huấn luyện viên và chương trình đào tạo của Liên đoàn Pickleball Việt Nam.",
     note: "Tài liệu và danh mục chính thức sẽ được đăng khi Liên đoàn công bố.",
   },
-  congdong: {
-    id: "congdong",
-    file: "congdong.html",
-    eyebrow: "Cộng đồng",
-    title: "Cộng đồng Pickleball Việt Nam",
-    crumb: "Cộng đồng",
-    description: "Kết nối người chơi, câu lạc bộ và các hoạt động phát triển phong trào Pickleball.",
-    note: "Thông tin câu lạc bộ và hoạt động đang hiển thị là dữ liệu minh họa.",
-  },
   media: {
     id: "media",
     file: "thu-vien-cong-dong.html",
