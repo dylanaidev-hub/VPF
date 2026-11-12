@@ -76,14 +76,14 @@
 }
 
 .vpf-star-mark-hero {
-  width: 77.6%;
+  width: min(52vw, 34rem);
   max-width: none;
   height: auto;
-  left: -40%;
-  right: auto;
+  left: auto;
+  right: -8%;
   top: 50%;
-  translate: 0 -50%;
-  opacity: 0.78;
+  translate: 0 -46%;
+  opacity: 0.22;
 }
 
 .vpf-star-mark-card {
@@ -104,10 +104,10 @@
 
 @media (max-width: 1023px) {
   .vpf-star-mark-hero {
-    width: 62%;
-    left: -36%;
-    right: auto;
-    opacity: 0.5;
+    width: min(48vw, 26rem);
+    left: auto;
+    right: -12%;
+    opacity: 0.16;
   }
 }
 

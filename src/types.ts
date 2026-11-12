@@ -5,12 +5,22 @@ export type NavItem = {
   children?: NavItem[]
 }
 
+export type HeroTitlePart = {
+  text: string
+  accent?: boolean
+}
+
 export type HeroSlide = {
   id: string
-  category: string
+  eyebrow: string
+  /** Each inner array is one headline line; accent parts use VPF orange. */
+  titleLines: HeroTitlePart[][]
+  /** Plain-text title for aria / live region. */
   title: string
   description: string
   image: string
+  imageWebp?: string
+  imageMobileWebp?: string
   imageAlt: string
   objectPosition: string
   primaryCta: { label: string; href: string }

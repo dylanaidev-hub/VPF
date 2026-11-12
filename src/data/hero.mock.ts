@@ -1,44 +1,79 @@
 import type { HeroSlide } from "../types"
 
 /**
- * Ba banner minh họa cho trang chủ.
- * Ảnh là ảnh pickleball thật trong bộ asset; nội dung chữ không phải thông cáo chính thức.
+ * Banner minh họa trang chủ — concept The Spirit of Pickleball.
+ * Ảnh pickleball thật trong bộ asset; chữ không phải thông cáo chính thức.
  */
 export const heroSlides: HeroSlide[] = [
   {
-    id: "tuong-lai",
-    category: "Sự kiện nổi bật",
-    title: "Cùng kiến tạo tương lai Pickleball Việt Nam",
+    id: "spirit",
+    eyebrow: "VIETNAM PICKLEBALL FEDERATION",
+    title: "Kết nối đam mê. Vươn tầm Pickleball.",
+    titleLines: [
+      [
+        { text: "KẾT NỐI " },
+        { text: "ĐAM MÊ.", accent: true },
+      ],
+      [
+        { text: "VƯƠN TẦM " },
+        { text: "PICKLEBALL.", accent: true },
+      ],
+    ],
     description:
-      "Kết nối cộng đồng, phát triển phong trào và nâng tầm Pickleball Việt Nam.",
+      "Cùng phát triển cộng đồng Pickleball Việt Nam chuyên nghiệp, năng động và bền vững.",
+    image: "/images/hero-spirit.jpg",
+    imageWebp: "/images/hero-spirit.webp",
+    imageMobileWebp: "/images/hero-spirit-mobile.webp",
+    imageAlt: "Pha bóng pickleball cận cảnh với vợt và bóng vàng trên sân xanh ngoài trời.",
+    objectPosition: "object-[center_45%]",
+    primaryCta: { label: "Khám phá VPF", href: "/liendoan.html" },
+    secondaryCta: { label: "Xem giải đấu", href: "/giaidau.html" },
+  },
+  {
+    id: "arena",
+    eyebrow: "VIETNAM PICKLEBALL FEDERATION",
+    title: "Đấu trường bùng nổ. Tinh thần thể thao.",
+    titleLines: [
+      [
+        { text: "ĐẤU TRƯỜNG " },
+        { text: "BÙNG NỔ.", accent: true },
+      ],
+      [
+        { text: "TINH THẦN " },
+        { text: "THỂ THAO.", accent: true },
+      ],
+    ],
+    description:
+      "Nơi hội tụ đam mê, tranh tài chuyên nghiệp và lan tỏa tinh thần Pickleball Việt Nam.",
     image: "/images/outdoor.jpg",
+    imageWebp: "/images/outdoor.webp",
+    imageMobileWebp: "/images/outdoor-mobile.webp",
     imageAlt: "Hai người chơi pickleball trong một pha bóng trên sân ngoài trời.",
     objectPosition: "object-[center_40%]",
-    primaryCta: { label: "Khám phá VPF", href: "#lien-doan" },
-    secondaryCta: { label: "Xem giải đấu", href: "#giai-dau" },
+    primaryCta: { label: "Khám phá VPF", href: "/liendoan.html" },
+    secondaryCta: { label: "Xem giải đấu", href: "/giaidau.html" },
   },
   {
-    id: "giai-dau",
-    category: "Giải đấu",
-    title: "Sẵn sàng cho những trận đấu bùng nổ",
+    id: "community",
+    eyebrow: "VIETNAM PICKLEBALL FEDERATION",
+    title: "Kết nối cộng đồng. Nâng tầm Việt Nam.",
+    titleLines: [
+      [
+        { text: "KẾT NỐI " },
+        { text: "CỘNG ĐỒNG.", accent: true },
+      ],
+      [
+        { text: "NÂNG TẦM " },
+        { text: "VIỆT NAM.", accent: true },
+      ],
+    ],
     description:
-      "Khám phá các giải đấu Pickleball, nơi hội tụ đam mê, tinh thần thể thao và những màn tranh tài hấp dẫn.",
-    image: "/images/match.jpg",
-    imageAlt: "Vận động viên thi đấu đôi pickleball trên cụm sân trong nhà.",
-    objectPosition: "object-[center_45%]",
-    primaryCta: { label: "Xem giải đấu", href: "#giai-dau" },
-    secondaryCta: { label: "Khám phá VPF", href: "#lien-doan" },
-  },
-  {
-    id: "cong-dong",
-    category: "Cộng đồng",
-    title: "Kết nối đam mê, lan tỏa tinh thần thể thao",
-    description:
-      "Cùng xây dựng cộng đồng Pickleball năng động, gắn kết và phát triển bền vững.",
+      "Gắn kết người chơi, phát triển hoạt động chuyên môn và vươn tầm quốc tế.",
     image: "/images/player.jpg",
+    imageWebp: "/images/player.webp",
     imageAlt: "Vận động viên cầm vợt pickleball trên sân ngoài trời.",
-    objectPosition: "object-[center_18%]",
-    primaryCta: { label: "Khám phá cộng đồng", href: "#cong-dong" },
-    secondaryCta: { label: "Khám phá VPF", href: "#lien-doan" },
+    objectPosition: "object-[center_22%]",
+    primaryCta: { label: "Khám phá VPF", href: "/liendoan.html" },
+    secondaryCta: { label: "Xem giải đấu", href: "/giaidau.html" },
   },
 ]
