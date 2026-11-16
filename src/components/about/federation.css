@@ -487,6 +487,35 @@
   transform: scaleX(1);
 }
 
+.fed-journey {
+  position: relative;
+}
+
+.fed-track li.is-landed .fed-node {
+  box-shadow:
+    0 0 0 5px rgba(232, 148, 60, 0.32),
+    0 0 14px rgba(232, 148, 60, 0.62);
+}
+
+.fed-ball {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 3;
+  width: 26px;
+  height: 26px;
+  transform-origin: center center;
+  pointer-events: none;
+  opacity: 0;
+  filter: drop-shadow(0 1px 1px rgba(64, 64, 64, 0.35));
+}
+
+.fed-ball img {
+  display: block;
+  width: 26px;
+  height: 26px;
+}
+
 .fed-history-modal {
   position: fixed;
   inset: 0;
@@ -740,7 +769,7 @@
 
 @media (prefers-reduced-motion: no-preference) {
   .fed-node {
-    transition: border-color 240ms ease, background-color 240ms ease;
+    transition: box-shadow 280ms ease, border-color 240ms ease, background-color 240ms ease;
   }
 
   .fed-track time,
@@ -2904,6 +2933,7 @@
   .fed-node,
   .fed-track time,
   .fed-track-title,
+  .fed-ball,
   .fed-decree-paper,
   .fed-decree-copy > *,
   .fed-section > .fixed,
