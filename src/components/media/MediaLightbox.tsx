@@ -12,12 +12,14 @@ export function MediaLightbox({
   onIndex,
   onClose,
   dismissOnBackdrop = false,
+  lockBodyScroll = true,
 }: {
   shots: LightboxShot[]
   index: number
   onIndex: (index: number) => void
   onClose: () => void
   dismissOnBackdrop?: boolean
+  lockBodyScroll?: boolean
 }) {
   const titleId = useId()
   const reduce = useReducedMotion()
@@ -40,7 +42,7 @@ export function MediaLightbox({
   useEffect(() => {
     const previouslyFocused = document.activeElement as HTMLElement | null
     const previousOverflow = document.body.style.overflow
-    document.body.style.overflow = "hidden"
+    if (lockBodyScroll) document.body.style.overflow = "hidden"
     closeRef.current?.focus()
 
     const step = (direction: -1 | 1) => {
@@ -84,10 +86,10 @@ export function MediaLightbox({
     document.addEventListener("keydown", onKeyDown)
     return () => {
       document.removeEventListener("keydown", onKeyDown)
-      document.body.style.overflow = previousOverflow
+      if (lockBodyScroll) document.body.style.overflow = previousOverflow
       previouslyFocused?.focus()
     }
-  }, [total])
+  }, [lockBodyScroll, total])
 
   useEffect(() => {
     const thumb = activeThumbRef.current

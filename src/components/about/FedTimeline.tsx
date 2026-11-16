@@ -3,13 +3,14 @@ import { federationHistory } from "../../data/aboutFederation.mock"
 import { cx } from "../../lib/cx"
 import { useReveal } from "../../lib/useReveal"
 import { Timeline } from "./Timeline"
-import { TimelineGallery } from "./TimelineGallery"
+import { MilestoneGalleryModal } from "./MilestoneGalleryModal"
 
 export function FedTimeline() {
   const reveal = useReveal<HTMLElement>()
   const galleryId = useId()
   const { milestones } = federationHistory
-  const [activeMilestone, setActiveMilestone] = useState<string | null>(milestones[0]?.id ?? null)
+  const [activeMilestone, setActiveMilestone] = useState<string | null>(null)
+  const [galleryOpen, setGalleryOpen] = useState(false)
   const milestone = milestones.find((item) => item.id === activeMilestone)
 
   return (
@@ -26,12 +27,21 @@ export function FedTimeline() {
           milestones={milestones}
           activeMilestone={activeMilestone}
           galleryId={galleryId}
-          onSelect={(id) => setActiveMilestone((current) => (current === id ? null : id))}
+          galleryOpen={galleryOpen}
+          onSelect={(id) => {
+            setActiveMilestone(id)
+            setGalleryOpen(true)
+          }}
         />
-        <div id={galleryId} hidden={!milestone}>
-          {milestone ? <TimelineGallery key={milestone.id} milestone={milestone} /> : null}
-        </div>
       </div>
+      {galleryOpen && milestone ? (
+        <MilestoneGalleryModal
+          key={milestone.id}
+          id={galleryId}
+          milestone={milestone}
+          onClose={() => setGalleryOpen(false)}
+        />
+      ) : null}
     </section>
   )
 }
