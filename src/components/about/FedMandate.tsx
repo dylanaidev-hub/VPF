@@ -14,7 +14,6 @@ export function FedMandate() {
       aria-labelledby="chuc-nang-tieu-de"
     >
       <div className="page-wrap">
-        <p className="fed-kicker">{federationMandate.eyebrow}</p>
         <h2 id="chuc-nang-tieu-de">{federationMandate.title}</h2>
         <p className="fed-note">{federationMandate.note}</p>
         <div className="fed-mandate">

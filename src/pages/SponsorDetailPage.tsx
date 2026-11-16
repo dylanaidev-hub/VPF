@@ -2,7 +2,7 @@ import { ArrowLeft, ArrowRight, ExternalLink } from "lucide-react"
 import { PageHeader } from "../components/PageHeader"
 import { SiteLayout } from "../components/SiteLayout"
 import { news } from "../data/news"
-import { ILLUSTRATIVE_LABEL, sponsorTierLabel, type SponsorProfile } from "../data/partnership.mock"
+import { sponsorTierLabel, type SponsorProfile } from "../data/partnership.mock"
 import { tournaments } from "../data/tournaments.mock"
 import { formatViDate } from "../lib/format"
 import { newsPath } from "../lib/news"
@@ -21,11 +21,9 @@ export function SponsorDetailPage({ sponsor }: { sponsor: SponsorProfile }) {
           { label: "Hợp tác", href: "/hoptac.html" },
           { label: sponsor.name },
         ]}
-        eyebrow={sponsorTierLabel[sponsor.tier]}
         title={sponsor.name}
         titleId="nha-tai-tro-chi-tiet"
         description={sponsor.intro}
-        disclaimer={ILLUSTRATIVE_LABEL}
         action={
           <a href={sitePath("/hoptac.html")} className="page-header-cta">
             <ArrowLeft className="size-4" aria-hidden />
@@ -42,7 +40,6 @@ export function SponsorDetailPage({ sponsor }: { sponsor: SponsorProfile }) {
           <div className="partner-detail-banner-copy">
             <p className="partner-tier-badge">{sponsorTierLabel[sponsor.tier]}</p>
             <p className="partner-main-sector mt-3">{sponsor.sector}</p>
-            <p className="partner-note mt-2">Hồ sơ nhà tài trợ minh họa — không phải đối tác chính thức đã công bố.</p>
           </div>
         </div>
       </section>
@@ -97,7 +94,6 @@ export function SponsorDetailPage({ sponsor }: { sponsor: SponsorProfile }) {
             <h2 id="giai-dong-hanh" className="partner-section-title">
               Giải đấu đồng hành
             </h2>
-            <p className="partner-note">Danh sách giải minh họa gắn với hồ sơ này trên giao diện.</p>
             <ul className="partner-tour-grid">
               {supported.map((item) => (
                 <li key={item.id}>
@@ -125,7 +121,6 @@ export function SponsorDetailPage({ sponsor }: { sponsor: SponsorProfile }) {
             <h2 id="tin-lien-quan" className="partner-section-title">
               Tin liên quan
             </h2>
-            <p className="partner-note">Bài viết hiện có trên cổng tin tức, gắn minh họa với hồ sơ này.</p>
             <ul className="partner-news-grid">
               {relatedNews.map((article) => (
                 <li key={article.id}>
@@ -177,10 +172,9 @@ export function SponsorNotFoundPage() {
           { label: "Hợp tác", href: "/hoptac.html" },
           { label: "Không tìm thấy" },
         ]}
-        eyebrow="Hợp tác"
         title="Không tìm thấy nhà tài trợ"
         titleId="nha-tai-tro-khong-tim-thay"
-        description="Hồ sơ bạn mở không có trong dữ liệu minh họa hiện tại."
+        description="Hồ sơ nhà tài trợ này không có trên cổng hợp tác."
       />
       <div className="page-wrap pb-16">
         <a href={sitePath("/hoptac.html")} className="partner-btn-primary inline-flex">

@@ -22,16 +22,16 @@ export type PartnershipMetric = {
 }
 
 export const partnershipMetrics: PartnershipMetric[] = [
-  { id: "vdv-clb", value: 1200, suffix: "+", label: "VĐV & CLB (minh họa)" },
-  { id: "giai-dau", value: 24, label: "Giải đấu mỗi năm (minh họa)" },
-  { id: "livestream", value: 85, suffix: "K+", label: "Lượt xem livestream (minh họa)" },
-  { id: "tinh-thanh", value: 32, label: "Tỉnh/thành tham gia (minh họa)" },
+  { id: "vdv-clb", value: 1200, suffix: "+", label: "VĐV & CLB" },
+  { id: "giai-dau", value: 24, label: "Giải đấu mỗi năm" },
+  { id: "livestream", value: 85, suffix: "K+", label: "Lượt xem livestream" },
+  { id: "tinh-thanh", value: 32, label: "Tỉnh/thành tham gia" },
 ]
 
 export const impactSection = {
   id: "dong-hanh",
   title: "Đồng hành cùng VPF",
-  description: "Quy mô phong trào Pickleball Việt Nam — số liệu minh họa để đối tác hình dung tiềm năng đồng hành.",
+  description: "Quy mô phong trào Pickleball Việt Nam và tiềm năng đồng hành cùng VPF.",
   note: ILLUSTRATIVE_LABEL,
   ctaLabel: "Trở thành đối tác",
   ctaHref: "#lien-he-hop-tac",
@@ -229,7 +229,7 @@ export const mediaSponsors = sponsors.filter((item) => item.tier === "media")
 export const sponsorsSection = {
   id: "nha-tai-tro",
   title: "Nhà tài trợ & Đối tác",
-  description: "Danh mục nhà tài trợ và đối tác minh họa theo hạng mục trên giao diện cổng Hợp tác.",
+  description: "Các nhà tài trợ và đối tác đồng hành theo từng hạng mục hợp tác.",
   note: ILLUSTRATIVE_LABEL,
 } as const
 
@@ -279,9 +279,9 @@ export const benefitRows = [
 export const offersSection = {
   id: "hinh-thuc",
   title: "Hình thức hợp tác & Quyền lợi",
-  description: "Bốn hướng hợp tác và khung quyền lợi minh họa. Chưa phải gói thương mại chính thức.",
+  description: "Các hướng hợp tác và quyền lợi dành cho đối tác đồng hành cùng VPF.",
   note: ILLUSTRATIVE_LABEL,
-  comparisonTitle: "So sánh quyền lợi minh họa",
+  comparisonTitle: "So sánh quyền lợi",
   downloadLabel: "Tải hồ sơ tài trợ (PDF)",
   /** Chỉ gán khi có PDF thật. */
   downloadHref: undefined as string | undefined,
@@ -300,7 +300,7 @@ export const partnershipTypeOptions = [
 export const contactSection = {
   id: "lien-he-hop-tac",
   title: "Liên hệ hợp tác",
-  description: "Gửi thông tin quan tâm hợp tác. Biểu mẫu đang ở chế độ minh họa — chưa có kênh tiếp nhận chính thức.",
+  description: "Gửi thông tin để VPF liên hệ về cơ hội hợp tác.",
   note: "Chức năng gửi đang chờ tích hợp. Dữ liệu không được gửi đi và không được lưu trên trình duyệt.",
   ctaLabel: "Gửi thông tin",
   consentLabel: "Tôi đồng ý để VPF liên hệ và xử lý thông tin theo chính sách bảo mật.",

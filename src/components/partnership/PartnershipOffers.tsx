@@ -24,7 +24,6 @@ export function PartnershipOffers() {
             {offersSection.title}
           </h2>
           <p className="partner-section-lead">{offersSection.description}</p>
-          <p className="partner-note">{offersSection.note}</p>
         </div>
 
         <ul className="partner-offer-grid">
@@ -47,7 +46,6 @@ export function PartnershipOffers() {
 
         <div className="partner-compare">
           <h3 className="partner-compare-title">{offersSection.comparisonTitle}</h3>
-          <p className="partner-note">Bảng quyền lợi minh họa — chưa phải cam kết thương mại.</p>
           <div className="partner-compare-scroll">
             <table className="partner-compare-table">
               <thead>

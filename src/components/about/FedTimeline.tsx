@@ -178,7 +178,6 @@ export function FedTimeline() {
       aria-labelledby="lich-su-tieu-de"
     >
       <div className="page-wrap">
-        <p className="fed-kicker">{federationHistory.eyebrow}</p>
         <h2 id="lich-su-tieu-de">{federationHistory.title}</h2>
         <p className="fed-note">{federationHistory.note}</p>
         <div

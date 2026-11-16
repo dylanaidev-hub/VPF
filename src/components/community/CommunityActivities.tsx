@@ -10,9 +10,9 @@ export function CommunityActivities() {
 
   return (
     <section className="page-wrap py-14 md:py-16">
-      <h2 className="text-3xl font-semibold tracking-tight text-ink md:text-4xl">Hoạt động cộng đồng</h2>
-        <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted">
-          Hoạt động minh họa, chưa phải lịch sinh hoạt của Liên đoàn.
+      <h2 className="vpf-section-title">Hoạt động cộng đồng</h2>
+        <p className="mt-3 max-w-2xl text-[15px] leading-relaxed text-muted md:text-base">
+          Các hoạt động giao lưu, tập luyện và sự kiện trong cộng đồng Pickleball.
         </p>
       <div ref={ref} className="community-activities mt-8">
         <article className={cx("community-rise community-activity-main overflow-hidden rounded-2xl border border-line bg-white", shown && "is-in")}>

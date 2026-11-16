@@ -48,7 +48,6 @@ export function TeamsAthletesSection() {
             {teamsSection.title}
           </h2>
           <p className="library-section-lead">{teamsSection.description}</p>
-          <p className="library-note">{teamsSection.note}</p>
         </div>
 
         <div className="library-tabs" role="tablist" aria-label="Đội tuyển và vận động viên">

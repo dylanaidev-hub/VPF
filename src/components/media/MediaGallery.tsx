@@ -62,9 +62,8 @@ export function MediaGallery() {
       <h2 id="thu-vien-tieu-de" className="sr-only">
         Thư viện hình ảnh và video
       </h2>
-      <p className="text-sm text-muted">Nội dung minh họa, không phải tư liệu chính thức của Liên đoàn.</p>
 
-      <div className="media-filters mt-5" role="tablist" aria-label="Loại media">
+      <div className="media-filters" role="tablist" aria-label="Loại media">
         {mediaFilters.map((item) => {
           const selected = item === filter
           return (

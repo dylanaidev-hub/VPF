@@ -6,6 +6,7 @@ import { sitePath } from "../lib/site"
 import { statusLabel, tournamentSlugFromLocation, withStatus } from "../lib/tournaments"
 import { Badge } from "../components/Badge"
 import { Breadcrumb } from "../components/Breadcrumb"
+import { PageHero } from "../components/PageHero"
 import { SiteLayout } from "../components/SiteLayout"
 import { TournamentDetailTabs } from "../components/tournaments/TournamentDetailTabs"
 
@@ -44,7 +45,7 @@ export function TournamentDetailPage() {
           />
           <h1 className="mt-6 text-[2rem] font-bold tracking-tight text-ink">Không tìm thấy giải đấu</h1>
           <p className="mt-3 max-w-xl text-[15px] leading-relaxed text-muted">
-            Đường dẫn không khớp với giải nào trong dữ liệu minh họa.
+            Đường dẫn không khớp với giải nào trên hệ thống.
           </p>
           <a
             href={sitePath("/giaidau.html")}
@@ -62,41 +63,33 @@ export function TournamentDetailPage() {
   return (
     <SiteLayout>
       <article className="bg-white">
-        <header className="tournament-hero">
-          <img
-            src={sitePath(tournament.coverImage)}
-            alt={tournament.coverImageAlt}
-            width={1600}
-            height={900}
-            className="absolute inset-0 h-full w-full object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-navy via-navy/75 to-navy/25" aria-hidden />
-          <div className="page-wrap relative z-10 py-8 sm:py-10">
-            <Breadcrumb
-              tone="inverse"
-              items={[
-                { label: "Trang chủ", href: "/index.html" },
-                { label: "Giải đấu", href: "/giaidau.html" },
-                { label: tournament.name },
-              ]}
-            />
-            <div className="mt-8 max-w-3xl">
-              <Badge tone={tone[tournament.status]}>{statusLabel[tournament.status]}</Badge>
-              <h1 className="mt-4 text-[2rem] font-bold leading-[1.12] tracking-tight text-white min-[1200px]:text-[2.75rem]">
-                {tournament.name}
-              </h1>
-              <p className="mt-3 text-sm text-white/85 sm:text-base">
-                <time dateTime={tournament.startDate}>{date.rangeLabel}</time>
-                <span aria-hidden> · </span>
-                {tournament.time}
-              </p>
-              <p className="mt-2 flex items-center gap-2 text-sm text-white/85 sm:text-base">
-                <MapPin className="size-4 shrink-0" aria-hidden />
-                {tournament.venue}, {tournament.location}
-              </p>
-            </div>
-          </div>
-        </header>
+        <PageHero
+          variant="detail"
+          title={tournament.name}
+          breadcrumbs={[
+            { label: "Trang chủ", href: "/index.html" },
+            { label: "Giải đấu", href: "/giaidau.html" },
+            { label: tournament.name },
+          ]}
+          beforeTitle={
+            <Badge
+              tone={tone[tournament.status]}
+              className={tournament.status === "ongoing" ? "bg-white text-signal" : undefined}
+            >
+              {statusLabel[tournament.status]}
+            </Badge>
+          }
+        >
+          <p className="mt-3 text-sm text-white/85 sm:text-base">
+            <time dateTime={tournament.startDate}>{date.rangeLabel}</time>
+            <span aria-hidden> · </span>
+            {tournament.time}
+          </p>
+          <p className="mt-2 flex items-center gap-2 text-sm text-white/85 sm:text-base">
+            <MapPin className="size-4 shrink-0" aria-hidden />
+            {tournament.venue}, {tournament.location}
+          </p>
+        </PageHero>
 
         <div className="page-wrap">
           <p className="border-b border-line py-4 text-sm text-muted">{tournament.note}</p>

@@ -42,7 +42,6 @@ export function BrandIdentitySection() {
             {brandSection.title}
           </h2>
           <p className="library-section-lead">{brandSection.description}</p>
-          <p className="library-note">{brandSection.note}</p>
 
           <ul className="library-brand-resources">
             {brandSection.resources.map((item) => (

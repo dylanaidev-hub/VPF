@@ -126,7 +126,7 @@ function Overview({ tournament }: { tournament: TournamentView }) {
           </div>
         ) : null}
       </dl>
-      <p className="text-sm leading-relaxed text-muted">Thông tin liên hệ chưa được công bố trong dữ liệu minh họa.</p>
+      <p className="text-sm leading-relaxed text-muted">Thông tin liên hệ chưa được công bố.</p>
     </div>
   )
 }

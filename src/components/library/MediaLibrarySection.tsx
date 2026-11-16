@@ -55,8 +55,7 @@ export function MediaLibrarySection() {
           <h2 id="anh-video-tieu-de" className="library-section-title">
             Ảnh & Video
           </h2>
-          <p className="library-section-lead">Thư viện album giải đấu, câu lạc bộ và video minh họa.</p>
-          <p className="library-note">Album và video dưới đây là dữ liệu minh họa — không phải tư liệu chính thức.</p>
+          <p className="library-section-lead">Thư viện album giải đấu, câu lạc bộ và video Pickleball.</p>
         </div>
 
         <div className="library-tabs" role="tablist" aria-label="Loại media">

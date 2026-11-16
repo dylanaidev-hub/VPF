@@ -6,7 +6,6 @@ import { selectNewsLayout } from "../lib/news"
 import { Dialog } from "./Dialog"
 import { FeaturedNewsCard } from "./FeaturedNewsCard"
 import { NewsCard } from "./NewsCard"
-import { TrendingNews } from "./TrendingNews"
 
 export function NewsSection({
   articles,
@@ -16,7 +15,7 @@ export function NewsSection({
   onOpen: (article: NewsArticle) => void
 }) {
   const [catalogOpen, setCatalogOpen] = useState(false)
-  const { featured, secondary, trending, catalog } = selectNewsLayout(articles)
+  const { featured, secondary, catalog } = selectNewsLayout(articles)
 
   if (!featured) return null
 
@@ -26,10 +25,9 @@ export function NewsSection({
         <div className="relative mb-8 flex flex-col gap-5 md:mb-10 md:flex-row md:items-end md:justify-between">
           <div className="relative max-w-2xl">
             <PickleballMark />
-            <p className="relative mb-3 text-[13px] font-medium text-brand-strong">Tin tức</p>
             <h2
               id="tin-tuc-tieu-de"
-              className="relative text-[2rem] font-bold leading-[1.15] tracking-tight text-ink min-[1200px]:text-[2.75rem]"
+              className="vpf-section-title relative"
             >
               Tin tức nổi bật
             </h2>
@@ -55,8 +53,6 @@ export function NewsSection({
             ))}
           </div>
         </div>
-
-        <TrendingNews articles={trending} onOpen={onOpen} />
       </div>
 
       <Dialog open={catalogOpen} title="Tất cả tin tức" onClose={() => setCatalogOpen(false)}>

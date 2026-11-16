@@ -39,15 +39,10 @@ export function HistoryTimeline() {
     <section className="bg-paper" aria-labelledby="lich-su-tieu-de">
       <Container className="grid gap-10 py-16 min-[1200px]:grid-cols-[minmax(0,35fr)_minmax(0,65fr)] min-[1200px]:items-center min-[1200px]:gap-16 min-[1200px]:py-24">
         <div>
-          <p className="text-[13px] font-medium text-brand-strong">{aboutHistory.eyebrow}</p>
-          <h2
-            id="lich-su-tieu-de"
-            className="mt-4 text-[2rem] font-bold leading-[1.12] tracking-tight text-ink min-[1200px]:text-[2.5rem]"
-          >
+          <h2 id="lich-su-tieu-de" className="vpf-section-title">
             {aboutHistory.title}
           </h2>
-          <p className="mt-4 text-[15px] leading-relaxed text-muted md:text-base">{aboutHistory.description}</p>
-          <p className="mt-4 text-sm leading-relaxed text-muted">{aboutHistory.note}</p>
+          <p className="mt-3 text-[15px] leading-relaxed text-muted md:text-base">{aboutHistory.description}</p>
         </div>
 
         <ol ref={listRef} className="relative flex flex-col gap-8 min-[1200px]:flex-row min-[1200px]:gap-6">

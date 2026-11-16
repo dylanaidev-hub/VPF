@@ -51,7 +51,6 @@ export function MembershipSection() {
             {membershipSection.title}
           </h2>
           <p className="library-section-lead">{membershipSection.description}</p>
-          <p className="library-note">{membershipSection.note}</p>
         </div>
 
         <ol className="library-steps">

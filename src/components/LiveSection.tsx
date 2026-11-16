@@ -30,9 +30,6 @@ export function LiveSection({ arena }: { arena: LiveArena }) {
                 </p>
               </div>
             ) : null}
-            <p className="vpf-arena-note">
-              Lịch, điểm số và hình ảnh là dữ liệu minh họa, không phải kết quả chính thức.
-            </p>
           </div>
           {hasLive ? (
             <p className="vpf-arena-now">
@@ -249,7 +246,6 @@ function LivePlayer({
             <p className="vpf-arena-score">{padScore(match.homeScore)}</p>
             <p className="vpf-arena-side">{match.awayName}</p>
             <p className="vpf-arena-score">{padScore(match.awayScore)}</p>
-            <p className="vpf-arena-mock">Điểm số minh họa, không phải kết quả chính thức.</p>
           </div>
         </div>
       )}

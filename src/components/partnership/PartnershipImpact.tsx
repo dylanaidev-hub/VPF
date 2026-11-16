@@ -43,7 +43,6 @@ export function PartnershipImpact() {
             {impactSection.title}
           </h2>
           <p className="partner-section-lead">{impactSection.description}</p>
-          <p className="partner-note">{impactSection.note}</p>
         </div>
 
         <ul className="partner-metrics">

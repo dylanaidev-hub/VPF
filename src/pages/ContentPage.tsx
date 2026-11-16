@@ -9,18 +9,11 @@ export function ContentPage({ page }: { page: PageContent }) {
       <article aria-labelledby="tieu-de-trang" className="bg-white">
         <Container className="py-14 md:py-20 min-[1200px]:py-24">
           <Breadcrumb items={[{ label: "Trang chủ", href: "/index.html" }, { label: page.crumb }]} />
-          <div className="mt-10 max-w-3xl">
-            <p className="text-[13px] font-medium text-brand-strong">{page.eyebrow}</p>
-            <h1
-              id="tieu-de-trang"
-              className="mt-4 text-[2rem] font-bold leading-[1.12] tracking-tight text-ink sm:text-4xl min-[1200px]:text-[2.75rem]"
-            >
+          <div className="mt-8 max-w-3xl">
+            <h1 id="tieu-de-trang" className="page-header-title mt-0">
               {page.title}
             </h1>
-            <p className="mt-5 max-w-2xl text-[15px] leading-relaxed text-muted md:text-base">{page.description}</p>
-            <p className="mt-8 max-w-2xl rounded-2xl border border-line bg-paper px-5 py-4 text-sm leading-relaxed text-muted">
-              {page.note}
-            </p>
+            <p className="page-header-description">{page.description}</p>
           </div>
         </Container>
       </article>

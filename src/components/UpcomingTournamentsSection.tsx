@@ -12,10 +12,8 @@ function phaseOf(item: Pick<Tournament, "startDate" | "time">, now: Date) {
 
 export function UpcomingTournamentsSection({
   tournaments,
-  illustrative = false,
 }: {
   tournaments: Tournament[]
-  illustrative?: boolean
 }) {
   const now = useTournamentClock()
   const { featured, timeline } = selectTournamentSpotlight(tournaments, now)
@@ -25,14 +23,10 @@ export function UpcomingTournamentsSection({
       <div className="page-wrap">
         <div className="vpf-hub-head">
           <div className="max-w-2xl">
-            <p className="vpf-hub-eyebrow">UPCOMING TOURNAMENTS</p>
             <h2 id="giai-dau-tieu-de">Đấu trường Pickleball</h2>
             <p className="vpf-hub-lead">
               Khám phá những giải đấu và sự kiện Pickleball sắp diễn ra trên toàn quốc.
             </p>
-            {illustrative ? (
-              <p className="vpf-hub-note">Các giải đang hiển thị là dữ liệu minh họa, không phải lịch chính thức.</p>
-            ) : null}
           </div>
           <a className="vpf-hub-calendar" href={sitePath("/giaidau.html")}>
             Xem lịch giải đấu

@@ -17,14 +17,12 @@ type ActiveTab = "all" | TournamentStatus
 
 function SectionHead({
   id,
-  eyebrow,
   title,
   description,
   actionHref,
   actionLabel,
 }: {
   id: string
-  eyebrow?: string
   title: string
   description?: string
   actionHref?: string
@@ -33,7 +31,6 @@ function SectionHead({
   return (
     <div className="tournament-section-head">
       <div className="min-w-0">
-        {eyebrow ? <p className="tournament-section-eyebrow">{eyebrow}</p> : null}
         <h2 id={id}>{title}</h2>
         {description ? <p>{description}</p> : null}
       </div>
@@ -74,9 +71,8 @@ export function ActiveTournamentSchedule({
       <div className="page-wrap py-10 min-[1200px]:py-12">
         <SectionHead
           id="giai-sap-dien-ra"
-          eyebrow="Lịch thi đấu"
           title="Giải đang và sắp diễn ra"
-          description="Theo dõi các giải đang diễn ra và lịch sắp tới trên toàn hệ thống minh họa."
+          description="Theo dõi các giải đang diễn ra và lịch sắp tới trên toàn quốc."
         />
 
         <div className="tournament-pills mt-5" role="tablist" aria-label="Lọc giải đang và sắp diễn ra">
@@ -202,9 +198,8 @@ export function CompletedTournamentSection({
       <div className="page-wrap py-10 min-[1200px]:py-12">
         <SectionHead
           id="giai-da-ket-thuc"
-          eyebrow="Kết quả"
           title="Giải đã kết thúc"
-          description="Xem lại các giải minh họa đã khép lại và nhà vô địch khi có trong dữ liệu."
+          description="Xem lại các giải đã khép lại và kết quả thi đấu."
         />
         <ul className="tournament-completed-grid mt-6">
           {list.map((tournament) => {

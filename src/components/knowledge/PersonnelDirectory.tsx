@@ -7,6 +7,7 @@ import { sitePath } from "../../lib/site"
 import { useReveal } from "../../lib/useReveal"
 import { Dialog } from "../Dialog"
 import { Select } from "../Select"
+import { RefereeCard, RefereeDetail } from "./RefereeCard"
 
 const searchInputClass =
   "h-12 w-full rounded-[10px] border border-line bg-white px-4 pr-12 text-[15px] text-ink outline-none [&::-webkit-search-cancel-button]:hidden"
@@ -51,7 +52,6 @@ export function PersonnelDirectory({
   searchLabel,
   empty,
   emptyFiltered,
-  illustrativeNote,
   viewAllLabel,
   collapseLabel,
   members,
@@ -106,7 +106,6 @@ export function PersonnelDirectory({
             {title}
           </h2>
           <p className="expertise-section-lead">{description}</p>
-          <p className="expertise-note">{illustrativeNote}</p>
         </div>
 
         {hasData ? (
@@ -169,7 +168,12 @@ export function PersonnelDirectory({
             </form>
 
             {dirty ? (
-              <div>
+              <div className="flex flex-wrap items-center gap-3">
+                {filtered.length > 0 ? (
+                  <p className="referee-count" aria-live="polite">
+                    {variant === "referee" ? `${filtered.length} trọng tài` : `${filtered.length} hồ sơ phù hợp`}
+                  </p>
+                ) : null}
                 <button type="button" className={resetFilterClass} onClick={reset}>
                   Xóa bộ lọc
                 </button>
@@ -191,25 +195,35 @@ export function PersonnelDirectory({
           </div>
         ) : (
           <>
-            <ul className="expertise-person-grid">
-              {visible.map((member) => (
-                <li key={member.id}>
-                  <button type="button" className="expertise-person-card" onClick={() => setOpen(member)}>
-                    <span className="expertise-person-avatar">
-                      <Portrait member={member} />
-                    </span>
-                    <span className="expertise-person-body">
-                      <span className="expertise-person-name">{member.name}</span>
-                      <span className="expertise-level">{member.level}</span>
-                      <span className="expertise-person-place">
-                        <MapPin className="size-3.5 shrink-0" aria-hidden />
-                        {member.province}
+            {variant === "referee" ? (
+              <ul className="referee-grid">
+                {visible.map((member) => (
+                  <li key={member.id}>
+                    <RefereeCard member={member} onOpen={() => setOpen(member)} />
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <ul className="expertise-person-grid">
+                {visible.map((member) => (
+                  <li key={member.id}>
+                    <button type="button" className="expertise-person-card" onClick={() => setOpen(member)}>
+                      <span className="expertise-person-avatar">
+                        <Portrait member={member} />
                       </span>
-                    </span>
-                  </button>
-                </li>
-              ))}
-            </ul>
+                      <span className="expertise-person-body">
+                        <span className="expertise-person-name">{member.name}</span>
+                        <span className="expertise-level">{member.level}</span>
+                        <span className="expertise-person-place">
+                          <MapPin className="size-3.5 shrink-0" aria-hidden />
+                          {member.province}
+                        </span>
+                      </span>
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            )}
 
             {canToggle ? (
               <div className="expertise-more">
@@ -223,10 +237,6 @@ export function PersonnelDirectory({
                   {expanded ? <ChevronUp className="size-4" aria-hidden /> : <ChevronDown className="size-4" aria-hidden />}
                 </button>
               </div>
-            ) : dirty ? (
-              <p className="expertise-more-meta" aria-live="polite">
-                {filtered.length} hồ sơ phù hợp
-              </p>
             ) : null}
           </>
         )}
@@ -237,12 +247,13 @@ export function PersonnelDirectory({
         title={open?.name ?? (variant === "coach" ? "Huấn luyện viên" : "Trọng tài")}
         onClose={() => setOpen(null)}
       >
-        {open ? (
+        {open && variant === "referee" ? (
+          <RefereeDetail member={open} />
+        ) : open ? (
           <div className="expertise-profile">
             <div className="expertise-profile-media">
               <Portrait member={open} large />
             </div>
-            <p className="text-sm font-medium text-brand-strong">Hồ sơ minh họa</p>
             <p className="expertise-level mt-3">{open.level}</p>
             {open.specialization ? (
               <p className="mt-2 text-sm text-ink">
@@ -253,10 +264,6 @@ export function PersonnelDirectory({
             <p className="expertise-person-place mt-3">
               <MapPin className="size-3.5 shrink-0" aria-hidden />
               {open.province}
-            </p>
-            {open.bio ? <p className="mt-4 text-[15px] leading-relaxed text-ink">{open.bio}</p> : null}
-            <p className="mt-4 text-sm text-muted">
-              Không phải thành viên hay chứng nhận chính thức của Liên đoàn. Chỉ dùng để duyệt giao diện.
             </p>
           </div>
         ) : null}

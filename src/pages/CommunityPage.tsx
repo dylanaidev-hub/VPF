@@ -17,11 +17,9 @@ export function CommunityPage() {
     <SiteLayout>
       <PageHeader
         breadcrumb={[{ label: "Trang chủ", href: "/index.html" }, { label: "Cộng đồng" }]}
-        eyebrow="Cộng đồng"
         title="Cộng đồng Pickleball Việt Nam"
         titleId="cong-dong-tieu-de"
         description="Kết nối người chơi, câu lạc bộ và các hoạt động phát triển phong trào Pickleball."
-        disclaimer="Thông tin câu lạc bộ và hoạt động đang hiển thị là dữ liệu minh họa."
       />
       <CommunityStats />
       <ClubDiscovery

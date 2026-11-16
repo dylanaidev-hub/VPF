@@ -24,14 +24,11 @@ export function CommunityNetwork({ city, onCity }: { city: string; onCity: (city
       <div className="page-wrap">
         <div className="community-network-grid">
           <div className="min-w-0">
-            <h2 id="mang-luoi-cong-dong" className="text-3xl font-semibold tracking-tight md:text-4xl">
+            <h2 id="mang-luoi-cong-dong" className="vpf-section-title text-white">
               Mỗi sân đấu, một kết nối mới.
             </h2>
             <p className="mt-4 max-w-xl text-base leading-relaxed text-white/80">
-              Khám phá mạng lưới cộng đồng Pickleball đang phát triển tại nhiều địa phương.
-            </p>
-            <p className="mt-3 max-w-xl text-sm leading-relaxed text-white/70">
-              Sơ đồ kết nối minh họa, không phải bản đồ hành chính. Chọn một địa phương để lọc danh sách câu lạc bộ.
+              Khám phá mạng lưới cộng đồng Pickleball đang phát triển tại nhiều địa phương. Chọn một địa phương để xem câu lạc bộ trong khu vực.
             </p>
           </div>
 

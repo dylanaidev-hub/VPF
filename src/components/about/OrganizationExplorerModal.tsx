@@ -278,7 +278,7 @@ export function OrganizationExplorerModal({ open, onClose }: OrganizationExplore
               <section aria-labelledby="fed-org-units-title">
                 <div className="fed-org-units-head">
                   <h3 id="fed-org-units-title">Các ban chuyên môn</h3>
-                  <p>Chọn một ban để xem danh sách thành viên minh họa.</p>
+                  <p>Chọn một ban để xem danh sách thành viên.</p>
                 </div>
                 <div className="fed-org-grid">
                   {unitCommittees.map((committee) => (

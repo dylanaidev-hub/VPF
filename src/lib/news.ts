@@ -75,8 +75,3 @@ export function selectNewsLayout(articles: NewsArticle[]) {
     catalog: [...articles].sort((a, b) => b.date.localeCompare(a.date)),
   }
 }
-
-export function trendingLabel(article: NewsArticle, index: number) {
-  const rank = article.trendingRank ?? index + 1
-  return String(rank).padStart(2, "0")
-}

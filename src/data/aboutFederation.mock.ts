@@ -67,8 +67,8 @@ export const federationNav = [
 export const federationHistory = {
   id: "lich-su",
   eyebrow: "Lịch sử hình thành",
-  title: "Các mốc trên dòng thời gian",
-  note: "Bốn mốc dưới đây là dữ liệu minh họa, không phải lịch sử chính thức của VPF.",
+  title: "Lịch sử hình thành",
+  note: "Những dấu mốc quan trọng trong quá trình hình thành và phát triển của Liên đoàn.",
   milestones: [
     {
       id: "2024-03",
@@ -101,7 +101,7 @@ export const federationDecision = {
   id: "quyet-dinh",
   eyebrow: "Hồ sơ pháp lý",
   title: "Quyết định thành lập Liên đoàn",
-  note: "Văn bản thành lập sẽ được đăng tại đây khi có quyết định chính thức. Các mục bên dưới là chỗ chờ, không phải nội dung đã ban hành.",
+  note: "Quyết định thành lập sẽ được cập nhật khi Liên đoàn công bố.",
   numberLabel: "Số quyết định",
   number: "Chưa công bố",
   dateLabel: "Ngày ban hành",
@@ -189,8 +189,8 @@ export const federationVision = {
 export const federationMandate = {
   id: "chuc-nang",
   eyebrow: "Chức năng và nhiệm vụ",
-  title: "Phạm vi được mô tả trên trang",
-  note: "Hai cột là khung minh họa. Chức năng, nhiệm vụ và quyền hạn chính thức chỉ có khi điều lệ được công bố.",
+  title: "Chức năng và nhiệm vụ",
+  note: "Phạm vi hoạt động và những nhiệm vụ VPF đảm nhận trong phát triển Pickleball Việt Nam.",
   functionsTitle: "Chức năng",
   functions: [
     "Đại diện cộng đồng pickleball trong các hoạt động được giao trên hồ sơ này.",
@@ -217,7 +217,7 @@ export const federationCharter = {
   format: "PDF",
   statusLabel: "Tình trạng",
   status: "Chưa có tệp",
-  note: "Chưa có điều lệ chính thức để xem hoặc tải. Nút bên cạnh mở trang thông báo, không mở một văn bản giả.",
+  note: "Điều lệ sẽ được đăng tại đây khi Liên đoàn công bố.",
   cta: "Xem tài liệu",
   href: "/documents/chua-cong-bo.html?van-ban=dieu-le",
 }
@@ -262,7 +262,7 @@ export const federationCommittee = {
   id: "ban-chap-hanh",
   eyebrow: "Ban Chấp hành",
   title: "Ban Chấp hành Liên đoàn",
-  note: "Tên và chức danh là dữ liệu minh họa, không khẳng định chức vụ tại VPF.",
+  note: "Đội ngũ lãnh đạo và các thành viên tham gia điều hành hoạt động của Liên đoàn.",
   cta: "Xem toàn bộ Ban Chấp hành",
   chair: federationChair,
   vices: federationVices,
@@ -274,7 +274,7 @@ export const federationContact = {
   id: "lien-he",
   eyebrow: "Thông tin liên hệ",
   title: "Liên hệ Liên đoàn",
-  note: "Địa chỉ, hotline, email và giờ làm việc chưa được công bố. Không dùng các dòng dưới đây như thông tin chính thức.",
+  note: "Thông tin để kết nối với Liên đoàn Pickleball Việt Nam.",
   rows: [
     { id: "address", label: "Địa chỉ", value: "Hà Nội, Việt Nam — địa điểm minh họa, chưa có số nhà." },
     { id: "hotline", label: "Hotline", value: "Chưa công bố" },

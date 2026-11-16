@@ -27,7 +27,6 @@ export function SponsorShowcase() {
             {sponsorsSection.title}
           </h2>
           <p className="partner-section-lead">{sponsorsSection.description}</p>
-          <p className="partner-note">{sponsorsSection.note}</p>
         </div>
 
         {mainSponsor ? (

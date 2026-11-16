@@ -58,12 +58,9 @@ export function OrganizationChart() {
       <Container className="py-20 min-[1200px]:py-24">
         <SectionHeading
           id="co-cau-tieu-de"
-          eyebrow={organization.eyebrow}
           title={organization.title}
           subtitle={organization.description}
         />
-        <p className="-mt-4 mb-8 text-sm text-muted">{organization.note}</p>
-
         <div className="org-architecture">
           <article data-org-reveal className="org-reveal org-tier org-tier-congress" style={{ transitionDelay: "0ms" }}>
             <p className="org-tier-label">Cấp 01</p>

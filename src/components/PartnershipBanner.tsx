@@ -7,10 +7,9 @@ export function PartnershipBanner() {
     <section id="hop-tac" data-section className="partner-banner relative overflow-hidden bg-signal text-white" aria-labelledby="hop-tac-tieu-de">
       <div className="page-wrap grid items-center gap-10 py-13 md:py-15 min-[1200px]:grid-cols-2 min-[1200px]:gap-16">
         <div>
-          <p className="text-[13px] font-medium text-brand">{partnership.eyebrow}</p>
           <h2
             id="hop-tac-tieu-de"
-            className="mt-4 max-w-[14ch] text-[2rem] font-bold leading-[1.12] tracking-tight sm:text-4xl min-[1200px]:text-[2.75rem]"
+            className="vpf-section-title max-w-[14ch] text-white"
           >
             {partnership.title}
           </h2>

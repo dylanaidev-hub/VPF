@@ -111,7 +111,6 @@ export function HeroSlider({
       <div className="vpf-hero-content">
         <div key={slide.id} className="page-wrap">
           <div className="vpf-hero-copy">
-            <p className="vpf-hero-eyebrow">{slide.eyebrow}</p>
             <h1 className="vpf-hero-title">
               {slide.titleLines.map((line, lineIndex) => (
                 <span key={`${slide.id}-line-${lineIndex}`} className="vpf-hero-line">

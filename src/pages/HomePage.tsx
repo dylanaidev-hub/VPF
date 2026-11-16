@@ -2,9 +2,9 @@ import { useState } from "react"
 import { heroSlides } from "../data/hero"
 import { liveArena } from "../data/live"
 import { news } from "../data/news"
-import { partners, partnersIllustrativeNote } from "../data/partners"
+import { partners } from "../data/partners"
 import { statistics } from "../data/stats"
-import { tournaments, tournamentsIllustrative } from "../data/tournaments"
+import { tournaments } from "../data/tournaments"
 import { formatViDate } from "../lib/format"
 import { sitePath } from "../lib/site"
 import type { NewsArticle } from "../types"
@@ -36,11 +36,11 @@ export function HomePage() {
 
         <NewsSection articles={news} onOpen={setArticle} />
 
-        <UpcomingTournamentsSection tournaments={tournaments} illustrative={tournamentsIllustrative} />
+        <UpcomingTournamentsSection tournaments={tournaments} />
 
         <PartnershipBanner />
         <section aria-label="Logo đối tác" className="border-b border-line bg-white py-8 md:py-10">
-          <PartnerMarquee partners={partners} note={partnersIllustrativeNote} />
+          <PartnerMarquee partners={partners} />
         </section>
       </main>
       <Footer />

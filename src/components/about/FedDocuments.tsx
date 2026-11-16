@@ -55,7 +55,6 @@ export function FedDecision() {
           </div>
         </div>
         <div className="fed-decree-copy">
-          <p className="fed-decree-kicker">{doc.eyebrow}</p>
           <h2 id="quyet-dinh-tieu-de">{doc.title}</h2>
           <p className="fed-decree-lead">{doc.note}</p>
           <dl className="fed-decree-meta">
@@ -98,7 +97,6 @@ export function FedCharter() {
     >
       <div className="page-wrap fed-charter-grid">
         <div>
-          <p className="fed-kicker fed-kicker-light">{doc.eyebrow}</p>
           <h2 id="tai-lieu-tieu-de">{doc.title}</h2>
           <p>{doc.note}</p>
         </div>

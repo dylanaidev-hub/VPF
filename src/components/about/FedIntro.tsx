@@ -21,7 +21,6 @@ export function FedIntro() {
     >
       <div className="page-wrap fed-brand-grid">
         <div className="fed-brand-copy">
-          <p className="fed-brand-kicker">Về liên đoàn</p>
           <h1 id="gioi-thieu-tieu-de">Liên đoàn Pickleball Việt Nam</h1>
           <p>
             Liên đoàn Pickleball Việt Nam là đầu mối <span>kết nối</span> người chơi, câu lạc bộ và các

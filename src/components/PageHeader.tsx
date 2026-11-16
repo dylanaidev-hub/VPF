@@ -10,10 +10,8 @@ export type PageHeaderCrumb = {
 
 type PageHeaderProps = {
   breadcrumb: PageHeaderCrumb[]
-  eyebrow: string
   title: string
-  description: string
-  disclaimer?: string
+  description?: string
   titleId?: string
   className?: string
   action?: ReactNode
@@ -21,10 +19,8 @@ type PageHeaderProps = {
 
 export function PageHeader({
   breadcrumb,
-  eyebrow,
   title,
   description,
-  disclaimer,
   titleId,
   className,
   action,
@@ -32,12 +28,10 @@ export function PageHeader({
   return (
     <header className={cx("page-header page-wrap", className)}>
       <Breadcrumb items={breadcrumb} />
-      <p className="page-header-eyebrow">{eyebrow}</p>
       <h1 id={titleId} className="page-header-title">
         {title}
       </h1>
-      <p className="page-header-description">{description}</p>
-      {disclaimer ? <p className="page-header-disclaimer">{disclaimer}</p> : null}
+      {description ? <p className="page-header-description">{description}</p> : null}
       {action ? <div className="page-header-action">{action}</div> : null}
     </header>
   )

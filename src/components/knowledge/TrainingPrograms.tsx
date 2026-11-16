@@ -49,7 +49,6 @@ export function TrainingPrograms() {
             {trainingSection.title}
           </h2>
           <p className="expertise-section-lead">{trainingSection.description}</p>
-          <p className="expertise-note">{trainingSection.illustrativeNote}</p>
         </div>
 
         {!hasData ? (

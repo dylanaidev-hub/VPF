@@ -72,7 +72,6 @@ export function MemberOrgsSection() {
             {memberSection.title}
           </h2>
           <p className="library-section-lead">{memberSection.description}</p>
-          <p className="library-note">{memberSection.note}</p>
         </div>
 
         <div className="mb-4 flex flex-col gap-3">

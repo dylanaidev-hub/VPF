@@ -37,11 +37,10 @@ export function ClubDiscovery({ query, city, kind, onQuery, onCity, onKind, onRe
 
   return (
     <section id="tim-cau-lac-bo" className="page-wrap py-14 md:py-16">
-      <h2 className="text-3xl font-semibold tracking-tight text-ink md:text-4xl">Tìm câu lạc bộ phù hợp với bạn</h2>
-      <p className="mt-3 max-w-2xl text-base leading-relaxed text-muted">
+      <h2 className="vpf-section-title">Tìm câu lạc bộ phù hợp với bạn</h2>
+      <p className="mt-3 max-w-2xl text-[15px] leading-relaxed text-muted md:text-base">
         Khám phá các câu lạc bộ Pickleball theo khu vực và nhu cầu tham gia.
       </p>
-      <p className="mt-2 text-sm text-muted">Tên câu lạc bộ là dữ liệu minh họa, chưa phải danh sách được VPF công nhận.</p>
 
       <form className="community-filters mt-8" role="search" onSubmit={(event) => event.preventDefault()}>
         <label className="relative block min-w-0">
@@ -164,9 +163,6 @@ export function ClubDiscovery({ query, city, kind, onQuery, onCity, onKind, onRe
             <p className="mt-3 text-[15px] leading-relaxed text-ink">{open.description}</p>
             <p className="mt-3 text-[15px] leading-relaxed text-ink">{open.focus}</p>
             <p className="mt-3 text-sm leading-relaxed text-muted">{open.rhythm}</p>
-            <p className="mt-4 text-sm font-medium text-ink">
-              Tên minh họa, chưa phải câu lạc bộ được VPF công nhận. Chưa mở đăng ký tham gia.
-            </p>
           </div>
         ) : null}
       </Dialog>

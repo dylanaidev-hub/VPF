@@ -35,11 +35,8 @@ export function CommunityStats() {
   const { ref, shown } = useReveal<HTMLDListElement>()
 
   return (
-    <section className="page-wrap pb-4" aria-labelledby="so-lieu-cong-dong">
-      <p id="so-lieu-cong-dong" className="text-sm font-semibold text-brand-strong">
-        Số liệu minh họa
-      </p>
-      <dl ref={ref} className="community-stats mt-4">
+    <section className="page-wrap pb-4" aria-label="Quy mô cộng đồng">
+      <dl ref={ref} className="community-stats">
         {communityStats.map((stat) => (
           <div key={stat.id} className="community-stat">
             <dt className="text-sm text-muted">{stat.label}</dt>

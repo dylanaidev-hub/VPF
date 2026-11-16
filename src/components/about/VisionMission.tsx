@@ -71,9 +71,6 @@ export function VisionMission() {
         </div>
 
         <div className="vision-manifesto-inner page-wrap">
-          <p data-reveal className="vision-kicker vision-reveal" style={{ transitionDelay: "0ms" }}>
-            {aboutVision.eyebrow}
-          </p>
           <h2 id="tam-nhin-tieu-de" className="vision-headline">
             <span data-reveal className="vision-line vision-reveal" style={{ transitionDelay: "80ms" }}>
               {aboutVision.headline}

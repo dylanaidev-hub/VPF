@@ -2,14 +2,12 @@ import type { ReactNode } from "react"
 import { cx } from "../lib/cx"
 
 export function SectionHeading({
-  eyebrow,
   title,
   subtitle,
   action,
   id,
   className,
 }: {
-  eyebrow?: string
   title: string
   subtitle?: string
   action?: ReactNode
@@ -24,12 +22,9 @@ export function SectionHeading({
       )}
     >
       <div className="max-w-2xl">
-        {eyebrow ? (
-          <p className="mb-3 text-[13px] font-medium text-brand-strong">{eyebrow}</p>
-        ) : null}
         <h2
           id={id}
-          className="text-[2rem] font-bold leading-[1.15] tracking-tight text-ink min-[1200px]:text-[2.75rem]"
+          className="vpf-section-title"
         >
           {title}
         </h2>

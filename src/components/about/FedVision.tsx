@@ -188,7 +188,6 @@ export function FedVision() {
     >
       <div className="page-wrap">
         <header className="fed-constellation-head">
-          <p className="fed-constellation-kicker">{copy.eyebrow}</p>
           <h2 id="tam-nhin-tieu-de">{copy.headline}</h2>
           <p>{copy.tagline}</p>
         </header>
@@ -303,7 +302,6 @@ export function FedVision() {
                   <p key={`${current.id}-copy-${swap}`} className={cx("fed-star-blurb", swap > 0 && "is-swap")}>
                     {current.description}
                   </p>
-                  <p className="fed-star-note">Ảnh minh họa</p>
                   <p className="fed-sr">{current.imageAlt}</p>
                 </div>
               ) : null}

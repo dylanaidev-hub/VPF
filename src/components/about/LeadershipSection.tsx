@@ -16,7 +16,6 @@ export function LeadershipSection() {
       <Container className="py-16 min-[1200px]:py-24">
         <SectionHeading
           id="lanh-dao-tieu-de"
-          eyebrow={leadership.eyebrow}
           title={leadership.title}
           action={
             <button
@@ -27,8 +26,8 @@ export function LeadershipSection() {
               {leadership.cta}
             </button>
           }
+          subtitle="Đội ngũ lãnh đạo và các thành viên tham gia điều hành hoạt động của Liên đoàn."
         />
-        <p className="-mt-4 mb-8 text-sm text-muted">{leadership.note}</p>
         <ul className="about-leaders">
           <li>
             <LeaderCard leader={featured} featured />
@@ -42,8 +41,7 @@ export function LeadershipSection() {
       </Container>
 
       <Dialog open={open} title={leadership.title} onClose={() => setOpen(false)}>
-        <p className="text-sm leading-relaxed text-muted">{leadership.note}</p>
-        <ul className="mt-5 divide-y divide-line">
+        <ul className="divide-y divide-line">
           {leadership.leaders.map((leader) => (
             <li key={leader.id} className="flex items-center justify-between gap-4 py-3">
               <div>

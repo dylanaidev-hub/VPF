@@ -13,7 +13,8 @@ import {
   type TournamentStatusFilter,
 } from "../lib/tournaments"
 import { LiveSection } from "../components/LiveSection"
-import { PageHeader } from "../components/PageHeader"
+import { PageHero } from "../components/PageHero"
+import { pageHeroes } from "../data/pageHeroes"
 import { SiteLayout } from "../components/SiteLayout"
 import { FeaturedTournament } from "../components/FeaturedTournament"
 import { TournamentEmpty, TournamentGrid, TournamentToolbar } from "../components/tournaments/TournamentArchive"
@@ -80,14 +81,7 @@ export function TournamentsPage() {
   return (
     <SiteLayout>
       <article className="bg-white">
-        <PageHeader
-          breadcrumb={[{ label: "Trang chủ", href: "/index.html" }, { label: "Giải đấu" }]}
-          eyebrow="Giải đấu"
-          title="Hệ thống giải đấu"
-          titleId="giai-dau-trang"
-          description="Khám phá các giải đấu Pickleball trên toàn quốc, cập nhật lịch thi đấu và kết quả."
-          disclaimer="Các giải đang hiển thị là dữ liệu minh họa, không phải lịch thi đấu chính thức."
-        />
+        <PageHero {...pageHeroes.tournaments} />
 
         <LiveSection arena={liveArena} />
 

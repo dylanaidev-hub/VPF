@@ -3,8 +3,9 @@ import { news } from "../data/news"
 import { filterNews, NEWS_PAGE_SIZE, selectSpotlight, type NewsCategory, type NewsSort } from "../lib/news"
 import { NewsEmpty, NewsGrid, NewsPagination, NewsToolbar } from "../components/news/NewsArchive"
 import { NewsSpotlight } from "../components/news/NewsSpotlight"
-import { PageHeader } from "../components/PageHeader"
+import { PageHero } from "../components/PageHero"
 import { SiteLayout } from "../components/SiteLayout"
+import { pageHeroes } from "../data/pageHeroes"
 
 export function NewsPage() {
   const featured = useMemo(() => selectSpotlight(news).featured, [])
@@ -38,16 +39,9 @@ export function NewsPage() {
   return (
     <SiteLayout>
       <article className="bg-white">
-        <PageHeader
-          breadcrumb={[{ label: "Trang chủ", href: "/index.html" }, { label: "Tin tức" }]}
-          eyebrow="Tin tức"
-          title="Tin tức Pickleball"
-          titleId="tin-tuc-trang"
-          description="Cập nhật những thông tin mới nhất từ Liên đoàn và cộng đồng Pickleball Việt Nam."
-          disclaimer="Các bài viết đang hiển thị là dữ liệu minh họa, không phải thông cáo chính thức."
-        />
+        <PageHero {...pageHeroes.news} />
 
-        <div className="page-wrap pb-8">
+        <div className="page-wrap pb-8 pt-6 sm:pt-8">
           <NewsToolbar
             category={category}
             query={query}

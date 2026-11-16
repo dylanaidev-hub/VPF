@@ -1,9 +1,8 @@
 import { useEffect, useRef, useState } from "react"
 import type { Statistic } from "../types"
-import { cx } from "../lib/cx"
 import { useReducedMotion } from "../lib/useReducedMotion"
 
-const COUNT_MS = 1800
+const COUNT_MS = 1350
 
 function easeInOutCubic(progress: number) {
   return progress < 0.5 ? 4 * progress ** 3 : 1 - (-2 * progress + 2) ** 3 / 2
@@ -44,19 +43,16 @@ function StatFigure({ stat, active }: { stat: Statistic; active: boolean }) {
   const figure = formatStat(current, stat.suffix)
   const finalFigure = formatStat(stat.value, stat.suffix)
   const label =
-    current === null
-      ? `${stat.label}, chưa có số liệu`
-      : `${stat.label}: ${figure}. ${stat.note}`
+    current === null ? `${stat.label}, chưa có số liệu` : `${stat.label}: ${figure}`
 
   return (
-    <div className="px-1 py-8 sm:px-6 lg:px-8" aria-label={label}>
-      <span className="block h-0.5 w-7 bg-brand" aria-hidden />
-      <p className="relative mt-4 text-[clamp(1.85rem,7vw,3.5rem)] font-bold leading-none tracking-tight text-ink tabular-nums" aria-hidden>
+    <div className="px-4 py-8 text-center sm:px-6" aria-label={label}>
+      <span className="mx-auto block h-0.5 w-7 bg-brand" aria-hidden />
+      <p className="relative mt-4 text-[clamp(2rem,3vw,3.25rem)] font-bold leading-none tracking-tight text-ink tabular-nums" aria-hidden>
         <span className="invisible">{finalFigure}</span>
         <span className="absolute inset-x-0 top-0">{figure}</span>
       </p>
-      <p className="mt-3 text-sm font-medium text-ink">{stat.label}</p>
-      <p className="mt-1 text-[13px] text-muted">{stat.note}</p>
+      <p className="mt-3 text-sm font-medium whitespace-nowrap text-ink sm:text-[15px]">{stat.label}</p>
     </div>
   )
 }
@@ -71,34 +67,23 @@ export function StatsSection({ items }: { items: Statistic[] }) {
     if (!node || reduce) return
 
     let started = false
-    let inView = false
 
     const start = () => {
       if (started) return
       started = true
       setActive(true)
       observer.disconnect()
-      window.removeEventListener("scroll", onScroll)
-    }
-
-    const onScroll = () => {
-      if (window.scrollY > 0 && inView) start()
     }
 
     const observer = new IntersectionObserver(
       (entries) => {
-        inView = entries.some((entry) => entry.isIntersecting && entry.intersectionRatio >= 0.25)
-        if (inView && window.scrollY > 0) start()
+        if (entries.some((entry) => entry.isIntersecting && entry.intersectionRatio >= 0.25)) start()
       },
       { threshold: [0.25, 0.3] },
     )
 
     observer.observe(node)
-    window.addEventListener("scroll", onScroll, { passive: true })
-    return () => {
-      observer.disconnect()
-      window.removeEventListener("scroll", onScroll)
-    }
+    return () => observer.disconnect()
   }, [reduce])
 
   return (
@@ -111,24 +96,16 @@ export function StatsSection({ items }: { items: Statistic[] }) {
     >
       <div className="page-wrap">
         <div className="max-w-2xl">
-          <p className="text-[13px] font-medium text-brand-strong">Số liệu minh họa</p>
-          <h2 id="so-lieu-tieu-de" className="mt-3 text-[2rem] font-bold leading-tight tracking-tight text-ink">
+          <h2 id="so-lieu-tieu-de" className="vpf-section-title">
             Quy mô hoạt động
           </h2>
-          <p className="mt-3 text-[15px] leading-relaxed text-muted">
-            Bốn con số dưới đây chỉ dùng để xem giao diện. Đây không phải thống kê chính thức của Liên đoàn Pickleball Việt Nam.
+          <p className="mt-3 text-[15px] leading-relaxed text-muted md:text-base">
+            Khám phá quy mô hoạt động và những dấu ấn phát triển của Pickleball Việt Nam.
           </p>
         </div>
-        <ul className="mt-6 grid grid-cols-2 border-t border-line md:grid-cols-4">
-          {items.map((item, index) => (
-            <li
-              key={item.id}
-              className={cx(
-                index % 2 === 0 && "max-md:border-r max-md:border-line",
-                index < 2 && "max-md:border-b max-md:border-line",
-                index < items.length - 1 && "md:border-r md:border-line",
-              )}
-            >
+        <ul className="mt-10 grid grid-cols-1 divide-y divide-line sm:mt-12 sm:grid-cols-3 sm:divide-x sm:divide-y-0">
+          {items.map((item) => (
+            <li key={item.id}>
               <StatFigure stat={item} active={active || reduce} />
             </li>
           ))}

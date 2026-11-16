@@ -1,6 +1,8 @@
-import { PageHeader } from "../components/PageHeader"
+import { PageHero } from "../components/PageHero"
 import { SiteLayout } from "../components/SiteLayout"
+import { pageHeroes } from "../data/pageHeroes"
 import { ExpertiseNav } from "../components/knowledge/ExpertiseNav"
+import { CoachSpotlightCarousel } from "../components/knowledge/CoachSpotlightCarousel"
 import { PersonnelDirectory } from "../components/knowledge/PersonnelDirectory"
 import { RulesSection } from "../components/knowledge/RulesSection"
 import { TrainingPrograms } from "../components/knowledge/TrainingPrograms"
@@ -9,14 +11,7 @@ import { coachSection, coaches, refereeSection, referees } from "../data/experti
 export function KnowledgePage() {
   return (
     <SiteLayout>
-      <PageHeader
-        breadcrumb={[{ label: "Trang chủ", href: "/index.html" }, { label: "Chuyên môn" }]}
-        eyebrow="Chuyên môn"
-        title="Chuyên môn Pickleball"
-        titleId="chuyen-mon-tieu-de"
-        description="Luật thi đấu, hệ thống trọng tài, huấn luyện viên và chương trình đào tạo của Liên đoàn Pickleball Việt Nam."
-        disclaimer="Nội dung trên trang đang dùng dữ liệu minh họa để duyệt giao diện — chưa phải tài liệu hay danh mục chính thức."
-      />
+      <PageHero {...pageHeroes.knowledge} />
       <ExpertiseNav />
       <RulesSection />
       <PersonnelDirectory
@@ -32,18 +27,11 @@ export function KnowledgePage() {
         members={referees}
         variant="referee"
       />
-      <PersonnelDirectory
+      <CoachSpotlightCarousel
         id={coachSection.id}
         title={coachSection.title}
         description={coachSection.description}
-        searchLabel={coachSection.searchLabel}
-        empty={coachSection.empty}
-        emptyFiltered={coachSection.emptyFiltered}
-        illustrativeNote={coachSection.illustrativeNote}
-        viewAllLabel={coachSection.viewAllLabel}
-        collapseLabel={coachSection.collapseLabel}
         members={coaches}
-        variant="coach"
       />
       <TrainingPrograms />
     </SiteLayout>

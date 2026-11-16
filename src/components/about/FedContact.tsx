@@ -23,7 +23,6 @@ export function FedContact() {
     >
       <div className="page-wrap fed-contact-grid">
         <div>
-          <p className="fed-kicker">{federationContact.eyebrow}</p>
           <h2 id="lien-he-tieu-de">{federationContact.title}</h2>
           <p className="fed-note">{federationContact.note}</p>
           <ul className="fed-contact-list">

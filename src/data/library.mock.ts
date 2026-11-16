@@ -35,8 +35,7 @@ const logoColor = "/brand/logo-horizontal-color.svg"
 export const brandSection = {
   id: "bo-nhan-dien",
   title: "Bộ nhận diện VPF",
-  description:
-    "Logo, màu sắc và kiểu chữ dùng trên giao diện cổng thông tin. Bản dưới đây là khung minh họa để duyệt bố cục thư viện nhận diện.",
+  description: "Logo, màu sắc và kiểu chữ của Liên đoàn Pickleball Việt Nam.",
   logoPreview: logoColor,
   logoMark,
   logoAlt: "Logo Liên đoàn Pickleball Việt Nam — xem trước minh họa.",

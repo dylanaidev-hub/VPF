@@ -226,7 +226,6 @@ export function FedCommittee() {
       aria-labelledby="ban-chap-hanh-tieu-de"
     >
       <div className="page-wrap">
-        <p className="fed-kicker">{data.eyebrow}</p>
         <h2 id="ban-chap-hanh-tieu-de">{data.title}</h2>
         <p className="fed-note">{data.note}</p>
         <div className="fed-lead-actions">
