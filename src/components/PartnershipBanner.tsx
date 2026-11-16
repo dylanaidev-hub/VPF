@@ -1,36 +1,65 @@
 import { partnership } from "../data/partners"
+import { useReveal } from "../lib/useReveal"
 import { Button } from "./Button"
 import { vpfStarPaths } from "./vpfStarPaths"
 
 export function PartnershipBanner() {
+  const { ref, shown } = useReveal<HTMLElement>()
+
   return (
-    <section id="hop-tac" data-section className="partner-banner relative overflow-hidden bg-signal text-white" aria-labelledby="hop-tac-tieu-de">
-      <div className="page-wrap grid items-center gap-10 py-13 md:py-15 min-[1200px]:grid-cols-2 min-[1200px]:gap-16">
-        <div>
-          <h2
-            id="hop-tac-tieu-de"
-            className="vpf-section-title max-w-[14ch] text-white"
-          >
+    <section
+      id="hop-tac"
+      ref={ref}
+      data-section
+      data-revealed={shown}
+      className="partner-hub relative overflow-hidden bg-signal text-white"
+      aria-labelledby="hop-tac-tieu-de"
+    >
+      <div className="page-wrap partner-hub-inner">
+        <header className="partner-hub-copy">
+          <p className="partner-hub-eyebrow">{partnership.eyebrow}</p>
+          <h2 id="hop-tac-tieu-de" className="vpf-section-title text-white">
             {partnership.title}
           </h2>
-          <p className="mt-5 max-w-xl text-[15px] leading-relaxed text-white/75 md:text-base">
-            {partnership.description}
-          </p>
-          <div className="mt-8">
+          <p className="partner-hub-lead">{partnership.description}</p>
+          <div className="partner-hub-cta">
             <Button href={partnership.href}>{partnership.cta}</Button>
           </div>
-        </div>
-        <div className="partner-star" aria-hidden>
-          <svg className="partner-star-svg" viewBox="0 0 800 800" fill="none">
-            <g className="partner-star-shape">
-              {vpfStarPaths.map((d) => (
-                <g key={d} className="partner-star-ring">
-                  <path className="partner-star-stroke" d={d} />
-                  <path className="partner-star-glow" d={d} pathLength={100} />
-                </g>
-              ))}
-            </g>
+        </header>
+
+        <div className="partner-hub-stage">
+          <svg
+            className="partner-hub-orbit"
+            viewBox="0 0 120 120"
+            preserveAspectRatio="xMidYMid meet"
+            fill="none"
+            aria-hidden="true"
+          >
+            <circle className="partner-hub-orbit-ring" cx="60" cy="60" r="47" />
+            <path className="partner-hub-link" data-link="thuong-hieu" d="M60 42V20" />
+            <path className="partner-hub-link" data-link="truyen-thong" d="M73 60H100" />
+            <path className="partner-hub-link" data-link="giai-dau" d="M60 75V100" />
+            <path className="partner-hub-link" data-link="cong-dong" d="M47 60H20" />
           </svg>
+          <svg
+            className="partner-hub-star"
+            viewBox="0 0 800 800"
+            preserveAspectRatio="xMidYMid meet"
+            fill="none"
+            aria-hidden="true"
+          >
+            {vpfStarPaths.map((d) => (
+              <g key={d} className="partner-star-ring">
+                <path className="partner-star-stroke" d={d} />
+              </g>
+            ))}
+          </svg>
+          {partnership.pillars.map((pillar) => (
+            <article key={pillar.id} className="partner-hub-pillar" data-pillar={pillar.id} tabIndex={0}>
+              <h3 className="partner-hub-pillar-label">{pillar.label}</h3>
+              <p className="partner-hub-pillar-detail">{pillar.detail}</p>
+            </article>
+          ))}
         </div>
       </div>
     </section>
