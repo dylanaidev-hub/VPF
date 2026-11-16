@@ -1,10 +1,16 @@
 import { leadership } from "./leadership.mock"
+import type { MediaShot } from "./media.mock"
+
+export type FederationHistoryImage = MediaShot & {
+  source: "illustrative" | "generated" | "official"
+}
 
 export type FederationMilestone = {
   id: string
   date: string
   title: string
   description: string
+  images: FederationHistoryImage[]
 }
 
 export type FederationPerson = {
@@ -75,24 +81,48 @@ export const federationHistory = {
       date: "03/2024",
       title: "Khởi xướng",
       description: "Phong trào pickleball được ghi nhận rộng hơn ở nhiều địa phương. Mốc chỉ để xem giao diện.",
+      images: [
+        { id: "outdoor", src: "/images/outdoor.webp", alt: "Người chơi trên sân pickleball ngoài trời.", caption: "Những buổi chơi trên sân ngoài trời.", source: "illustrative" },
+        { id: "player", src: "/images/player.webp", alt: "Vận động viên pickleball cầm vợt.", caption: "Người chơi và bộ môn pickleball.", position: "object-[center_20%]", source: "illustrative" },
+        { id: "community-court", src: "/images/partnership/community.jpg", alt: "Sân pickleball cộng đồng lúc cuối ngày.", caption: "Không gian chơi pickleball cộng đồng.", source: "illustrative" },
+        { id: "spirit", src: "/images/hero-spirit.webp", alt: "Vợt pickleball và bóng trên sân.", caption: "Dụng cụ và không khí trên sân.", source: "illustrative" },
+      ],
     },
     {
       id: "2025-06",
       date: "06/2025",
       title: "Kết nối câu lạc bộ",
       description: "Các nhóm chơi bắt đầu trao đổi để hình dung một tổ chức chung. Không phải biên bản đã ký.",
+      images: [
+        { id: "indoor-match", src: "/images/match.webp", alt: "Trận pickleball diễn ra trên sân trong nhà.", caption: "Thi đấu và giao lưu trên sân trong nhà.", source: "illustrative" },
+        { id: "club-event", src: "/images/partnership/event.jpg", alt: "Các sân thi đấu pickleball trong nhà.", caption: "Không gian tổ chức giao lưu giữa các câu lạc bộ.", source: "illustrative" },
+        { id: "coach", src: "/images/coaches/coach-01.webp", alt: "Chân dung huấn luyện viên pickleball.", caption: "Vai trò của huấn luyện viên trong cộng đồng.", position: "object-[center_20%]", source: "illustrative" },
+        { id: "club-sign", src: "/images/clubs/club-01.png", alt: "Mẫu biểu trưng câu lạc bộ pickleball.", caption: "Nhận diện câu lạc bộ trong thư viện VPF.", source: "illustrative" },
+      ],
     },
     {
       id: "2026-01",
       date: "01/2026",
       title: "Dự thảo tổ chức",
       description: "Khung nhiệm vụ được soạn để trình bày trên trang. Chưa phải văn bản đã ban hành.",
+      images: [
+        { id: "draft-planning", src: "/images/history/draft-planning.jpg", alt: "Nhóm người phác thảo kế hoạch bên sân pickleball.", caption: "Trao đổi về một khung hoạt động dự kiến.", source: "generated" },
+        { id: "planning-tools", src: "/images/partnership/other.jpg", alt: "Vợt, bóng pickleball và sổ tay trên bàn.", caption: "Ghi chú và chuẩn bị nội dung.", source: "illustrative" },
+        { id: "draft-paper", src: "/images/brand/brand-letterhead-scene.jpg", alt: "Giấy và bút trên bàn gỗ.", caption: "Văn phòng phẩm dùng trong khâu soạn thảo.", source: "illustrative" },
+        { id: "sports-equipment", src: "/images/partnership/hero.jpg", alt: "Vợt và bóng pickleball dưới ánh sáng đỏ.", caption: "Pickleball là trọng tâm của bản đề xuất.", source: "illustrative" },
+      ],
     },
     {
       id: "2026-07",
       date: "07/2026",
       title: "Hồ sơ trên website",
       description: "Trang liên đoàn được dựng để xem cấu trúc nội dung. Không phải lễ thành lập chính thức.",
+      images: [
+        { id: "website-publishing", src: "/images/history/website-publishing.jpg", alt: "Laptop hiển thị một bản mô phỏng website pickleball.", caption: "Chuẩn bị nội dung cho hồ sơ trên website.", source: "generated" },
+        { id: "media-studio", src: "/images/partnership/media.jpg", alt: "Máy quay và vợt pickleball trên bàn.", caption: "Chuẩn bị hình ảnh cho nội dung trực tuyến.", source: "illustrative" },
+        { id: "brand-card", src: "/images/brand/brand-card-scene.jpg", alt: "Mẫu danh thiếp trên mặt đá.", caption: "Ứng dụng nhận diện trong bộ tài nguyên.", source: "illustrative" },
+        { id: "brand-scene", src: "/images/brand/brand-event-scene.jpg", alt: "Phông đỏ và bảng trưng bày.", caption: "Bề mặt nhận diện trong thư viện truyền thông.", source: "illustrative" },
+      ],
     },
   ] satisfies FederationMilestone[],
 }

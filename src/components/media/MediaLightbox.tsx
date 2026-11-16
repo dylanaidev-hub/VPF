@@ -11,11 +11,13 @@ export function MediaLightbox({
   index,
   onIndex,
   onClose,
+  dismissOnBackdrop = false,
 }: {
   shots: LightboxShot[]
   index: number
   onIndex: (index: number) => void
   onClose: () => void
+  dismissOnBackdrop?: boolean
 }) {
   const titleId = useId()
   const reduce = useReducedMotion()
@@ -103,9 +105,22 @@ export function MediaLightbox({
   }
 
   return (
-    <div ref={panelRef} className="media-lightbox" role="dialog" aria-modal="true" aria-labelledby={titleId}>
+    <div
+      ref={panelRef}
+      className="media-lightbox"
+      data-dismissible={dismissOnBackdrop || undefined}
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby={titleId}
+      onClick={(event) => {
+        if (!dismissOnBackdrop || !(event.target instanceof Element)) return
+        if (!event.target.closest("button, .media-lightbox-photo, .media-viewer__details, .media-lightbox-thumbs")) {
+          onClose()
+        }
+      }}
+    >
       <div className="flex items-center justify-between gap-3 px-4 py-3 text-white md:px-6">
-        <p className="media-viewer__counter">
+        <p className="media-viewer__counter" aria-live="polite">
           {String(index + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}
         </p>
         <button
@@ -154,7 +169,7 @@ export function MediaLightbox({
             go(delta < 0 ? 1 : -1)
           }}
         >
-          <img src={sitePath(shot.src)} alt={shot.alt} className="media-lightbox-photo" />
+          <img key={shot.id} src={sitePath(shot.src)} alt={shot.alt} className="media-lightbox-photo" />
           <div className="media-viewer__details">
             <p id={titleId} className="media-viewer__title">
               {shot.title ?? shot.caption}
