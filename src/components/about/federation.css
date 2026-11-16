@@ -369,6 +369,54 @@
   cursor: pointer;
 }
 
+.fed-milestone-cursor {
+  display: none;
+  pointer-events: none;
+}
+
+@media (any-hover: hover) and (any-pointer: fine) {
+  .fed-track-button[data-cursor-active]:hover {
+    cursor: none;
+  }
+
+  .fed-milestone-cursor {
+    position: fixed;
+    inset: 0 auto auto 0;
+    z-index: 60;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.4rem 0.7rem;
+    border-radius: 999px;
+    background: var(--vpf-red-500);
+    color: var(--vpf-white);
+    box-shadow: 0 4px 14px rgb(0 0 0 / 16%);
+    font-size: 0.8rem;
+    font-weight: 700;
+    line-height: 1.25;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    scale: 0.94;
+    transform-origin: top left;
+    transition: opacity 160ms ease, scale 160ms ease, visibility 0s 160ms;
+  }
+
+  .fed-milestone-cursor[data-visible] {
+    opacity: 1;
+    visibility: visible;
+    scale: 1;
+    transition-delay: 0s;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fed-milestone-cursor {
+    scale: 1;
+    transition: none;
+  }
+}
+
 .fed-node {
   position: absolute;
   top: 0.2rem;
