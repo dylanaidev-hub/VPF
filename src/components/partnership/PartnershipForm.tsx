@@ -2,6 +2,8 @@ import { useState, type FormEvent } from "react"
 import { contactSection, partnershipTypeOptions } from "../../data/partnership.mock"
 import { cx } from "../../lib/cx"
 import { useReveal } from "../../lib/useReveal"
+import { Button } from "../Button"
+import { SectionHeading } from "../SectionHeading"
 import { Select } from "../Select"
 
 type Field = "name" | "organization" | "email" | "phone" | "type" | "message" | "consent"
@@ -32,7 +34,7 @@ const labels: Record<Exclude<Field, "consent">, string> = {
   email: "Email",
   phone: "Số điện thoại",
   type: "Hình thức quan tâm",
-  message: "Nội dung quan tâm",
+  message: "Nội dung đề xuất",
 }
 
 export function PartnershipForm() {
@@ -78,15 +80,16 @@ export function PartnershipForm() {
   return (
     <section
       id={contactSection.id}
-      className="partner-section partner-contact"
+      className="eco-section eco-contact"
       aria-labelledby="lien-he-hop-tac-tieu-de"
     >
       <div className="page-wrap">
-        <div ref={ref} className={cx("partnership-form-panel partner-rise", shown && "is-in")}>
-          <h2 id="lien-he-hop-tac-tieu-de" className="partner-section-title">
-            {contactSection.title}
-          </h2>
-          <p className="partner-section-lead mt-3">{contactSection.description}</p>
+        <div ref={ref} className={cx("eco-form", shown && "is-in")}>
+          <SectionHeading
+            id="lien-he-hop-tac-tieu-de"
+            title={contactSection.title}
+            subtitle={contactSection.description}
+          />
           <p className="partnership-notice" role="note">
             {contactSection.note}
           </p>
@@ -201,9 +204,9 @@ export function PartnershipForm() {
             </div>
 
             <div className="mt-6 flex flex-col gap-4 sm:flex-row sm:items-center">
-              <button type="submit" className="partnership-submit" disabled={processing || status === "demo-ok"}>
+              <Button type="submit" disabled={processing || status === "demo-ok"}>
                 {processing ? "Đang xử lý…" : contactSection.ctaLabel}
-              </button>
+              </Button>
               {statusMessage ? (
                 <p
                   className={cx("text-sm leading-relaxed", status === "demo-ok" ? "text-ink" : "text-muted")}
@@ -305,7 +308,7 @@ function validate(values: Values): Partial<Record<Field, string>> {
     errors.type = "Vui lòng chọn hình thức quan tâm."
   }
   if (message && (message.length < 10 || message.length > 1500)) {
-    errors.message = "Nội dung quan tâm cần từ 10 đến 1500 ký tự khi điền."
+    errors.message = "Nội dung đề xuất cần từ 10 đến 1500 ký tự khi điền."
   }
   if (!values.consent) errors.consent = "Vui lòng đồng ý với chính sách bảo mật để tiếp tục."
   return errors

@@ -1,6 +1,9 @@
 import { ArrowLeft, ArrowRight, ExternalLink } from "lucide-react"
+import { Button } from "../components/Button"
 import { PageHeader } from "../components/PageHeader"
+import { PartnershipBenefits } from "../components/partnership/PartnershipBenefits"
 import { SiteLayout } from "../components/SiteLayout"
+import "../components/partnership/partnership-ecosystem.css"
 import { news } from "../data/news"
 import { sponsorTierLabel, type SponsorProfile } from "../data/partnership.mock"
 import { tournaments } from "../data/tournaments.mock"
@@ -15,6 +18,7 @@ export function SponsorDetailPage({ sponsor }: { sponsor: SponsorProfile }) {
 
   return (
     <SiteLayout>
+      <div className="eco-detail">
       <PageHeader
         breadcrumb={[
           { label: "Trang chủ", href: "/index.html" },
@@ -25,10 +29,10 @@ export function SponsorDetailPage({ sponsor }: { sponsor: SponsorProfile }) {
         titleId="nha-tai-tro-chi-tiet"
         description={sponsor.intro}
         action={
-          <a href={sitePath("/hoptac.html")} className="page-header-cta">
+          <Button href="/hoptac.html">
             <ArrowLeft className="size-4" aria-hidden />
             Về trang Hợp tác
-          </a>
+          </Button>
         }
       />
 
@@ -147,18 +151,20 @@ export function SponsorDetailPage({ sponsor }: { sponsor: SponsorProfile }) {
         </section>
       ) : null}
 
+      <PartnershipBenefits />
       <section className="partner-section">
         <div className="page-wrap flex flex-wrap gap-3">
-          <a href={sitePath("/hoptac.html#nha-tai-tro")} className="partner-btn-secondary inline-flex">
+          <Button href="/hoptac.html#nha-tai-tro" variant="secondary">
             <ArrowLeft className="size-4" aria-hidden />
             Quay lại danh mục nhà tài trợ
-          </a>
-          <a href={sitePath("/hoptac.html#lien-he-hop-tac")} className="partner-btn-primary inline-flex">
+          </Button>
+          <Button href="/hoptac.html#lien-he-hop-tac">
             Liên hệ hợp tác
             <ArrowRight className="size-4" aria-hidden />
-          </a>
+          </Button>
         </div>
       </section>
+      </div>
     </SiteLayout>
   )
 }
@@ -177,9 +183,7 @@ export function SponsorNotFoundPage() {
         description="Hồ sơ nhà tài trợ này không có trên cổng hợp tác."
       />
       <div className="page-wrap pb-16">
-        <a href={sitePath("/hoptac.html")} className="partner-btn-primary inline-flex">
-          Về trang Hợp tác
-        </a>
+        <Button href="/hoptac.html">Về trang Hợp tác</Button>
       </div>
     </SiteLayout>
   )

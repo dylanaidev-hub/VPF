@@ -781,7 +781,7 @@ body {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center 42%;
+  object-position: center 20%;
 }
 
 .vision-shade {
@@ -2324,14 +2324,18 @@ html.has-expertise-dock .back-top {
 }
 
 .coach-stage {
-  --card-w: 13.5rem;
-  --gap: 0.7rem;
-  --lift: 1.14;
+  --card-w: min(22rem, 100%);
+  --gap: 1rem;
   position: relative;
-  height: calc(var(--card-w) * 4 / 3 * var(--lift) + 4.55rem);
+  height: 36rem;
   margin-inline: auto;
   overflow: hidden;
   touch-action: pan-y;
+}
+
+.coach-card .player-card {
+  width: 100%;
+  height: auto;
 }
 
 .coach-card {
@@ -2350,6 +2354,8 @@ html.has-expertise-dock .back-top {
   transition: transform 520ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
+.coach-card[data-slot="2"],
+.coach-card[data-slot="-2"],
 .coach-card[data-slot="3"],
 .coach-card[data-slot="-3"] {
   pointer-events: none;
@@ -2573,9 +2579,9 @@ button.coach-card:focus-visible {
 
 @media (min-width: 768px) {
   .coach-stage {
-    --card-w: 11.25rem;
-    --gap: 0.85rem;
-    max-width: calc(3 * var(--card-w) + 2 * var(--gap) + 4px);
+    --card-w: 20rem;
+    --gap: 1.1rem;
+    max-width: calc(2 * var(--card-w) + var(--gap));
   }
 
   .coach-detail {
@@ -2587,9 +2593,9 @@ button.coach-card:focus-visible {
 
 @media (min-width: 1100px) {
   .coach-stage {
-    --card-w: 11rem;
-    --gap: 0.9rem;
-    max-width: calc(5 * var(--card-w) + 4 * var(--gap) + 4px);
+    --card-w: 21rem;
+    --gap: 1.15rem;
+    max-width: calc(3 * var(--card-w) + 2 * var(--gap));
   }
 }
 
@@ -3336,53 +3342,6 @@ button.coach-card:focus-visible {
 }
 
 /* —— Thư viện & Cộng đồng —— */
-.library-nav {
-  margin-top: 0.25rem;
-}
-
-.library-nav-list {
-  display: flex;
-  gap: 0.5rem;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  overflow-x: auto;
-  scrollbar-width: none;
-}
-
-.library-nav-list::-webkit-scrollbar {
-  display: none;
-}
-
-.library-nav-link {
-  display: inline-flex;
-  align-items: center;
-  min-height: 2.25rem;
-  padding: 0.35rem 0.9rem;
-  border: 1px solid var(--vpf-line);
-  border-radius: 999px;
-  background: #fff;
-  color: var(--vpf-ink);
-  font-size: 0.8125rem;
-  font-weight: 600;
-  white-space: nowrap;
-  transition:
-    background-color 160ms ease,
-    border-color 160ms ease,
-    color 160ms ease;
-}
-
-.library-nav-link:hover,
-.library-nav-link:focus-visible {
-  border-color: var(--vpf-gold-500);
-}
-
-.library-nav-link.is-active {
-  border-color: var(--vpf-gold-500);
-  background: var(--vpf-gold-500);
-  color: var(--vpf-ink);
-}
-
 .library-section {
   padding-block: 2.5rem;
 }
@@ -3464,58 +3423,7 @@ button.coach-card:focus-visible {
 .library-brand-layout {
   display: grid;
   gap: 1.5rem;
-  align-items: center;
-}
-
-.library-brand-preview {
-  display: grid;
-  justify-items: center;
-  gap: 0.65rem;
-  padding: 1.5rem 1.25rem;
-  border: 1px solid var(--vpf-line);
-  border-radius: 0.85rem;
-  background: var(--vpf-canvas);
-  cursor: pointer;
-}
-
-.library-brand-logo {
-  width: min(100%, 18rem);
-  height: auto;
-}
-
-.library-brand-preview-hint {
-  color: var(--vpf-ink-soft);
-  font-size: 0.75rem;
-  font-weight: 600;
-}
-
-.library-brand-resources {
-  display: grid;
-  gap: 0.65rem;
-  margin: 1rem 0 0;
-  padding: 0;
-  list-style: none;
-}
-
-.library-brand-resources li {
-  display: grid;
-  gap: 0.15rem;
-  padding: 0.7rem 0.85rem;
-  border: 1px solid var(--vpf-line);
-  border-radius: 0.65rem;
-  background: #fff;
-}
-
-.library-brand-resource-label {
-  color: var(--vpf-ink);
-  font-size: 0.875rem;
-  font-weight: 700;
-}
-
-.library-brand-resource-detail {
-  color: var(--vpf-ink-soft);
-  font-size: 0.8125rem;
-  line-height: 1.4;
+  align-items: stretch;
 }
 
 .library-media,
@@ -3526,6 +3434,41 @@ button.coach-card:focus-visible {
 .library-members,
 .library-join {
   background: #fff;
+}
+
+.library-team-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.library-team-toolbar .library-tabs {
+  margin-bottom: 0;
+}
+
+.library-batch-filter {
+  flex: 0 0 auto;
+  margin-left: auto;
+  width: 12.5rem;
+}
+
+.library-batch-filter .select-wrap,
+.library-batch-select {
+  width: 100%;
+}
+
+@media (max-width: 559px) {
+  .library-team-toolbar {
+    flex-wrap: wrap;
+  }
+
+  .library-batch-filter {
+    flex-basis: 100%;
+    width: 100%;
+    margin-left: 0;
+  }
 }
 
 .library-tabs {
@@ -3657,9 +3600,15 @@ button.coach-card:focus-visible {
 
 .library-org-grid {
   grid-template-columns: 1fr;
+  gap: 16px;
 }
 
-.library-org-card,
+.library-org-grid > li {
+  display: flex;
+  width: 100%;
+  min-width: 0;
+}
+
 .library-person-card {
   display: grid;
   grid-template-columns: 3rem minmax(0, 1fr);
@@ -3674,17 +3623,12 @@ button.coach-card:focus-visible {
   cursor: pointer;
 }
 
-.library-org-card:hover,
-.library-org-card:focus-visible,
 .library-person-card:hover,
-.library-person-card:focus-visible,
-.library-athlete-card:hover,
-.library-athlete-card:focus-visible {
+.library-person-card:focus-visible {
   border-color: var(--vpf-gold-500);
   box-shadow: 0 8px 18px rgba(23, 36, 50, 0.06);
 }
 
-.library-org-logo,
 .library-person-portrait {
   display: grid;
   place-items: center;
@@ -3702,7 +3646,6 @@ button.coach-card:focus-visible {
   color: var(--vpf-red-700);
 }
 
-.library-org-name,
 .library-person-name {
   display: block;
   color: var(--vpf-ink);
@@ -3711,7 +3654,6 @@ button.coach-card:focus-visible {
   line-height: 1.25;
 }
 
-.library-org-place,
 .library-person-role,
 .library-person-spec {
   display: inline-flex;
@@ -3727,38 +3669,20 @@ button.coach-card:focus-visible {
 }
 
 .library-athlete-grid {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: 1fr;
+  gap: 1.15rem;
 }
 
-.library-athlete-card {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  overflow: hidden;
-  border: 1px solid var(--vpf-line);
-  border-radius: 0.85rem;
-  background: #fff;
-  padding: 0;
-  text-align: left;
-  cursor: pointer;
-}
-
-.library-athlete-portrait {
-  display: grid;
-  place-items: center;
+.athlete-id-detail img {
+  display: block;
+  width: min(100%, 16rem);
   aspect-ratio: 3 / 4;
-  background: color-mix(in srgb, var(--vpf-gold-500) 14%, #f1f1f2);
-  color: var(--vpf-ink);
-  font-size: 1.35rem;
-  font-weight: 700;
-  letter-spacing: 0.04em;
+  object-fit: contain;
+  object-position: center bottom;
+  border-radius: 14px;
+  background: var(--vpf-canvas);
 }
 
-.library-athlete-card .library-person-body {
-  display: grid;
-  gap: 0.3rem;
-  padding: 0.75rem 0.85rem 0.95rem;
-}
 
 .library-level {
   display: inline-flex;
@@ -3798,77 +3722,6 @@ button.coach-card:focus-visible {
   text-align: center;
 }
 
-.library-steps {
-  display: grid;
-  gap: 0.65rem;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.library-step {
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
-  gap: 0.75rem;
-  width: 100%;
-  padding: 0.85rem 0.95rem;
-  border: 1px solid var(--vpf-line);
-  border-radius: 0.75rem;
-  background: #fff;
-  text-align: left;
-  cursor: pointer;
-}
-
-.library-step.is-active {
-  border-color: var(--vpf-gold-500);
-  box-shadow: 0 8px 18px rgba(23, 36, 50, 0.06);
-}
-
-.library-step-num {
-  color: var(--vpf-red-700);
-  font-size: 1rem;
-  font-weight: 800;
-  letter-spacing: 0.04em;
-}
-
-.library-step-title {
-  display: block;
-  color: var(--vpf-ink);
-  font-size: 0.95rem;
-  font-weight: 700;
-}
-
-.library-step-summary {
-  display: block;
-  margin-top: 0.25rem;
-  color: var(--vpf-ink-soft);
-  font-size: 0.8125rem;
-  line-height: 1.45;
-}
-
-.library-step-panel {
-  margin-top: 1rem;
-  padding: 1.1rem 1.15rem;
-  border: 1px solid var(--vpf-line);
-  border-radius: 0.85rem;
-  background: var(--vpf-canvas);
-}
-
-.library-step-panel-title {
-  margin: 0;
-  color: var(--vpf-ink);
-  font-size: 1.05rem;
-  font-weight: 700;
-}
-
-.library-step-details {
-  margin: 0.75rem 0 0;
-  padding-left: 1.15rem;
-  color: var(--vpf-ink-soft);
-  font-size: 0.9rem;
-  line-height: 1.55;
-}
-
 .library-rise {
   opacity: 1;
   transform: none;
@@ -3885,17 +3738,13 @@ button.coach-card:focus-visible {
   }
 
   .library-athlete-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-
-  .library-steps {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
 @media (min-width: 1024px) {
   .library-brand-layout {
-    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    grid-template-columns: minmax(0, 0.82fr) minmax(0, 1fr);
     gap: 2rem;
   }
 
@@ -3903,12 +3752,12 @@ button.coach-card:focus-visible {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
-  .library-athlete-grid {
+  .library-org-grid {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 
-  .library-steps {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+  .library-athlete-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 

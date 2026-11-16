@@ -2,40 +2,44 @@ import { useState, type FormEvent } from "react"
 import { membershipSection, membershipSteps } from "../../data/library.mock"
 import { cx } from "../../lib/cx"
 import { useReveal } from "../../lib/useReveal"
-import { Dialog } from "../Dialog"
 import { Select } from "../Select"
+import "./membership-journey.css"
 
-const selectClass = "h-12 w-full rounded-[10px] border border-line bg-white px-3 text-[15px] text-ink"
-const inputClass =
-  "h-12 w-full rounded-[10px] border border-line bg-white px-4 text-[15px] text-ink outline-none"
+const selectClass = "join-control"
+const inputClass = "join-control"
 
 type ApplicantType = (typeof membershipSection.applicantTypes)[number]
 
 export function MembershipSection() {
   const [active, setActive] = useState(0)
-  const [formOpen, setFormOpen] = useState(false)
   const [applicant, setApplicant] = useState<ApplicantType>("Cá nhân")
   const [name, setName] = useState("")
   const [email, setEmail] = useState("")
   const [org, setOrg] = useState("")
   const [note, setNote] = useState("")
-  const [status, setStatus] = useState("")
+  const [message, setMessage] = useState("")
+  const [messageKind, setMessageKind] = useState<"error" | "success" | "">("")
   const { ref, shown } = useReveal<HTMLElement>()
-  const step = membershipSteps[active]!
 
   const onSubmit = (event: FormEvent) => {
     event.preventDefault()
     if (!name.trim() || !email.trim()) {
-      setStatus("Vui lòng điền họ tên và email.")
+      setMessageKind("error")
+      setMessage("Vui lòng điền họ tên và email.")
+      return
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) {
+      setMessageKind("error")
+      setMessage("Email chưa đúng định dạng.")
       return
     }
     if (applicant !== "Cá nhân" && !org.trim()) {
-      setStatus("Vui lòng điền tên câu lạc bộ / đơn vị.")
+      setMessageKind("error")
+      setMessage("Vui lòng điền tên câu lạc bộ / đơn vị.")
       return
     }
-    setStatus(
-      "Chưa thể gửi đăng ký. Biểu mẫu đang ở chế độ minh họa — dữ liệu không được gửi đi và không được lưu.",
-    )
+    setMessageKind("success")
+    setMessage(membershipSection.successNote)
   }
 
   return (
@@ -46,107 +50,113 @@ export function MembershipSection() {
       aria-labelledby="dang-ky-tieu-de"
     >
       <div className="page-wrap">
-        <div className="library-section-head">
-          <h2 id="dang-ky-tieu-de" className="library-section-title">
-            {membershipSection.title}
-          </h2>
-          <p className="library-section-lead">{membershipSection.description}</p>
-        </div>
+        <div className="join-layout">
+          <div className="join-process">
+            <div className="library-section-head">
+              <h2 id="dang-ky-tieu-de" className="library-section-title">
+                {membershipSection.title}
+              </h2>
+              <p className="library-section-lead">{membershipSection.description}</p>
+            </div>
 
-        <ol className="library-steps">
-          {membershipSteps.map((item, index) => {
-            const selected = index === active
-            return (
-              <li key={item.id}>
-                <button
-                  type="button"
-                  className={cx("library-step", selected && "is-active")}
-                  aria-current={selected ? "step" : undefined}
-                  onClick={() => setActive(index)}
+            <ol className="join-steps">
+              {membershipSteps.map((item, index) => {
+                const selected = index === active
+                const panelId = `dang-ky-${item.id}`
+                return (
+                  <li key={item.id} className={cx(selected && "is-open", index < active && "is-reached")}>
+                    <h3 className="join-step-heading">
+                      <button
+                        type="button"
+                        id={`${panelId}-nut`}
+                        className={cx("join-step", selected && "is-active")}
+                        aria-expanded={selected}
+                        aria-controls={panelId}
+                        onClick={() => {
+                          if (!selected) setActive(index)
+                        }}
+                      >
+                        <span className="join-step-num">{item.number}</span>
+                        <span className="join-step-name">{item.title}</span>
+                      </button>
+                    </h3>
+                    <div
+                      id={panelId}
+                      className="join-acc"
+                      role="region"
+                      aria-labelledby={`${panelId}-nut`}
+                      aria-hidden={!selected}
+                    >
+                      <div className="join-acc-inner">
+                        <p className="join-summary">{item.summary}</p>
+                        <ul className="join-details">
+                          {item.details.map((line) => (
+                            <li key={line}>{line}</li>
+                          ))}
+                        </ul>
+                        <p className="join-note">{membershipSection.note}</p>
+                      </div>
+                    </div>
+                  </li>
+                )
+              })}
+            </ol>
+          </div>
+
+          <form className="join-form" noValidate onSubmit={onSubmit}>
+            <div className="join-fields">
+              <label className="join-field">
+                <span>Đối tượng</span>
+                <Select
+                  value={applicant}
+                  onChange={(event) => setApplicant(event.target.value as ApplicantType)}
+                  className={selectClass}
                 >
-                  <span className="library-step-num">{item.number}</span>
-                  <span className="library-step-copy">
-                    <span className="library-step-title">{item.title}</span>
-                    <span className="library-step-summary">{item.summary}</span>
-                  </span>
-                </button>
-              </li>
-            )
-          })}
-        </ol>
+                  {membershipSection.applicantTypes.map((item) => (
+                    <option key={item} value={item}>
+                      {item}
+                    </option>
+                  ))}
+                </Select>
+              </label>
+              <label className="join-field">
+                <span>Họ và tên</span>
+                <input value={name} onChange={(event) => setName(event.target.value)} className={inputClass} autoComplete="name" />
+              </label>
+              <label className="join-field">
+                <span>Email</span>
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(event) => setEmail(event.target.value)}
+                  className={inputClass}
+                  autoComplete="email"
+                />
+              </label>
+              {applicant !== "Cá nhân" ? (
+                <label className="join-field">
+                  <span>{applicant === "Câu lạc bộ" ? "Tên câu lạc bộ" : "Tên đơn vị tổ chức"}</span>
+                  <input value={org} onChange={(event) => setOrg(event.target.value)} className={inputClass} />
+                </label>
+              ) : null}
+              <label className="join-field">
+                <span>Ghi chú</span>
+                <textarea value={note} onChange={(event) => setNote(event.target.value)} rows={3} className="join-control" />
+              </label>
+            </div>
 
-        <article className="library-step-panel">
-          <h3 className="library-step-panel-title">
-            {step.number}. {step.title}
-          </h3>
-          <ul className="library-step-details">
-            {step.details.map((line) => (
-              <li key={line}>{line}</li>
-            ))}
-          </ul>
-          <button type="button" className="library-btn-primary mt-5" onClick={() => setFormOpen(true)}>
-            {membershipSection.ctaLabel}
-          </button>
-        </article>
+            {message ? (
+              <p className={cx("join-message", messageKind === "success" && "is-success")} role="status">
+                {message}
+              </p>
+            ) : null}
+
+            <button type="submit" className="library-btn-primary join-submit">
+              {membershipSection.submitLabel}
+            </button>
+          </form>
+        </div>
       </div>
-
-      <Dialog open={formOpen} title={membershipSection.ctaLabel} onClose={() => setFormOpen(false)}>
-        <p className="text-sm font-medium text-brand-strong">Biểu mẫu minh họa</p>
-        <p className="mt-2 text-sm text-muted">
-          Chưa có kênh tiếp nhận chính thức. Thông tin nhập chỉ dùng để kiểm tra giao diện.
-        </p>
-        <form className="mt-5 space-y-4" noValidate onSubmit={onSubmit}>
-          <label className="block">
-            <span className="mb-1.5 block text-sm font-semibold text-ink">Đối tượng</span>
-            <Select
-              value={applicant}
-              onChange={(event) => setApplicant(event.target.value as ApplicantType)}
-              className={selectClass}
-            >
-              {membershipSection.applicantTypes.map((item) => (
-                <option key={item} value={item}>
-                  {item}
-                </option>
-              ))}
-            </Select>
-          </label>
-          <label className="block">
-            <span className="mb-1.5 block text-sm font-semibold text-ink">Họ và tên</span>
-            <input value={name} onChange={(event) => setName(event.target.value)} className={inputClass} autoComplete="name" />
-          </label>
-          <label className="block">
-            <span className="mb-1.5 block text-sm font-semibold text-ink">Email</span>
-            <input
-              type="email"
-              value={email}
-              onChange={(event) => setEmail(event.target.value)}
-              className={inputClass}
-              autoComplete="email"
-            />
-          </label>
-          {applicant !== "Cá nhân" ? (
-            <label className="block">
-              <span className="mb-1.5 block text-sm font-semibold text-ink">
-                {applicant === "Câu lạc bộ" ? "Tên câu lạc bộ" : "Tên đơn vị tổ chức"}
-              </span>
-              <input value={org} onChange={(event) => setOrg(event.target.value)} className={inputClass} />
-            </label>
-          ) : null}
-          <label className="block">
-            <span className="mb-1.5 block text-sm font-semibold text-ink">Ghi chú</span>
-            <textarea
-              value={note}
-              onChange={(event) => setNote(event.target.value)}
-              rows={3}
-              className="w-full rounded-[10px] border border-line bg-white px-4 py-3 text-[15px] text-ink outline-none"
-            />
-          </label>
-          {status ? <p className="text-sm text-muted">{status}</p> : null}
-          <button type="submit" className="library-btn-primary">
-            Gửi đăng ký (demo)
-          </button>
-        </form>
-      </Dialog>
     </section>
   )
 }

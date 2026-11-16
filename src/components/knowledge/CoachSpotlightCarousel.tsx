@@ -1,12 +1,12 @@
-import { useEffect, useRef, useState } from "react"
+import { useRef, useState } from "react"
 import type { PointerEvent as ReactPointerEvent } from "react"
 import { ChevronLeft, ChevronRight } from "lucide-react"
-import type { PersonnelMember } from "../../data/expertise.mock"
+import type { Coach } from "../../data/coaches.mock"
 import { cx } from "../../lib/cx"
 import { sitePath } from "../../lib/site"
 import { useReveal } from "../../lib/useReveal"
+import { CoachCard } from "../CoachCard"
 import { Dialog } from "../Dialog"
-import { CoachPortraitCard } from "./CoachPortraitCard"
 
 function wrapOffset(index: number, active: number, count: number) {
   let diff = index - active
@@ -25,27 +25,16 @@ export function CoachSpotlightCarousel({
   id: string
   title: string
   description: string
-  members: PersonnelMember[]
+  members: Coach[]
 }) {
   const { ref, shown } = useReveal<HTMLElement>()
   const [active, setActive] = useState(0)
-  const [open, setOpen] = useState<PersonnelMember | null>(null)
+  const [open, setOpen] = useState<Coach | null>(null)
   const drag = useRef({ x: 0, pointer: -1, moved: false })
   const ignoreClick = useRef(false)
-  const [wide, setWide] = useState(() =>
-    typeof window !== "undefined" ? window.matchMedia("(min-width: 1100px)").matches : false,
-  )
   const count = members.length
   const current = members[active]
-  const reach = wide ? 2 : 1
-
-  useEffect(() => {
-    const media = window.matchMedia("(min-width: 1100px)")
-    const update = () => setWide(media.matches)
-    update()
-    media.addEventListener("change", update)
-    return () => media.removeEventListener("change", update)
-  }, [])
+  const reach = 1
 
   const step = (delta: number) => {
     if (count === 0) return
@@ -121,20 +110,24 @@ export function CoachSpotlightCarousel({
                 const slot = wrapOffset(index, active, count)
                 if (Math.abs(slot) > 3) return null
                 return (
-                  <CoachPortraitCard
+                  <div
                     key={member.id}
-                    member={member}
-                    slot={slot}
-                    active={slot === 0}
-                    hidden={Math.abs(slot) > reach}
-                    onSelect={() => setActive(index)}
-                    onOpen={() => setOpen(member)}
-                  />
+                    className={cx("coach-card", slot === 0 && "is-active")}
+                    style={{ ["--slot" as string]: slot }}
+                    data-slot={slot}
+                    aria-hidden={Math.abs(slot) > reach || undefined}
+                    inert={Math.abs(slot) > reach || undefined}
+                  >
+                    <CoachCard
+                      coach={member}
+                      onOpen={slot === 0 ? () => setOpen(member) : () => setActive(index)}
+                    />
+                  </div>
                 )
               })}
             </div>
             <p className="sr-only" aria-live="polite">
-              {current.name}. {current.level}. {current.province}.
+              {current.name}. {current.certification ?? ""}. {current.location ?? ""}.
             </p>
             <div className="coach-toolbar">
               <div
@@ -167,19 +160,21 @@ export function CoachSpotlightCarousel({
   )
 }
 
-function CoachDetail({ member }: { member: PersonnelMember }) {
+function CoachDetail({ member }: { member: Coach }) {
+  const specialties = (member.specialties ?? []).filter(Boolean).join(" · ")
   return (
     <div className="coach-detail">
       <div className="coach-detail-media">
-        {member.portrait ? (
-          <img src={sitePath(member.portrait)} alt="" width={864} height={1152} />
-        ) : null}
+        <img src={sitePath(member.image)} alt="" width={864} height={1152} />
       </div>
       <div>
-        <p className="coach-detail-level">{member.level}</p>
-        <p className="coach-detail-place">{member.province}</p>
-        {member.specialization ? <p className="coach-detail-focus">{member.specialization}</p> : null}
-        {member.bio ? <p className="coach-detail-bio">{member.bio}</p> : null}
+        {member.coachCode ? <p className="coach-detail-level">Mã HLV: {member.coachCode}</p> : null}
+        {member.certification ? <p className="coach-detail-place">{member.certification}</p> : null}
+        {member.organization ? <p className="coach-detail-place">{member.organization}</p> : null}
+        {member.location ? <p className="coach-detail-place">{member.location}</p> : null}
+        {specialties ? <p className="coach-detail-focus">Chuyên môn: {specialties}</p> : null}
+        {member.experience ? <p className="coach-detail-bio">{member.experience}</p> : null}
+        {member.achievement ? <p className="coach-detail-bio">{member.achievement}</p> : null}
         <p className="coach-detail-note">Danh mục này chưa phải danh sách huấn luyện viên được Liên đoàn công bố.</p>
       </div>
     </div>

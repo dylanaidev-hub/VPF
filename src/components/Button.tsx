@@ -2,7 +2,7 @@ import type { AnchorHTMLAttributes, ButtonHTMLAttributes, ReactNode } from "reac
 import { cx } from "../lib/cx"
 import { sitePath } from "../lib/site"
 
-type Variant = "primary" | "outline" | "text"
+type Variant = "primary" | "secondary" | "outline" | "text"
 
 type Common = {
   variant?: Variant
@@ -22,10 +22,12 @@ type LinkProps = Common &
 
 const variants: Record<Variant, string> = {
   primary:
-    "min-h-12 rounded-[10px] bg-brand px-5 text-[15px] text-ink hover:bg-vpf-gold-soft focus-visible:outline-ink",
+    "min-h-12 rounded-[10px] bg-brand px-5 text-[15px] text-ink hover:bg-vpf-gold-soft focus-visible:outline-ink disabled:cursor-not-allowed disabled:opacity-60",
+  secondary:
+    "min-h-12 rounded-[10px] border border-line bg-white px-5 text-[15px] text-ink hover:border-vpf-gold disabled:cursor-not-allowed disabled:opacity-60",
   outline:
-    "min-h-12 rounded-[10px] border border-white/85 bg-transparent px-5 text-[15px] text-white hover:bg-white hover:text-ink",
-  text: "text-sm text-ink hover:text-brand-strong",
+    "min-h-12 rounded-[10px] border border-white/85 bg-transparent px-5 text-[15px] text-white hover:bg-white hover:text-ink disabled:cursor-not-allowed disabled:opacity-60",
+  text: "min-h-12 px-2 text-[15px] text-ink hover:text-brand-strong",
 }
 
 function classes(variant: Variant, className?: string) {

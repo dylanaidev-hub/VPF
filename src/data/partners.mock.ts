@@ -15,21 +15,18 @@ export const partnership = {
 export const partnersIllustrativeNote =
   "Logo và tên thương hiệu chỉ mang tính minh họa, không đại diện cho đối tác chính thức của VPF."
 
-/**
- * Logo giả định cho bản demo. Không dùng tên hay biểu trưng doanh nghiệp thật.
- * Thay `logoSrc` bằng file chính thức khi có đối tác. Không gắn href nếu chưa có URL.
- */
+/** Ảnh logo thương hiệu. Chỉ để minh họa bố cục, không phải đối tác chính thức. */
 export const partners: Partner[] = [
-  { id: "ace-sports", name: "Ace Sports", logoSrc: "/partners/ace-sports.svg", illustrative: true },
-  { id: "rally-club", name: "Rally Club", logoSrc: "/partners/rally-club.svg", illustrative: true },
-  { id: "court-pro", name: "Court Pro", logoSrc: "/partners/court-pro.svg", illustrative: true },
-  { id: "paddle-one", name: "Paddle One", logoSrc: "/partners/paddle-one.svg", illustrative: true },
-  { id: "match-point", name: "Match Point", logoSrc: "/partners/match-point.svg", illustrative: true },
-  { id: "play-arena", name: "Play Arena", logoSrc: "/partners/play-arena.svg", illustrative: true },
-  { id: "next-serve", name: "Next Serve", logoSrc: "/partners/next-serve.svg", illustrative: true },
-  { id: "sport-hub", name: "Sport Hub", logoSrc: "/partners/sport-hub.svg", illustrative: true },
-  { id: "victory-court", name: "Victory Court", logoSrc: "/partners/victory-court.svg", illustrative: true },
-  { id: "prime-athletics", name: "Prime Athletics", logoSrc: "/partners/prime-athletics.svg", illustrative: true },
-  { id: "baseline", name: "Baseline", logoSrc: "/partners/baseline.svg", illustrative: true },
-  { id: "netline", name: "Netline", logoSrc: "/partners/netline.svg", illustrative: true },
+  { id: "ace-sports", name: "Adidas", logoSrc: "/images/partners/adidas.png", illustrative: true },
+  { id: "rally-club", name: "Visa", logoSrc: "/images/partners/visa.png", illustrative: true },
+  { id: "court-pro", name: "Nike", logoSrc: "/images/partners/nike.png", illustrative: true },
+  { id: "paddle-one", name: "Puma", logoSrc: "/images/partners/puma.png", illustrative: true },
+  { id: "match-point", name: "Coca-Cola", logoSrc: "/images/partners/coca-cola.png", illustrative: true },
+  { id: "play-arena", name: "Samsung", logoSrc: "/images/partners/samsung.png", illustrative: true },
+  { id: "next-serve", name: "Red Bull", logoSrc: "/images/partners/redbull.png", illustrative: true },
+  { id: "sport-hub", name: "YouTube", logoSrc: "/images/partners/youtube.png", illustrative: true },
+  { id: "victory-court", name: "TikTok", logoSrc: "/images/partners/tiktok.png", illustrative: true },
+  { id: "prime-athletics", name: "Netflix", logoSrc: "/images/partners/netflix.png", illustrative: true },
+  { id: "baseline", name: "Spotify", logoSrc: "/images/partners/spotify.png", illustrative: true },
+  { id: "netline", name: "Google", logoSrc: "/images/partners/google.png", illustrative: true },
 ]

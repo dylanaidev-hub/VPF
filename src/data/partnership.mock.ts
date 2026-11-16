@@ -67,14 +67,14 @@ export const sponsors: SponsorProfile[] = [
   {
     id: "court-pro",
     slug: "court-pro",
-    name: "Court Pro",
-    logoSrc: "/partners/court-pro.svg",
+    name: "Nike",
+    logoSrc: "/images/partners/nike.png",
     tier: "main",
-    sector: "Thiết bị & sân thể thao",
+    sector: "Thể thao",
     intro:
       "Thương hiệu minh họa đồng hành cùng các hoạt động thi đấu Pickleball ở mức nhà tài trợ chính trên giao diện cổng thông tin.",
     about:
-      "Court Pro là hồ sơ minh họa cho doanh nghiệp quan tâm trang thiết bị và mặt sân. Nội dung chỉ dùng để duyệt trang giới thiệu nhà tài trợ.",
+      "Nike là hồ sơ minh họa trên cổng thông tin. Nội dung chỉ dùng để duyệt trang giới thiệu nhà tài trợ, không phải đối tác chính thức.",
     statement:
       "Chúng tôi muốn đồng hành cùng phong trào Pickleball Việt Nam qua các giải đấu và hoạt động cộng đồng — nội dung minh họa.",
     quote: "Pickleball cần sân chơi chất lượng và hệ sinh thái bền vững. — Trích dẫn minh họa",
@@ -90,12 +90,12 @@ export const sponsors: SponsorProfile[] = [
   {
     id: "ace-sports",
     slug: "ace-sports",
-    name: "Ace Sports",
-    logoSrc: "/partners/ace-sports.svg",
+    name: "Adidas",
+    logoSrc: "/images/partners/adidas.png",
     tier: "gold",
-    sector: "Thể thao & phụ kiện",
+    sector: "Thể thao",
     intro: "Nhà tài trợ vàng minh họa cho danh mục logo cấp trung.",
-    about: "Hồ sơ minh họa Ace Sports trên cổng Hợp tác.",
+    about: "Hồ sơ minh họa Adidas trên cổng Hợp tác.",
     tournamentSlugs: ["mo-rong-ha-noi-2026", "dong-doi-mien-nam-2026"],
     newsSlugs: ["khong-khi-soi-dong-tai-cac-giai-pickleball-phong-trao"],
     illustrative: true,
@@ -103,10 +103,10 @@ export const sponsors: SponsorProfile[] = [
   {
     id: "paddle-one",
     slug: "paddle-one",
-    name: "Paddle One",
-    logoSrc: "/partners/paddle-one.svg",
+    name: "Puma",
+    logoSrc: "/images/partners/puma.png",
     tier: "gold",
-    sector: "Vợt & dụng cụ",
+    sector: "Thể thao",
     intro: "Nhà tài trợ vàng minh họa.",
     tournamentSlugs: ["cong-dong-tphcm-2026"],
     newsSlugs: [],
@@ -115,10 +115,10 @@ export const sponsors: SponsorProfile[] = [
   {
     id: "match-point",
     slug: "match-point",
-    name: "Match Point",
-    logoSrc: "/partners/match-point.svg",
+    name: "Coca-Cola",
+    logoSrc: "/images/partners/coca-cola.png",
     tier: "silver",
-    sector: "Sự kiện thể thao",
+    sector: "Đồ uống",
     intro: "Nhà tài trợ bạc minh họa.",
     tournamentSlugs: ["giao-luu-da-nang-2026"],
     newsSlugs: [],
@@ -127,10 +127,10 @@ export const sponsors: SponsorProfile[] = [
   {
     id: "play-arena",
     slug: "play-arena",
-    name: "Play Arena",
-    logoSrc: "/partners/play-arena.svg",
+    name: "Samsung",
+    logoSrc: "/images/partners/samsung.png",
     tier: "silver",
-    sector: "Cụm sân & giải trí",
+    sector: "Điện tử",
     intro: "Nhà tài trợ bạc minh họa.",
     tournamentSlugs: [],
     newsSlugs: [],
@@ -139,10 +139,10 @@ export const sponsors: SponsorProfile[] = [
   {
     id: "rally-club",
     slug: "rally-club",
-    name: "Rally Club",
-    logoSrc: "/partners/rally-club.svg",
+    name: "Visa",
+    logoSrc: "/images/partners/visa.png",
     tier: "silver",
-    sector: "Câu lạc bộ",
+    sector: "Thanh toán",
     intro: "Nhà tài trợ bạc minh họa.",
     tournamentSlugs: [],
     newsSlugs: [],
@@ -151,10 +151,10 @@ export const sponsors: SponsorProfile[] = [
   {
     id: "next-serve",
     slug: "next-serve",
-    name: "Next Serve",
-    logoSrc: "/partners/next-serve.svg",
+    name: "Red Bull",
+    logoSrc: "/images/partners/redbull.png",
     tier: "silver",
-    sector: "Công nghệ thể thao",
+    sector: "Đồ uống",
     intro: "Nhà tài trợ bạc minh họa.",
     tournamentSlugs: [],
     newsSlugs: [],
@@ -163,10 +163,10 @@ export const sponsors: SponsorProfile[] = [
   {
     id: "sport-hub",
     slug: "sport-hub",
-    name: "Sport Hub",
-    logoSrc: "/partners/sport-hub.svg",
+    name: "YouTube",
+    logoSrc: "/images/partners/youtube.png",
     tier: "media",
-    sector: "Truyền thông thể thao",
+    sector: "Nền tảng video",
     intro: "Đối tác truyền thông minh họa.",
     tournamentSlugs: [],
     newsSlugs: [],
@@ -175,10 +175,10 @@ export const sponsors: SponsorProfile[] = [
   {
     id: "victory-court",
     slug: "victory-court",
-    name: "Victory Court",
-    logoSrc: "/partners/victory-court.svg",
+    name: "TikTok",
+    logoSrc: "/images/partners/tiktok.png",
     tier: "media",
-    sector: "Nội dung chuyên môn",
+    sector: "Mạng xã hội",
     intro: "Đối tác chuyên môn minh họa.",
     tournamentSlugs: [],
     newsSlugs: [],
@@ -187,10 +187,10 @@ export const sponsors: SponsorProfile[] = [
   {
     id: "prime-athletics",
     slug: "prime-athletics",
-    name: "Prime Athletics",
-    logoSrc: "/partners/prime-athletics.svg",
+    name: "Netflix",
+    logoSrc: "/images/partners/netflix.png",
     tier: "media",
-    sector: "Huấn luyện & thể lực",
+    sector: "Giải trí",
     intro: "Đối tác chuyên môn minh họa.",
     tournamentSlugs: [],
     newsSlugs: [],
@@ -199,10 +199,10 @@ export const sponsors: SponsorProfile[] = [
   {
     id: "baseline",
     slug: "baseline",
-    name: "Baseline",
-    logoSrc: "/partners/baseline.svg",
+    name: "Spotify",
+    logoSrc: "/images/partners/spotify.png",
     tier: "media",
-    sector: "Truyền thông số",
+    sector: "Âm nhạc",
     intro: "Đối tác truyền thông minh họa.",
     tournamentSlugs: [],
     newsSlugs: [],
@@ -211,10 +211,10 @@ export const sponsors: SponsorProfile[] = [
   {
     id: "netline",
     slug: "netline",
-    name: "Netline",
-    logoSrc: "/partners/netline.svg",
+    name: "Google",
+    logoSrc: "/images/partners/google.png",
     tier: "media",
-    sector: "Hạ tầng sân",
+    sector: "Công nghệ",
     intro: "Đối tác chuyên môn minh họa.",
     tournamentSlugs: [],
     newsSlugs: [],
@@ -238,6 +238,8 @@ export type PartnershipOffer = {
   title: string
   description: string
   benefits: string[]
+  image: string
+  imageAlt: string
 }
 
 export const partnershipOffers: PartnershipOffer[] = [
@@ -246,26 +248,75 @@ export const partnershipOffers: PartnershipOffer[] = [
     title: "Nhà tài trợ chính",
     description: "Đồng hành chiến lược với phạm vi nhận diện rộng trên các hoạt động trọng điểm.",
     benefits: ["Hồ sơ nhà tài trợ trên cổng thông tin", "Hiện diện trên trang chủ (minh họa)", "Ưu tiên gắn kết giải trọng điểm"],
+    image: "/images/partnership/other.jpg",
+    imageAlt: "Vợt, bóng pickleball và sổ tay trên bàn.",
   },
   {
     id: "doi-tac-dong-hanh",
     title: "Đối tác đồng hành",
     description: "Phối hợp theo chương trình hoặc chuỗi hoạt động trong một giai đoạn.",
     benefits: ["Logo hạng mục đồng hành", "Chia sẻ nội dung hợp tác", "Tham gia hoạt động cộng đồng"],
+    image: "/images/partnership/community.jpg",
+    imageAlt: "Sân pickleball cộng đồng vào cuối ngày.",
   },
   {
     id: "tai-tro-giai",
     title: "Tài trợ giải",
     description: "Gắn thương hiệu với một giải hoặc một chuỗi sự kiện cụ thể.",
     benefits: ["Backdrop / bảng tên giải (minh họa)", "Hiện diện livestream (minh họa)", "Tin bài sự kiện liên quan"],
+    image: "/images/partnership/event.jpg",
+    imageAlt: "Sân pickleball trong một giải đấu trong nhà.",
   },
   {
     id: "doi-tac-truyen-thong",
     title: "Đối tác truyền thông",
     description: "Cùng sản xuất hoặc phân phối nội dung về Pickleball Việt Nam.",
     benefits: ["Chia sẻ kênh truyền thông", "Bài PR / nội dung chuyên đề", "Hỗ trợ phủ sóng sự kiện"],
+    image: "/images/partnership/media.jpg",
+    imageAlt: "Máy quay và vợt pickleball trên bàn sản xuất.",
   },
 ]
+
+export const partnershipHero = {
+  eyebrow: "Hợp tác cùng VPF",
+  title: "Cùng phát triển phong trào Pickleball Việt Nam",
+  description:
+    "VPF đồng hành cùng các đối tác, tổ chức và doanh nghiệp để phát triển hệ sinh thái Pickleball chuyên nghiệp và bền vững.",
+  primaryLabel: "Đề xuất hợp tác",
+  primaryHref: "#lien-he-hop-tac",
+  secondaryLabel: "Tìm hiểu thêm",
+  secondaryHref: "#gia-tri-hop-tac",
+  image: "/images/partnership/hero.jpg",
+  imageAlt: "Vợt và bóng pickleball dưới ánh sáng đỏ.",
+} as const
+
+export const valuesSection = {
+  id: "gia-tri-hop-tac",
+  title: "Giá trị hợp tác",
+} as const
+
+export const partnershipValues = [
+  {
+    id: "dai-han",
+    title: "Đồng hành dài hạn",
+    detail: "Hợp tác theo chương trình, đủ thời gian để cùng xây phong trào.",
+  },
+  {
+    id: "thuong-hieu",
+    title: "Gia tăng giá trị thương hiệu",
+    detail: "Hiện diện cạnh các hoạt động thi đấu và cộng đồng Pickleball.",
+  },
+  {
+    id: "he-sinh-thai",
+    title: "Kết nối hệ sinh thái",
+    detail: "Nối doanh nghiệp với câu lạc bộ, giải đấu và người chơi.",
+  },
+  {
+    id: "tac-dong",
+    title: "Tác động tích cực",
+    detail: "Góp vào sân chơi, nội dung và cơ hội cho người mới tham gia.",
+  },
+] as const
 
 export const benefitRows = [
   { id: "logo-home", label: "Logo trên trang chủ VPF", main: true, companion: true, event: false, media: false },
@@ -278,10 +329,11 @@ export const benefitRows = [
 
 export const offersSection = {
   id: "hinh-thuc",
-  title: "Hình thức hợp tác & Quyền lợi",
-  description: "Các hướng hợp tác và quyền lợi dành cho đối tác đồng hành cùng VPF.",
+  title: "Các hình thức hợp tác",
+  description: "Các hướng hợp tác đang được dựng trên cổng này, kèm quyền lợi minh họa.",
   note: ILLUSTRATIVE_LABEL,
   comparisonTitle: "So sánh quyền lợi",
+  comparisonDescription: "Khám phá các quyền lợi dành cho từng hạng mục hợp tác cùng VPF.",
   downloadLabel: "Tải hồ sơ tài trợ (PDF)",
   /** Chỉ gán khi có PDF thật. */
   downloadHref: undefined as string | undefined,
@@ -299,10 +351,10 @@ export const partnershipTypeOptions = [
 
 export const contactSection = {
   id: "lien-he-hop-tac",
-  title: "Liên hệ hợp tác",
+  title: "Cùng VPF kiến tạo giá trị",
   description: "Gửi thông tin để VPF liên hệ về cơ hội hợp tác.",
   note: "Chức năng gửi đang chờ tích hợp. Dữ liệu không được gửi đi và không được lưu trên trình duyệt.",
-  ctaLabel: "Gửi thông tin",
+  ctaLabel: "Gửi đề xuất hợp tác",
   consentLabel: "Tôi đồng ý để VPF liên hệ và xử lý thông tin theo chính sách bảo mật.",
 } as const
 

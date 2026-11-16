@@ -4,18 +4,9 @@
  */
 
 import type { MediaShot } from "./media.mock"
+import { players, type CatalogPlayer, type PlayerBatch } from "./players.mock"
 
 export const ILLUSTRATIVE_LABEL = "Dữ liệu minh họa — không phải thông tin chính thức của Liên đoàn."
-
-export const libraryNav = [
-  { id: "bo-nhan-dien", label: "Thư viện" },
-  { id: "anh-video", label: "Ảnh & Video" },
-  { id: "don-vi-thanh-vien", label: "Đơn vị thành viên" },
-  { id: "doi-tuyen-vdv", label: "Đội tuyển & VĐV" },
-  { id: "dang-ky-thanh-vien", label: "Đăng ký thành viên" },
-] as const
-
-export type LibraryNavId = (typeof libraryNav)[number]["id"]
 
 export const libraryPage = {
   eyebrow: "Thư viện & Cộng đồng",
@@ -31,20 +22,54 @@ const match = "/images/match.jpg"
 const player = "/images/player.jpg"
 const logoMark = "/brand/logo-mark-color.svg"
 const logoColor = "/brand/logo-horizontal-color.svg"
+const logoWhite = "/brand/logo-horizontal-white.svg"
+
+export const brandColors = [
+  { id: "primary", name: "Primary", hex: "#AE3033", note: "Màu nền chính, đo từ ấn phẩm nhận diện." },
+  { id: "logo", name: "Đỏ logo", hex: "#BE1E2D", note: "Màu đỏ trong file logo." },
+  { id: "accent", name: "Accent", hex: "#E8943C", note: "Vàng nhấn trong hệ màu." },
+  { id: "orange", name: "Cam logo", hex: "#F7941D", note: "Cam trong file logo." },
+] as const
+
+export const brandLogoVersions = [
+  { id: "horizontal", label: "Logo ngang", src: logoColor, surface: "light" },
+  { id: "white", label: "Nền đỏ", src: logoWhite, surface: "field" },
+  { id: "mark", label: "Biểu tượng", src: logoMark, surface: "light" },
+] as const
+
+export const brandTypeWeights = [
+  { id: "regular", label: "Regular", weight: 400 },
+  { id: "medium", label: "Medium", weight: 500 },
+  { id: "semibold", label: "Semibold", weight: 600 },
+  { id: "bold", label: "Bold", weight: 700 },
+] as const
+
+export const brandScenes = [
+  { id: "card", label: "Danh thiếp", src: "/images/brand/brand-card-scene.jpg", alt: "Danh thiếp trống trên mặt đá. Ảnh minh họa bề mặt in." },
+  { id: "letter", label: "Giấy tiêu đề", src: "/images/brand/brand-letterhead-scene.jpg", alt: "Tờ giấy trắng và bút trên bàn gỗ. Ảnh minh họa văn phòng phẩm." },
+  { id: "event", label: "Sự kiện", src: "/images/brand/brand-event-scene.jpg", alt: "Phông đỏ với tấm bảng trắng. Ảnh minh họa nhận diện sự kiện." },
+] as const
 
 export const brandSection = {
   id: "bo-nhan-dien",
   title: "Bộ nhận diện VPF",
-  description: "Logo, màu sắc và kiểu chữ của Liên đoàn Pickleball Việt Nam.",
+  description:
+    "Khám phá hệ thống nhận diện thương hiệu và các quy chuẩn ứng dụng của Liên đoàn Pickleball Việt Nam.",
   logoPreview: logoColor,
+  logoWhite,
   logoMark,
-  logoAlt: "Logo Liên đoàn Pickleball Việt Nam — xem trước minh họa.",
+  logoAlt: "Logo Liên đoàn Pickleball Việt Nam.",
   note: ILLUSTRATIVE_LABEL,
   resources: [
-    { id: "logo", label: "Logo", detail: "Phiên bản ngang và biểu tượng." },
-    { id: "color", label: "Bảng màu", detail: "Đỏ VPF, navy và cam nhấn." },
-    { id: "type", label: "Typography", detail: "Be Vietnam Pro trên giao diện." },
-    { id: "usage", label: "Hướng dẫn sử dụng", detail: "Khung minh họa — chưa có guideline chính thức." },
+    { id: "logo", index: "01", label: "Logo", detail: "Logo ngang màu, logo trắng trên nền đỏ và biểu tượng." },
+    { id: "color", index: "02", label: "Bảng màu", detail: "Primary, accent và màu trong file logo, kèm mã HEX." },
+    { id: "type", index: "03", label: "Typography", detail: "Be Vietnam Pro và các độ đậm đang dùng trên website." },
+    {
+      id: "usage",
+      index: "04",
+      label: "Hướng dẫn sử dụng",
+      detail: "Khung minh họa. Chưa có quy chuẩn khoảng cách và kích thước tối thiểu được công bố.",
+    },
   ],
   viewLibraryLabel: "Xem thư viện",
   downloadLabel: "Tải tài nguyên",
@@ -300,16 +325,16 @@ export type MemberOrg = {
 }
 
 export const memberOrgs: MemberOrg[] = [
-  { id: "m01", name: "Hanoi Pickleball Community", province: "Hà Nội", description: "Nhóm minh họa kết nối người chơi tại Hà Nội.", illustrative: true },
-  { id: "m02", name: "Saigon Pickleball Club", province: "TP. Hồ Chí Minh", description: "Câu lạc bộ minh họa tại TP. Hồ Chí Minh.", illustrative: true },
-  { id: "m03", name: "Da Nang Pickleball Club", province: "Đà Nẵng", description: "Câu lạc bộ minh họa khu vực miền Trung.", illustrative: true },
-  { id: "m04", name: "Can Tho Pickleball Club", province: "Cần Thơ", description: "Câu lạc bộ minh họa Đồng bằng sông Cửu Long.", illustrative: true },
-  { id: "m05", name: "Hai Phong Pickleball Club", province: "Hải Phòng", description: "Câu lạc bộ minh họa tại Hải Phòng.", illustrative: true },
-  { id: "m06", name: "Nha Trang Pickleball Community", province: "Khánh Hòa", description: "Cộng đồng minh họa tại Nha Trang.", illustrative: true },
-  { id: "m07", name: "Binh Duong Open Club", province: "Bình Dương", description: "Câu lạc bộ minh họa tại Bình Dương.", illustrative: true },
-  { id: "m08", name: "Hue Pickleball Group", province: "Huế", description: "Nhóm minh họa tại Huế.", illustrative: true },
-  { id: "m09", name: "Dong Nai Pickleball Club", province: "Đồng Nai", description: "Câu lạc bộ minh họa tại Đồng Nai.", illustrative: true },
-  { id: "m10", name: "Vung Tau Community", province: "Bà Rịa - Vũng Tàu", description: "Cộng đồng minh họa tại Vũng Tàu.", illustrative: true },
+  { id: "m01", name: "Hanoi Pickleball Community", province: "Hà Nội", logo: "/images/clubs/club-01.png", description: "Nhóm minh họa kết nối người chơi tại Hà Nội.", illustrative: true },
+  { id: "m02", name: "Saigon Pickleball Club", province: "TP. Hồ Chí Minh", logo: "/images/clubs/club-02.png", description: "Câu lạc bộ minh họa tại TP. Hồ Chí Minh.", illustrative: true },
+  { id: "m03", name: "Da Nang Pickleball Club", province: "Đà Nẵng", logo: "/images/clubs/club-03.png", description: "Câu lạc bộ minh họa khu vực miền Trung.", illustrative: true },
+  { id: "m04", name: "Can Tho Pickleball Club", province: "Cần Thơ", logo: "/images/clubs/club-04.png", description: "Câu lạc bộ minh họa Đồng bằng sông Cửu Long.", illustrative: true },
+  { id: "m05", name: "Hai Phong Pickleball Club", province: "Hải Phòng", logo: "/images/clubs/club-05.png", description: "Câu lạc bộ minh họa tại Hải Phòng.", illustrative: true },
+  { id: "m06", name: "Nha Trang Pickleball Community", province: "Khánh Hòa", logo: "/images/clubs/club-06.png", description: "Cộng đồng minh họa tại Nha Trang.", illustrative: true },
+  { id: "m07", name: "Binh Duong Open Club", province: "Bình Dương", logo: "/images/clubs/club-07.png", description: "Câu lạc bộ minh họa tại Bình Dương.", illustrative: true },
+  { id: "m08", name: "Hue Pickleball Group", province: "Huế", logo: "/images/clubs/club-05.png", description: "Nhóm minh họa tại Huế.", illustrative: true },
+  { id: "m09", name: "Dong Nai Pickleball Club", province: "Đồng Nai", logo: "/images/clubs/club-06.png", description: "Câu lạc bộ minh họa tại Đồng Nai.", illustrative: true },
+  { id: "m10", name: "Vung Tau Community", province: "Bà Rịa - Vũng Tàu", logo: "/images/clubs/club-07.png", description: "Cộng đồng minh họa tại Vũng Tàu.", illustrative: true },
 ]
 
 export const MEMBER_PREVIEW_COUNT = 6
@@ -323,49 +348,13 @@ export const memberSection = {
   collapseLabel: "Thu gọn danh mục",
 } as const
 
-export type StaffProfile = {
-  id: string
-  name: string
-  role: string
-  specialization: string
-  bio: string
-  illustrative: true
-}
-
-export const coachingStaff: StaffProfile[] = [
-  { id: "s1", name: "Nguyễn Thanh Phong", role: "Huấn luyện viên trưởng (minh họa)", specialization: "Chiến thuật đôi", bio: "Hồ sơ minh họa ban huấn luyện.", illustrative: true },
-  { id: "s2", name: "Trần Mai Chi", role: "HLV thể lực (minh họa)", specialization: "Thể lực & di chuyển", bio: "Hồ sơ minh họa chuyên đề thể lực.", illustrative: true },
-  { id: "s3", name: "Lê Quốc Bảo", role: "HLV kỹ thuật (minh họa)", specialization: "Giao bóng & volley", bio: "Hồ sơ minh họa chuyên đề kỹ thuật.", illustrative: true },
-  { id: "s4", name: "Phạm Thu Hà", role: "Trợ lý HLV (minh họa)", specialization: "Người mới & nền tảng", bio: "Hồ sơ minh họa trợ lý huấn luyện.", illustrative: true },
-  { id: "s5", name: "Hoàng Minh Tuấn", role: "HLV phân tích (minh họa)", specialization: "Phân tích trận đấu", bio: "Hồ sơ minh họa phân tích chuyên môn.", illustrative: true },
-  { id: "s6", name: "Đỗ Lan Anh", role: "HLV trẻ (minh họa)", specialization: "Huấn luyện trẻ em", bio: "Hồ sơ minh họa huấn luyện trẻ.", illustrative: true },
-]
-
-export type AthleteBatch = "Đợt 1" | "Đợt 2" | "Đợt 3"
+export type AthleteBatch = PlayerBatch
+export type AthleteProfile = CatalogPlayer
 
 export const athleteBatches = ["Tất cả đợt", "Đợt 1", "Đợt 2", "Đợt 3"] as const
 
-export type AthleteProfile = {
-  id: string
-  name: string
-  category: string
-  batch: AthleteBatch
-  bio: string
-  illustrative: true
-}
-
-export const athletes: AthleteProfile[] = [
-  { id: "a1", name: "Nguyễn Gia Huy", category: "Đôi nam", batch: "Đợt 1", bio: "Hồ sơ VĐV minh họa đợt 1.", illustrative: true },
-  { id: "a2", name: "Trần Ngọc Ánh", category: "Đôi nữ", batch: "Đợt 1", bio: "Hồ sơ VĐV minh họa đợt 1.", illustrative: true },
-  { id: "a3", name: "Lê Minh Khoa", category: "Đơn nam", batch: "Đợt 1", bio: "Hồ sơ VĐV minh họa đợt 1.", illustrative: true },
-  { id: "a4", name: "Phạm Bảo Châu", category: "Đôi hỗn hợp", batch: "Đợt 1", bio: "Hồ sơ VĐV minh họa đợt 1.", illustrative: true },
-  { id: "a5", name: "Hoàng Đức Anh", category: "Đôi nam", batch: "Đợt 2", bio: "Hồ sơ VĐV minh họa đợt 2.", illustrative: true },
-  { id: "a6", name: "Vũ Thanh Thảo", category: "Đơn nữ", batch: "Đợt 2", bio: "Hồ sơ VĐV minh họa đợt 2.", illustrative: true },
-  { id: "a7", name: "Đặng Nhật Nam", category: "Đôi nam", batch: "Đợt 2", bio: "Hồ sơ VĐV minh họa đợt 2.", illustrative: true },
-  { id: "a8", name: "Bùi Hà My", category: "Đôi nữ", batch: "Đợt 2", bio: "Hồ sơ VĐV minh họa đợt 2.", illustrative: true },
-  { id: "a9", name: "Ngô Quang Vinh", category: "Đơn nam", batch: "Đợt 3", bio: "Hồ sơ VĐV minh họa đợt 3.", illustrative: true },
-  { id: "a10", name: "Đinh Thu Trang", category: "Đôi hỗn hợp", batch: "Đợt 3", bio: "Hồ sơ VĐV minh họa đợt 3.", illustrative: true },
-]
+/** Cùng nguồn với `players` — không nhân bản hồ sơ. */
+export const athletes = players
 
 export const teamsSection = {
   id: "doi-tuyen-vdv",
@@ -387,11 +376,12 @@ export const membershipSteps: MembershipStep[] = [
     id: "step-01",
     number: "01",
     title: "Đối tượng & điều kiện",
-    summary: "Cá nhân, câu lạc bộ hoặc đơn vị tổ chức quan tâm mạng lưới Pickleball.",
+    summary: "Các nhóm đối tượng minh họa có thể đăng ký khi có kênh chính thức.",
     details: [
-      "Nội dung điều kiện chính thức chưa được công bố.",
-      "Khung này chỉ minh họa các nhóm đối tượng có thể đăng ký sau này.",
-      "Không suy diễn điều kiện hội viên thực tế từ bản demo.",
+      "Cá nhân.",
+      "Câu lạc bộ.",
+      "Đơn vị, tổ chức.",
+      "Điều kiện tham gia chính thức chưa được công bố.",
     ],
   },
   {
@@ -416,25 +406,19 @@ export const membershipSteps: MembershipStep[] = [
       "Phần này chỉ giữ chỗ cấu trúc thông tin.",
     ],
   },
-  {
-    id: "step-04",
-    number: "04",
-    title: "Biểu mẫu",
-    summary: "Biểu mẫu đăng ký minh họa để kiểm tra trải nghiệm điền thông tin.",
-    details: [
-      "Dữ liệu nhập không được gửi đi và không được lưu.",
-      "Chọn loại đối tượng: cá nhân, câu lạc bộ hoặc đơn vị tổ chức.",
-      "CTA mở biểu mẫu demo trong hộp thoại.",
-    ],
-  },
 ]
 
 export const membershipSection = {
   id: "dang-ky-thanh-vien",
   title: "Đăng ký thành viên",
-  description: "Hành trình đăng ký hội viên gồm bốn bước. Nội dung đang ở chế độ minh họa.",
+  description: "Khám phá quy trình tham gia mạng lưới Pickleball Việt Nam.",
   note: ILLUSTRATIVE_LABEL,
-  ctaLabel: "Đăng ký thành viên",
+  formTitle: "Đăng ký thành viên",
+  formDescription: "Điền thông tin để bắt đầu tham gia mạng lưới Pickleball Việt Nam.",
+  formNote: "Biểu mẫu minh họa. Chưa có kênh tiếp nhận chính thức — thông tin không được gửi đi và không được lưu.",
+  submitLabel: "Gửi đăng ký",
+  successNote:
+    "Đăng ký minh họa đã được ghi nhận trên giao diện. Thông tin không được gửi đi và không được lưu.",
   applicantTypes: ["Cá nhân", "Câu lạc bộ", "Đơn vị tổ chức"] as const,
 } as const
 

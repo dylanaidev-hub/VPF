@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react"
 import { ChevronDown, ChevronUp, MapPin, X } from "lucide-react"
+import { sitePath } from "../../lib/site"
 import {
   MEMBER_PREVIEW_COUNT,
   memberOrgs,
@@ -11,6 +12,7 @@ import { cx } from "../../lib/cx"
 import { foldText } from "../../lib/format"
 import { useReveal } from "../../lib/useReveal"
 import { Dialog } from "../Dialog"
+import { ClubCard } from "./ClubCard"
 import { Select } from "../Select"
 
 const searchInputClass =
@@ -23,13 +25,6 @@ const clearSearchClass =
 
 function fold(value: string) {
   return foldText(value).replace(/đ/g, "d")
-}
-
-function initials(name: string) {
-  const parts = name.split(" ").filter(Boolean)
-  const first = parts[0]?.[0] ?? ""
-  const last = parts.length > 1 ? parts[parts.length - 1]![0]! : ""
-  return `${first}${last}`.toUpperCase()
 }
 
 export function MemberOrgsSection() {
@@ -133,18 +128,12 @@ export function MemberOrgsSection() {
             <ul className="library-org-grid">
               {visible.map((org) => (
                 <li key={org.id}>
-                  <button type="button" className="library-org-card" onClick={() => setOpen(org)}>
-                    <span className="library-org-logo" aria-hidden>
-                      {initials(org.name)}
-                    </span>
-                    <span className="library-org-body">
-                      <span className="library-org-name">{org.name}</span>
-                      <span className="library-org-place">
-                        <MapPin className="size-3.5 shrink-0" aria-hidden />
-                        {org.province}
-                      </span>
-                    </span>
-                  </button>
+                  <ClubCard
+                    name={org.name}
+                    location={org.province}
+                    logo={org.logo ?? ""}
+                    onOpen={() => setOpen(org)}
+                  />
                 </li>
               ))}
             </ul>
@@ -168,7 +157,10 @@ export function MemberOrgsSection() {
       <Dialog open={open !== null} title={open?.name ?? "Đơn vị"} onClose={() => setOpen(null)}>
         {open ? (
           <div>
-            <p className="text-sm font-medium text-brand-strong">Đơn vị minh họa</p>
+            {open.logo ? (
+              <img className="club-dialog-logo" src={sitePath(open.logo)} alt="" width={72} height={72} />
+            ) : null}
+            <p className="mt-3 text-sm font-medium text-brand-strong">Đơn vị minh họa</p>
             <p className="mt-3 inline-flex items-center gap-1.5 text-sm text-muted">
               <MapPin className="size-3.5" aria-hidden />
               {open.province}

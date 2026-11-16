@@ -36,9 +36,9 @@ export const pageHeroes = {
   },
   partnership: {
     titleId: "hop-tac-trang",
-    title: "Đồng hành cùng VPF",
+    title: "Cùng phát triển phong trào Pickleball Việt Nam",
     description:
-      "Cùng VPF phát triển phong trào Pickleball Việt Nam thông qua những cơ hội hợp tác và đồng hành bền vững.",
-    breadcrumbs: [home, { label: "Đồng hành cùng VPF" }],
+      "VPF đồng hành cùng các đối tác, tổ chức và doanh nghiệp để phát triển hệ sinh thái Pickleball chuyên nghiệp và bền vững.",
+    breadcrumbs: [home, { label: "Hợp tác" }],
   },
 } satisfies Record<string, PageHeroConfig>

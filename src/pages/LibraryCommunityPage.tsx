@@ -1,5 +1,4 @@
 import { BrandIdentitySection } from "../components/library/BrandIdentitySection"
-import { LibraryNav } from "../components/library/LibraryNav"
 import { MediaLibrarySection } from "../components/library/MediaLibrarySection"
 import { MemberOrgsSection } from "../components/library/MemberOrgsSection"
 import { MembershipSection } from "../components/library/MembershipSection"
@@ -12,9 +11,6 @@ export function LibraryCommunityPage() {
   return (
     <SiteLayout>
       <PageHero {...pageHeroes.library} />
-      <div className="page-wrap py-5">
-        <LibraryNav />
-      </div>
       <BrandIdentitySection />
       <MediaLibrarySection />
       <MemberOrgsSection />
