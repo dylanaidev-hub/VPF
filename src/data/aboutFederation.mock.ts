@@ -129,21 +129,12 @@ export const federationHistory = {
 
 export const federationDecision = {
   id: "quyet-dinh",
-  eyebrow: "Hồ sơ pháp lý",
   title: "Quyết định thành lập Liên đoàn",
-  note: "Quyết định thành lập sẽ được cập nhật khi Liên đoàn công bố.",
-  numberLabel: "Số quyết định",
-  number: "Chưa công bố",
-  dateLabel: "Ngày ban hành",
-  date: "Chưa công bố",
-  authorityLabel: "Cơ quan ban hành",
-  authority: "Chưa công bố",
-  documentTitle: "Quyết định thành lập",
-  stampLabel: "Minh họa",
-  status: "PDF chưa được cung cấp",
-  cta: "Xem văn bản",
-  href: "/documents/chua-cong-bo.html?van-ban=quyet-dinh",
-  pdf: "",
+  category: "Tài liệu Liên đoàn",
+  description: "Văn bản quyết định thành lập Liên đoàn Pickleball Việt Nam.",
+  availabilityStatus: "PDF chưa được công bố",
+  documentUrl: "",
+  downloadUrl: "",
 }
 
 export const federationVision = {

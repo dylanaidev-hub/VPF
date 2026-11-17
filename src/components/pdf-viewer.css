@@ -1,0 +1,92 @@
+.vpf-pdf {
+  overflow: hidden;
+  border: 1px solid var(--vpf-line);
+  border-radius: 6px;
+}
+
+.vpf-pdf-tools {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem 0.6rem;
+  padding: 0.4rem;
+  border-bottom: 1px solid var(--vpf-line);
+  background: var(--vpf-white);
+  font-size: 0.8rem;
+}
+
+.vpf-pdf-tools div,
+.vpf-pdf-tools form {
+  display: inline-flex;
+  min-width: 0;
+  align-items: center;
+  gap: 0.2rem;
+}
+
+.vpf-pdf-tools div:first-child span {
+  min-width: 2.6rem;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.vpf-pdf-tools form {
+  flex: 1 1 11rem;
+}
+
+.vpf-pdf-tools input {
+  flex: 1 1 auto;
+  width: 100%;
+  min-width: 0;
+  min-height: 40px;
+  padding: 0.4rem 0.5rem;
+  border: 1px solid var(--vpf-line);
+  border-radius: 5px;
+}
+
+.vpf-pdf-tools button {
+  display: grid;
+  flex-shrink: 0;
+  width: 40px;
+  min-height: 40px;
+  place-items: center;
+  border: 1px solid var(--vpf-line);
+  border-radius: 5px;
+  color: var(--vpf-red-700);
+  cursor: pointer;
+}
+
+.vpf-pdf-tools button:disabled {
+  color: var(--vpf-ink-soft);
+  opacity: 0.55;
+  cursor: default;
+}
+
+.vpf-pdf-tools button:hover:not(:disabled) {
+  background: #f4e8e5;
+}
+
+.vpf-pdf .vpf-pdf-matches,
+.vpf-pdf [role="alert"] {
+  padding: 0.4rem 0.6rem;
+}
+
+.vpf-pdf-stage {
+  position: relative;
+  height: min(56dvh, 36rem);
+  background: var(--vpf-canvas);
+}
+
+.vpf-pdf-stage > p {
+  padding: 0.65rem;
+}
+
+.vpf-pdf-viewport {
+  position: absolute;
+  inset: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+}
+
+.vpf-pdf-viewport:focus-visible {
+  outline-offset: -2px;
+}

@@ -830,200 +830,14 @@
 }
 
 .fed-decree {
-  padding-top: 64px;
-  padding-bottom: 64px;
+  padding-block: clamp(2rem, 4.25vw, 4rem);
   background: var(--vpf-white);
 }
 
-.fed-decree-grid {
-  display: grid;
-  gap: 2rem;
-  align-items: center;
-}
-
-.fed-decree-stage {
-  display: flex;
-  justify-content: center;
-  padding: 1.25rem 0.5rem;
-}
-
-.fed-decree-paper {
-  position: relative;
-  width: min(68%, 220px);
-  aspect-ratio: 1 / 1.414;
-  padding: 1.35rem 1.15rem 1.1rem;
-  border-radius: 2px;
-  background: var(--vpf-white);
-  box-shadow:
-    0 0 0 1px rgb(24 35 46 / 6%),
-    0 14px 32px rgb(24 35 46 / 8%);
-  opacity: 0;
-  transform: translateY(24px) rotate(-3deg);
-  transform-origin: center center;
-  transition:
-    opacity 600ms ease,
-    transform 600ms ease,
-    box-shadow 600ms ease;
-}
-
-.fed-decree-paper::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  right: 0;
-  left: 0;
-  height: 4px;
-  background: var(--vpf-logo-red);
-}
-
-.fed-decree.is-in .fed-decree-paper {
-  opacity: 1;
-  transform: none;
-}
-
-.fed-decree-dochead {
-  display: flex;
-  gap: 0.55rem;
-  align-items: center;
-  color: var(--vpf-logo-red);
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-}
-
-.fed-decree-mark {
-  display: grid;
-  width: 1.75rem;
-  height: 1.75rem;
-  place-items: center;
-  border-radius: 6px;
-  background: var(--vpf-logo-red);
-  color: var(--vpf-white);
-}
-
-.fed-decree-mark svg {
-  width: 0.95rem;
-  height: 0.95rem;
-}
-
-.fed-decree-paper > p {
-  margin: 1rem 0 0;
-  color: #18232e;
-  font-size: 0.95rem;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  line-height: 1.35;
-  text-transform: uppercase;
-}
-
-.fed-decree-lines {
-  display: grid;
-  gap: 0.55rem;
+.fed-decree .rulebook {
   margin-top: 1.15rem;
 }
 
-.fed-decree-lines span {
-  display: block;
-  height: 6px;
-  border-radius: 99px;
-  background: var(--vpf-canvas);
-}
-
-.fed-decree-lines span:nth-child(2) {
-  width: 92%;
-}
-
-.fed-decree-lines span:nth-child(4) {
-  width: 74%;
-}
-
-.fed-decree-lines span:nth-child(5) {
-  width: 58%;
-}
-
-.fed-decree-stamp {
-  position: absolute;
-  right: 0.95rem;
-  bottom: 1rem;
-  display: grid;
-  width: 4.25rem;
-  height: 4.25rem;
-  place-items: center;
-  border: 1.5px solid var(--vpf-logo-orange);
-  border-radius: 50%;
-  color: #18232e;
-  font-size: 9px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  transform: rotate(-12deg);
-}
-
-.fed-decree-stamp::before {
-  content: "";
-  position: absolute;
-  inset: 4px;
-  border: 1px dashed var(--vpf-logo-orange);
-  border-radius: 50%;
-}
-
-.fed-decree-copy > * {
-  opacity: 0;
-  transform: translateY(16px);
-  transition:
-    opacity 560ms ease,
-    transform 560ms ease;
-}
-
-.fed-decree.is-in .fed-decree-copy > * {
-  opacity: 1;
-  transform: none;
-}
-
-.fed-decree.is-in .fed-decree-copy > *:nth-child(1) {
-  transition-delay: 80ms;
-}
-
-.fed-decree.is-in .fed-decree-copy > *:nth-child(2) {
-  transition-delay: 150ms;
-}
-
-.fed-decree.is-in .fed-decree-copy > *:nth-child(3) {
-  transition-delay: 220ms;
-}
-
-.fed-decree.is-in .fed-decree-copy > *:nth-child(4) {
-  transition-delay: 290ms;
-}
-
-.fed-decree.is-in .fed-decree-copy > *:nth-child(5) {
-  transition-delay: 360ms;
-}
-
-.fed-decree-kicker {
-  margin: 0;
-  color: var(--vpf-logo-red);
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-}
-
-.fed-decree-lead {
-  max-width: 38rem;
-  margin: 1rem 0 0;
-  color: var(--vpf-ink-soft);
-  font-size: 1.02rem;
-  line-height: 1.65;
-}
-
-.fed-decree-meta {
-  display: grid;
-  gap: 1.15rem;
-  margin: 1.75rem 0 0;
-}
-
-.fed-decree-meta dt,
 .fed-charter dt,
 .fed-contact-list span span {
   color: var(--vpf-ink-soft);
@@ -1033,7 +847,6 @@
   text-transform: uppercase;
 }
 
-.fed-decree-meta dd,
 .fed-charter dd {
   margin: 0.2rem 0 0;
   color: var(--vpf-ink);
@@ -1046,14 +859,7 @@
   margin: 1rem 0 0;
 }
 
-.fed-decree-status {
-  margin: 1.5rem 0 0;
-  color: var(--vpf-red-700);
-  font-size: 14px;
-  font-weight: 700;
-}
-
-.fed-decree .fed-button {
+.fed-button {
   margin-top: 1.5rem;
 }
 
@@ -2934,22 +2740,10 @@
   .fed-track time,
   .fed-track-title,
   .fed-ball,
-  .fed-decree-paper,
-  .fed-decree-copy > *,
   .fed-section > .fixed,
   .fed-section [role="dialog"] {
     transition: none;
     animation: none;
-  }
-
-  .fed-decree-paper,
-  .fed-decree.is-in .fed-decree-paper,
-  .fed-decree.is-in .fed-decree-stage:hover .fed-decree-paper,
-  .fed-decree-copy > *,
-  .fed-decree.is-in .fed-decree-copy > * {
-    opacity: 1;
-    transform: none;
-    transition: none;
   }
 
   .fed-constellation-head > *,
