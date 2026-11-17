@@ -1916,16 +1916,11 @@
   font-size: 0.95rem;
 }
 
-.fed-lead-board button {
-  margin-top: 1.35rem;
-}
-
 .fed-org-dialog {
   position: fixed;
   inset: 0;
-  width: min(1440px, 94vw);
+  width: min(42rem, 94vw);
   max-width: none;
-  height: min(90dvh, 48rem);
   max-height: 90dvh;
   margin: auto;
   padding: 0;
@@ -1993,18 +1988,13 @@
   min-height: 0;
   overflow-y: auto;
   overscroll-behavior: contain;
-}
-
-.fed-org-chart,
-.fed-org-detail {
-  min-width: 0;
-  padding: clamp(0.8rem, 2.2vw, 1.6rem);
+  padding: 0 clamp(1rem, 2.2vw, 1.6rem);
 }
 
 .fed-org-chart {
   --org-columns: 2;
-  --org-gap: clamp(0.4rem, 1.2vw, 0.85rem);
-  background: #faf9f7;
+  --org-gap: clamp(0.7rem, 1.4vw, 1rem);
+  margin-top: clamp(1.7rem, 3.6vw, 3rem);
 }
 
 .fed-org-board {
@@ -2035,15 +2025,33 @@
 }
 
 .fed-org-board .fed-org-node {
-  width: min(100%, 17rem);
-  padding-block: 1rem;
+  width: min(100%, 24rem);
+  min-height: 7rem;
+  align-items: center;
+  border-color: color-mix(in srgb, var(--vpf-red-500) 20%, var(--vpf-line));
+  background: color-mix(in srgb, var(--vpf-red-500) 6%, var(--vpf-white));
   text-align: center;
+}
+
+.fed-org-board .fed-org-node-name {
+  color: var(--vpf-red-700);
+  font-size: clamp(1.05rem, 2vw, 1.35rem);
+}
+
+.fed-org-board .fed-org-node-meta {
+  justify-content: center;
+}
+
+.fed-org-board .fed-org-node-arrow {
+  position: absolute;
+  right: 1.2rem;
 }
 
 .fed-org-grid {
   position: relative;
   display: grid;
   grid-template-columns: repeat(var(--org-columns), minmax(0, 1fr));
+  grid-auto-rows: 1fr;
   gap: var(--org-gap);
   margin: 0;
   padding: 1.2rem 0 0;
@@ -2076,41 +2084,31 @@
   display: flex;
   width: 100%;
   height: 100%;
-  min-height: 76px;
+  min-height: 6.1rem;
   flex-direction: column;
   justify-content: center;
-  gap: 0.35rem;
-  padding: 0.62rem 0.7rem;
+  gap: 0.48rem;
+  padding: clamp(0.9rem, 1.65vw, 1.45rem);
   border: 1px solid var(--vpf-line);
-  border-radius: 9px;
+  border-radius: 14px;
   background: var(--vpf-white);
   text-align: left;
   overflow-wrap: anywhere;
   cursor: pointer;
 }
 
-.fed-org-node[aria-pressed="true"] {
+.fed-org-node:is(:hover, :focus-visible) {
   border-color: var(--vpf-red-500);
-  background: color-mix(in srgb, var(--vpf-red-500) 8%, var(--vpf-white));
-}
-
-.fed-org-node:hover {
-  border-color: var(--vpf-red-500);
+  background: color-mix(in srgb, var(--vpf-red-500) 5%, var(--vpf-white));
 }
 
 .fed-org-node-name {
-  font-size: 0.87rem;
+  font-size: clamp(0.89rem, 1.2vw, 1rem);
   font-weight: 700;
   line-height: 1.4;
 }
 
-.fed-org-node[aria-pressed="true"] .fed-org-node-name,
-.fed-org-member-role {
-  color: var(--vpf-red-700);
-}
-
 .fed-org-node-meta,
-.fed-org-detail-head p,
 .fed-org-member-duty,
 .fed-org-empty {
   color: var(--vpf-ink-soft);
@@ -2118,23 +2116,26 @@
   line-height: 1.5;
 }
 
-.fed-org-detail {
-  border-top: 1px solid var(--vpf-line);
+.fed-org-node-meta {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.4rem;
 }
 
-.fed-org-detail-head h3 {
-  margin: 0;
-  font-size: clamp(1.1rem, 2vw, 1.45rem);
-  font-weight: 700;
-  line-height: 1.25;
+.fed-org-node-arrow {
+  flex-shrink: 0;
+  color: var(--vpf-red-700);
+  opacity: 0;
 }
 
-.fed-org-detail-head p {
-  margin: 0.4rem 0 0;
+.fed-org-node:is(:hover, :focus-visible) .fed-org-node-arrow {
+  opacity: 1;
 }
 
 .fed-org-members {
-  margin: 0.85rem 0 0;
+  margin: 0;
   padding: 0;
   list-style: none;
 }
@@ -2143,7 +2144,10 @@
   display: flex;
   align-items: flex-start;
   gap: 0.75rem;
-  padding: 0.85rem 0;
+  padding: 0.9rem 0;
+}
+
+.fed-org-member + .fed-org-member {
   border-top: 1px solid var(--vpf-line);
 }
 
@@ -2159,7 +2163,7 @@
   min-width: 0;
 }
 
-.fed-org-member-copy h4 {
+.fed-org-member-copy h3 {
   margin: 0;
   color: var(--vpf-ink);
   font-size: 0.95rem;
@@ -2167,6 +2171,7 @@
 }
 
 .fed-org-member-role {
+  color: var(--vpf-red-700);
   margin: 0.2rem 0 0;
   font-size: 0.85rem;
   font-weight: 600;
@@ -2178,11 +2183,6 @@
   margin: 0.24rem 0 0;
 }
 
-.fed-org-chart:focus-visible,
-.fed-org-detail:focus-visible {
-  outline-offset: -2px;
-}
-
 @media (max-width: 767px) {
   .fed-org-dialog {
     width: calc(100% - 1rem);
@@ -2192,30 +2192,28 @@
   }
 }
 
+@media (max-width: 359px) {
+  .fed-org-chart {
+    --org-columns: 1;
+  }
+
+  .fed-org-grid {
+    padding-top: 0;
+  }
+
+  .fed-org-grid::before,
+  .fed-org-grid > li:nth-child(-n+2)::before {
+    display: none;
+  }
+}
+
 @media (min-width: 768px) {
-  .fed-org-dialog-body {
-    display: grid;
-    grid-template-columns: minmax(0, 65fr) minmax(0, 35fr);
-    overflow: hidden;
-  }
-
-  .fed-org-chart,
-  .fed-org-detail {
-    overflow-y: auto;
-    overscroll-behavior: contain;
-  }
-
   .fed-org-chart {
     --org-columns: 3;
   }
 
   .fed-org-grid > li:nth-child(3)::before {
     display: block;
-  }
-
-  .fed-org-detail {
-    border-top: 0;
-    border-left: 1px solid var(--vpf-line);
   }
 }
 
@@ -2234,19 +2232,22 @@
     animation: fed-org-enter 200ms ease-out;
   }
 
-  .fed-org-dialog::backdrop,
-  .fed-org-detail-content {
+  .fed-org-dialog::backdrop {
     animation: fed-fade 180ms ease;
   }
 
   .fed-org-node {
-    transition: border-color 200ms ease, background-color 200ms ease, translate 200ms ease;
+    transition: border-color 220ms ease, background-color 220ms ease, translate 220ms ease;
+  }
+
+  .fed-org-node-arrow {
+    transition: opacity 220ms ease;
   }
 }
 
 @media (hover: hover) and (prefers-reduced-motion: no-preference) {
   .fed-org-node:hover {
-    translate: 0 -2px;
+    translate: 0 -3px;
   }
 }
 
