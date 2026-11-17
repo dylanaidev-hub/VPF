@@ -11,11 +11,14 @@ export type PageHeroCrumb = {
 }
 
 export type PageHeroProps = {
+  id?: string
   title: string
-  description?: string
+  description?: ReactNode
   breadcrumbs: PageHeroCrumb[]
   variant?: "default" | "detail"
   showPattern?: boolean
+  markOverlay?: ReactNode
+  interactivePattern?: boolean
   titleId?: string
   /** Nội dung ngay trên tiêu đề, ví dụ huy hiệu trạng thái. */
   beforeTitle?: ReactNode
@@ -26,11 +29,14 @@ export type PageHeroProps = {
 }
 
 export function PageHero({
+  id,
   title,
   description,
   breadcrumbs,
   variant = "default",
   showPattern = true,
+  markOverlay,
+  interactivePattern = false,
   titleId,
   beforeTitle,
   action,
@@ -47,8 +53,15 @@ export function PageHero({
   }, [reduce])
 
   return (
-    <header className={cx("page-hero", variant === "detail" && "is-detail", ready && "is-ready", reduce && "is-reduced")}>
+    <header id={id} aria-labelledby={titleId} className={cx(
+      "page-hero",
+      variant === "detail" && "is-detail",
+      interactivePattern && "is-pattern-interactive",
+      ready && "is-ready",
+      reduce && "is-reduced",
+    )}>
       {showPattern ? <div className="page-hero-mark" aria-hidden><VPFStarPattern /></div> : null}
+      {markOverlay ? <div className="page-hero-mark-overlay" aria-hidden>{markOverlay}</div> : null}
       <div className="page-wrap page-hero-body">
         <div className="page-hero-crumb">
           <Breadcrumb tone="inverse" items={breadcrumbs} />
@@ -58,7 +71,9 @@ export function PageHero({
           <h1 id={titleId} className="page-hero-title">
             {t(title)}
           </h1>
-          {description ? <p className="page-hero-description">{t(description)}</p> : null}
+          {description ? (
+            <p className="page-hero-description">{typeof description === "string" ? t(description) : description}</p>
+          ) : null}
           {children ? <div className="page-hero-extra">{children}</div> : null}
           {action ? <div className="page-hero-action">{action}</div> : null}
         </div>
