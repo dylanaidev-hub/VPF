@@ -88,7 +88,6 @@ export const en: Readonly<Record<string, string>> = {
   "Khi lịch được cập nhật, giải gần nhất sẽ xuất hiện tại đây.": "The next tournament will appear here when the schedule is updated.",
   "Về trang tin tức": "Back to news",
   "Quay lại Tin tức": "Back to News",
-  "Tin đang được chú ý": "Trending News",
   "Tin tức liên quan": "Related News",
   "Bài viết minh họa": "Illustrative Article",
   "Nội dung bài viết chưa được công bố.": "This article has not been published yet.",

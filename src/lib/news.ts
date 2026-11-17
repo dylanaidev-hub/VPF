@@ -60,7 +60,7 @@ export function selectSpotlight(articles: NewsArticle[]) {
   const trending = articles
     .filter((item) => item.isTrending && item.id !== featured?.id)
     .sort((a, b) => (a.trendingRank ?? Number.MAX_SAFE_INTEGER) - (b.trendingRank ?? Number.MAX_SAFE_INTEGER))
-  return { featured, trending, trendingTop: trending.slice(0, 3) }
+  return { featured, trending }
 }
 
 function foldNewsQuery(value: string) {
@@ -87,13 +87,12 @@ export function filterNews(
 }
 
 export function selectNewsLayout(articles: NewsArticle[]) {
-  const { featured, trending, trendingTop } = selectSpotlight(articles)
+  const { featured, trending } = selectSpotlight(articles)
   const rest = articles.filter((item) => item.id !== featured?.id)
   const trendingIds = new Set(trending.map((item) => item.id))
   const secondary = rest.filter((item) => !trendingIds.has(item.id)).slice(0, 3)
   return {
     featured,
     secondary,
-    trendingTop,
   }
 }

@@ -8,7 +8,7 @@ import { NewsCard } from "./NewsCard"
 
 export function NewsSection({ articles }: { articles: NewsArticle[] }) {
   const { t } = useTranslation()
-  const { featured, secondary, trendingTop } = selectNewsLayout(articles)
+  const { featured, secondary } = selectNewsLayout(articles)
 
   if (!featured) return null
 
@@ -45,16 +45,6 @@ export function NewsSection({ articles }: { articles: NewsArticle[] }) {
             ))}
           </div>
         </div>
-        {trendingTop.length ? (
-          <section className="mt-8" aria-labelledby="tin-dang-chu-y">
-            <h3 id="tin-dang-chu-y" className="mb-4 text-xl font-bold text-ink">{t("Tin đang được chú ý")}</h3>
-            <ul className="grid gap-4 md:grid-cols-2 min-[1200px]:grid-cols-3">
-              {trendingTop.map((article) => (
-                <li key={article.id} className="min-w-0"><NewsCard article={article} /></li>
-              ))}
-            </ul>
-          </section>
-        ) : null}
       </div>
     </section>
   )
