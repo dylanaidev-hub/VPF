@@ -1,61 +1,41 @@
-import { useEffect, useRef, useState } from "react"
-import { ChevronRight } from "lucide-react"
+import { useEffect, useState } from "react"
+import { ArrowRight } from "lucide-react"
 import { technicalSections } from "../../data/technicalResources"
 
 export function TechnicalNavigation() {
-  const navigation = useRef<HTMLElement>(null)
-  const [active, setActive] = useState<string>(technicalSections[0].id)
+  const [hash, setHash] = useState(window.location.hash)
 
   useEffect(() => {
-    const sections = technicalSections.flatMap(({ id }) => {
-      const section = document.getElementById(id)
-      return section ? [section] : []
-    })
-    let frame = 0
-    const update = () => {
-      frame = 0
-      const offset = Number.parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop) + 10
-      const current = sections.findLast((section) => section.getBoundingClientRect().top <= offset)
-      setActive(current?.id ?? technicalSections[0].id)
-    }
-    const queue = () => {
-      if (!frame) frame = requestAnimationFrame(update)
-    }
-    const initial = sections.find((section) => `#${section.id}` === window.location.hash)
-    initial?.scrollIntoView({ block: "start", behavior: "instant" })
-    queue()
-    window.addEventListener("scroll", queue, { passive: true })
-    window.addEventListener("resize", queue)
+    const header = document.getElementById("dau-trang")
+    const root = document.documentElement
+    const measure = () => root.style.setProperty("--tech-scroll-offset", `${(header?.getBoundingClientRect().height ?? 76) + 24}px`)
+    measure()
+    const observer = new ResizeObserver(measure)
+    if (header) observer.observe(header)
+    const initial = technicalSections.find(({ id }) => `#${id}` === window.location.hash)
+    if (initial) document.getElementById(initial.id)?.scrollIntoView({ block: "start", behavior: "instant" })
+    const update = () => setHash(window.location.hash)
+    window.addEventListener("hashchange", update)
     return () => {
-      cancelAnimationFrame(frame)
-      window.removeEventListener("scroll", queue)
-      window.removeEventListener("resize", queue)
+      observer.disconnect()
+      window.removeEventListener("hashchange", update)
+      root.style.removeProperty("--tech-scroll-offset")
     }
   }, [])
 
-  useEffect(() => {
-    const nav = navigation.current
-    const link = nav?.querySelector<HTMLAnchorElement>('[aria-current="location"]')
-    if (!nav || !link || nav.scrollWidth <= nav.clientWidth) return
-    const offset = link.getBoundingClientRect().left - nav.getBoundingClientRect().left
-    if (offset < 0 || offset + link.offsetWidth > nav.clientWidth) {
-      nav.scrollLeft += offset - (nav.clientWidth - link.offsetWidth) / 2
-    }
-  }, [active])
-
   return (
-    <nav ref={navigation} className="tech-nav" aria-label="Danh mục chuyên môn">
-      <p>Danh mục chuyên môn</p>
-      <ul>
-        {technicalSections.map(({ id, title }) => (
+    <nav className="tech-nav" aria-label="Danh mục chuyên môn">
+      <ol>
+        {technicalSections.map(({ id, title }, index) => (
           <li key={id}>
-            <a href={`#${id}`} aria-current={active === id ? "location" : undefined} onClick={() => setActive(id)}>
+            <a href={`#${id}`} aria-current={hash === `#${id}` ? "location" : undefined}>
+              <span className="tech-topic-number" aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
               <span>{title}</span>
-              <ChevronRight size={16} aria-hidden="true" />
+              <ArrowRight size={19} aria-hidden="true" />
             </a>
           </li>
         ))}
-      </ul>
+      </ol>
     </nav>
   )
 }

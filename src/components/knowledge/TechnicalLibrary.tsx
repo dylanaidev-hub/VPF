@@ -1,19 +1,10 @@
 import { useState } from "react"
-import { ArrowDown, ArrowUp, ChevronsUpDown, ChevronLeft, ChevronRight, Search } from "lucide-react"
+import { ChevronLeft, ChevronRight, Search } from "lucide-react"
 import { documentTypes, type TechnicalDocument } from "../../data/technicalResources"
-import { foldText, formatViDate } from "../../lib/format"
-import { DocumentSource, DownloadTechnicalPdf, TechnicalSection, type OpenTechnicalDocument } from "./TechnicalSections"
+import { foldText } from "../../lib/format"
+import { TechnicalDocumentList, TechnicalSection, type OpenTechnicalDocument } from "./TechnicalSections"
 
 const PAGE_SIZE = 5
-const columns = [
-  { key: "title", label: "Tên văn bản" },
-  { key: "type", label: "Loại văn bản" },
-  { key: "reference", label: "Số hiệu" },
-  { key: "date", label: "Ngày ban hành" },
-] as const
-type Column = typeof columns[number]["key"]
-type Sort = { key: Column; direction: "ascending" | "descending" }
-
 const documentDate = (document: TechnicalDocument) => document.publishedOn ?? document.sampleDate ?? ""
 const normalize = (value: string) => foldText(value).replace(/đ/g, "d").trim()
 
@@ -21,7 +12,7 @@ export function TechnicalLibrary({ documents, onOpen }: { documents: TechnicalDo
   const [query, setQuery] = useState("")
   const [type, setType] = useState("")
   const [year, setYear] = useState("")
-  const [sort, setSort] = useState<Sort>({ key: "date", direction: "descending" })
+  const [sort, setSort] = useState("date")
   const [page, setPage] = useState(1)
 
   const term = normalize(query)
@@ -31,25 +22,15 @@ export function TechnicalLibrary({ documents, onOpen }: { documents: TechnicalDo
     && (!type || document.type === type)
     && (!year || (year === "unpublished" ? !documentDate(document) : documentDate(document).startsWith(year)))
   ))
-  matching.sort((a, b) => {
-    const left = sort.key === "date" ? documentDate(a) : (a[sort.key] ?? "")
-    const right = sort.key === "date" ? documentDate(b) : (b[sort.key] ?? "")
-    const order = left.localeCompare(right, "vi", { numeric: true, sensitivity: "base" })
-    return sort.direction === "ascending" ? order : -order
-  })
+  matching.sort((a, b) => sort === "title"
+    ? a.title.localeCompare(b.title, "vi", { sensitivity: "base" })
+    : documentDate(b).localeCompare(documentDate(a))
+  )
 
   const pageCount = Math.max(1, Math.ceil(matching.length / PAGE_SIZE))
   const currentPage = Math.min(page, pageCount)
   const start = (currentPage - 1) * PAGE_SIZE
   const visible = matching.slice(start, start + PAGE_SIZE)
-
-  function sortBy(key: Column) {
-    setSort((current) => ({
-      key,
-      direction: current.key === key && current.direction === "ascending" ? "descending" : "ascending",
-    }))
-    setPage(1)
-  }
 
   function resetFilters() {
     setQuery("")
@@ -59,7 +40,7 @@ export function TechnicalLibrary({ documents, onOpen }: { documents: TechnicalDo
   }
 
   return (
-    <TechnicalSection id="van-ban-chuyen-mon" title="Văn bản chuyên môn" intro="Tìm và tải văn bản theo tên, số hiệu, loại tài liệu hoặc năm. Ngày và mã của bản mẫu dùng để minh họa thư viện.">
+    <TechnicalSection id="van-ban-chuyen-mon" intro="Tìm theo tên, số hiệu, loại tài liệu hoặc năm. Tài liệu minh họa có nhãn Bản mẫu.">
       <div className="tech-library">
         <div className="tech-filters" role="search" aria-label="Tìm văn bản chuyên môn">
           <label>
@@ -77,10 +58,17 @@ export function TechnicalLibrary({ documents, onOpen }: { documents: TechnicalDo
             </select>
           </label>
           <label>
-            <span>Năm ban hành</span>
+            <span>Năm tài liệu</span>
             <select value={year} onChange={(event) => { setYear(event.target.value); setPage(1) }}>
               <option value="">Tất cả năm</option>
               {years.map((item) => item ? <option key={item}>{item}</option> : <option key="unpublished" value="unpublished">Chưa công bố</option>)}
+            </select>
+          </label>
+          <label>
+            <span>Sắp xếp</span>
+            <select value={sort} onChange={(event) => { setSort(event.target.value); setPage(1) }}>
+              <option value="date">Mới nhất</option>
+              <option value="title">Tên A–Z</option>
             </select>
           </label>
         </div>
@@ -91,34 +79,7 @@ export function TechnicalLibrary({ documents, onOpen }: { documents: TechnicalDo
         </div>
 
         {visible.length ? (
-          <div className="tech-table-scroll" role="region" aria-label="Danh sách văn bản" tabIndex={0}>
-            <table>
-              <thead>
-                <tr>
-                  {columns.map(({ key, label }) => {
-                    const direction = sort.key === key ? sort.direction : undefined
-                    const Indicator = direction === "ascending" ? ArrowUp : direction === "descending" ? ArrowDown : ChevronsUpDown
-                    return <th scope="col" aria-sort={direction} key={key}><button type="button" onClick={() => sortBy(key)}>{label}<Indicator size={14} aria-hidden="true" /></button></th>
-                  })}
-                  <th scope="col">Tải xuống</th>
-                </tr>
-              </thead>
-              <tbody>
-                {visible.map((document) => {
-                  const date = documentDate(document)
-                  return (
-                    <tr key={document.id}>
-                      <td><button type="button" className="tech-text-action" onClick={() => onOpen(document)}>{document.title}</button><DocumentSource document={document} /></td>
-                      <td>{document.type}</td>
-                      <td>{document.reference ?? "Chưa công bố"}</td>
-                      <td>{date ? <time dateTime={date}>{formatViDate(date)}</time> : "Chưa công bố"}</td>
-                      <td><DownloadTechnicalPdf document={document} /></td>
-                    </tr>
-                  )
-                })}
-              </tbody>
-            </table>
-          </div>
+          <TechnicalDocumentList documents={visible} onOpen={onOpen} />
         ) : (
           <div className="tech-empty">
             <h3>Không tìm thấy văn bản phù hợp</h3>

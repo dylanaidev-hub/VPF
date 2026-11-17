@@ -24,7 +24,7 @@ export const pageHeroes = {
     titleId: "chuyen-mon-tieu-de",
     title: "Chuyên môn",
     description:
-      "Luật thi đấu, hệ thống trọng tài, huấn luyện viên và chương trình đào tạo của Liên đoàn Pickleball Việt Nam.",
+      "Hệ thống tài liệu, quy định, hướng dẫn và chương trình đào tạo chuyên môn của Liên đoàn Pickleball Việt Nam.",
     breadcrumbs: [home, { label: "Chuyên môn" }],
   },
   library: {

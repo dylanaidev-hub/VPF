@@ -2,6 +2,7 @@ import { useEffect, useState, type ReactNode } from "react"
 import { useReducedMotion } from "../lib/useReducedMotion"
 import { cx } from "../lib/cx"
 import { Breadcrumb } from "./Breadcrumb"
+import { StarPattern } from "./StarPattern"
 import { VPFStarPattern } from "./VPFStarPattern"
 
 export type PageHeroCrumb = {
@@ -13,7 +14,7 @@ export type PageHeroProps = {
   title: string
   description?: string
   breadcrumbs: PageHeroCrumb[]
-  variant?: "default" | "detail"
+  variant?: "default" | "detail" | "compact"
   titleId?: string
   /** Nội dung ngay trên tiêu đề, ví dụ huy hiệu trạng thái. */
   beforeTitle?: ReactNode
@@ -34,20 +35,20 @@ export function PageHero({
   children,
 }: PageHeroProps) {
   const reduce = useReducedMotion()
+  const compact = variant === "compact"
   const [ready, setReady] = useState(false)
 
   useEffect(() => {
-    if (reduce) return
+    if (reduce || compact) return
     const id = requestAnimationFrame(() => setReady(true))
     return () => cancelAnimationFrame(id)
-  }, [reduce])
+  }, [compact, reduce])
 
   return (
-    <header className={cx("page-hero", variant === "detail" && "is-detail", ready && "is-ready", reduce && "is-reduced")}>
-      <div className="page-hero-mark" aria-hidden>
-        <VPFStarPattern />
-      </div>
+    <header className={cx("page-hero", variant === "detail" && "is-detail", compact && "is-compact", ready && !compact && "is-ready", reduce && "is-reduced")}>
+      {compact ? null : <div className="page-hero-mark" aria-hidden><VPFStarPattern /></div>}
       <div className="page-wrap page-hero-body">
+        {compact ? <StarPattern className="page-hero-compact-mark" /> : null}
         <div className="page-hero-crumb">
           <Breadcrumb tone="inverse" items={breadcrumbs} />
         </div>

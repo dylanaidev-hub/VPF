@@ -7,7 +7,7 @@ export const technicalSections = [
   { id: "dao-tao", title: "Đào tạo & tập huấn" },
 ] as const
 
-export const documentTypes = ["Luật", "Quy chế", "Hướng dẫn", "Biểu mẫu"] as const
+export const documentTypes = ["Luật", "Quy chế", "Hướng dẫn", "Tiêu chuẩn", "Biểu mẫu"] as const
 
 export type TechnicalDocument = {
   id: string
@@ -21,12 +21,44 @@ export type TechnicalDocument = {
   sampleDate?: string
   version?: string
   description: string
-  pdf: string
+  pdf?: string
   cover?: string
   outline: { title: string; text: string }[]
 }
 
 export const technicalDocuments: TechnicalDocument[] = [
+  {
+    id: "luat-thi-dau-vpf",
+    title: "Luật thi đấu Pickleball",
+    type: "Luật",
+    source: "official",
+    description: "Văn bản luật thi đấu của Liên đoàn Pickleball Việt Nam.",
+    outline: [],
+  },
+  {
+    id: "the-thuc-vpf",
+    title: "Hướng dẫn thể thức thi đấu",
+    type: "Hướng dẫn",
+    source: "official",
+    description: "Tài liệu về nội dung thi đấu, vòng đấu và phân hạng.",
+    outline: [],
+  },
+  {
+    id: "quy-che-trong-tai-vpf",
+    title: "Quy chế trọng tài",
+    type: "Quy chế",
+    source: "official",
+    description: "Văn bản về nhiệm vụ, phân công và phạm vi hoạt động của trọng tài.",
+    outline: [],
+  },
+  {
+    id: "tieu-chuan-huan-luyen-vpf",
+    title: "Tiêu chuẩn đào tạo huấn luyện viên",
+    type: "Tiêu chuẩn",
+    source: "official",
+    description: "Tài liệu về hệ thống chứng nhận và tiêu chuẩn đào tạo.",
+    outline: [],
+  },
   {
     id: "luat-thi-dau-mau",
     title: "Luật thi đấu Pickleball",
@@ -155,60 +187,37 @@ export const technicalDocuments: TechnicalDocument[] = [
 
 export const resourceGroups = [
   {
+    id: "luat-thi-dau",
+    intro: "Tra cứu bộ luật, từ sân và thiết bị đến cách ghi điểm và xử lý tình huống trong trận.",
+    documents: ["luat-thi-dau-vpf", "luat-thi-dau-mau"],
+  },
+  {
     id: "the-thuc-thi-dau",
-    title: "Thể thức thi đấu",
-    intro: "Tra cứu các nội dung cần xác định khi xây dựng điều lệ và lịch thi đấu.",
-    panels: [
-      { title: "Nội dung", items: ["Đơn", "Đôi", "Đôi nam nữ"] },
-      { title: "Thể thức", items: ["Vòng bảng", "Loại trực tiếp", "Số game", "Cách xác định người thắng"] },
-      { title: "Phân hạng", items: ["Trình độ", "Lứa tuổi"] },
-    ],
-    documents: ["huong-dan-the-thuc", "phieu-ghi-nhan-tran"],
+    intro: "Tài liệu để chuẩn bị nội dung đơn, đôi và đôi nam nữ, phân hạng và lịch thi đấu.",
+    documents: ["the-thuc-vpf", "huong-dan-the-thuc", "phieu-ghi-nhan-tran"],
   },
   {
     id: "trong-tai",
-    title: "Trọng tài",
-    intro: "Tài liệu tham khảo để chuẩn bị nhân sự điều hành và phối hợp xử lý tình huống trên sân.",
-    panels: [
-      { title: "Vai trò và cấp bậc", items: ["Trọng tài chính", "Trọng tài biên", "Giám sát", "Phạm vi hoạt động theo quốc gia, tỉnh thành"] },
-      { title: "Quy trình điều hành trận đấu", items: ["Ký hiệu tay", "Gọi điểm", "Xử lý tình huống", "Giải quyết tranh chấp"] },
-    ],
-    documents: ["quy-che-trong-tai", "huong-dan-dieu-hanh"],
+    intro: "Tra cứu vai trò trọng tài, quy trình điều hành và cách ghi nhận tình huống trên sân.",
+    documents: ["quy-che-trong-tai-vpf", "quy-che-trong-tai", "huong-dan-dieu-hanh"],
   },
   {
     id: "huan-luyen-vien",
-    title: "Huấn luyện viên",
-    intro: "Các chủ đề cần đối chiếu khi tra cứu chứng nhận, lập giáo trình và chuẩn bị buổi tập.",
-    panels: [
-      { title: "Hệ thống chứng nhận", items: ["Các cấp độ huấn luyện viên", "Điều kiện tham gia", "Thời hạn chứng nhận", "Quy trình gia hạn"] },
-      { title: "Giáo trình và phương pháp", items: ["Giáo trình cơ bản", "Giáo trình nâng cao", "Phương pháp huấn luyện", "An toàn tập luyện"] },
-    ],
-    documents: ["tieu-chuan-huan-luyen", "ke-hoach-buoi-tap"],
+    intro: "Tìm tài liệu về chứng nhận, thiết kế giáo trình và an toàn tập luyện.",
+    documents: ["tieu-chuan-huan-luyen-vpf", "tieu-chuan-huan-luyen", "ke-hoach-buoi-tap"],
   },
 ] as const
-
-export const courseStatuses = {
-  open: "Đang mở đăng ký",
-  upcoming: "Sắp diễn ra",
-  closed: "Đã kết thúc",
-  pending: "Chưa mở đăng ký",
-} as const
 
 export type TechnicalCourse = {
   id: string
   title: string
   audience: string
-  duration: string
-  format: string
-  status: keyof typeof courseStatuses
-  deadline?: string
-  description: string
-  topics: string[]
+  startsOn: string
+  endsOn?: string
+  venue: string
+  status: "Đang mở đăng ký" | "Sắp diễn ra" | "Đã kết thúc" | "Chưa mở đăng ký"
+  registrationUrl?: string
 }
 
-export const technicalCourses: TechnicalCourse[] = [
-  { id: "trong-tai-co-ban", title: "Thực hành trọng tài cơ bản", audience: "Trọng tài mới, cán bộ câu lạc bộ", duration: "2 ngày", format: "Trực tiếp", status: "open", deadline: "2026-12-06", description: "Thực hành cách chuẩn bị sân, phối hợp điều hành và ghi nhận tình huống trong trận mô phỏng.", topics: ["Chuẩn bị trước trận", "Gọi điểm và giao tiếp trên sân", "Ghi nhận tình huống"] },
-  { id: "huan-luyen-nen-tang", title: "Xây dựng buổi tập nền tảng", audience: "Huấn luyện viên, người phụ trách nhóm tập", duration: "1 ngày", format: "Trực tiếp", status: "upcoming", description: "Thiết kế một buổi tập có mục tiêu cụ thể và điều chỉnh bài tập theo trình độ của nhóm.", topics: ["Mục tiêu buổi tập", "Tổ chức bài tập theo nhóm", "Phản hồi và an toàn"] },
-  { id: "to-chuc-giai", title: "Lập kế hoạch tổ chức giải", audience: "Ban tổ chức, câu lạc bộ", duration: "3 giờ", format: "Trực tuyến", status: "closed", description: "Làm quen với các bước chuẩn bị thể thức, xếp lịch sân và bàn giao kết quả thi đấu.", topics: ["Sơ đồ vòng đấu", "Lịch sân", "Bàn giao kết quả"] },
-  { id: "doc-luat", title: "Đọc luật qua tình huống", audience: "Vận động viên, trọng tài và huấn luyện viên", duration: "2 giờ", format: "Trực tuyến", status: "pending", description: "Luyện cách tra cứu tài liệu và giải thích căn cứ khi phân tích tình huống giả lập.", topics: ["Xác định tài liệu áp dụng", "Mô tả dữ kiện", "Tra cứu và trình bày căn cứ"] },
-]
+// Add courses after VPF publishes their schedule and registration details.
+export const technicalCourses: TechnicalCourse[] = []
