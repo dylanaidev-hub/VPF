@@ -1,3 +1,5 @@
+import { useTranslation } from "../i18n"
+import { englishHeroLines } from "../i18n/en"
 import { useEffect, useState } from "react"
 import type { KeyboardEvent, ReactNode } from "react"
 import { ArrowLeft, ArrowRight, Pause, Play } from "lucide-react"
@@ -16,6 +18,7 @@ export function HeroSlider({
   slides: HeroSlide[]
   suspended?: boolean
 }) {
+  const { language, t } = useTranslation()
   const reduce = useReducedMotion()
   const [index, setIndex] = useState(0)
   const [autoplay, setAutoplay] = useState(!reduce)
@@ -66,7 +69,7 @@ export function HeroSlider({
   return (
     <section
       className={cx("vpf-hero", entered && "is-ready", reduce && "is-reduced")}
-      aria-roledescription="trình chiếu"
+      aria-roledescription={t("trình chiếu")}
       aria-label="The Spirit of Pickleball"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
@@ -91,7 +94,7 @@ export function HeroSlider({
                 ) : null}
                 <img
                   src={sitePath(item.image)}
-                  alt={itemIndex === index ? item.imageAlt : ""}
+                  alt={itemIndex === index ? t(item.imageAlt) : ""}
                   width={2000}
                   height={1333}
                   className={cx("vpf-hero-image", item.objectPosition)}
@@ -111,25 +114,25 @@ export function HeroSlider({
       <div className="vpf-hero-content">
         <div key={slide.id} className="page-wrap">
           <div className="vpf-hero-copy">
-            <h1 className="vpf-hero-title">
+            <h1 className="vpf-hero-title" aria-label={t(slide.title)}>
               {slide.titleLines.map((line, lineIndex) => (
                 <span key={`${slide.id}-line-${lineIndex}`} className="vpf-hero-line">
-                  {line.map((part) => (
+                  {line.map((part, partIndex) => (
                     <span
                       key={`${part.text}-${part.accent ? "a" : "t"}`}
                       className={part.accent ? "vpf-hero-accent" : undefined}
                     >
-                      {part.text}
+                      {language === "en" ? englishHeroLines[slide.id]?.[lineIndex]?.[partIndex] ?? part.text : part.text}
                     </span>
                   ))}
                 </span>
               ))}
             </h1>
-            <p className="vpf-hero-desc">{slide.description}</p>
+            <p className="vpf-hero-desc">{t(slide.description)}</p>
             <div className="vpf-hero-cta">
-              <Button href={slide.primaryCta.href}>{slide.primaryCta.label}</Button>
+              <Button href={slide.primaryCta.href}>{t(slide.primaryCta.label)}</Button>
               <Button href={slide.secondaryCta.href} variant="outline">
-                {slide.secondaryCta.label}
+                {t(slide.secondaryCta.label)}
               </Button>
             </div>
           </div>
@@ -139,7 +142,7 @@ export function HeroSlider({
       {multi ? (
         <div className="vpf-hero-controls">
           <div className="page-wrap flex items-center justify-between gap-4">
-            <div className="flex items-center gap-2" role="tablist" aria-label="Chọn banner">
+            <div className="flex items-center gap-2" role="tablist" aria-label={t("Chọn banner")}>
               {slides.map((item, itemIndex) => (
                 <button
                   key={item.id}
@@ -158,14 +161,14 @@ export function HeroSlider({
             <div
               className="flex items-center gap-2"
               role="group"
-              aria-label="Điều khiển trình chiếu"
+              aria-label={t("Điều khiển trình chiếu")}
               onKeyDown={onControlKeyDown}
             >
-              <ControlButton label="Banner trước" onClick={() => go(-1)}>
+              <ControlButton label={t("Banner trước")} onClick={() => go(-1)}>
                 <ArrowLeft className="size-4" aria-hidden />
               </ControlButton>
               <ControlButton
-                label={autoplay ? "Tạm dừng trình chiếu" : "Tiếp tục trình chiếu"}
+                label={autoplay ? t("Tạm dừng trình chiếu") : t("Tiếp tục trình chiếu")}
                 pressed={!autoplay}
                 onClick={() => setAutoplay((value) => !value)}
               >
@@ -175,7 +178,7 @@ export function HeroSlider({
                   <Play className="size-4" aria-hidden />
                 )}
               </ControlButton>
-              <ControlButton label="Banner sau" onClick={() => go(1)}>
+              <ControlButton label={t("Banner sau")} onClick={() => go(1)}>
                 <ArrowRight className="size-4" aria-hidden />
               </ControlButton>
             </div>
@@ -184,7 +187,7 @@ export function HeroSlider({
       ) : null}
 
       <p className="sr-only" aria-live="polite">
-        Banner {index + 1} trên {slides.length}: {slide.title}
+        {t("hero.slide", { current: index + 1, total: slides.length, title: t(slide.title) })}
       </p>
     </section>
   )
@@ -201,10 +204,11 @@ function ControlButton({
   onClick: () => void
   children: ReactNode
 }) {
+  const { t } = useTranslation()
   return (
     <button
       type="button"
-      aria-label={label}
+      aria-label={t(label)}
       aria-pressed={pressed}
       onClick={onClick}
       className="grid size-11 place-items-center rounded-full border border-white/40 bg-white/15 text-white transition-colors hover:bg-white hover:text-ink"

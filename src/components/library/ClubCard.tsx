@@ -1,3 +1,4 @@
+import { useTranslation } from "../../i18n"
 import { MapPin } from "lucide-react"
 import { sitePath } from "../../lib/site"
 import { vpfStarPaths } from "../vpfStarPaths"
@@ -26,6 +27,7 @@ export function ClubCard({
   logo: string
   onOpen: () => void
 }) {
+  const { t } = useTranslation()
   return (
     <article className="club-card">
       <button type="button" className="club-card-open" onClick={onOpen}>
@@ -40,7 +42,7 @@ export function ClubCard({
           <span className="club-card-name">{name}</span>
           <span className="club-card-place">
             <MapPin className="club-card-pin" aria-hidden />
-            <span>{location}</span>
+            <span>{t(location)}</span>
           </span>
         </span>
       </button>

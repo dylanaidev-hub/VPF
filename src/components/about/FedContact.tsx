@@ -1,3 +1,4 @@
+import { useTranslation } from "../../i18n"
 import { Clock, Mail, MapPin, Phone } from "lucide-react"
 import { federationContact } from "../../data/aboutFederation.mock"
 import { cx } from "../../lib/cx"
@@ -12,6 +13,7 @@ const icons = {
 }
 
 export function FedContact() {
+  const { t } = useTranslation()
   const reveal = useReveal<HTMLElement>()
 
   return (
@@ -23,8 +25,8 @@ export function FedContact() {
     >
       <div className="page-wrap fed-contact-grid">
         <div>
-          <h2 id="lien-he-tieu-de">{federationContact.title}</h2>
-          <p className="fed-note">{federationContact.note}</p>
+          <h2 id="lien-he-tieu-de">{t(federationContact.title)}</h2>
+          <p className="fed-note">{t(federationContact.note)}</p>
           <ul className="fed-contact-list">
             {federationContact.rows.map((row) => {
               const Icon = icons[row.id as keyof typeof icons]
@@ -32,7 +34,7 @@ export function FedContact() {
                 <li key={row.id}>
                   <Icon aria-hidden />
                   <span>
-                    <span>{row.label}</span>
+                    <span>{t(row.label)}</span>
                     {row.value}
                   </span>
                 </li>
@@ -40,7 +42,7 @@ export function FedContact() {
             })}
           </ul>
           <a className="fed-button" href={sitePath(federationContact.href)}>
-            {federationContact.cta}
+            {t(federationContact.cta)}
           </a>
         </div>
         <div className="fed-map">

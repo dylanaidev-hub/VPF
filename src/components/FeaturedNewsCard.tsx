@@ -1,3 +1,4 @@
+import { useTranslation } from "../i18n"
 import { ArrowRight } from "lucide-react"
 import type { NewsArticle } from "../types"
 import { formatViDate } from "../lib/format"
@@ -12,6 +13,7 @@ export function FeaturedNewsCard({
   article: NewsArticle
   onOpen: (article: NewsArticle) => void
 }) {
+  const { t } = useTranslation()
   const important = article.category === "Tin Liên đoàn"
 
   return (
@@ -37,18 +39,18 @@ export function FeaturedNewsCard({
       />
       <StarPattern className="vpf-star-mark-card" />
       <div className="absolute left-4 top-4 z-10 sm:left-6 sm:top-6">
-        <Badge tone={important ? "important" : "neutral"}>{article.category}</Badge>
+        <Badge tone={important ? "important" : "neutral"}>{t(article.category)}</Badge>
       </div>
       <div className="relative z-10 mt-auto w-full max-w-xl p-5 pr-20 sm:p-7 sm:pr-24">
         <time dateTime={article.date} className="text-[13px] font-medium text-white/75">
           {formatViDate(article.date)}
         </time>
         <h3 className="mt-2 line-clamp-3 text-2xl font-semibold leading-snug text-white sm:text-[1.7rem]">
-          {article.title}
+          {t(article.title)}
         </h3>
-        <p className="mt-3 line-clamp-2 text-[15px] leading-relaxed text-white/80">{article.excerpt}</p>
+        <p className="mt-3 line-clamp-2 text-[15px] leading-relaxed text-white/80">{t(article.excerpt)}</p>
         <span className="mt-5 inline-flex items-center gap-2 text-[15px] font-medium text-brand">
-          Đọc tiếp
+          {t("Đọc tiếp")}
           <ArrowRight
             className="size-4 transition-transform duration-200 group-hover:translate-x-1 motion-reduce:transition-none"
             aria-hidden

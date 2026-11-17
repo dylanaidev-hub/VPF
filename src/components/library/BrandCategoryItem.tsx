@@ -1,3 +1,4 @@
+import { useTranslation } from "../../i18n"
 import { ChevronRight } from "lucide-react"
 
 export function BrandCategoryItem({
@@ -13,6 +14,7 @@ export function BrandCategoryItem({
   pressed?: boolean
   onSelect: () => void
 }) {
+  const { t } = useTranslation()
   return (
     <li>
       <button
@@ -23,8 +25,8 @@ export function BrandCategoryItem({
       >
         <span className="brand-category-index">{index}</span>
         <span className="brand-category-copy">
-          <span className="brand-category-title">{title}</span>
-          <span className="brand-category-detail">{detail}</span>
+          <span className="brand-category-title">{t(title)}</span>
+          <span className="brand-category-detail">{t(detail)}</span>
         </span>
         <ChevronRight className="brand-category-chevron" aria-hidden />
       </button>

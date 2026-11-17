@@ -1,3 +1,4 @@
+import { useTranslation } from "../../i18n"
 import { useState } from "react"
 import { Download, ExternalLink } from "lucide-react"
 import {
@@ -27,6 +28,7 @@ function BrandStar() {
 }
 
 export function BrandIdentitySection() {
+  const { t } = useTranslation()
   const { ref, shown } = useReveal<HTMLElement>()
   const [panel, setPanel] = useState<BrandPanel>(null)
   const [logoTab, setLogoTab] = useState<(typeof brandLogoVersions)[number]["id"]>("horizontal")
@@ -71,7 +73,7 @@ export function BrandIdentitySection() {
           <button
             type="button"
             className="brand-stage-logo-btn"
-            aria-label="Xem các phiên bản logo"
+            aria-label={t("Xem các phiên bản logo")}
             onClick={() => {
               setLogoTab("white")
               setPanel("logo")
@@ -80,7 +82,7 @@ export function BrandIdentitySection() {
             <img
               className="brand-stage-logo"
               src={sitePath(brandSection.logoWhite)}
-              alt={brandSection.logoAlt}
+              alt={t(brandSection.logoAlt)}
               width={588}
               height={219}
             />
@@ -89,16 +91,16 @@ export function BrandIdentitySection() {
 
         <div className="min-w-0">
           <h2 id="bo-nhan-dien-tieu-de" className="library-section-title">
-            {brandSection.title}
+            {t(brandSection.title)}
           </h2>
-          <p className="library-section-lead">{brandSection.description}</p>
+          <p className="library-section-lead">{t(brandSection.description)}</p>
 
           <ul className="brand-categories">
             {brandSection.resources.map((item) => (
               <BrandCategoryItem
                 key={item.id}
                 index={item.index}
-                title={item.label}
+                title={t(item.label)}
                 detail={item.detail}
                 pressed={panel === item.id}
                 onSelect={() => setPanel(item.id)}
@@ -109,7 +111,7 @@ export function BrandIdentitySection() {
           <div className="library-actions">
             <button type="button" className="library-btn-primary" onClick={() => setPanel("library")}>
               <ExternalLink className="size-4" aria-hidden />
-              {brandSection.viewLibraryLabel}
+              {t(brandSection.viewLibraryLabel)}
             </button>
             {hasDownload && brandSection.downloadHref ? (
               <a
@@ -119,12 +121,12 @@ export function BrandIdentitySection() {
                 rel="noreferrer"
               >
                 <Download className="size-4" aria-hidden />
-                {brandSection.downloadLabel}
+                {t(brandSection.downloadLabel)}
               </a>
             ) : (
               <button type="button" className="library-btn-secondary" onClick={() => setPanel("download")}>
                 <Download className="size-4" aria-hidden />
-                {brandSection.downloadLabel}
+                {t(brandSection.downloadLabel)}
               </button>
             )}
           </div>
@@ -132,7 +134,7 @@ export function BrandIdentitySection() {
       </div>
 
       <Dialog open={panel === "logo"} title="Logo" onClose={closePanel}>
-        <div className="brand-tabs" role="tablist" aria-label="Phiên bản logo">
+        <div className="brand-tabs" role="tablist" aria-label={t("Phiên bản logo")}>
           {brandLogoVersions.map((item) => (
             <button
               key={item.id}
@@ -142,7 +144,7 @@ export function BrandIdentitySection() {
               aria-selected={logoTab === item.id}
               onClick={() => setLogoTab(item.id)}
             >
-              {item.label}
+              {t(item.label)}
             </button>
           ))}
         </div>
@@ -157,9 +159,9 @@ export function BrandIdentitySection() {
           <img src={sitePath(activeLogo.src)} alt="" width={588} height={219} />
         </div>
         <p className="brand-note">
-          Bộ file trên trang gồm logo ngang màu, logo ngang trắng và biểu tượng. Chưa có file logo dọc.
+          {t("Bộ file trên trang gồm logo ngang màu, logo ngang trắng và biểu tượng. Chưa có file logo dọc.")}
         </p>
-        <p className="brand-note">{brandSection.note}</p>
+        <p className="brand-note">{t(brandSection.note)}</p>
       </Dialog>
 
       <Dialog open={panel === "color"} title="Bảng màu" onClose={closePanel}>
@@ -170,14 +172,14 @@ export function BrandIdentitySection() {
                 <span className="brand-swatch-chip" style={{ background: color.hex }} />
                 <span>
                   <span className="brand-swatch-name">{color.name}</span>
-                  <span className="brand-swatch-note">{color.note}</span>
+                  <span className="brand-swatch-note">{t(color.note)}</span>
                 </span>
-                <span className="brand-swatch-hex">{copied === color.hex ? "Đã chép" : color.hex}</span>
+                <span className="brand-swatch-hex">{copied === color.hex ? t("Đã chép") : color.hex}</span>
               </button>
             </li>
           ))}
         </ul>
-        <p className="brand-note">Nhấn một màu để chép mã HEX. Các mã lấy từ file nhận diện đang dùng trên website.</p>
+        <p className="brand-note">{t("Nhấn một màu để chép mã HEX. Các mã lấy từ file nhận diện đang dùng trên website.")}</p>
       </Dialog>
 
       <Dialog open={panel === "type"} title="Typography" onClose={closePanel}>
@@ -185,16 +187,16 @@ export function BrandIdentitySection() {
           {brandTypeWeights.map((item) => (
             <li key={item.id}>
               <span className="brand-type-meta">
-                Be Vietnam Pro · {item.label} {item.weight}
+                Be Vietnam Pro · {t(item.label)} {item.weight}
               </span>
               <p className="brand-type-sample" style={{ fontWeight: item.weight }}>
-                Liên đoàn Pickleball Việt Nam
+                {t("Liên đoàn Pickleball Việt Nam")}
               </p>
             </li>
           ))}
         </ul>
         <p className="brand-note">
-          Ấn phẩm in ghi nhận SVN-Gotham. Giao diện website dùng Be Vietnam Pro.
+          {t("Ấn phẩm in ghi nhận SVN-Gotham. Giao diện website dùng Be Vietnam Pro.")}
         </p>
       </Dialog>
 
@@ -203,20 +205,19 @@ export function BrandIdentitySection() {
           <img src={sitePath(brandSection.logoPreview)} alt="" width={588} height={219} />
         </div>
         <p className="brand-note">
-          Dùng file SVG đã có: bản màu trên nền sáng, bản trắng trên nền đỏ. Không vẽ lại logo.
+          {t("Dùng file SVG đã có: bản màu trên nền sáng, bản trắng trên nền đỏ. Không vẽ lại logo.")}
         </p>
         <p className="brand-note">
-          Khoảng cách an toàn, kích thước tối thiểu và danh sách cách dùng sai chưa được công bố trên trang này.
-          Khung viền chỉ minh họa khoảng thở quanh logo.
+          {t("Khoảng cách an toàn, kích thước tối thiểu và danh sách cách dùng sai chưa được công bố trên trang này. Khung viền chỉ minh họa khoảng thở quanh logo.")}
         </p>
       </Dialog>
 
-      <Dialog open={panel === "library"} title={brandSection.viewLibraryLabel} onClose={closePanel}>
-        <p className="text-[15px] leading-relaxed text-ink">{brandSection.libraryNote}</p>
+      <Dialog open={panel === "library"} title={t(brandSection.viewLibraryLabel)} onClose={closePanel}>
+        <p className="text-[15px] leading-relaxed text-ink">{t(brandSection.libraryNote)}</p>
       </Dialog>
 
-      <Dialog open={panel === "download"} title={brandSection.downloadLabel} onClose={closePanel}>
-        <p className="text-[15px] leading-relaxed text-ink">{brandSection.downloadNote}</p>
+      <Dialog open={panel === "download"} title={t(brandSection.downloadLabel)} onClose={closePanel}>
+        <p className="text-[15px] leading-relaxed text-ink">{t(brandSection.downloadNote)}</p>
       </Dialog>
     </section>
   )

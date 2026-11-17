@@ -1,3 +1,4 @@
+import { useTranslation } from "../i18n"
 import { useEffect, useMemo, useState } from "react"
 import { liveArena } from "../data/live"
 import { tournaments } from "../data/tournaments"
@@ -20,6 +21,7 @@ import { FeaturedTournament } from "../components/FeaturedTournament"
 import { TournamentEmpty, TournamentGrid, TournamentToolbar } from "../components/tournaments/TournamentArchive"
 
 export function TournamentsPage() {
+  const { t } = useTranslation()
   const featured = useMemo(() => selectFeaturedTournament(tournaments), [])
   const years = useMemo(
     () => [...new Set(tournaments.map((item) => item.startDate.slice(0, 4)))].sort((a, b) => b.localeCompare(a)),
@@ -64,7 +66,7 @@ export function TournamentsPage() {
   /** Chỉ hiện khi dropdown (khu vực / năm / địa điểm / nội dung) khác mặc định — không vì status chip. */
   const dirty = !dropdownsDefault
   const showFeatured = Boolean(browsing && featured)
-  const emptyCopy = tournamentEmptyMessage(status, query)
+  const emptyCopy = t(tournamentEmptyMessage(status, query))
 
   const resetVisible = () => setVisibleCount(TOURNAMENT_PAGE_SIZE)
   const clearFilters = () => {
@@ -96,10 +98,10 @@ export function TournamentsPage() {
             <div className="tournament-explorer-head">
               <div>
                 <h2 id="kham-pha-giai-dau" className="text-[1.65rem] font-bold tracking-tight text-ink min-[1200px]:text-[1.85rem]">
-                  Khám phá giải đấu
+                  {t("Khám phá giải đấu")}
                 </h2>
                 <p className="mt-1 text-sm text-muted" aria-live="polite">
-                  {archive.length} giải đấu
+                  {archive.length} {t("giải đấu")}
                 </p>
               </div>
             </div>
@@ -167,7 +169,7 @@ export function TournamentsPage() {
                   className="inline-flex min-h-12 items-center rounded-[10px] border border-line bg-white px-6 text-[15px] font-medium text-ink hover:border-brand hover:bg-brand"
                   onClick={() => setVisibleCount((count) => count + TOURNAMENT_LOAD_MORE)}
                 >
-                  Xem thêm giải đấu
+                  {t("Xem thêm giải đấu")}
                 </button>
               </div>
             ) : null}

@@ -1,3 +1,4 @@
+import { useTranslation } from "../i18n"
 import { useState } from "react"
 import { ArrowUpRight } from "lucide-react"
 import type { NewsArticle } from "../types"
@@ -14,6 +15,7 @@ export function NewsSection({
   articles: NewsArticle[]
   onOpen: (article: NewsArticle) => void
 }) {
+  const { t } = useTranslation()
   const [catalogOpen, setCatalogOpen] = useState(false)
   const { featured, secondary, catalog } = selectNewsLayout(articles)
 
@@ -29,10 +31,10 @@ export function NewsSection({
               id="tin-tuc-tieu-de"
               className="vpf-section-title relative"
             >
-              Tin tức nổi bật
+              {t("Tin tức nổi bật")}
             </h2>
             <p className="relative mt-3 max-w-xl text-[15px] leading-relaxed text-muted md:text-base">
-              Cập nhật những thông tin mới nhất từ cộng đồng Pickleball Việt Nam.
+              {t("Cập nhật những thông tin mới nhất từ cộng đồng Pickleball Việt Nam.")}
             </p>
           </div>
           <button
@@ -40,7 +42,7 @@ export function NewsSection({
             className="relative inline-flex min-h-12 shrink-0 items-center justify-center gap-2 self-start rounded-[10px] border border-line bg-white px-5 text-[15px] font-medium text-ink transition-colors duration-200 hover:border-brand hover:bg-brand md:self-auto"
             onClick={() => setCatalogOpen(true)}
           >
-            Tất cả tin tức
+            {t("Tất cả tin tức")}
             <ArrowUpRight className="size-4" aria-hidden />
           </button>
         </div>
@@ -55,7 +57,7 @@ export function NewsSection({
         </div>
       </div>
 
-      <Dialog open={catalogOpen} title="Tất cả tin tức" onClose={() => setCatalogOpen(false)}>
+      <Dialog open={catalogOpen} title={t("Tất cả tin tức")} onClose={() => setCatalogOpen(false)}>
         <ul className="divide-y divide-line">
           {catalog.map((article) => (
             <li key={article.id}>
@@ -68,11 +70,11 @@ export function NewsSection({
                 }}
               >
                 <span className="text-[12px] font-medium text-muted">
-                  {article.category}
+                  {t(article.category)}
                   <span aria-hidden> · </span>
                   <time dateTime={article.date}>{formatViDate(article.date)}</time>
                 </span>
-                <span className="text-base font-semibold leading-snug text-ink">{article.title}</span>
+                <span className="text-base font-semibold leading-snug text-ink">{t(article.title)}</span>
               </button>
             </li>
           ))}

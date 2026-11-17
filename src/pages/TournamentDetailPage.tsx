@@ -1,3 +1,4 @@
+import { setPageMetadata, useTranslation } from "../i18n"
 import { useEffect, useMemo } from "react"
 import { MapPin } from "lucide-react"
 import { tournaments } from "../data/tournaments"
@@ -17,6 +18,7 @@ const tone = {
 } as const
 
 export function TournamentDetailPage() {
+  const { t } = useTranslation()
   const slug = tournamentSlugFromLocation()
   const tournament = useMemo(() => {
     if (!slug) return null
@@ -25,11 +27,10 @@ export function TournamentDetailPage() {
 
   useEffect(() => {
     if (!tournament) {
-      document.title = "Không tìm thấy giải đấu – Liên đoàn Pickleball Việt Nam"
+      setPageMetadata("Không tìm thấy giải đấu – Liên đoàn Pickleball Việt Nam")
       return
     }
-    document.title = `${tournament.name} – Liên đoàn Pickleball Việt Nam`
-    document.querySelector('meta[name="description"]')?.setAttribute("content", tournament.description)
+    setPageMetadata(`${tournament.name} – Liên đoàn Pickleball Việt Nam`, tournament.description)
   }, [tournament])
 
   if (!tournament) {
@@ -43,15 +44,15 @@ export function TournamentDetailPage() {
               { label: "Không tìm thấy" },
             ]}
           />
-          <h1 className="mt-6 text-[2rem] font-bold tracking-tight text-ink">Không tìm thấy giải đấu</h1>
+          <h1 className="mt-6 text-[2rem] font-bold tracking-tight text-ink">{t("Không tìm thấy giải đấu")}</h1>
           <p className="mt-3 max-w-xl text-[15px] leading-relaxed text-muted">
-            Đường dẫn không khớp với giải nào trên hệ thống.
+            {t("Đường dẫn không khớp với giải nào trên hệ thống.")}
           </p>
           <a
             href={sitePath("/giaidau.html")}
             className="mt-6 inline-flex min-h-12 items-center rounded-[10px] bg-brand px-5 text-[15px] font-medium text-ink"
           >
-            Về hệ thống giải đấu
+            {t("Về hệ thống giải đấu")}
           </a>
         </article>
       </SiteLayout>
@@ -76,7 +77,7 @@ export function TournamentDetailPage() {
               tone={tone[tournament.status]}
               className={tournament.status === "ongoing" ? "bg-white text-signal" : undefined}
             >
-              {statusLabel[tournament.status]}
+              {t(statusLabel[tournament.status])}
             </Badge>
           }
         >
@@ -87,34 +88,34 @@ export function TournamentDetailPage() {
           </p>
           <p className="mt-2 flex items-center gap-2 text-sm text-white/85 sm:text-base">
             <MapPin className="size-4 shrink-0" aria-hidden />
-            {tournament.venue}, {tournament.location}
+            {tournament.venue}, {t(tournament.location)}
           </p>
         </PageHero>
 
         <div className="page-wrap">
-          <p className="border-b border-line py-4 text-sm text-muted">{tournament.note}</p>
+          <p className="border-b border-line py-4 text-sm text-muted">{t(tournament.note)}</p>
           <dl className="tournament-facts">
             <div>
-              <dt>Thời gian</dt>
+              <dt>{t("Thời gian")}</dt>
               <dd>
                 {date.rangeLabel}
                 <span className="mt-1 block">{tournament.time}</span>
               </dd>
             </div>
             <div>
-              <dt>Địa điểm</dt>
+              <dt>{t("Địa điểm")}</dt>
               <dd>
                 {tournament.venue}
-                <span className="mt-1 block">{tournament.location}</span>
+                <span className="mt-1 block">{t(tournament.location)}</span>
               </dd>
             </div>
             <div>
-              <dt>Đơn vị tổ chức</dt>
+              <dt>{t("Đơn vị tổ chức")}</dt>
               <dd>{tournament.organizer}</dd>
             </div>
             <div>
-              <dt>Trạng thái</dt>
-              <dd>{statusLabel[tournament.status]}</dd>
+              <dt>{t("Trạng thái")}</dt>
+              <dd>{t(statusLabel[tournament.status])}</dd>
             </div>
           </dl>
           <div className="py-8 min-[1200px]:py-10">

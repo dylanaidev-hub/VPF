@@ -1,3 +1,4 @@
+import { useTranslation } from "../../i18n"
 import { useEffect, useId, useRef } from "react"
 import { ChevronLeft, ChevronRight, X } from "lucide-react"
 import type { MediaShot } from "../../data/media.mock"
@@ -21,6 +22,7 @@ export function MediaLightbox({
   dismissOnBackdrop?: boolean
   lockBodyScroll?: boolean
 }) {
+  const { t } = useTranslation()
   const titleId = useId()
   const reduce = useReducedMotion()
   const closeRef = useRef<HTMLButtonElement>(null)
@@ -129,7 +131,7 @@ export function MediaLightbox({
           ref={closeRef}
           type="button"
           className="media-viewer__close grid size-11 place-items-center rounded-[10px] border border-white/30"
-          aria-label="Đóng ảnh"
+          aria-label={t("Đóng ảnh")}
           onClick={onClose}
         >
           <X className="size-5" aria-hidden />
@@ -140,7 +142,7 @@ export function MediaLightbox({
           <button
             type="button"
             className="media-lightbox-nav media-lightbox-nav-prev"
-            aria-label="Ảnh trước"
+            aria-label={t("Ảnh trước")}
             onClick={() => go(-1)}
           >
             <ChevronLeft className="size-5" aria-hidden />
@@ -150,7 +152,7 @@ export function MediaLightbox({
           <button
             type="button"
             className="media-lightbox-nav media-lightbox-nav-next"
-            aria-label="Ảnh sau"
+            aria-label={t("Ảnh sau")}
             onClick={() => go(1)}
           >
             <ChevronRight className="size-5" aria-hidden />
@@ -171,15 +173,15 @@ export function MediaLightbox({
             go(delta < 0 ? 1 : -1)
           }}
         >
-          <img key={shot.id} src={sitePath(shot.src)} alt={shot.alt} className="media-lightbox-photo" />
+          <img key={shot.id} src={sitePath(shot.src)} alt={t(shot.alt)} className="media-lightbox-photo" />
           <div className="media-viewer__details">
             <p id={titleId} className="media-viewer__title">
               {shot.title ?? shot.caption}
             </p>
-            {shot.title ? <p className="media-viewer__description">{shot.caption}</p> : null}
+            {shot.title ? <p className="media-viewer__description">{t(shot.caption)}</p> : null}
           </div>
           {multiple ? (
-            <div ref={thumbsRef} className="media-lightbox-thumbs media-viewer__thumbnails" role="list" aria-label="Ảnh trong bộ">
+            <div ref={thumbsRef} className="media-lightbox-thumbs media-viewer__thumbnails" role="list" aria-label={t("Ảnh trong bộ")}>
               {shots.map((item, itemIndex) => {
                 const active = itemIndex === index
                 return (

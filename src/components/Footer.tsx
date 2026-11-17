@@ -1,3 +1,4 @@
+import { useTranslation } from "../i18n"
 import { Mail, MapPin, Phone } from "lucide-react"
 import { navigation } from "../data/navigation"
 import { sitePath } from "../lib/site"
@@ -20,6 +21,7 @@ const anchorId: Record<string, string> = {
 }
 
 export function Footer() {
+  const { t } = useTranslation()
   const office = site.offices[0]
   const addressUnpublished = !office || office.address.includes("sẽ được công bố")
 
@@ -29,21 +31,21 @@ export function Footer() {
       <div className="page-wrap py-16 min-[1200px]:py-20">
         <div className="footer-grid">
           <div id="lien-doan">
-            <a href={sitePath("/index.html")} className="brand-home" aria-label="Về trang chủ VPF">
+            <a href={sitePath("/index.html")} className="brand-home" aria-label={t("Về trang chủ VPF")}>
               <Logo variant="white" />
             </a>
             <p className="mt-5 text-base font-semibold">{site.name}</p>
             <p className="mt-1 text-sm text-vpf-gold-wash">{site.englishName}</p>
             <p className="mt-3 text-sm leading-relaxed text-vpf-gold-wash">
-              Kết nối cộng đồng, phát triển phong trào và đồng hành cùng Pickleball Việt Nam.
+              {t("Kết nối cộng đồng, phát triển phong trào và đồng hành cùng Pickleball Việt Nam.")}
             </p>
-            <ul className="mt-5 flex gap-2" aria-label="Mạng xã hội">
+            <ul className="mt-5 flex gap-2" aria-label={t("Mạng xã hội")}>
               {socialChannels.map((channel) => (
                 <li key={channel.id}>
                   <span
                     role="img"
-                    aria-label={`${channel.label} — đường dẫn chính thức chưa được công bố`}
-                    title="Đường dẫn chính thức chưa được công bố"
+                    aria-label={t("footer.socialUnavailable", { name: channel.label })}
+                    title={t("Đường dẫn chính thức chưa được công bố")}
                     className="grid size-9 place-items-center rounded-lg border border-white/25 text-white transition-colors duration-200 hover:bg-brand/15 motion-reduce:transition-none"
                   >
                     <SocialGlyph name={channel.id} />
@@ -54,20 +56,20 @@ export function Footer() {
           </div>
 
           <div className="footer-nav-pair">
-            <FooterNav title="Khám phá" links={discoverLinks} />
-            <FooterNav title="Chuyên mục" links={categoryLinks} />
+            <FooterNav title={t("Khám phá")} links={discoverLinks} />
+            <FooterNav title={t("Chuyên mục")} links={categoryLinks} />
           </div>
 
           <div id="lien-he">
-            <h2 className="text-[15px] font-semibold">Liên hệ</h2>
+            <h2 className="text-[15px] font-semibold">{t("Liên hệ")}</h2>
             <ul className="mt-4 space-y-3 text-sm text-vpf-gold-wash">
               <li className="flex gap-2.5">
                 <MapPin className="mt-0.5 size-4 shrink-0 text-white" aria-hidden />
                 <span>
                   <span className="block text-white">
-                    Trụ sở: {office ? `${office.city}, Việt Nam` : "Chưa công bố"}
+                    {t("footer.office", { location: office ? `${office.city}, ${t("Việt Nam")}` : t("Chưa công bố") })}
                   </span>
-                  {addressUnpublished ? <span className="text-xs">Địa điểm minh họa</span> : null}
+                  {addressUnpublished ? <span className="text-xs">{t("Địa điểm minh họa")}</span> : null}
                   {!addressUnpublished && office ? <span className="block">{office.address}</span> : null}
                 </span>
               </li>
@@ -78,12 +80,12 @@ export function Footer() {
                     {site.email}
                   </a>
                 ) : (
-                  <span>Email: Chưa công bố</span>
+                  <span>{t("Email: Chưa công bố")}</span>
                 )}
               </li>
               <li className="flex items-center gap-2.5">
                 <Phone className="size-4 shrink-0 text-white" aria-hidden />
-                <span>Hotline: {site.hotline}</span>
+                <span>Hotline: {t(site.hotline)}</span>
               </li>
             </ul>
           </div>
@@ -95,7 +97,7 @@ export function Footer() {
           <div>
             <p>© 2026 {site.englishName}. All rights reserved.</p>
             <p className="mt-1 text-xs">
-              Ảnh sân ngoài trời:{" "}
+              {t("Ảnh sân ngoài trời:")}{" "}
               <a
                 href="https://commons.wikimedia.org/wiki/File:Pickleball_Pros.jpg"
                 className="underline decoration-white/30 underline-offset-2 transition-colors duration-200 hover:text-brand"
@@ -106,8 +108,8 @@ export function Footer() {
             </p>
           </div>
           <p className="flex gap-4">
-            <span>Chính sách bảo mật</span>
-            <span>Điều khoản sử dụng</span>
+            <span>{t("Chính sách bảo mật")}</span>
+            <span>{t("Điều khoản sử dụng")}</span>
           </p>
         </div>
       </div>
@@ -124,9 +126,10 @@ function FooterNav({
   title: string
   links: { id: string; label: string; href: string }[]
 }) {
+  const { t } = useTranslation()
   return (
-    <nav aria-label={title}>
-      <h2 className="text-[15px] font-semibold">{title}</h2>
+    <nav aria-label={t(title)}>
+      <h2 className="text-[15px] font-semibold">{t(title)}</h2>
       <ul className="mt-4 flex flex-col gap-3.5">
         {links.map((item) => (
           <li key={item.id}>
@@ -135,7 +138,7 @@ function FooterNav({
               href={sitePath(item.href)}
               className="text-sm text-vpf-gold-wash transition-colors duration-200 hover:text-brand motion-reduce:transition-none"
             >
-              {item.label}
+              {t(item.label)}
             </a>
           </li>
         ))}

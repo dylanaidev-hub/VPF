@@ -1,3 +1,4 @@
+import { useTranslation } from "../i18n"
 import { cx } from "../lib/cx"
 import { sitePath } from "../lib/site"
 
@@ -8,6 +9,7 @@ export function Logo({
   variant?: "color" | "white"
   className?: string
 }) {
+  const { t } = useTranslation()
   const src =
     variant === "white"
       ? "/brand/logo-horizontal-white.svg"
@@ -16,7 +18,7 @@ export function Logo({
   return (
     <img
       src={sitePath(src)}
-      alt="Liên đoàn Pickleball Việt Nam"
+      alt={t("Liên đoàn Pickleball Việt Nam")}
       width={588}
       height={219}
       className={cx("h-11 w-auto", className)}

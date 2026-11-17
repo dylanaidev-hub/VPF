@@ -1,3 +1,4 @@
+import { useTranslation } from "../../i18n"
 import { useState, type KeyboardEvent } from "react"
 import type { TournamentScheduleStatus, TournamentView } from "../../types"
 import { formatViDate } from "../../lib/format"
@@ -21,6 +22,7 @@ const scheduleStatusLabel: Record<TournamentScheduleStatus, string> = {
 }
 
 export function TournamentDetailTabs({ tournament }: { tournament: TournamentView }) {
+  const { t } = useTranslation()
   const [tab, setTab] = useState<TabId>("tong-quan")
 
   const onKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
@@ -38,7 +40,7 @@ export function TournamentDetailTabs({ tournament }: { tournament: TournamentVie
       <div
         className="tournament-tabs"
         role="tablist"
-        aria-label="Thông tin giải đấu"
+        aria-label={t("Thông tin giải đấu")}
         onKeyDown={onKeyDown}
       >
         {tabs.map((item) => {
@@ -59,7 +61,7 @@ export function TournamentDetailTabs({ tournament }: { tournament: TournamentVie
               }
               onClick={() => setTab(item.id)}
             >
-              {item.label}
+              {t(item.label)}
             </button>
           )
         })}
@@ -82,6 +84,7 @@ export function TournamentDetailTabs({ tournament }: { tournament: TournamentVie
 }
 
 function Overview({ tournament }: { tournament: TournamentView }) {
+  const { t } = useTranslation()
   const place =
     tournament.scope === "international" && tournament.country
       ? `${tournament.venue}, ${tournament.location}, ${tournament.country}`
@@ -89,29 +92,29 @@ function Overview({ tournament }: { tournament: TournamentView }) {
 
   return (
     <div className="max-w-3xl space-y-6">
-      <p className="text-[15px] leading-relaxed text-ink md:text-base">{tournament.description}</p>
+      <p className="text-[15px] leading-relaxed text-ink md:text-base">{t(tournament.description)}</p>
       <div>
-        <h3 className="text-base font-semibold text-ink">Mục tiêu tổ chức</h3>
+        <h3 className="text-base font-semibold text-ink">{t("Mục tiêu tổ chức")}</h3>
         <p className="mt-2 text-[15px] leading-relaxed text-muted">{tournament.objective}</p>
       </div>
       <dl className="grid gap-4 sm:grid-cols-2">
         <div>
-          <dt className="text-sm font-medium text-ink">Địa điểm</dt>
+          <dt className="text-sm font-medium text-ink">{t("Địa điểm")}</dt>
           <dd className="mt-1 text-sm leading-relaxed text-muted">{place}</dd>
         </div>
         <div>
-          <dt className="text-sm font-medium text-ink">Đơn vị tổ chức</dt>
+          <dt className="text-sm font-medium text-ink">{t("Đơn vị tổ chức")}</dt>
           <dd className="mt-1 text-sm leading-relaxed text-muted">{tournament.organizer}</dd>
         </div>
         <div>
-          <dt className="text-sm font-medium text-ink">Phạm vi</dt>
+          <dt className="text-sm font-medium text-ink">{t("Phạm vi")}</dt>
           <dd className="mt-1 text-sm leading-relaxed text-muted">
-            {tournament.scope === "international" ? "Quốc tế" : "Trong nước"}
+            {tournament.scope === "international" ? t("Quốc tế") : t("Trong nước")}
           </dd>
         </div>
         {tournament.champion ? (
           <div>
-            <dt className="text-sm font-medium text-ink">Nhà vô địch (minh họa)</dt>
+            <dt className="text-sm font-medium text-ink">{t("Nhà vô địch (minh họa)")}</dt>
             <dd className="mt-1 text-sm leading-relaxed text-muted">{tournament.champion}</dd>
           </div>
         ) : null}
@@ -120,20 +123,21 @@ function Overview({ tournament }: { tournament: TournamentView }) {
             <dt className="text-sm font-medium text-ink">Livestream</dt>
             <dd className="mt-1 text-sm leading-relaxed text-muted">
               <a href={tournament.livestreamUrl} className="font-medium text-brand-strong underline-offset-2 hover:underline">
-                Xem phát sóng
+                {t("Xem phát sóng")}
               </a>
             </dd>
           </div>
         ) : null}
       </dl>
-      <p className="text-sm leading-relaxed text-muted">Thông tin liên hệ chưa được công bố.</p>
+      <p className="text-sm leading-relaxed text-muted">{t("Thông tin liên hệ chưa được công bố.")}</p>
     </div>
   )
 }
 
 function Events({ tournament }: { tournament: TournamentView }) {
+  const { t } = useTranslation()
   if (tournament.categories.length === 0) {
-    return <p className="text-[15px] text-muted">Chưa có nội dung thi đấu.</p>
+    return <p className="text-[15px] text-muted">{t("Chưa có nội dung thi đấu.")}</p>
   }
   return (
     <ul className="grid gap-4 sm:grid-cols-2">
@@ -143,20 +147,20 @@ function Events({ tournament }: { tournament: TournamentView }) {
           <dl className="mt-2 space-y-1 text-sm text-muted">
             {item.level ? (
               <div className="flex gap-2">
-                <dt>Nhóm trình độ</dt>
+                <dt>{t("Nhóm trình độ")}</dt>
                 <dd>{item.level}</dd>
               </div>
             ) : null}
             {item.ageGroup ? (
               <div className="flex gap-2">
-                <dt>Độ tuổi</dt>
+                <dt>{t("Độ tuổi")}</dt>
                 <dd>{item.ageGroup}</dd>
               </div>
             ) : null}
             {item.format ? (
               <div className="flex gap-2">
-                <dt>Thể thức</dt>
-                <dd>{item.format}</dd>
+                <dt>{t("Thể thức")}</dt>
+                <dd>{t(item.format)}</dd>
               </div>
             ) : null}
           </dl>
@@ -167,25 +171,26 @@ function Events({ tournament }: { tournament: TournamentView }) {
 }
 
 function Schedule({ tournament }: { tournament: TournamentView }) {
+  const { t } = useTranslation()
   const [day, setDay] = useState("Tất cả")
   const days = [...new Set(tournament.schedule.map((item) => item.date))]
   const rows = day === "Tất cả" ? tournament.schedule : tournament.schedule.filter((item) => item.date === day)
 
   if (tournament.schedule.length === 0) {
-    return <p className="text-[15px] text-muted">Ban tổ chức chưa cập nhật lịch thi đấu.</p>
+    return <p className="text-[15px] text-muted">{t("Ban tổ chức chưa cập nhật lịch thi đấu.")}</p>
   }
 
   return (
     <div>
       {days.length > 1 ? (
         <label className="mb-4 block max-w-xs">
-          <span className="sr-only">Lọc lịch theo ngày</span>
+          <span className="sr-only">{t("Lọc lịch theo ngày")}</span>
           <Select
             value={day}
             onChange={(event) => setDay(event.target.value)}
             className="h-12 w-full rounded-[10px] border border-line bg-white px-3 text-[15px] text-ink"
           >
-            <option value="Tất cả">Tất cả ngày</option>
+            <option value="Tất cả">{t("Tất cả ngày")}</option>
             {days.map((item) => (
               <option key={item} value={item}>
                 {formatViDate(item)}
@@ -198,12 +203,12 @@ function Schedule({ tournament }: { tournament: TournamentView }) {
         <table className="w-full text-left text-sm">
           <thead className="bg-paper text-muted">
             <tr>
-              <th className="px-4 py-3 font-medium">Ngày</th>
-              <th className="px-4 py-3 font-medium">Giờ</th>
-              <th className="px-4 py-3 font-medium">Sân</th>
-              <th className="px-4 py-3 font-medium">Nội dung</th>
-              <th className="px-4 py-3 font-medium">Vận động viên / Đội</th>
-              <th className="px-4 py-3 font-medium">Trạng thái</th>
+              <th className="px-4 py-3 font-medium">{t("Ngày")}</th>
+              <th className="px-4 py-3 font-medium">{t("Giờ")}</th>
+              <th className="px-4 py-3 font-medium">{t("Sân")}</th>
+              <th className="px-4 py-3 font-medium">{t("Nội dung")}</th>
+              <th className="px-4 py-3 font-medium">{t("Vận động viên / Đội")}</th>
+              <th className="px-4 py-3 font-medium">{t("Trạng thái")}</th>
             </tr>
           </thead>
           <tbody>
@@ -211,7 +216,7 @@ function Schedule({ tournament }: { tournament: TournamentView }) {
               <tr key={item.id} className="border-t border-line">
                 <td className="px-4 py-3 text-ink">{formatViDate(item.date)}</td>
                 <td className="px-4 py-3 text-ink">{item.time}</td>
-                <td className="px-4 py-3 text-ink">{item.court}</td>
+                <td className="px-4 py-3 text-ink">{t(item.court)}</td>
                 <td className="px-4 py-3 text-ink">{item.event}</td>
                 <td className="px-4 py-3 text-ink">{item.participants}</td>
                 <td className="px-4 py-3 text-muted">{scheduleStatusLabel[item.status]}</td>
@@ -229,15 +234,15 @@ function Schedule({ tournament }: { tournament: TournamentView }) {
             <p className="mt-2 text-base font-semibold text-ink">{item.event}</p>
             <dl className="mt-2 space-y-1 text-sm text-muted">
               <div className="flex gap-2">
-                <dt>Sân</dt>
-                <dd className="text-ink">{item.court}</dd>
+                <dt>{t("Sân")}</dt>
+                <dd className="text-ink">{t(item.court)}</dd>
               </div>
               <div>
-                <dt>Vận động viên / Đội</dt>
+                <dt>{t("Vận động viên / Đội")}</dt>
                 <dd className="text-ink">{item.participants}</dd>
               </div>
               <div className="flex gap-2">
-                <dt>Trạng thái</dt>
+                <dt>{t("Trạng thái")}</dt>
                 <dd>{scheduleStatusLabel[item.status]}</dd>
               </div>
             </dl>
@@ -249,13 +254,14 @@ function Schedule({ tournament }: { tournament: TournamentView }) {
 }
 
 function Results({ tournament }: { tournament: TournamentView }) {
+  const { t } = useTranslation()
   if (tournament.results.length === 0) {
-    return <p className="text-[15px] text-muted">Kết quả sẽ được cập nhật sau khi các trận đấu kết thúc.</p>
+    return <p className="text-[15px] text-muted">{t("Kết quả sẽ được cập nhật sau khi các trận đấu kết thúc.")}</p>
   }
   return (
     <div>
       <p className="mb-4 text-sm leading-relaxed text-muted">
-        Tên và tỷ số dưới đây chỉ để xem giao diện, không phải kết quả thi đấu chính thức.
+        {t("Tên và tỷ số dưới đây chỉ để xem giao diện, không phải kết quả thi đấu chính thức.")}
       </p>
       <ul className="divide-y divide-line border-y border-line">
         {tournament.results.map((item) => (
@@ -267,9 +273,9 @@ function Results({ tournament }: { tournament: TournamentView }) {
             </p>
             <p className="text-sm font-semibold text-ink">{item.score}</p>
             <p className="text-sm text-muted">
-              {item.round}
+              {t(item.round)}
               <span className="mx-1.5">·</span>
-              Thắng: {item.winner}
+              {t("Thắng:")} {item.winner}
             </p>
           </li>
         ))}
@@ -279,10 +285,11 @@ function Results({ tournament }: { tournament: TournamentView }) {
 }
 
 function Regulations({ tournament }: { tournament: TournamentView }) {
+  const { t } = useTranslation()
   return (
     <div className="max-w-3xl">
       <p id="dieu-le-noi-dung" className="text-[15px] leading-relaxed text-ink">
-        {tournament.regulations.summary}
+        {t(tournament.regulations.summary)}
       </p>
       {tournament.regulations.documents.length > 0 ? (
         <ul className="mt-5 space-y-2">
@@ -290,10 +297,10 @@ function Regulations({ tournament }: { tournament: TournamentView }) {
             <li key={document.id} className="text-sm text-ink">
               {document.href ? (
                 <a href={sitePath(document.href)} className="font-medium underline-offset-2 hover:underline">
-                  {document.title}
+                  {t(document.title)}
                 </a>
               ) : (
-                <span>{document.title}</span>
+                <span>{t(document.title)}</span>
               )}
             </li>
           ))}
@@ -304,10 +311,10 @@ function Regulations({ tournament }: { tournament: TournamentView }) {
           href="#dieu-le-noi-dung"
           className="inline-flex min-h-11 items-center rounded-[10px] bg-brand px-5 text-sm font-medium text-ink"
         >
-          Xem điều lệ
+          {t("Xem điều lệ")}
         </a>
       </div>
-      <p className="mt-3 text-sm text-muted">Chưa có tệp điều lệ để tải.</p>
+      <p className="mt-3 text-sm text-muted">{t("Chưa có tệp điều lệ để tải.")}</p>
     </div>
   )
 }

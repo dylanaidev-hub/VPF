@@ -1,3 +1,4 @@
+import { useTranslation } from "../../i18n"
 import { useEffect, useRef, useState } from "react"
 import { ChevronLeft, ChevronRight, X } from "lucide-react"
 import { federationVision } from "../../data/aboutFederation.mock"
@@ -55,6 +56,7 @@ function useCompactStar() {
 }
 
 export function FedVision() {
+  const { t } = useTranslation()
   const reveal = useReveal<HTMLElement>()
   const story = useReveal<HTMLDivElement>()
   const compact = useCompactStar()
@@ -188,8 +190,8 @@ export function FedVision() {
     >
       <div className="page-wrap">
         <header className="fed-constellation-head">
-          <h2 id="tam-nhin-tieu-de">{copy.headline}</h2>
-          <p>{copy.tagline}</p>
+          <h2 id="tam-nhin-tieu-de">{t(copy.headline)}</h2>
+          <p>{t(copy.tagline)}</p>
         </header>
         <div
           className={cx(
@@ -252,7 +254,7 @@ export function FedVision() {
                 }
                 const word = (
                   <span className="fed-constellation-label">
-                    <span className="fed-constellation-word">{value.label}</span>
+                    <span className="fed-constellation-word">{t(value.label)}</span>
                   </span>
                 )
                 if (compact) {
@@ -297,10 +299,10 @@ export function FedVision() {
               {current ? (
                 <div className="fed-star-readout" aria-hidden={phase !== "open"}>
                   <p key={`${current.id}-title-${swap}`} className={cx("fed-star-title", swap > 0 && "is-swap")}>
-                    {current.label}
+                    {t(current.label)}
                   </p>
                   <p key={`${current.id}-copy-${swap}`} className={cx("fed-star-blurb", swap > 0 && "is-swap")}>
-                    {current.description}
+                    {t(current.description)}
                   </p>
                   <p className="fed-sr">{current.imageAlt}</p>
                 </div>
@@ -309,7 +311,7 @@ export function FedVision() {
             <div className="fed-star-tools" aria-hidden={!telling}>
               <button
                 type="button"
-                aria-label="Giá trị trước"
+                aria-label={t("Giá trị trước")}
                 tabIndex={phase === "open" ? 0 : -1}
                 disabled={phase !== "open"}
                 onClick={() => stepStory(-1)}
@@ -319,7 +321,7 @@ export function FedVision() {
               <button
                 ref={closeRef}
                 type="button"
-                aria-label="Đóng"
+                aria-label={t("Đóng")}
                 tabIndex={telling ? 0 : -1}
                 disabled={!telling}
                 onClick={closeStory}
@@ -328,7 +330,7 @@ export function FedVision() {
               </button>
               <button
                 type="button"
-                aria-label="Giá trị sau"
+                aria-label={t("Giá trị sau")}
                 tabIndex={phase === "open" ? 0 : -1}
                 disabled={phase !== "open"}
                 onClick={() => stepStory(1)}
@@ -349,7 +351,7 @@ export function FedVision() {
                     onClick={(event) => openStory(index, event.currentTarget)}
                   >
                     <span>{index + 1}</span>
-                    {value.label}
+                    {t(value.label)}
                   </button>
                 </li>
               ))}
@@ -364,15 +366,15 @@ export function FedVision() {
           <div className="fed-story-grid">
             <article>
               <p className="fed-story-index">01</p>
-              <p className="fed-constellation-kicker">{copy.visionLabel}</p>
-              <h3>{copy.visionTitle}</h3>
-              <p>{copy.vision}</p>
+              <p className="fed-constellation-kicker">{t(copy.visionLabel)}</p>
+              <h3>{t(copy.visionTitle)}</h3>
+              <p>{t(copy.vision)}</p>
             </article>
             <article>
               <p className="fed-story-index">02</p>
-              <p className="fed-constellation-kicker">{copy.missionLabel}</p>
-              <h3>{copy.missionTitle}</h3>
-              <p>{copy.mission}</p>
+              <p className="fed-constellation-kicker">{t(copy.missionLabel)}</p>
+              <h3>{t(copy.missionTitle)}</h3>
+              <p>{t(copy.mission)}</p>
             </article>
           </div>
         </div>

@@ -1,3 +1,4 @@
+import { useTranslation } from "../../i18n"
 import { ArrowRight } from "lucide-react"
 import {
   mainSponsor,
@@ -17,16 +18,17 @@ const goldSponsors = sponsors.filter((item) => item.tier === "gold")
 const silverSponsors = sponsors.filter((item) => item.tier === "silver")
 
 export function SponsorShowcase() {
+  const { t } = useTranslation()
   return (
     <section id={sponsorsSection.id} className="eco-section eco-sponsors" aria-labelledby="nha-tai-tro-tieu-de">
       <div className="page-wrap">
         <SectionHeading
           id="nha-tai-tro-tieu-de"
-          title={sponsorsSection.title}
-          subtitle={sponsorsSection.description}
+          title={t(sponsorsSection.title)}
+          subtitle={t(sponsorsSection.description)}
           className="eco-sponsors-head"
         />
-        <p className="eco-note">{sponsorsSection.note}</p>
+        <p className="eco-note">{t(sponsorsSection.note)}</p>
 
         {mainSponsor ? <MainSponsor sponsor={mainSponsor} /> : null}
         <SponsorTier tone="gold" title={sponsorTierLabel.gold} sponsors={goldSponsors} />
@@ -38,6 +40,7 @@ export function SponsorShowcase() {
 }
 
 function MainSponsor({ sponsor }: { sponsor: SponsorProfile }) {
+  const { t } = useTranslation()
   const href = sitePath(sponsorPath(sponsor.slug))
   return (
     <article className="sponsor-feature">
@@ -55,9 +58,9 @@ function MainSponsor({ sponsor }: { sponsor: SponsorProfile }) {
       <div className="sponsor-feature-copy">
         <h3>{sponsor.name}</h3>
         <p className="sponsor-feature-sector">{sponsor.sector}</p>
-        <p className="sponsor-feature-intro">{sponsor.intro}</p>
+        <p className="sponsor-feature-intro">{t(sponsor.intro)}</p>
         <a href={href} className="eco-type-link">
-          Xem giới thiệu
+          {t("Xem giới thiệu")}
           <ArrowRight className="size-4" aria-hidden />
         </a>
       </div>
@@ -74,9 +77,10 @@ function SponsorTier({
   title: string
   sponsors: SponsorProfile[]
 }) {
+  const { t } = useTranslation()
   return (
     <div className={`sponsor-tier is-${tone}`}>
-      <h3>{title}</h3>
+      <h3>{t(title)}</h3>
       <ul>
         {items.map((sponsor) => (
           <li key={sponsor.id}>

@@ -1,3 +1,4 @@
+import { useTranslation } from "../i18n"
 import type { ReactNode } from "react"
 import { Briefcase, ChartColumn, ChevronRight, GraduationCap, MapPin, Target, Trophy, Users } from "lucide-react"
 import { cx } from "../lib/cx"
@@ -51,14 +52,15 @@ function StarField() {
 }
 
 function HighlightBody({ highlight }: { highlight: SportsProfileHighlight }) {
+  const { t } = useTranslation()
   const Icon = highlight.icon === "trophy" ? Trophy : Briefcase
   return (
     <>
       <Icon className="player-card-trophy" aria-hidden />
       <span className="player-card-award-rule" aria-hidden />
       <span className="player-card-award-copy">
-        <span className="player-card-award-title">{highlight.title}</span>
-        {highlight.description ? <span className="player-card-award-text">{highlight.description}</span> : null}
+        <span className="player-card-award-title">{t(highlight.title)}</span>
+        {highlight.description ? <span className="player-card-award-text">{t(highlight.description)}</span> : null}
       </span>
       {highlight.href ? <ChevronRight className="player-card-award-chevron" aria-hidden /> : null}
     </>
@@ -84,6 +86,7 @@ export function SportsProfileCard({
   onOpen?: () => void
   profileUrl?: string
 }) {
+  const { t } = useTranslation()
   const compact = variant === "compact"
   const openClass = "player-card-open"
 
@@ -98,7 +101,7 @@ export function SportsProfileCard({
               {rows.map((row, index) => (
                 <span className="player-card-row" key={index}>
                   <RowIcon icon={row.icon} />
-                  <span>{row.text}</span>
+                  <span>{typeof row.text === "string" ? t(row.text) : row.text}</span>
                 </span>
               ))}
             </span>
@@ -147,7 +150,7 @@ export function SportsProfileCard({
           {rows.map((row, index) => (
             <span className="player-card-row" key={index}>
               <RowIcon icon={row.icon} />
-              <span>{row.text}</span>
+              <span>{typeof row.text === "string" ? t(row.text) : row.text}</span>
             </span>
           ))}
         </span>

@@ -1,3 +1,4 @@
+import { useTranslation } from "../../i18n"
 import { useEffect, useId, useLayoutEffect, useRef, useState } from "react"
 import { createPortal } from "react-dom"
 import { Images, X } from "lucide-react"
@@ -12,6 +13,7 @@ export function MilestoneGalleryModal({ id, milestone, onClose }: {
   milestone: FederationMilestone
   onClose: () => void
 }) {
+  const { t } = useTranslation()
   const dialogRef = useRef<HTMLDialogElement>(null)
   const photoTrigger = useRef<HTMLButtonElement | null>(null)
   const titleId = useId()
@@ -80,10 +82,10 @@ export function MilestoneGalleryModal({ id, milestone, onClose }: {
         <header className="fed-history-modal-header">
           <div>
             <time dateTime={milestone.id}>{milestone.date}</time>
-            <h2 id={titleId}>{milestone.title}</h2>
-            <p id={descriptionId}>{milestone.description}</p>
+            <h2 id={titleId}>{t(milestone.title)}</h2>
+            <p id={descriptionId}>{t(milestone.description)}</p>
           </div>
-          <button type="button" className="fed-history-modal-close" aria-label="Đóng bộ ảnh" onClick={requestClose}>
+          <button type="button" className="fed-history-modal-close" aria-label={t("Đóng bộ ảnh")} onClick={requestClose}>
             <X size={22} aria-hidden="true" />
           </button>
         </header>
@@ -97,8 +99,8 @@ export function MilestoneGalleryModal({ id, milestone, onClose }: {
             }}
           />
           <p className="fed-history-gallery-caption">
-            <span className="fed-history-gallery-count"><Images size={16} aria-hidden="true" />{images.length} ảnh</span>
-            {hasIllustrations ? <span>Ảnh minh họa cho mốc thời gian.</span> : null}
+            <span className="fed-history-gallery-count"><Images size={16} aria-hidden="true" />{images.length} {t("ảnh")}</span>
+            {hasIllustrations ? <span>{t("Ảnh minh họa cho mốc thời gian.")}</span> : null}
           </p>
         </div>
       </div>

@@ -1,3 +1,4 @@
+import { useTranslation } from "../../i18n"
 import { useCallback, useEffect, useState } from "react"
 import { federationCharter, federationDecision } from "../../data/aboutFederation.mock"
 import { cx } from "../../lib/cx"
@@ -8,6 +9,7 @@ import { DocumentCard, publishedPdf } from "../DocumentCard"
 import { DocumentReader } from "../DocumentReader"
 
 export function FedDecision() {
+  const { t } = useTranslation()
   const doc = federationDecision
   const pdf = publishedPdf(doc.documentUrl)
   const [open, setOpen] = useState(false)
@@ -22,11 +24,11 @@ export function FedDecision() {
   return (
     <section id={doc.id} className="fed-decree" aria-labelledby="quyet-dinh-tieu-de">
       <div className="page-wrap">
-        <h2 id="quyet-dinh-tieu-de" className="vpf-section-title">{doc.title}</h2>
+        <h2 id="quyet-dinh-tieu-de" className="vpf-section-title">{t(doc.title)}</h2>
         <DocumentCard
           category={doc.category}
-          title={doc.title}
-          description={doc.description}
+          title={t(doc.title)}
+          description={t(doc.description)}
           documentUrl={pdf}
           downloadUrl={doc.downloadUrl}
           availabilityStatus={doc.availabilityStatus}
@@ -34,7 +36,7 @@ export function FedDecision() {
         />
       </div>
       {pdf ? (
-        <Dialog open={open} title={doc.title} onClose={close}>
+        <Dialog open={open} title={t(doc.title)} onClose={close}>
           <DocumentReader documentUrl={pdf} downloadUrl={doc.downloadUrl} />
         </Dialog>
       ) : null}
@@ -43,6 +45,7 @@ export function FedDecision() {
 }
 
 export function FedCharter() {
+  const { t } = useTranslation()
   const reveal = useReveal<HTMLElement>()
   const doc = federationCharter
 
@@ -55,25 +58,25 @@ export function FedCharter() {
     >
       <div className="page-wrap fed-charter-grid">
         <div>
-          <h2 id="tai-lieu-tieu-de">{doc.title}</h2>
-          <p>{doc.note}</p>
+          <h2 id="tai-lieu-tieu-de">{t(doc.title)}</h2>
+          <p>{t(doc.note)}</p>
         </div>
         <dl>
           <div>
-            <dt>{doc.typeLabel}</dt>
-            <dd>{doc.type}</dd>
+            <dt>{t(doc.typeLabel)}</dt>
+            <dd>{t(doc.type)}</dd>
           </div>
           <div>
-            <dt>{doc.formatLabel}</dt>
-            <dd>{doc.format}</dd>
+            <dt>{t(doc.formatLabel)}</dt>
+            <dd>{t(doc.format)}</dd>
           </div>
           <div>
-            <dt>{doc.statusLabel}</dt>
-            <dd>{doc.status}</dd>
+            <dt>{t(doc.statusLabel)}</dt>
+            <dd>{t(doc.status)}</dd>
           </div>
         </dl>
         <a className="fed-button fed-button-gold" href={sitePath(doc.href)} target="_blank" rel="noreferrer">
-          {doc.cta}
+          {t(doc.cta)}
         </a>
       </div>
     </section>

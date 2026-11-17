@@ -1,3 +1,4 @@
+import { useTranslation } from "../../i18n"
 import { useMemo, useState } from "react"
 import { ChevronDown, ChevronUp, MapPin, X } from "lucide-react"
 import { sitePath } from "../../lib/site"
@@ -29,6 +30,7 @@ function fold(value: string) {
 }
 
 export function MemberOrgsSection() {
+  const { t } = useTranslation()
   const [query, setQuery] = useState("")
   const [province, setProvince] = useState("Tất cả")
   const [expanded, setExpanded] = useState(() => {
@@ -68,40 +70,40 @@ export function MemberOrgsSection() {
       <div className="page-wrap">
         <div className="library-section-head">
           <h2 id="don-vi-tieu-de" className="library-section-title">
-            {memberSection.title}
+            {t(memberSection.title)}
           </h2>
-          <p className="library-section-lead">{memberSection.description}</p>
+          <p className="library-section-lead">{t(memberSection.description)}</p>
         </div>
 
         <div className="mb-4 flex flex-col gap-3">
           <form className="flex flex-col gap-3 sm:flex-row" role="search" onSubmit={(event) => event.preventDefault()}>
             <label className="relative min-w-0 flex-1">
-              <span className="sr-only">Tìm đơn vị thành viên</span>
+              <span className="sr-only">{t("Tìm đơn vị thành viên")}</span>
               <input
                 type="search"
                 value={query}
                 onChange={(event) => setQuery(event.target.value)}
-                placeholder="Tìm tên đơn vị..."
+                placeholder={t("Tìm tên đơn vị...")}
                 className={searchInputClass}
               />
               {query ? (
-                <button type="button" className={clearSearchClass} aria-label="Xóa tìm kiếm" onClick={() => setQuery("")}>
+                <button type="button" className={clearSearchClass} aria-label={t("Xóa tìm kiếm")} onClick={() => setQuery("")}>
                   <X className="size-4" aria-hidden />
                 </button>
               ) : null}
             </label>
             <label className="sm:w-56">
-              <span className="sr-only">Lọc theo tỉnh/thành</span>
+              <span className="sr-only">{t("Lọc theo tỉnh/thành")}</span>
               <Select
                 value={province}
                 onChange={(event) => setProvince(event.target.value)}
-                aria-label="Lọc theo tỉnh/thành"
+                aria-label={t("Lọc theo tỉnh/thành")}
                 className={selectClass}
               >
-                <option value="Tất cả">Tất cả tỉnh/thành</option>
+                <option value="Tất cả">{t("Tất cả tỉnh/thành")}</option>
                 {provinces.map((item) => (
                   <option key={item} value={item}>
-                    {item}
+                    {t(item)}
                   </option>
                 ))}
               </Select>
@@ -114,7 +116,7 @@ export function MemberOrgsSection() {
                 className="h-12 rounded-[10px] border border-line px-4 text-sm font-medium text-ink hover:border-ink/20"
                 onClick={reset}
               >
-                Xóa bộ lọc
+                {t("Xóa bộ lọc")}
               </button>
             </div>
           ) : null}
@@ -122,9 +124,9 @@ export function MemberOrgsSection() {
 
         {filtered.length === 0 ? (
           <div className="library-empty">
-            <p className="text-base font-medium text-ink">Không có đơn vị phù hợp với bộ lọc.</p>
+            <p className="text-base font-medium text-ink">{t("Không có đơn vị phù hợp với bộ lọc.")}</p>
             <button type="button" className="mt-3 text-sm font-semibold underline" onClick={reset}>
-              Xóa bộ lọc
+              {t("Xóa bộ lọc")}
             </button>
           </div>
         ) : (
@@ -149,7 +151,7 @@ export function MemberOrgsSection() {
                   aria-expanded={expanded}
                   onClick={() => setExpanded((value) => !value)}
                 >
-                  {expanded ? memberSection.collapseLabel : `${memberSection.viewAllLabel} (${filtered.length})`}
+                  {expanded ? t(memberSection.collapseLabel) : `${t(memberSection.viewAllLabel)} (${filtered.length})`}
                   {expanded ? <ChevronUp className="size-4" aria-hidden /> : <ChevronDown className="size-4" aria-hidden />}
                 </button>
               </div>
@@ -164,14 +166,14 @@ export function MemberOrgsSection() {
             {open.logo ? (
               <img className="club-dialog-logo" src={sitePath(open.logo)} alt="" width={72} height={72} />
             ) : null}
-            <p className="mt-3 text-sm font-medium text-brand-strong">Đơn vị minh họa</p>
+            <p className="mt-3 text-sm font-medium text-brand-strong">{t("Đơn vị minh họa")}</p>
             <p className="mt-3 inline-flex items-center gap-1.5 text-sm text-muted">
               <MapPin className="size-3.5" aria-hidden />
               {open.province}
             </p>
-            <p className="mt-4 text-[15px] leading-relaxed text-ink">{open.description}</p>
+            <p className="mt-4 text-[15px] leading-relaxed text-ink">{t(open.description)}</p>
             <p className="mt-4 text-sm text-muted">
-              Không phải đơn vị thành viên chính thức. Chưa có thông tin liên hệ công bố trên trang này.
+              {t("Không phải đơn vị thành viên chính thức. Chưa có thông tin liên hệ công bố trên trang này.")}
             </p>
           </div>
         ) : null}

@@ -1,4 +1,5 @@
 import { foldText } from "./format"
+import { translate } from "../i18n"
 
 export const searchTypes = {
   news: "Tin tức",
@@ -34,12 +35,16 @@ export function searchSite(items: readonly SearchItem[], query: string, type?: S
   const words = [...new Set(phrase.split(" "))]
   return items.flatMap((item) => {
     if (type && item.type !== type) return []
-    const title = normalize(item.title)
-    const context = normalize([item.description, ...(item.keywords ?? [])].join(" "))
-    if (!words.every((word) => title.includes(word) || context.includes(word))) return []
+    const titles = [normalize(item.title), normalize(translate(item.title, "en"))]
+    const fields = [item.description ?? "", ...(item.keywords ?? [])]
+    const context = normalize([...fields, ...fields.map((value) => translate(value, "en"))].join(" "))
+    const matchesTitle = (word: string) => titles.some((title) => title.includes(word))
+    if (!words.every((word) => matchesTitle(word) || context.includes(word))) return []
 
-    const titleMatches = words.filter((word) => title.includes(word)).length
-    const rank = title === phrase ? 3 : title.startsWith(phrase) ? 2 : title.includes(phrase) ? 1 : 0
+    const titleMatches = words.filter(matchesTitle).length
+    const rank = Math.max(...titles.map((title) =>
+      title === phrase ? 3 : title.startsWith(phrase) ? 2 : title.includes(phrase) ? 1 : 0,
+    ))
     return [{ item, titleMatches, rank }]
   }).sort((a, b) =>
     b.rank - a.rank ||

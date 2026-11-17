@@ -1,3 +1,4 @@
+import { useTranslation } from "../i18n"
 import { useEffect, useRef, useState } from "react"
 import { Maximize, Minimize2, Pause, Play, Volume2, VolumeX } from "lucide-react"
 import type { LiveArena } from "../data/live"
@@ -6,6 +7,7 @@ import { cx } from "../lib/cx"
 import { sitePath } from "../lib/site"
 
 export function LiveSection({ arena }: { arena: LiveArena }) {
+  const { t } = useTranslation()
   const matches = arena.matches.map((match) => presentBroadcast(match, arena.tournaments, arena.teams))
   const hasLive = matches.some((item) => item.status === "live")
   const [selectedId, setSelectedId] = useState(
@@ -26,7 +28,7 @@ export function LiveSection({ arena }: { arena: LiveArena }) {
                 <p className="vpf-arena-status">
                   {broadcastStatusLabel[selected.status]}
                   <span aria-hidden> · </span>
-                  COURT {selected.court}
+                  COURT {t(selected.court)}
                 </p>
               </div>
             ) : null}
@@ -42,7 +44,7 @@ export function LiveSection({ arena }: { arena: LiveArena }) {
         {selected ? (
           <>
             <LivePlayer match={selected} muted={muted} onToggleMute={() => setMuted((value) => !value)} />
-            <div className="vpf-arena-rundown" role="list" aria-label="Lịch phát sóng">
+            <div className="vpf-arena-rundown" role="list" aria-label={t("Lịch phát sóng")}>
               {matches.map((item) => {
                 const pressed = item.id === selected.id
                 return (
@@ -55,7 +57,7 @@ export function LiveSection({ arena }: { arena: LiveArena }) {
                     onClick={() => setSelectedId(item.id)}
                   >
                     <span className="vpf-arena-row-time">{item.time}</span>
-                    <span className="vpf-arena-row-court">COURT {item.court}</span>
+                    <span className="vpf-arena-row-court">COURT {t(item.court)}</span>
                     <span className="vpf-arena-row-meta">
                       <span className="vpf-arena-row-name">{item.name}</span>
                       <span className="vpf-arena-row-sub">
@@ -69,7 +71,7 @@ export function LiveSection({ arena }: { arena: LiveArena }) {
             </div>
           </>
         ) : (
-          <p className="vpf-arena-empty">Chưa có lịch phát sóng.</p>
+          <p className="vpf-arena-empty">{t("Chưa có lịch phát sóng.")}</p>
         )}
       </div>
     </section>
@@ -85,6 +87,7 @@ function LivePlayer({
   muted: boolean
   onToggleMute: () => void
 }) {
+  const { t } = useTranslation()
   const frameRef = useRef<HTMLDivElement>(null)
   const videoRef = useRef<HTMLVideoElement>(null)
   const youtubeRef = useRef<HTMLIFrameElement>(null)
@@ -212,12 +215,12 @@ function LivePlayer({
           type="button"
           className="vpf-live-icon"
           aria-pressed={muted}
-          aria-label={muted ? "Bật tiếng" : "Tắt tiếng"}
+          aria-label={muted ? t("Bật tiếng") : t("Tắt tiếng")}
           onClick={onToggleMute}
         >
           {muted ? <VolumeX className="size-5" aria-hidden /> : <Volume2 className="size-5" aria-hidden />}
         </button>
-        <button type="button" className="vpf-live-icon" aria-label={fullscreen ? "Thoát toàn màn hình" : "Toàn màn hình"} onClick={onFullscreen}>
+        <button type="button" className="vpf-live-icon" aria-label={fullscreen ? t("Thoát toàn màn hình") : t("Toàn màn hình")} onClick={onFullscreen}>
           {fullscreen ? <Minimize2 className="size-5" aria-hidden /> : <Maximize className="size-5" aria-hidden />}
         </button>
       </div>
@@ -230,14 +233,14 @@ function LivePlayer({
             </button>
           </div>
 
-          <div key={match.id} className="vpf-arena-board vpf-arena-swap" aria-label="Bảng điểm minh họa">
+          <div key={match.id} className="vpf-arena-board vpf-arena-swap" aria-label={t("Bảng điểm minh họa")}>
             {notice ? (
               <p role="status" className="vpf-arena-notice">
-                {notice}
+                {t(notice)}
               </p>
             ) : null}
             <p className="vpf-arena-court">
-              COURT {match.court}
+              COURT {t(match.court)}
               <span aria-hidden> | </span>
               {match.stage}
             </p>

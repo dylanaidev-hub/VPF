@@ -1,8 +1,10 @@
+import { useTranslation } from "../i18n"
 import { useEffect, useRef, useState } from "react"
 import { ArrowUp } from "lucide-react"
 import { useModalPresence } from "../lib/modalPresence"
 
 export function BackToTop() {
+  const { t } = useTranslation()
   const [visible, setVisible] = useState(false)
   const modalOpen = useModalPresence()
   const buttonRef = useRef<HTMLButtonElement>(null)
@@ -37,7 +39,7 @@ export function BackToTop() {
       ref={buttonRef}
       type="button"
       className={shown ? "back-top is-on" : "back-top"}
-      aria-label="Cuộn lên đầu trang"
+      aria-label={t("Cuộn lên đầu trang")}
       aria-hidden={shown ? undefined : true}
       tabIndex={shown ? 0 : -1}
       disabled={modalOpen}

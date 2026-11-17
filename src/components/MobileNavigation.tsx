@@ -1,3 +1,4 @@
+import { useTranslation } from "../i18n"
 import { useEffect, useRef, useState } from "react"
 import { ChevronDown } from "lucide-react"
 import { navigation, presentNavItem } from "../data/navigation"
@@ -15,6 +16,7 @@ export function MobileNavigation({
   onClose: () => void
   items?: NavItem[]
 }) {
+  const { t } = useTranslation()
   const [expanded, setExpanded] = useState<string | null>(null)
   const navRef = useRef<HTMLElement>(null)
 
@@ -34,14 +36,14 @@ export function MobileNavigation({
     <div className="min-[1200px]:hidden">
       <button
         type="button"
-        aria-label="Đóng menu"
+        aria-label={t("Đóng menu")}
         className="fixed inset-0 top-[76px] z-40 bg-signal/40"
         onClick={onClose}
       />
       <nav
         ref={navRef}
         id="menu-di-dong"
-        aria-label="Menu di động"
+        aria-label={t("Menu di động")}
         className="fixed inset-y-0 right-0 top-[76px] z-50 w-[min(100%,22.5rem)] overflow-y-auto border-l border-line bg-white px-5 py-4"
       >
         <ul className="flex flex-col">
@@ -72,6 +74,7 @@ function MobileItem({
   onToggle: () => void
   onNavigate: () => void
 }) {
+  const { t } = useTranslation()
   const children = item.children ?? []
   const current = isCurrentPage(item.href)
   return (
@@ -88,14 +91,14 @@ function MobileItem({
             if (item.href.startsWith("#")) onNavigate()
           }}
         >
-          {item.label}
+          {t(item.label)}
         </a>
         {children.length >= 2 ? (
           <button
             type="button"
             className="grid size-10 place-items-center rounded-[10px] border border-line"
             aria-expanded={expanded}
-            aria-label={`${expanded ? "Thu gọn" : "Mở"} menu ${item.label}`}
+            aria-label={t(expanded ? "navigation.close" : "navigation.open", { label: t(item.label) })}
             onClick={onToggle}
           >
             <ChevronDown className={cx("size-4", expanded && "rotate-180")} aria-hidden />
@@ -113,7 +116,7 @@ function MobileItem({
                   if (child.href.startsWith("#")) onNavigate()
                 }}
               >
-                {child.label}
+                {t(child.label)}
               </a>
             </li>
           ))}

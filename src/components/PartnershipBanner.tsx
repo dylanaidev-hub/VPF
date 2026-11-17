@@ -1,9 +1,11 @@
+import { useTranslation } from "../i18n"
 import { partnership } from "../data/partners"
 import { useReveal } from "../lib/useReveal"
 import { Button } from "./Button"
 import { vpfStarPaths } from "./vpfStarPaths"
 
 export function PartnershipBanner() {
+  const { t } = useTranslation()
   const { ref, shown } = useReveal<HTMLElement>()
 
   return (
@@ -17,13 +19,13 @@ export function PartnershipBanner() {
     >
       <div className="page-wrap partner-hub-inner">
         <header className="partner-hub-copy">
-          <p className="partner-hub-eyebrow">{partnership.eyebrow}</p>
+          <p className="partner-hub-eyebrow">{t(partnership.eyebrow)}</p>
           <h2 id="hop-tac-tieu-de" className="vpf-section-title text-white">
-            {partnership.title}
+            {t(partnership.title)}
           </h2>
-          <p className="partner-hub-lead">{partnership.description}</p>
+          <p className="partner-hub-lead">{t(partnership.description)}</p>
           <div className="partner-hub-cta">
-            <Button href={partnership.href}>{partnership.cta}</Button>
+            <Button href={partnership.href}>{t(partnership.cta)}</Button>
           </div>
         </header>
 
@@ -56,8 +58,8 @@ export function PartnershipBanner() {
           </svg>
           {partnership.pillars.map((pillar) => (
             <article key={pillar.id} className="partner-hub-pillar" data-pillar={pillar.id} tabIndex={0}>
-              <h3 className="partner-hub-pillar-label">{pillar.label}</h3>
-              <p className="partner-hub-pillar-detail">{pillar.detail}</p>
+              <h3 className="partner-hub-pillar-label">{t(pillar.label)}</h3>
+              <p className="partner-hub-pillar-detail">{t(pillar.detail)}</p>
             </article>
           ))}
         </div>

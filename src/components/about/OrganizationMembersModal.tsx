@@ -1,3 +1,4 @@
+import { useTranslation } from "../../i18n"
 import { useId, useLayoutEffect, useRef } from "react"
 import { createPortal } from "react-dom"
 import { X } from "lucide-react"
@@ -6,7 +7,8 @@ import { sitePath } from "../../lib/site"
 import { useRegisterModalPresence } from "../../lib/modalPresence"
 
 function MemberList({ members, emptyLabel }: { members: OrgExplorerMember[]; emptyLabel: string }) {
-  if (!members.length) return <p className="fed-org-empty">{emptyLabel}</p>
+  const { t } = useTranslation()
+  if (!members.length) return <p className="fed-org-empty">{t(emptyLabel)}</p>
 
   return (
     <ul className="fed-org-members">
@@ -24,8 +26,8 @@ function MemberList({ members, emptyLabel }: { members: OrgExplorerMember[]; emp
           ) : null}
           <div className="fed-org-member-copy">
             <h3>{member.name}</h3>
-            <p className="fed-org-member-role">{member.position}</p>
-            {member.responsibility ? <p className="fed-org-member-duty">{member.responsibility}</p> : null}
+            <p className="fed-org-member-role">{t(member.position)}</p>
+            {member.responsibility ? <p className="fed-org-member-duty">{t(member.responsibility)}</p> : null}
           </div>
         </li>
       ))}
@@ -37,6 +39,7 @@ export function OrganizationMembersModal({ committee, onClose }: {
   committee: OrgExplorerCommittee
   onClose: () => void
 }) {
+  const { t } = useTranslation()
   const titleId = useId()
   const countId = useId()
   const dialogRef = useRef<HTMLDialogElement>(null)
@@ -68,10 +71,10 @@ export function OrganizationMembersModal({ committee, onClose }: {
     >
       <header className="fed-org-dialog-head">
         <div>
-          <h2 id={titleId}>{committee.name}</h2>
-          <p id={countId}>{members.length} thành viên</p>
+          <h2 id={titleId}>{t(committee.name)}</h2>
+          <p id={countId}>{members.length} {t("thành viên")}</p>
         </div>
-        <button type="button" className="fed-org-close" aria-label="Đóng danh sách thành viên" onClick={onClose}>
+        <button type="button" className="fed-org-close" aria-label={t("Đóng danh sách thành viên")} onClick={onClose}>
           <X size={20} aria-hidden="true" />
         </button>
       </header>

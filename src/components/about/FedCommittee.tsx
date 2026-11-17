@@ -1,3 +1,4 @@
+import { useTranslation } from "../../i18n"
 import { useEffect, useState } from "react"
 import { federationCommittee } from "../../data/aboutFederation.mock"
 import type { OrgExplorerCommittee } from "../../data/organizationExplorer.mock"
@@ -5,6 +6,7 @@ import { OrganizationChart } from "./OrganizationChart"
 import { OrganizationMembersModal } from "./OrganizationMembersModal"
 
 export function FedCommittee() {
+  const { t } = useTranslation()
   const [selected, setSelected] = useState<OrgExplorerCommittee | null>(null)
   const data = federationCommittee
 
@@ -17,8 +19,8 @@ export function FedCommittee() {
   return (
     <section id={data.id} className="fed-section fed-lead-board" aria-labelledby="ban-chap-hanh-tieu-de">
       <div className="page-wrap">
-        <h2 id="ban-chap-hanh-tieu-de">{data.title}</h2>
-        <p className="fed-note">{data.note}</p>
+        <h2 id="ban-chap-hanh-tieu-de">{t(data.title)}</h2>
+        <p className="fed-note">{t(data.note)}</p>
         <OrganizationChart onSelect={setSelected} />
       </div>
       {selected ? <OrganizationMembersModal key={selected.id} committee={selected} onClose={() => setSelected(null)} /> : null}

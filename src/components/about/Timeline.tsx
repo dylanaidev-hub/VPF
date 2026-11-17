@@ -1,3 +1,4 @@
+import { useTranslation } from "../../i18n"
 import { useEffect, useRef, useState, type PointerEvent } from "react"
 import { createPortal } from "react-dom"
 import { Images } from "lucide-react"
@@ -15,6 +16,7 @@ type TimelineProps = {
 }
 
 export function Timeline({ milestones, activeMilestone, galleryId, galleryOpen, onSelect }: TimelineProps) {
+  const { t } = useTranslation()
   const cursorRef = useRef<HTMLSpanElement>(null)
   const hoveredMilestone = useRef<HTMLButtonElement | null>(null)
   const wrapRef = useRef<HTMLDivElement>(null)
@@ -127,8 +129,8 @@ export function Timeline({ milestones, activeMilestone, galleryId, galleryOpen, 
               >
                 <span className="fed-node" aria-hidden="true" />
                 <time dateTime={milestone.id}>{milestone.date}</time>
-                <span className="fed-track-title">{milestone.title}</span>
-                <span className="fed-track-description">{milestone.description}</span>
+                <span className="fed-track-title">{t(milestone.title)}</span>
+                <span className="fed-track-description">{t(milestone.description)}</span>
               </button>
             </li>
           ))}
@@ -140,7 +142,7 @@ export function Timeline({ milestones, activeMilestone, galleryId, galleryOpen, 
       {createPortal(
         <span ref={cursorRef} className="fed-milestone-cursor" aria-hidden="true">
           <Images size={15} />
-          Xem ảnh
+          {t("Xem ảnh")}
         </span>,
         document.body,
       )}

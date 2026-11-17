@@ -1,3 +1,4 @@
+import { useTranslation } from "../i18n"
 import { useMemo } from "react"
 import { news } from "../data/news"
 import { formatViDate } from "../lib/format"
@@ -7,6 +8,7 @@ import { Breadcrumb } from "../components/Breadcrumb"
 import { SiteLayout } from "../components/SiteLayout"
 
 export function ArticlePage() {
+  const { t } = useTranslation()
   const article = useMemo(() => {
     const slug = articleSlugFromPath(window.location.pathname)
     return news.find((item) => item.slug === slug) ?? null
@@ -26,17 +28,17 @@ export function ArticlePage() {
                 ]}
               />
               <p className="mt-8 text-[13px] font-medium text-brand-strong">
-                {article.category}
+                {t(article.category)}
                 <span className="text-muted"> · </span>
                 <time dateTime={article.publishedAt} className="text-muted">
                   {formatViDate(article.publishedAt)}
                 </time>
               </p>
-              <h1 className="news-page-title mt-4 max-w-4xl text-ink">{article.title}</h1>
-              <p className="mt-4 max-w-2xl text-[15px] leading-relaxed text-muted md:text-base">{article.excerpt}</p>
+              <h1 className="news-page-title mt-4 max-w-4xl text-ink">{t(article.title)}</h1>
+              <p className="mt-4 max-w-2xl text-[15px] leading-relaxed text-muted md:text-base">{t(article.excerpt)}</p>
               <img
                 src={sitePath(article.image)}
-                alt={article.imageAlt}
+                alt={t(article.imageAlt)}
                 width={1600}
                 height={900}
                 fetchPriority="high"
@@ -45,22 +47,22 @@ export function ArticlePage() {
               />
               <div className="mt-8 max-w-2xl space-y-4 text-[15px] leading-relaxed text-ink md:text-base">
                 {article.content.map((paragraph, index) => (
-                  <p key={index}>{paragraph}</p>
+                  <p key={index}>{t(paragraph)}</p>
                 ))}
               </div>
               <p className="mt-10">
                 <a href={sitePath("/tintuc.html")} className="text-[15px] font-medium text-brand-strong">
-                  Về trang tin tức
+                  {t("Về trang tin tức")}
                 </a>
               </p>
             </>
           ) : (
             <>
-              <h1 className="news-page-title text-ink">Không tìm thấy bài viết</h1>
-              <p className="mt-4 text-muted">Đường dẫn không khớp bài nào trong nguồn tin hiện tại.</p>
+              <h1 className="news-page-title text-ink">{t("Không tìm thấy bài viết")}</h1>
+              <p className="mt-4 text-muted">{t("Đường dẫn không khớp bài nào trong nguồn tin hiện tại.")}</p>
               <p className="mt-6">
                 <a href={sitePath("/tintuc.html")} className="text-[15px] font-medium text-brand-strong">
-                  Về trang tin tức
+                  {t("Về trang tin tức")}
                 </a>
               </p>
             </>

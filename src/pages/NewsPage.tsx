@@ -1,3 +1,4 @@
+import { useTranslation } from "../i18n"
 import { useMemo, useState } from "react"
 import { news } from "../data/news"
 import { filterNews, NEWS_PAGE_SIZE, selectSpotlight, type NewsCategory, type NewsSort } from "../lib/news"
@@ -8,6 +9,7 @@ import { SiteLayout } from "../components/SiteLayout"
 import { pageHeroes } from "../data/pageHeroes"
 
 export function NewsPage() {
+  const { t } = useTranslation()
   const featured = useMemo(() => selectSpotlight(news).featured, [])
   const [category, setCategory] = useState<NewsCategory>("Tất cả")
   const [query, setQuery] = useState("")
@@ -70,10 +72,10 @@ export function NewsPage() {
         <section className="border-t border-line" aria-labelledby="tin-tat-ca">
           <div className="page-wrap py-10 min-[1200px]:py-12">
             <h2 id="tin-tat-ca" className="text-[1.75rem] font-bold tracking-tight text-ink">
-              Tất cả bài viết
+              {t("Tất cả bài viết")}
             </h2>
             <p className="mt-2 text-sm text-muted" aria-live="polite">
-              {archive.length} bài viết
+              {archive.length} {t("bài viết")}
             </p>
             <div className="mt-6">
               {visible.length === 0 ? <NewsEmpty onClear={clearFilters} /> : <NewsGrid articles={visible} />}

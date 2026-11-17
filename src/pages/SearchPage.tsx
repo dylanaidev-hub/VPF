@@ -1,3 +1,4 @@
+import { useTranslation } from "../i18n"
 import { useEffect, useRef } from "react"
 import { ArrowRight, ChevronLeft, ChevronRight, Search } from "lucide-react"
 import { Button } from "../components/Button"
@@ -21,16 +22,17 @@ function resultsPath(query: string, type?: SearchType, page = 1) {
 }
 
 function ResultList({ items }: { items: SearchItem[] }) {
+  const { t } = useTranslation()
   return (
     <ul className="search-results">
       {items.map((item) => (
         <li key={item.id}>
           <a className="search-result" href={sitePath(item.url)}>
             <div>
-              <p className="search-result-type">{item.label ?? searchTypes[item.type]}</p>
-              <h3>{item.title}</h3>
-              {item.description ? <p className="search-result-description">{item.description}</p> : null}
-              {item.meta ? <p className="search-result-meta">{item.meta}</p> : null}
+              <p className="search-result-type">{t(item.label ?? searchTypes[item.type])}</p>
+              <h3>{t(item.title)}</h3>
+              {item.description ? <p className="search-result-description">{t(item.description)}</p> : null}
+              {item.meta ? <p className="search-result-meta">{item.meta.split(" · ").map((part) => t(part)).join(" · ")}</p> : null}
             </div>
             <ArrowRight className="size-5 search-result-arrow" aria-hidden="true" />
           </a>
@@ -41,6 +43,7 @@ function ResultList({ items }: { items: SearchItem[] }) {
 }
 
 export function SearchPage() {
+  const { t } = useTranslation()
   const params = new URLSearchParams(window.location.search)
   const query = params.get("q")?.trim() ?? ""
   const type = filters.find(([key]) => key === params.get("type"))?.[0]
@@ -73,58 +76,58 @@ export function SearchPage() {
       <div className="site-search-page">
         <PageHeader
           breadcrumb={[{ label: "Trang chủ", href: "/index.html" }, { label: "Tìm kiếm" }]}
-          title="Tìm kiếm"
-          description="Khám phá thông tin trên website Liên đoàn Pickleball Việt Nam."
+          title={t("Tìm kiếm")}
+          description={t("Khám phá thông tin trên website Liên đoàn Pickleball Việt Nam.")}
         />
         <div className="page-wrap">
           <form className="site-search-form" role="search" action={sitePath(searchPage)} method="get">
             <label className="site-search-field">
               <Search className="size-5 shrink-0" aria-hidden="true" />
-              <span className="sr-only">Từ khóa tìm kiếm</span>
-              <input ref={inputRef} type="search" name="q" defaultValue={query} placeholder="Nhập từ khóa" enterKeyHint="search" />
+              <span className="sr-only">{t("Từ khóa tìm kiếm")}</span>
+              <input ref={inputRef} type="search" name="q" defaultValue={query} placeholder={t("Nhập từ khóa")} enterKeyHint="search" />
             </label>
             {type ? <input type="hidden" name="type" value={type} /> : null}
-            <Button type="submit">Tìm kiếm</Button>
+            <Button type="submit">{t("Tìm kiếm")}</Button>
           </form>
 
           {query ? (
             <section id="ket-qua" className="site-search-content" aria-labelledby="ket-qua-tieu-de">
-              <nav ref={filterRef} className="search-filters" aria-label="Lọc theo loại nội dung">
-                <a href={sitePath(resultsPath(query))} aria-current={!type ? "page" : undefined}>Tất cả</a>
+              <nav ref={filterRef} className="search-filters" aria-label={t("Lọc theo loại nội dung")}>
+                <a href={sitePath(resultsPath(query))} aria-current={!type ? "page" : undefined}>{t("Tất cả")}</a>
                 {filters.map(([key, label]) => (
-                  <a key={key} href={sitePath(resultsPath(query, key))} aria-current={type === key ? "page" : undefined}>{label}</a>
+                  <a key={key} href={sitePath(resultsPath(query, key))} aria-current={type === key ? "page" : undefined}>{t(label)}</a>
                 ))}
               </nav>
               <div className="search-results-heading">
-                <h2 id="ket-qua-tieu-de">Kết quả tìm kiếm</h2>
-                <p>{results.length} kết quả cho “{query}”</p>
+                <h2 id="ket-qua-tieu-de">{t("Kết quả tìm kiếm")}</h2>
+                <p>{t("search.count", { count: results.length, query })}</p>
               </div>
               {results.length ? (
                 <ResultList items={results.slice(start, start + PAGE_SIZE)} />
               ) : (
                 <div className="search-empty">
-                  <h3>Không tìm thấy kết quả phù hợp</h3>
-                  <p>Thử dùng từ khóa khác hoặc chọn bộ lọc “Tất cả”.</p>
+                  <h3>{t("Không tìm thấy kết quả phù hợp")}</h3>
+                  <p>{t("Thử dùng từ khóa khác hoặc chọn bộ lọc “Tất cả”.")}</p>
                 </div>
               )}
               {pageCount > 1 ? (
-                <nav className="search-pagination" aria-label="Trang kết quả tìm kiếm">
+                <nav className="search-pagination" aria-label={t("Trang kết quả tìm kiếm")}>
                   {page > 1 ? (
                     <Button variant="secondary" href={resultsPath(query, type, page - 1)} rel="prev" className="search-page-step">
-                      <ChevronLeft className="size-4" aria-hidden="true" /> Trang trước
+                      <ChevronLeft className="size-4" aria-hidden="true" /> {t("Trang trước")}
                     </Button>
                   ) : null}
                   <span className="search-page-number" aria-current="page">{page} / {pageCount}</span>
                   {page < pageCount ? (
                     <Button variant="secondary" href={resultsPath(query, type, page + 1)} rel="next" className="search-page-step">
-                      Trang sau <ChevronRight className="size-4" aria-hidden="true" />
+                      {t("Trang sau")} <ChevronRight className="size-4" aria-hidden="true" />
                     </Button>
                   ) : null}
                 </nav>
               ) : null}
             </section>
           ) : (
-            <p className="site-search-hint">Nhập từ khóa để tìm tin tức, giải đấu, tài liệu và các nội dung khác.</p>
+            <p className="site-search-hint">{t("Nhập từ khóa để tìm tin tức, giải đấu, tài liệu và các nội dung khác.")}</p>
           )}
         </div>
       </div>

@@ -1,3 +1,4 @@
+import { useTranslation } from "../i18n"
 import { ArrowLeft, ArrowRight, ExternalLink } from "lucide-react"
 import { Button } from "../components/Button"
 import { PageHeader } from "../components/PageHeader"
@@ -13,6 +14,7 @@ import { sitePath } from "../lib/site"
 import { tournamentPath } from "../lib/tournaments"
 
 export function SponsorDetailPage({ sponsor }: { sponsor: SponsorProfile }) {
+  const { t } = useTranslation()
   const supported = tournaments.filter((item) => sponsor.tournamentSlugs.includes(item.slug)).slice(0, 4)
   const relatedNews = news.filter((item) => sponsor.newsSlugs.includes(item.slug)).slice(0, 4)
 
@@ -27,11 +29,11 @@ export function SponsorDetailPage({ sponsor }: { sponsor: SponsorProfile }) {
         ]}
         title={sponsor.name}
         titleId="nha-tai-tro-chi-tiet"
-        description={sponsor.intro}
+        description={t(sponsor.intro)}
         action={
           <Button href="/hoptac.html">
             <ArrowLeft className="size-4" aria-hidden />
-            Về trang Hợp tác
+            {t("Về trang Hợp tác")}
           </Button>
         }
       />
@@ -42,7 +44,7 @@ export function SponsorDetailPage({ sponsor }: { sponsor: SponsorProfile }) {
             <img src={sitePath(sponsor.logoSrc)} alt={sponsor.name} width={280} height={120} className="partner-detail-logo" />
           </div>
           <div className="partner-detail-banner-copy">
-            <p className="partner-tier-badge">{sponsorTierLabel[sponsor.tier]}</p>
+            <p className="partner-tier-badge">{t(sponsorTierLabel[sponsor.tier])}</p>
             <p className="partner-main-sector mt-3">{sponsor.sector}</p>
           </div>
         </div>
@@ -53,29 +55,29 @@ export function SponsorDetailPage({ sponsor }: { sponsor: SponsorProfile }) {
           <div className="page-wrap partner-about-grid">
             <div className="min-w-0">
               <h2 id="gioi-thieu-cong-ty" className="partner-section-title">
-                Giới thiệu
+                {t("Giới thiệu")}
               </h2>
               {sponsor.about ? <p className="partner-section-lead mt-3">{sponsor.about}</p> : null}
               {sponsor.statement ? <p className="mt-4 text-[15px] leading-relaxed text-ink">{sponsor.statement}</p> : null}
               {sponsor.quote ? <blockquote className="partner-quote">{sponsor.quote}</blockquote> : null}
             </div>
             <aside className="partner-quick-info">
-              <h3 className="partner-quick-title">Thông tin nhanh</h3>
+              <h3 className="partner-quick-title">{t("Thông tin nhanh")}</h3>
               <dl className="partner-quick-list">
                 <div>
-                  <dt>Lĩnh vực</dt>
+                  <dt>{t("Lĩnh vực")}</dt>
                   <dd>{sponsor.sector}</dd>
                 </div>
                 <div>
-                  <dt>Hạng mục</dt>
-                  <dd>{sponsorTierLabel[sponsor.tier]}</dd>
+                  <dt>{t("Hạng mục")}</dt>
+                  <dd>{t(sponsorTierLabel[sponsor.tier])}</dd>
                 </div>
                 {sponsor.website ? (
                   <div>
                     <dt>Website</dt>
                     <dd>
                       <a href={sponsor.website} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1">
-                        Truy cập
+                        {t("Truy cập")}
                         <ExternalLink className="size-3.5" aria-hidden />
                       </a>
                     </dd>
@@ -83,7 +85,7 @@ export function SponsorDetailPage({ sponsor }: { sponsor: SponsorProfile }) {
                 ) : (
                   <div>
                     <dt>Website</dt>
-                    <dd>Chưa công bố</dd>
+                    <dd>{t("Chưa công bố")}</dd>
                   </div>
                 )}
               </dl>
@@ -96,7 +98,7 @@ export function SponsorDetailPage({ sponsor }: { sponsor: SponsorProfile }) {
         <section className="partner-section partner-detail-related" aria-labelledby="giai-dong-hanh">
           <div className="page-wrap">
             <h2 id="giai-dong-hanh" className="partner-section-title">
-              Giải đấu đồng hành
+              {t("Giải đấu đồng hành")}
             </h2>
             <ul className="partner-tour-grid">
               {supported.map((item) => (
@@ -123,7 +125,7 @@ export function SponsorDetailPage({ sponsor }: { sponsor: SponsorProfile }) {
         <section className="partner-section" aria-labelledby="tin-lien-quan">
           <div className="page-wrap">
             <h2 id="tin-lien-quan" className="partner-section-title">
-              Tin liên quan
+              {t("Tin liên quan")}
             </h2>
             <ul className="partner-news-grid">
               {relatedNews.map((article) => (
@@ -138,7 +140,7 @@ export function SponsorDetailPage({ sponsor }: { sponsor: SponsorProfile }) {
                       className="partner-news-img"
                     />
                     <span className="partner-news-body">
-                      <span className="partner-news-title">{article.title}</span>
+                      <span className="partner-news-title">{t(article.title)}</span>
                       <time dateTime={article.publishedAt} className="partner-news-date">
                         {formatViDate(article.publishedAt)}
                       </time>
@@ -156,10 +158,10 @@ export function SponsorDetailPage({ sponsor }: { sponsor: SponsorProfile }) {
         <div className="page-wrap flex flex-wrap gap-3">
           <Button href="/hoptac.html#nha-tai-tro" variant="secondary">
             <ArrowLeft className="size-4" aria-hidden />
-            Quay lại danh mục nhà tài trợ
+            {t("Quay lại danh mục nhà tài trợ")}
           </Button>
           <Button href="/hoptac.html#lien-he-hop-tac">
-            Liên hệ hợp tác
+            {t("Liên hệ hợp tác")}
             <ArrowRight className="size-4" aria-hidden />
           </Button>
         </div>
@@ -170,6 +172,7 @@ export function SponsorDetailPage({ sponsor }: { sponsor: SponsorProfile }) {
 }
 
 export function SponsorNotFoundPage() {
+  const { t } = useTranslation()
   return (
     <SiteLayout>
       <PageHeader
@@ -178,12 +181,12 @@ export function SponsorNotFoundPage() {
           { label: "Hợp tác", href: "/hoptac.html" },
           { label: "Không tìm thấy" },
         ]}
-        title="Không tìm thấy nhà tài trợ"
+        title={t("Không tìm thấy nhà tài trợ")}
         titleId="nha-tai-tro-khong-tim-thay"
-        description="Hồ sơ nhà tài trợ này không có trên cổng hợp tác."
+        description={t("Hồ sơ nhà tài trợ này không có trên cổng hợp tác.")}
       />
       <div className="page-wrap pb-16">
-        <Button href="/hoptac.html">Về trang Hợp tác</Button>
+        <Button href="/hoptac.html">{t("Về trang Hợp tác")}</Button>
       </div>
     </SiteLayout>
   )

@@ -1,3 +1,4 @@
+import { useTranslation } from "../../i18n"
 import { useId, useState } from "react"
 import { federationHistory } from "../../data/aboutFederation.mock"
 import { cx } from "../../lib/cx"
@@ -6,6 +7,7 @@ import { Timeline } from "./Timeline"
 import { MilestoneGalleryModal } from "./MilestoneGalleryModal"
 
 export function FedTimeline() {
+  const { t } = useTranslation()
   const reveal = useReveal<HTMLElement>()
   const galleryId = useId()
   const { milestones } = federationHistory
@@ -21,8 +23,8 @@ export function FedTimeline() {
       aria-labelledby="lich-su-tieu-de"
     >
       <div className="page-wrap">
-        <h2 id="lich-su-tieu-de">{federationHistory.title}</h2>
-        <p className="fed-note">{federationHistory.note}</p>
+        <h2 id="lich-su-tieu-de">{t(federationHistory.title)}</h2>
+        <p className="fed-note">{t(federationHistory.note)}</p>
         <Timeline
           milestones={milestones}
           activeMilestone={activeMilestone}

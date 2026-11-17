@@ -1,3 +1,4 @@
+import { useTranslation } from "../../i18n"
 import { useState } from "react"
 import { Check, Download } from "lucide-react"
 import { benefitRows, offersSection, partnershipOffers } from "../../data/partnership.mock"
@@ -41,6 +42,7 @@ const tierNames = [
 ] as const
 
 export function PartnershipBenefits() {
+  const { t } = useTranslation()
   const [downloadOpen, setDownloadOpen] = useState(false)
   const hasPdf = Boolean(offersSection.downloadHref?.trim())
   const community = partnershipOffers
@@ -61,21 +63,21 @@ export function PartnershipBenefits() {
           subtitle={offersSection.comparisonDescription}
           className="eco-benefits-head"
         />
-        <p className="eco-benefits-note">{offersSection.note}</p>
+        <p className="eco-benefits-note">{t(offersSection.note)}</p>
 
         <div className="eco-benefit-cards">
           {groups.map((group) => {
             const rows = benefitRows.filter((row) => (group.ids as readonly string[]).includes(row.id))
             return (
               <article key={group.id} className={group.featured ? "eco-benefit-card is-featured" : "eco-benefit-card"}>
-                {group.featured ? <p className="eco-benefit-badge">Nổi bật</p> : null}
-                <h3>{group.title}</h3>
+                {group.featured ? <p className="eco-benefit-badge">{t("Nổi bật")}</p> : null}
+                <h3>{t(group.title)}</h3>
                 <ul>
                   {rows.map((row) => (
                     <li key={row.id}>
                       <Check className="eco-benefit-check" aria-hidden />
                       <div>
-                        <strong>{row.label}</strong>
+                        <strong>{t(row.label)}</strong>
                         <span>{tiers(row)}</span>
                       </div>
                     </li>
@@ -85,7 +87,7 @@ export function PartnershipBenefits() {
                       <Check className="eco-benefit-check" aria-hidden />
                       <div>
                         <strong>{community}</strong>
-                        <span>Đối tác đồng hành</span>
+                        <span>{t("Đối tác đồng hành")}</span>
                       </div>
                     </li>
                   ) : null}
@@ -99,17 +101,17 @@ export function PartnershipBenefits() {
           {hasPdf && offersSection.downloadHref ? (
             <Button href={offersSection.downloadHref} download>
               <Download className="size-4" aria-hidden />
-              {offersSection.downloadLabel}
+              {t(offersSection.downloadLabel)}
             </Button>
           ) : (
             <Button type="button" onClick={() => setDownloadOpen(true)}>
               <Download className="size-4" aria-hidden />
-              {offersSection.downloadLabel}
+              {t(offersSection.downloadLabel)}
             </Button>
           )}
         </div>
       </div>
-      <Dialog open={downloadOpen} title={offersSection.downloadLabel} onClose={() => setDownloadOpen(false)}>
+      <Dialog open={downloadOpen} title={t(offersSection.downloadLabel)} onClose={() => setDownloadOpen(false)}>
         <p className="text-[15px] leading-relaxed text-ink">{offersSection.downloadNote}</p>
       </Dialog>
     </section>

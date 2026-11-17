@@ -1,8 +1,10 @@
+import { useTranslation } from "../../i18n"
 import { useEffect, useRef, useState } from "react"
 import { ArrowRight } from "lucide-react"
 import { technicalSections } from "../../data/technicalResources"
 
 export function TechnicalNavigation() {
+  const { t } = useTranslation()
   const navRef = useRef<HTMLElement>(null)
   const [active, setActive] = useState<string>(() =>
     technicalSections.find(({ id }) => `#${id}` === window.location.hash)?.id ?? technicalSections[0].id,
@@ -94,13 +96,13 @@ export function TechnicalNavigation() {
   }, [active])
 
   return (
-    <nav ref={navRef} className="tech-nav" aria-label="Danh mục chuyên môn">
+    <nav ref={navRef} className="tech-nav" aria-label={t("Danh mục chuyên môn")}>
       <ol>
         {technicalSections.map(({ id, title }, index) => (
           <li key={id}>
             <a href={`#${id}`} aria-current={active === id ? "location" : undefined}>
               <span className="tech-topic-number" aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
-              <span className="tech-topic-title">{title}</span>
+              <span className="tech-topic-title">{t(title)}</span>
               <ArrowRight size={16} aria-hidden="true" />
             </a>
           </li>

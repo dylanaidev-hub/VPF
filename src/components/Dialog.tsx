@@ -1,3 +1,4 @@
+import { useTranslation } from "../i18n"
 import { useEffect, useId, useRef } from "react"
 import type { ReactNode } from "react"
 import { X } from "lucide-react"
@@ -11,6 +12,7 @@ type DialogProps = {
 }
 
 export function Dialog({ open, title, onClose, children }: DialogProps) {
+  const { t } = useTranslation()
   const titleId = useId()
   const panelRef = useRef<HTMLDivElement>(null)
   useRegisterModalPresence(open)
@@ -67,7 +69,7 @@ export function Dialog({ open, title, onClose, children }: DialogProps) {
     <div className="fixed inset-0 z-[80] flex items-end justify-center p-0 sm:items-center sm:p-6">
       <button
         type="button"
-        aria-label="Đóng hộp thoại"
+        aria-label={t("Đóng hộp thoại")}
         className="absolute inset-0 bg-signal/55"
         onClick={onClose}
       />
@@ -80,13 +82,13 @@ export function Dialog({ open, title, onClose, children }: DialogProps) {
       >
         <div className="sticky top-0 flex items-start justify-between gap-4 border-b border-line bg-white px-5 py-4 md:px-6">
           <h2 id={titleId} className="text-lg font-semibold leading-snug text-ink md:text-xl">
-            {title}
+            {t(title)}
           </h2>
           <button
             type="button"
             onClick={onClose}
             className="grid size-10 shrink-0 place-items-center rounded-[10px] border border-line text-ink hover:bg-paper"
-            aria-label="Đóng"
+            aria-label={t("Đóng")}
           >
             <X className="size-5" aria-hidden />
           </button>

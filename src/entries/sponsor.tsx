@@ -1,5 +1,6 @@
 import { StrictMode, useEffect } from "react"
 import { createRoot } from "react-dom/client"
+import { setPageMetadata } from "../i18n"
 import { resolveSponsorFromLocation } from "../lib/partnership"
 import { SponsorDetailPage, SponsorNotFoundPage } from "../pages/SponsorDetailPage"
 import "../index.css"
@@ -9,13 +10,10 @@ function SponsorEntry() {
 
   useEffect(() => {
     if (!sponsor) {
-      document.title = "Không tìm thấy nhà tài trợ – Liên đoàn Pickleball Việt Nam"
+      setPageMetadata("Không tìm thấy nhà tài trợ – Liên đoàn Pickleball Việt Nam")
       return
     }
-    document.title = `${sponsor.name} – Liên đoàn Pickleball Việt Nam`
-    document
-      .querySelector('meta[name="description"]')
-      ?.setAttribute("content", sponsor.intro)
+    setPageMetadata(`${sponsor.name} – Liên đoàn Pickleball Việt Nam`, sponsor.intro)
   }, [sponsor])
 
   return sponsor ? <SponsorDetailPage sponsor={sponsor} /> : <SponsorNotFoundPage />

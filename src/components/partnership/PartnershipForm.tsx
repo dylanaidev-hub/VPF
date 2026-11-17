@@ -1,3 +1,4 @@
+import { useTranslation } from "../../i18n"
 import { useState, type FormEvent } from "react"
 import { contactSection, partnershipTypeOptions } from "../../data/partnership.mock"
 import { cx } from "../../lib/cx"
@@ -38,6 +39,7 @@ const labels: Record<Exclude<Field, "consent">, string> = {
 }
 
 export function PartnershipForm() {
+  const { t } = useTranslation()
   const [values, setValues] = useState<Values>(empty)
   const [errors, setErrors] = useState<Partial<Record<Field, string>>>({})
   const [status, setStatus] = useState<"idle" | "processing" | "demo-ok">("idle")
@@ -87,11 +89,11 @@ export function PartnershipForm() {
         <div ref={ref} className={cx("eco-form", shown && "is-in")}>
           <SectionHeading
             id="lien-he-hop-tac-tieu-de"
-            title={contactSection.title}
-            subtitle={contactSection.description}
+            title={t(contactSection.title)}
+            subtitle={t(contactSection.description)}
           />
           <p className="partnership-notice" role="note">
-            {contactSection.note}
+            {t(contactSection.note)}
           </p>
 
           <form className="mt-8" noValidate onSubmit={onSubmit}>
@@ -135,7 +137,7 @@ export function PartnershipForm() {
               />
               <div className="partnership-field sm:col-span-2">
                 <label htmlFor={fieldId("type")}>
-                  {labels.type}
+                  {t(labels.type)}
                   <RequiredMark />
                 </label>
                 <Select
@@ -148,23 +150,23 @@ export function PartnershipForm() {
                   onChange={(event) => setField("type", event.target.value)}
                   className="h-12 w-full rounded-[10px] border border-line bg-white px-3 text-[15px] text-ink"
                 >
-                  <option value="">Chọn hình thức</option>
+                  <option value="">{t("Chọn hình thức")}</option>
                   {partnershipTypeOptions.map((option) => (
                     <option key={option} value={option}>
-                      {option}
+                      {t(option)}
                     </option>
                   ))}
                 </Select>
                 {errors.type ? (
                   <p id={errorId("type")} className="partnership-error">
-                    {errors.type}
+                    {t(errors.type)}
                   </p>
                 ) : null}
               </div>
             </div>
 
             <div className="partnership-field mt-4">
-              <label htmlFor={fieldId("message")}>{labels.message}</label>
+              <label htmlFor={fieldId("message")}>{t(labels.message)}</label>
               <textarea
                 id={fieldId("message")}
                 name="message"
@@ -177,7 +179,7 @@ export function PartnershipForm() {
               />
               {errors.message ? (
                 <p id={errorId("message")} className="partnership-error">
-                  {errors.message}
+                  {t(errors.message)}
                 </p>
               ) : null}
             </div>
@@ -194,25 +196,25 @@ export function PartnershipForm() {
                   aria-describedby={errors.consent ? errorId("consent") : undefined}
                   onChange={(event) => setField("consent", event.target.checked)}
                 />
-                <span>{contactSection.consentLabel}</span>
+                <span>{t(contactSection.consentLabel)}</span>
               </label>
               {errors.consent ? (
                 <p id={errorId("consent")} className="partnership-error">
-                  {errors.consent}
+                  {t(errors.consent)}
                 </p>
               ) : null}
             </div>
 
             <div className="mt-6 flex flex-col gap-4 sm:flex-row sm:items-center">
               <Button type="submit" disabled={processing || status === "demo-ok"}>
-                {processing ? "Đang xử lý…" : contactSection.ctaLabel}
+                {processing ? t("Đang xử lý…") : t(contactSection.ctaLabel)}
               </Button>
               {statusMessage ? (
                 <p
                   className={cx("text-sm leading-relaxed", status === "demo-ok" ? "text-ink" : "text-muted")}
                   role="status"
                 >
-                  {statusMessage}
+                  {t(statusMessage)}
                 </p>
               ) : null}
             </div>
@@ -242,10 +244,11 @@ function Field({
   required?: boolean
   disabled?: boolean
 }) {
+  const { t } = useTranslation()
   return (
     <div className="partnership-field">
       <label htmlFor={fieldId(id)}>
-        {labels[id]}
+        {t(labels[id])}
         {required ? <RequiredMark /> : null}
       </label>
       <input
@@ -261,7 +264,7 @@ function Field({
       />
       {error ? (
         <p id={errorId(id)} className="partnership-error">
-          {error}
+          {t(error)}
         </p>
       ) : null}
     </div>

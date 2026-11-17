@@ -1,3 +1,4 @@
+import { useTranslation } from "../i18n"
 import { Button } from "../components/Button"
 import { PageHero } from "../components/PageHero"
 import { SiteLayout } from "../components/SiteLayout"
@@ -11,6 +12,7 @@ import { partnershipHero } from "../data/partnership.mock"
 import "../components/partnership/partnership-ecosystem.css"
 
 export function PartnershipPage() {
+  const { t } = useTranslation()
   return (
     <SiteLayout>
       <article className="bg-white">
@@ -18,9 +20,9 @@ export function PartnershipPage() {
           {...pageHeroes.partnership}
           action={
             <div className="flex flex-wrap items-center gap-3">
-              <Button href={partnershipHero.primaryHref}>{partnershipHero.primaryLabel}</Button>
+              <Button href={partnershipHero.primaryHref}>{t(partnershipHero.primaryLabel)}</Button>
               <Button href={partnershipHero.secondaryHref} variant="outline">
-                {partnershipHero.secondaryLabel}
+                {t(partnershipHero.secondaryLabel)}
               </Button>
             </div>
           }

@@ -1,3 +1,4 @@
+import { useTranslation } from "../i18n"
 import { useEffect, useState, type ReactNode } from "react"
 import { useReducedMotion } from "../lib/useReducedMotion"
 import { cx } from "../lib/cx"
@@ -35,6 +36,7 @@ export function PageHero({
   action,
   children,
 }: PageHeroProps) {
+  const { t } = useTranslation()
   const reduce = useReducedMotion()
   const [ready, setReady] = useState(false)
 
@@ -54,9 +56,9 @@ export function PageHero({
         <div className="page-hero-copy">
           {beforeTitle ? <div className="page-hero-kicker">{beforeTitle}</div> : null}
           <h1 id={titleId} className="page-hero-title">
-            {title}
+            {t(title)}
           </h1>
-          {description ? <p className="page-hero-description">{description}</p> : null}
+          {description ? <p className="page-hero-description">{t(description)}</p> : null}
           {children ? <div className="page-hero-extra">{children}</div> : null}
           {action ? <div className="page-hero-action">{action}</div> : null}
         </div>

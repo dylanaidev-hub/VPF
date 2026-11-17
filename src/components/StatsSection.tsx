@@ -1,3 +1,4 @@
+import { useTranslation } from "../i18n"
 import { useEffect, useRef, useState } from "react"
 import type { Statistic } from "../types"
 import { useReducedMotion } from "../lib/useReducedMotion"
@@ -39,6 +40,7 @@ function useCountUp(target: number | null, active: boolean) {
 }
 
 function StatFigure({ stat, active }: { stat: Statistic; active: boolean }) {
+  const { t } = useTranslation()
   const current = useCountUp(stat.value, active)
   const figure = formatStat(current, stat.suffix)
   const finalFigure = formatStat(stat.value, stat.suffix)
@@ -46,18 +48,19 @@ function StatFigure({ stat, active }: { stat: Statistic; active: boolean }) {
     current === null ? `${stat.label}, chưa có số liệu` : `${stat.label}: ${figure}`
 
   return (
-    <div className="px-4 py-8 text-center sm:px-6" aria-label={label}>
+    <div className="px-4 py-8 text-center sm:px-6" aria-label={t(label)}>
       <span className="mx-auto block h-0.5 w-7 bg-brand" aria-hidden />
       <p className="relative mt-4 text-[clamp(2rem,3vw,3.25rem)] font-bold leading-none tracking-tight text-ink tabular-nums" aria-hidden>
         <span className="invisible">{finalFigure}</span>
         <span className="absolute inset-x-0 top-0">{figure}</span>
       </p>
-      <p className="mt-3 text-sm font-medium whitespace-nowrap text-ink sm:text-[15px]">{stat.label}</p>
+      <p className="mt-3 text-sm font-medium whitespace-nowrap text-ink sm:text-[15px]">{t(stat.label)}</p>
     </div>
   )
 }
 
 export function StatsSection({ items }: { items: Statistic[] }) {
+  const { t } = useTranslation()
   const reduce = useReducedMotion()
   const sectionRef = useRef<HTMLElement>(null)
   const [active, setActive] = useState(false)
@@ -97,10 +100,10 @@ export function StatsSection({ items }: { items: Statistic[] }) {
       <div className="page-wrap">
         <div className="max-w-2xl">
           <h2 id="so-lieu-tieu-de" className="vpf-section-title">
-            Quy mô hoạt động
+            {t("Quy mô hoạt động")}
           </h2>
           <p className="mt-3 text-[15px] leading-relaxed text-muted md:text-base">
-            Khám phá quy mô hoạt động và những dấu ấn phát triển của Pickleball Việt Nam.
+            {t("Khám phá quy mô hoạt động và những dấu ấn phát triển của Pickleball Việt Nam.")}
           </p>
         </div>
         <ul className="mt-10 grid grid-cols-1 divide-y divide-line sm:mt-12 sm:grid-cols-3 sm:divide-x sm:divide-y-0">

@@ -1,3 +1,4 @@
+import { useTranslation } from "../../i18n"
 import { useMemo, useState } from "react"
 import { CalendarDays, MapPin, Play } from "lucide-react"
 import { libraryAlbums, libraryMediaTabs, type LibraryAlbum, type LibraryMediaTab } from "../../data/library.mock"
@@ -10,6 +11,7 @@ import { MediaLightbox } from "../media/MediaLightbox"
 import { Dialog } from "../Dialog"
 
 export function MediaLibrarySection() {
+  const { t } = useTranslation()
   const [tab, setTab] = useState<LibraryMediaTab>("Ảnh giải đấu")
   const [album, setAlbum] = useState<LibraryAlbum | null>(null)
   const [lightbox, setLightbox] = useState<{ shots: Array<MediaShot & { title?: string }>; index: number } | null>(
@@ -53,12 +55,12 @@ export function MediaLibrarySection() {
       <div className="page-wrap">
         <div className="library-section-head">
           <h2 id="anh-video-tieu-de" className="library-section-title">
-            Ảnh & Video
+            {t("Ảnh & Video")}
           </h2>
-          <p className="library-section-lead">Thư viện album giải đấu, câu lạc bộ và video Pickleball.</p>
+          <p className="library-section-lead">{t("Thư viện album giải đấu, câu lạc bộ và video Pickleball.")}</p>
         </div>
 
-        <div className="library-tabs" role="tablist" aria-label="Loại media">
+        <div className="library-tabs" role="tablist" aria-label={t("Loại media")}>
           {libraryMediaTabs.map((item) => {
             const selected = item === tab
             return (
@@ -70,7 +72,7 @@ export function MediaLibrarySection() {
                 className={cx("library-tab", selected && "is-active")}
                 onClick={() => setTab(item)}
               >
-                {item}
+                {t(item)}
               </button>
             )
           })}
@@ -96,7 +98,7 @@ export function MediaLibrarySection() {
                   ) : null}
                 </span>
                 <span className="library-album-body">
-                  <span className="library-album-title">{item.title}</span>
+                  <span className="library-album-title">{t(item.title)}</span>
                   <span className="library-album-meta">{item.countLabel}</span>
                   {item.date || item.location ? (
                     <span className="library-album-facts">
@@ -109,7 +111,7 @@ export function MediaLibrarySection() {
                       {item.location ? (
                         <span>
                           <MapPin className="size-3.5" aria-hidden />
-                          {item.location}
+                          {t(item.location)}
                         </span>
                       ) : null}
                     </span>
@@ -147,9 +149,9 @@ export function MediaLibrarySection() {
       <Dialog open={videoNote !== null} title={videoNote?.title ?? "Video"} onClose={() => setVideoNote(null)}>
         {videoNote ? (
           <div>
-            <p className="text-sm font-medium text-brand-strong">Video minh họa</p>
+            <p className="text-sm font-medium text-brand-strong">{t("Video minh họa")}</p>
             <p className="mt-2 text-[15px] leading-relaxed text-ink">
-              Chưa có tệp hoặc nguồn phát hợp lệ. Thẻ này dùng để duyệt giao diện danh mục video.
+              {t("Chưa có tệp hoặc nguồn phát hợp lệ. Thẻ này dùng để duyệt giao diện danh mục video.")}
             </p>
             <p className="mt-3 text-sm text-muted">
               {videoNote.countLabel}

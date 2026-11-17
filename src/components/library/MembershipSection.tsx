@@ -1,3 +1,4 @@
+import { useTranslation } from "../../i18n"
 import { useState, type FormEvent } from "react"
 import { membershipSection, membershipSteps } from "../../data/library.mock"
 import { cx } from "../../lib/cx"
@@ -11,6 +12,7 @@ const inputClass = "join-control"
 type ApplicantType = (typeof membershipSection.applicantTypes)[number]
 
 export function MembershipSection() {
+  const { t } = useTranslation()
   const [active, setActive] = useState(0)
   const [applicant, setApplicant] = useState<ApplicantType>("Cá nhân")
   const [name, setName] = useState("")
@@ -54,9 +56,9 @@ export function MembershipSection() {
           <div className="join-process">
             <div className="library-section-head">
               <h2 id="dang-ky-tieu-de" className="library-section-title">
-                {membershipSection.title}
+                {t(membershipSection.title)}
               </h2>
-              <p className="library-section-lead">{membershipSection.description}</p>
+              <p className="library-section-lead">{t(membershipSection.description)}</p>
             </div>
 
             <ol className="join-steps">
@@ -77,7 +79,7 @@ export function MembershipSection() {
                         }}
                       >
                         <span className="join-step-num">{item.number}</span>
-                        <span className="join-step-name">{item.title}</span>
+                        <span className="join-step-name">{t(item.title)}</span>
                       </button>
                     </h3>
                     <div
@@ -88,13 +90,13 @@ export function MembershipSection() {
                       aria-hidden={!selected}
                     >
                       <div className="join-acc-inner">
-                        <p className="join-summary">{item.summary}</p>
+                        <p className="join-summary">{t(item.summary)}</p>
                         <ul className="join-details">
                           {item.details.map((line) => (
                             <li key={line}>{line}</li>
                           ))}
                         </ul>
-                        <p className="join-note">{membershipSection.note}</p>
+                        <p className="join-note">{t(membershipSection.note)}</p>
                       </div>
                     </div>
                   </li>
@@ -106,7 +108,7 @@ export function MembershipSection() {
           <form className="join-form" noValidate onSubmit={onSubmit}>
             <div className="join-fields">
               <label className="join-field">
-                <span>Đối tượng</span>
+                <span>{t("Đối tượng")}</span>
                 <Select
                   value={applicant}
                   onChange={(event) => setApplicant(event.target.value as ApplicantType)}
@@ -114,13 +116,13 @@ export function MembershipSection() {
                 >
                   {membershipSection.applicantTypes.map((item) => (
                     <option key={item} value={item}>
-                      {item}
+                      {t(item)}
                     </option>
                   ))}
                 </Select>
               </label>
               <label className="join-field">
-                <span>Họ và tên</span>
+                <span>{t("Họ và tên")}</span>
                 <input value={name} onChange={(event) => setName(event.target.value)} className={inputClass} autoComplete="name" />
               </label>
               <label className="join-field">
@@ -135,19 +137,19 @@ export function MembershipSection() {
               </label>
               {applicant !== "Cá nhân" ? (
                 <label className="join-field">
-                  <span>{applicant === "Câu lạc bộ" ? "Tên câu lạc bộ" : "Tên đơn vị tổ chức"}</span>
+                  <span>{applicant === "Câu lạc bộ" ? t("Tên câu lạc bộ") : t("Tên đơn vị tổ chức")}</span>
                   <input value={org} onChange={(event) => setOrg(event.target.value)} className={inputClass} />
                 </label>
               ) : null}
               <label className="join-field">
-                <span>Ghi chú</span>
+                <span>{t("Ghi chú")}</span>
                 <textarea value={note} onChange={(event) => setNote(event.target.value)} rows={3} className="join-control" />
               </label>
             </div>
 
             {message ? (
               <p className={cx("join-message", messageKind === "success" && "is-success")} role="status">
-                {message}
+                {t(message)}
               </p>
             ) : null}
 

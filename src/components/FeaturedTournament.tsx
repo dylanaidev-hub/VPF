@@ -1,3 +1,4 @@
+import { useTranslation } from "../i18n"
 import { useEffect, useLayoutEffect, useRef, useState } from "react"
 import { ArrowRight } from "lucide-react"
 import type { Tournament, TournamentView } from "../types"
@@ -48,6 +49,7 @@ export function FeaturedTournament({
   className,
   now: nowProp,
 }: FeaturedTournamentProps) {
+  const { t } = useTranslation()
   const localNow = useTournamentClock(nowProp === undefined)
   const now = nowProp ?? localNow
   const date = formatEventDate(tournament.startDate, tournament.endDate)
@@ -70,15 +72,15 @@ export function FeaturedTournament({
             phase === "finished" && "is-finished",
           )}
         >
-          {statusLabel[phase]}
+          {t(statusLabel[phase])}
         </p>
         <h3>{tournament.name}</h3>
-        {showDescription && tournament.summary ? <p className="vpf-hub-desc">{tournament.summary}</p> : null}
+        {showDescription && tournament.summary ? <p className="vpf-hub-desc">{t(tournament.summary)}</p> : null}
         <dl>
           <div>
-            <dt>Thời gian</dt>
+            <dt>{t("Thời gian")}</dt>
             <dd>
-              {date.day} {date.month} {date.year}
+              {date.day} {t(date.month)} {date.year}
               {tournament.time ? (
                 <>
                   <span aria-hidden> · </span>
@@ -89,9 +91,9 @@ export function FeaturedTournament({
           </div>
           {place ? (
             <div>
-              <dt>Địa điểm</dt>
+              <dt>{t("Địa điểm")}</dt>
               <dd>
-                {tournament.location}
+                {t(tournament.location)}
                 {tournament.venue ? <span className="vpf-hub-venue"> · {tournament.venue}</span> : null}
               </dd>
             </div>
@@ -103,16 +105,16 @@ export function FeaturedTournament({
             role="timer"
             aria-label={`Còn ${remaining.days} ngày ${remaining.hours} giờ ${remaining.minutes} phút ${remaining.seconds} giây`}
           >
-            <CountUnit value={remaining.days} label="Ngày" />
-            <CountUnit value={remaining.hours} label="Giờ" />
-            <CountUnit value={remaining.minutes} label="Phút" />
-            <CountUnit value={remaining.seconds} label="Giây" />
+            <CountUnit value={remaining.days} label={t("Ngày")} />
+            <CountUnit value={remaining.hours} label={t("Giờ")} />
+            <CountUnit value={remaining.minutes} label={t("Phút")} />
+            <CountUnit value={remaining.seconds} label={t("Giây")} />
           </div>
         ) : showCountdown ? (
-          <p className="vpf-hub-live">{statusLabel[phase]}</p>
+          <p className="vpf-hub-live">{t(statusLabel[phase])}</p>
         ) : null}
         <span className="vpf-hub-cta">
-          Khám phá giải đấu
+          {t("Khám phá giải đấu")}
           <ArrowRight className="size-4" aria-hidden />
         </span>
       </div>
@@ -129,6 +131,7 @@ export function FeaturedTournament({
 }
 
 function CountUnit({ value, label }: { value: number; label: string }) {
+  const { t } = useTranslation()
   const text = String(Math.max(0, value)).padStart(2, "0")
   return (
     <span className="vpf-hub-unit">
@@ -136,7 +139,7 @@ function CountUnit({ value, label }: { value: number; label: string }) {
         <FlipDigit digit={text[0]!} />
         <FlipDigit digit={text[1]!} />
       </span>
-      <span className="vpf-hub-unit-label">{label}</span>
+      <span className="vpf-hub-unit-label">{t(label)}</span>
     </span>
   )
 }

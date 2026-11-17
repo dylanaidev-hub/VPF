@@ -1,3 +1,4 @@
+import { useTranslation } from "../i18n"
 import type { ReactNode } from "react"
 import { cx } from "../lib/cx"
 
@@ -14,6 +15,7 @@ export function SectionHeading({
   id?: string
   className?: string
 }) {
+  const { t } = useTranslation()
   return (
     <div
       className={cx(
@@ -26,11 +28,11 @@ export function SectionHeading({
           id={id}
           className="vpf-section-title"
         >
-          {title}
+          {t(title)}
         </h2>
         {subtitle ? (
           <p className="mt-3 max-w-xl text-[15px] leading-relaxed text-muted md:text-base">
-            {subtitle}
+            {t(subtitle)}
           </p>
         ) : null}
       </div>

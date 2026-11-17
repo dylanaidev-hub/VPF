@@ -1,3 +1,4 @@
+import { useTranslation } from "../i18n"
 import type { Partner } from "../types"
 import { sitePath } from "../lib/site"
 
@@ -8,13 +9,14 @@ export function PartnerMarquee({
   partners: Partner[]
   note?: string
 }) {
+  const { t } = useTranslation()
   const logos = partners.filter((partner) => partner.logoSrc)
 
   if (logos.length === 0) {
     return (
       <div className="page-wrap">
         <p className="max-w-xl text-sm leading-relaxed text-muted">
-          Logo đối tác sẽ được đặt tại đây khi có file.
+          {t("Logo đối tác sẽ được đặt tại đây khi có file.")}
         </p>
       </div>
     )
@@ -26,13 +28,13 @@ export function PartnerMarquee({
     <div>
       {illustrative && note ? (
         <div className="page-wrap mb-2">
-          <p className="max-w-2xl text-sm leading-relaxed text-muted">{note}</p>
+          <p className="max-w-2xl text-sm leading-relaxed text-muted">{t(note)}</p>
         </div>
       ) : null}
       <div
         className="partner-marquee"
         tabIndex={0}
-        aria-label={illustrative ? "Logo đối tác minh họa" : "Logo đối tác"}
+        aria-label={illustrative ? t("Logo đối tác minh họa") : t("Logo đối tác")}
       >
         <div className="partner-track">
           <LogoSet logos={logos} />

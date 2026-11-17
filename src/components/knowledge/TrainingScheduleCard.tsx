@@ -1,3 +1,4 @@
+import { useTranslation } from "../../i18n"
 import type { TrainingCourse } from "../../data/trainingSchedule"
 import { formatViDate } from "../../lib/format"
 import { Badge } from "../Badge"
@@ -17,6 +18,7 @@ function getRegistrationUrl(value?: string) {
 }
 
 export function TrainingScheduleCard({ course }: { course: TrainingCourse }) {
+  const { language, t } = useTranslation()
   const { title, description, startDate, endDate, location, format, audience, registrationStatus } = course
   const [year, month, day] = startDate.split("-")
   const { label, tone } = registrationStates[registrationStatus]
@@ -26,18 +28,18 @@ export function TrainingScheduleCard({ course }: { course: TrainingCourse }) {
     <li className="training-schedule-card">
       <div className="training-schedule-date" aria-hidden="true">
         <span>{day}</span>
-        <span>THG {Number(month)}/{year}</span>
+        <span>{language === "en" ? t(`Tháng ${Number(month)}`).slice(0, 3).toUpperCase() : `THG ${Number(month)}`}/{year}</span>
       </div>
       <div className="training-schedule-details">
-        <Badge tone={tone} className="justify-self-start">{label}</Badge>
-        <h3>{title}</h3>
-        <p className="training-schedule-description">{description}</p>
+        <Badge tone={tone} className="justify-self-start">{t(label)}</Badge>
+        <h3>{t(title)}</h3>
+        <p className="training-schedule-description">{t(description)}</p>
         <dl>
-          <div><dt>Đối tượng</dt><dd>{audience}</dd></div>
-          <div><dt>Địa điểm</dt><dd>{location}</dd></div>
-          <div><dt>Hình thức</dt><dd>{format}</dd></div>
+          <div><dt>{t("Đối tượng")}</dt><dd>{t(audience)}</dd></div>
+          <div><dt>{t("Địa điểm")}</dt><dd>{t(location)}</dd></div>
+          <div><dt>{t("Hình thức")}</dt><dd>{t(format)}</dd></div>
           <div>
-            <dt>Thời gian</dt>
+            <dt>{t("Thời gian")}</dt>
             <dd>
               <time dateTime={startDate}>{formatViDate(startDate)}</time>
               {endDate !== startDate ? <> – <time dateTime={endDate}>{formatViDate(endDate)}</time></> : null}
@@ -46,14 +48,14 @@ export function TrainingScheduleCard({ course }: { course: TrainingCourse }) {
         </dl>
       </div>
       <div className="training-schedule-action">
-        {registrationStatus === "closed" ? <p>Đã đóng đăng ký</p> : registrationStatus === "upcoming" ? (
-          <Button disabled>Chưa mở đăng ký</Button>
+        {registrationStatus === "closed" ? <p>{t("Đã đóng đăng ký")}</p> : registrationStatus === "upcoming" ? (
+          <Button disabled>{t("Chưa mở đăng ký")}</Button>
         ) : registrationUrl ? (
-          <Button href={registrationUrl} aria-label={`Đăng ký ngay: ${title}`}>Đăng ký ngay</Button>
+          <Button href={registrationUrl} aria-label={t("training.register", { title: t(title) })}>{t("Đăng ký ngay")}</Button>
         ) : (
           <>
-            <Button disabled>Đăng ký ngay</Button>
-            <p>Chưa có liên kết đăng ký</p>
+            <Button disabled>{t("Đăng ký ngay")}</Button>
+            <p>{t("Chưa có liên kết đăng ký")}</p>
           </>
         )}
       </div>

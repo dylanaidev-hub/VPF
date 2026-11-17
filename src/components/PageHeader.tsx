@@ -1,3 +1,4 @@
+import { useTranslation } from "../i18n"
 import type { ReactNode } from "react"
 import { cx } from "../lib/cx"
 import { Breadcrumb } from "./Breadcrumb"
@@ -25,13 +26,14 @@ export function PageHeader({
   className,
   action,
 }: PageHeaderProps) {
+  const { t } = useTranslation()
   return (
     <header className={cx("page-header page-wrap", className)}>
       <Breadcrumb items={breadcrumb} />
       <h1 id={titleId} className="page-header-title">
-        {title}
+        {t(title)}
       </h1>
-      {description ? <p className="page-header-description">{description}</p> : null}
+      {description ? <p className="page-header-description">{t(description)}</p> : null}
       {action ? <div className="page-header-action">{action}</div> : null}
     </header>
   )

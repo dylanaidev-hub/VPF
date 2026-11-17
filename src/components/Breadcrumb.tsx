@@ -1,3 +1,4 @@
+import { useTranslation } from "../i18n"
 import { ChevronRight } from "lucide-react"
 import { cx } from "../lib/cx"
 import { sitePath } from "../lib/site"
@@ -9,10 +10,11 @@ export function Breadcrumb({
   items: { label: string; href?: string; hideBelow?: "sm" }[]
   tone?: "default" | "inverse"
 }) {
+  const { t } = useTranslation()
   const inverse = tone === "inverse"
 
   return (
-    <nav aria-label="Đường dẫn">
+    <nav aria-label={t("Đường dẫn")}>
       <ol className={cx("flex flex-wrap items-center gap-1.5 text-sm", inverse ? "text-white/75" : "text-muted")}>
         {items.map((item, index) => {
           const last = index === items.length - 1
@@ -26,14 +28,14 @@ export function Breadcrumb({
               ) : null}
               {item.href && !last ? (
                 <a href={sitePath(item.href)} className={inverse ? "hover:text-white" : "hover:text-ink"}>
-                  {item.label}
+                  {t(item.label)}
                 </a>
               ) : (
                 <span
                   className={cx("font-medium", inverse ? "text-white" : "text-ink")}
                   aria-current={last ? "page" : undefined}
                 >
-                  {item.label}
+                  {t(item.label)}
                 </span>
               )}
             </li>

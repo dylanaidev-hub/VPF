@@ -1,3 +1,4 @@
+import { useTranslation } from "../i18n"
 import { ArrowRight } from "lucide-react"
 import type { NewsArticle } from "../types"
 import { formatViDate } from "../lib/format"
@@ -11,6 +12,7 @@ export function NewsCard({
   article: NewsArticle
   onOpen: (article: NewsArticle) => void
 }) {
+  const { t } = useTranslation()
   return (
     <a
       href={`#${article.slug}`}
@@ -33,14 +35,14 @@ export function NewsCard({
       <div className="flex min-w-0 flex-1 flex-col justify-center py-0.5">
         <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
           <Badge tone="neutral" className="border border-line">
-            {article.category}
+            {t(article.category)}
           </Badge>
           <time dateTime={article.date} className="text-[12px] font-medium text-muted">
             {formatViDate(article.date)}
           </time>
         </div>
         <h3 className="mt-2 line-clamp-2 text-base font-semibold leading-snug text-ink sm:text-lg">
-          {article.title}
+          {t(article.title)}
         </h3>
       </div>
       <span className="grid size-9 shrink-0 place-items-center self-center rounded-full border border-line text-ink transition-transform duration-200 group-hover:translate-x-[3px] motion-reduce:transition-none">
