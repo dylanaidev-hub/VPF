@@ -6,9 +6,7 @@ export { getNewsDetailUrl, getNewsSlug } from "./newsRoute"
 export const newsCategories = [
   "Tất cả",
   "Tin Liên đoàn",
-  "Giải đấu",
-  "Cộng đồng",
-  "Chuyên môn",
+  "Giải đấu & Cộng đồng",
   "Quốc tế",
 ] as const
 
@@ -72,11 +70,14 @@ export function filterNews(
   options: { category: NewsCategory; query: string; sort: NewsSort },
 ) {
   const needle = foldNewsQuery(options.query.trim())
+  const categories = options.category === "Giải đấu & Cộng đồng"
+    ? ["Giải đấu", "Cộng đồng"]
+    : [options.category]
   const seen = new Set<string>()
   const matched = articles.filter((article) => {
     if (seen.has(article.id)) return false
     seen.add(article.id)
-    if (options.category !== "Tất cả" && article.category !== options.category) return false
+    if (options.category !== "Tất cả" && !categories.includes(article.category)) return false
     if (!needle) return true
     return foldNewsQuery(`${article.title} ${article.excerpt}`).includes(needle)
   })

@@ -353,6 +353,7 @@ export const en: Readonly<Record<string, string>> = {
   "Số liệu minh họa": "Illustrative figures",
   "Câu lạc bộ": "Clubs",
   "Cộng đồng": "Community",
+  "Giải đấu & Cộng đồng": "Tournaments & Community",
   "Đồng hành cùng Pickleball Việt Nam": "Partner With Pickleball in Vietnam",
   "Cùng VPF kết nối cộng đồng yêu thể thao, thúc đẩy phong trào Pickleball và tạo ra những giá trị hợp tác bền vững.": "Join VPF to connect sports communities, grow pickleball and build lasting partnerships.",
   "Trở thành đối tác": "Become a partner",
