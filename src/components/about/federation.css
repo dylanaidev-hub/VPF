@@ -91,6 +91,237 @@
   gap: 2rem;
 }
 
+.fed-brand {
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  background: var(--vpf-red-500);
+  color: var(--vpf-white);
+  padding: 2.75rem 0;
+}
+
+.fed-brand-grid {
+  display: grid;
+  gap: 2rem;
+  width: 100%;
+  align-items: center;
+}
+
+.fed-brand-kicker {
+  margin: 0 0 0.7rem;
+  color: var(--vpf-gold-100);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.fed-brand h1 {
+  margin: 0;
+  max-width: 14ch;
+  color: var(--vpf-white);
+  font-size: clamp(2rem, 4vw, 3.15rem);
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  line-height: 1.08;
+}
+
+.fed-brand-copy p {
+  max-width: 38rem;
+  margin: 1rem 0 0;
+  color: rgb(255 255 255 / 84%);
+  font-size: 1.02rem;
+  line-height: 1.65;
+}
+
+.fed-brand-copy span {
+  color: var(--vpf-gold-100);
+  font-weight: 700;
+}
+
+.fed-brand-cta {
+  display: inline-flex;
+  gap: 0.4rem;
+  align-items: center;
+  min-height: 2.85rem;
+  margin-top: 1.35rem;
+  padding: 0 1.05rem;
+  border-radius: 10px;
+  background: var(--vpf-gold-500);
+  color: var(--vpf-ink);
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.fed-brand-cta svg {
+  width: 1.05rem;
+  height: 1.05rem;
+}
+
+.fed-brand-cta:hover {
+  background: var(--vpf-gold-300);
+}
+
+.fed-brand-stage {
+  position: relative;
+  display: grid;
+  width: min(100%, 22rem);
+  margin-inline: auto;
+  aspect-ratio: 1;
+  place-items: center;
+}
+
+.fed-brand-stage::before,
+.fed-brand-stage::after {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.fed-brand-stage::before {
+  inset: 22%;
+  background: radial-gradient(circle, rgb(232 148 60 / 0.28), transparent 70%);
+  opacity: 0.45;
+  scale: 0.92;
+  transition: opacity 800ms ease, scale 1100ms ease-in-out;
+}
+
+.fed-brand-stage::after {
+  inset: 6%;
+  background: radial-gradient(circle, rgb(248 231 207 / 0.28) 0%, transparent 58%);
+  opacity: 0;
+  scale: 0.4;
+  transition: opacity 700ms ease, scale 1100ms ease-in-out;
+}
+
+.fed-brand-star {
+  position: absolute;
+  z-index: 0;
+  width: 84%;
+  height: auto;
+  pointer-events: none;
+  overflow: visible;
+}
+
+.fed-star-layer,
+.fed-star-pulse {
+  transform-box: view-box;
+  transform-origin: center center;
+}
+
+.fed-star-layer {
+  transition: scale 1.05s ease-in-out;
+  transition-delay: calc(var(--i) * 90ms);
+}
+
+.fed-brand-logo {
+  position: relative;
+  z-index: 1;
+  width: min(62%, 17.5rem);
+  height: auto;
+}
+
+@media (min-width: 768px) {
+  .fed-brand {
+    padding: 2.25rem 0;
+  }
+
+  .fed-brand-grid {
+    grid-template-columns: minmax(0, 1.15fr) minmax(16rem, 0.85fr);
+    gap: 1.5rem;
+  }
+
+  .fed-brand-stage {
+    width: min(100%, 26rem);
+  }
+}
+
+@media (min-width: 1100px) {
+  .fed-brand {
+    height: 560px;
+    padding: 1.25rem 0;
+  }
+
+  .fed-brand-stage {
+    width: min(100%, 32rem);
+  }
+
+  .fed-brand-logo {
+    width: min(58%, 18rem);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .fed-brand .fed-brand-copy {
+    opacity: 0;
+    translate: 0 16px;
+    transition: opacity 700ms ease, translate 700ms ease;
+  }
+
+  .fed-brand.is-in .fed-brand-copy {
+    opacity: 1;
+    translate: 0;
+  }
+
+  .fed-brand.is-hot .fed-star-layer {
+    scale: var(--swell);
+  }
+
+  .fed-brand.is-hot .fed-star-pulse {
+    animation: fed-star-breathe 2.8s ease-in-out infinite;
+    animation-delay: calc(var(--i) * 90ms);
+  }
+
+  .fed-brand.is-hot .fed-brand-stage::before {
+    opacity: 0.85;
+    scale: 1.12;
+    animation: fed-glow-breathe 2.8s ease-in-out infinite;
+  }
+
+  .fed-brand.is-hot .fed-brand-stage::after {
+    animation: fed-star-wave 2.8s ease-in-out infinite;
+  }
+}
+
+@keyframes fed-star-breathe {
+  0%,
+  100% {
+    scale: 1;
+  }
+  50% {
+    scale: 1.028;
+  }
+}
+
+@keyframes fed-glow-breathe {
+  0%,
+  100% {
+    opacity: 0.5;
+    scale: 1;
+  }
+  50% {
+    opacity: 0.9;
+    scale: 1.16;
+  }
+}
+
+@keyframes fed-star-wave {
+  0% {
+    opacity: 0.12;
+    scale: 0.42;
+  }
+  68% {
+    opacity: 0.5;
+    scale: 1.18;
+  }
+  100% {
+    opacity: 0;
+    scale: 1.32;
+  }
+}
+
 .fed-track {
   display: grid;
   gap: 1.5rem;
@@ -2112,6 +2343,10 @@
 
 @media (prefers-reduced-motion: reduce) {
   .fed-reveal,
+  .fed-star-layer,
+  .fed-star-pulse,
+  .fed-brand-stage::before,
+  .fed-brand-stage::after,
   .fed-node,
   .fed-track time,
   .fed-track-title,
