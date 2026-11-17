@@ -15,21 +15,18 @@ import { HeroSlider } from "../components/HeroSlider"
 import { LiveSection } from "../components/LiveSection"
 import { NewsSection } from "../components/NewsSection"
 import { PartnershipBanner } from "../components/PartnershipBanner"
-import { SearchDialog } from "../components/SearchDialog"
 import { PartnerMarquee } from "../components/PartnerMarquee"
 import { StatsSection } from "../components/StatsSection"
 import { UpcomingTournamentsSection } from "../components/UpcomingTournamentsSection"
 
 export function HomePage() {
-  const [searchOpen, setSearchOpen] = useState(false)
   const [article, setArticle] = useState<NewsArticle | null>(null)
-  const suspended = searchOpen || article !== null
 
   return (
     <>
-      <Header searchOpen={searchOpen} onSearch={() => setSearchOpen(true)} />
+      <Header />
       <main id="noi-dung">
-        <HeroSlider slides={heroSlides} suspended={suspended} />
+        <HeroSlider slides={heroSlides} suspended={article !== null} />
         <StatsSection items={statistics} />
 
         <LiveSection arena={liveArena} />
@@ -44,12 +41,6 @@ export function HomePage() {
         </section>
       </main>
       <Footer />
-
-      <SearchDialog
-        open={searchOpen}
-        onClose={() => setSearchOpen(false)}
-        onOpenNews={setArticle}
-      />
 
       <Dialog open={article !== null} title={article?.title ?? "Tin tức"} onClose={() => setArticle(null)}>
         {article ? (

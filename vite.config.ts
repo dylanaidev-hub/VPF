@@ -91,6 +91,7 @@ const pages = [
   "media",
   "congdong",
   "hoptac",
+  "timkiem",
 ]
 
 export default defineConfig({

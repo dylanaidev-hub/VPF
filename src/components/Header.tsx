@@ -76,14 +76,10 @@ function DesktopItem({ item }: { item: NavItem }) {
 }
 
 export function Header({
-  onSearch,
-  searchOpen,
   items = navigation,
 }: {
-  onSearch: () => void
-  searchOpen: boolean
   items?: NavItem[]
-}) {
+} = {}) {
   const [menuOpen, setMenuOpen] = useState(false)
 
   useEffect(() => {
@@ -111,19 +107,15 @@ export function Header({
           ))}
         </nav>
         <div className="flex items-center gap-2">
-          <button
-            type="button"
+          <a
+            href={sitePath("/timkiem.html")}
             className="grid size-10 place-items-center rounded-[10px] border border-line text-ink hover:bg-paper"
             aria-label="Tìm kiếm"
-            aria-expanded={searchOpen}
-            aria-controls="tim-kiem"
-            onClick={() => {
-              setMenuOpen(false)
-              onSearch()
-            }}
+            aria-current={isCurrentPage("/timkiem.html") ? "page" : undefined}
+            onClick={() => setMenuOpen(false)}
           >
             <Search className="size-5" aria-hidden />
-          </button>
+          </a>
           <button
             type="button"
             className="grid size-10 place-items-center rounded-[10px] border border-line text-ink hover:bg-paper min-[1200px]:hidden"

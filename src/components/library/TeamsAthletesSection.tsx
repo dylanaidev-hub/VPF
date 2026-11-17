@@ -8,6 +8,7 @@ import {
 } from "../../data/library.mock"
 import { cx } from "../../lib/cx"
 import { sitePath } from "../../lib/site"
+import { libraryRecordAnchor } from "../../lib/libraryLinks"
 import { useReveal } from "../../lib/useReveal"
 import { CoachCard } from "../CoachCard"
 import { Dialog } from "../Dialog"
@@ -19,7 +20,10 @@ const selectClass = "library-batch-select h-12 rounded-[10px] border border-line
 type Tab = "Ban huấn luyện" | "VĐV theo đợt"
 
 export function TeamsAthletesSection() {
-  const [tab, setTab] = useState<Tab>("Ban huấn luyện")
+  const [tab, setTab] = useState<Tab>(() => {
+    const athlete = new URLSearchParams(window.location.search).get("athlete")
+    return athletes.some((person) => person.id === athlete) ? "VĐV theo đợt" : "Ban huấn luyện"
+  })
   const [batch, setBatch] = useState<(typeof athleteBatches)[number]>("Tất cả đợt")
   const [coachOpen, setCoachOpen] = useState<Coach | null>(null)
   const [athleteOpen, setAthleteOpen] = useState<AthleteProfile | null>(null)
@@ -83,7 +87,7 @@ export function TeamsAthletesSection() {
         {tab === "Ban huấn luyện" ? (
           <ul className="library-athlete-grid">
             {coaches.map((person) => (
-              <li key={person.id}>
+              <li key={person.id} id={libraryRecordAnchor("coach", person.id)}>
                 <CoachCard coach={person} onOpen={() => setCoachOpen(person)} />
               </li>
             ))}
@@ -91,7 +95,7 @@ export function TeamsAthletesSection() {
         ) : (
           <ul className="library-athlete-grid">
             {visibleAthletes.map((person) => (
-              <li key={person.id}>
+              <li key={person.id} id={libraryRecordAnchor("athlete", person.id)}>
                 <PlayerCard player={person} onOpen={() => setAthleteOpen(person)} />
               </li>
             ))}

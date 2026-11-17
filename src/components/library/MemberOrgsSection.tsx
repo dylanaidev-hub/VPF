@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react"
 import { ChevronDown, ChevronUp, MapPin, X } from "lucide-react"
 import { sitePath } from "../../lib/site"
+import { libraryRecordAnchor } from "../../lib/libraryLinks"
 import {
   MEMBER_PREVIEW_COUNT,
   memberOrgs,
@@ -30,7 +31,10 @@ function fold(value: string) {
 export function MemberOrgsSection() {
   const [query, setQuery] = useState("")
   const [province, setProvince] = useState("Tất cả")
-  const [expanded, setExpanded] = useState(false)
+  const [expanded, setExpanded] = useState(() => {
+    const member = new URLSearchParams(window.location.search).get("member")
+    return memberOrgs.slice(MEMBER_PREVIEW_COUNT).some((org) => org.id === member)
+  })
   const [open, setOpen] = useState<MemberOrg | null>(null)
   const { ref, shown } = useReveal<HTMLElement>()
   const provinces = useMemo(() => uniqueProvinces(memberOrgs), [])
@@ -127,7 +131,7 @@ export function MemberOrgsSection() {
           <>
             <ul className="library-org-grid">
               {visible.map((org) => (
-                <li key={org.id}>
+                <li key={org.id} id={libraryRecordAnchor("member", org.id)}>
                   <ClubCard
                     name={org.name}
                     location={org.province}

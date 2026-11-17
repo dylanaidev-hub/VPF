@@ -1,62 +1,50 @@
-import { navigation } from "../data/navigation"
-import { news } from "../data/news"
-import { tournaments } from "../data/tournaments"
-import type { NavItem, NewsArticle, TournamentView } from "../types"
-import { foldText, formatViDate } from "./format"
-import { statusLabel, withStatus } from "./tournaments"
+import { foldText } from "./format"
 
-export type SearchResult =
-  | { id: string; kind: "news"; title: string; meta: string; article: NewsArticle }
-  | {
-      id: string
-      kind: "tournament"
-      title: string
-      meta: string
-      tournament: TournamentView
-    }
-  | { id: string; kind: "section"; title: string; meta: string; href: string }
+export const searchTypes = {
+  news: "Tin tức",
+  tournament: "Giải đấu",
+  document: "Chuyên môn / Tài liệu",
+  member: "Đơn vị thành viên",
+  athlete: "Vận động viên",
+  page: "Trang thông tin",
+} as const
 
-function flattenNav(items: NavItem[], parent?: string): SearchResult[] {
-  return items.flatMap((item) => {
-    const current: SearchResult = {
-      id: `section-${item.id}`,
-      kind: "section",
-      title: item.label,
-      meta: parent ? `${parent} · Chuyên mục` : "Chuyên mục",
-      href: item.href,
-    }
-    return [current, ...(item.children ? flattenNav(item.children, item.label) : [])]
-  })
+export type SearchType = keyof typeof searchTypes
+
+export type SearchItem = {
+  id: string
+  type: SearchType
+  title: string
+  description?: string
+  keywords?: string[]
+  url: string
+  date?: string
+  meta?: string
+  label?: string
 }
 
-export function searchSite(query: string, now = new Date()): SearchResult[] {
-  const folded = foldText(query.trim())
-  if (!folded) return []
+function normalize(value: string) {
+  return foldText(value).replace(/đ/g, "d").replace(/[^a-z0-9]+/g, " ").trim()
+}
 
-  const matches = (value: string) => foldText(value).includes(folded)
-  const articles = news
-    .filter((article) => matches(`${article.title} ${article.excerpt} ${article.category}`))
-    .map<SearchResult>((article) => ({
-      id: `news-${article.id}`,
-      kind: "news",
-      title: article.title,
-      meta: `${article.category} · ${formatViDate(article.date)}`,
-      article,
-    }))
+export function searchSite(items: readonly SearchItem[], query: string, type?: SearchType) {
+  const phrase = normalize(query)
+  if (!phrase) return []
 
-  const events = withStatus(tournaments, now)
-    .filter((item) => matches(`${item.name} ${item.location} ${statusLabel[item.status]}`))
-    .map<SearchResult>((tournament) => ({
-      id: `tournament-${tournament.id}`,
-      kind: "tournament",
-      title: tournament.name,
-      meta: `${tournament.location} · ${statusLabel[tournament.status]}`,
-      tournament,
-    }))
+  const words = [...new Set(phrase.split(" "))]
+  return items.flatMap((item) => {
+    if (type && item.type !== type) return []
+    const title = normalize(item.title)
+    const context = normalize([item.description, ...(item.keywords ?? [])].join(" "))
+    if (!words.every((word) => title.includes(word) || context.includes(word))) return []
 
-  const sections = flattenNav(navigation).filter(
-    (item) => matches(item.title) || matches(item.meta),
-  )
-
-  return [...articles, ...events, ...sections].slice(0, 8)
+    const titleMatches = words.filter((word) => title.includes(word)).length
+    const rank = title === phrase ? 3 : title.startsWith(phrase) ? 2 : title.includes(phrase) ? 1 : 0
+    return [{ item, titleMatches, rank }]
+  }).sort((a, b) =>
+    b.rank - a.rank ||
+    b.titleMatches - a.titleMatches ||
+    (b.item.date ?? "").localeCompare(a.item.date ?? "") ||
+    a.item.title.localeCompare(b.item.title, "vi"),
+  ).map(({ item }) => item)
 }

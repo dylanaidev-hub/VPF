@@ -6,9 +6,12 @@ import { FedMandate } from "../components/about/FedMandate"
 import { FedTimeline } from "../components/about/FedTimeline"
 import { FedVision } from "../components/about/FedVision"
 import { SiteLayout } from "../components/SiteLayout"
+import { useFragmentScroll } from "../lib/useFragmentScroll"
 import "../components/about/federation.css"
 
 export function AboutPage() {
+  useFragmentScroll()
+
   return (
     <SiteLayout>
       <FedIntro />

@@ -9,7 +9,11 @@ const documentDate = (document: TechnicalDocument) => document.publishedOn ?? do
 const normalize = (value: string) => foldText(value).replace(/đ/g, "d").trim()
 
 export function TechnicalLibrary({ documents }: { documents: TechnicalDocument[] }) {
-  const [query, setQuery] = useState("")
+  const [query, setQuery] = useState(() => {
+    const id = new URLSearchParams(window.location.search).get("document")
+    const document = documents.find((item) => item.id === id)
+    return document?.reference ?? document?.title ?? ""
+  })
   const [type, setType] = useState("")
   const [year, setYear] = useState("")
   const [sort, setSort] = useState("date")
