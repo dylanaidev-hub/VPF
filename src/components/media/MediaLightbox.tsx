@@ -176,7 +176,7 @@ export function MediaLightbox({
           <img key={shot.id} src={sitePath(shot.src)} alt={t(shot.alt)} className="media-lightbox-photo" />
           <div className="media-viewer__details">
             <p id={titleId} className="media-viewer__title">
-              {shot.title ?? shot.caption}
+              {t(shot.title ?? shot.caption)}
             </p>
             {shot.title ? <p className="media-viewer__description">{t(shot.caption)}</p> : null}
           </div>
@@ -192,7 +192,7 @@ export function MediaLightbox({
                     role="listitem"
                     className="media-lightbox-thumb"
                     aria-current={active ? "true" : undefined}
-                    aria-label={`Ảnh ${String(itemIndex + 1).padStart(2, "0")}: ${item.title ?? item.caption}`}
+                    aria-label={`${t("Ảnh")} ${String(itemIndex + 1).padStart(2, "0")}: ${t(item.title ?? item.caption)}`}
                     onClick={() => onIndex(itemIndex)}
                   >
                     <img src={sitePath(item.src)} alt="" />

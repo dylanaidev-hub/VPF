@@ -75,6 +75,7 @@ export function PhotoAlbums() {
           index={lightbox.index}
           onIndex={(index) => setLightbox((current) => (current ? { ...current, index } : current))}
           onClose={() => setLightbox(null)}
+          lockBodyScroll={false}
         />
       ) : null}
     </section>

@@ -5,6 +5,8 @@ import { news } from "../data/news"
 import { partners } from "../data/partners"
 import { statistics } from "../data/stats"
 import { tournaments } from "../data/tournaments"
+import { useFragmentScroll } from "../lib/useFragmentScroll"
+import { HomeMediaSection } from "../components/media/HomeMediaSection"
 import { HeroSlider } from "../components/HeroSlider"
 import { LiveSection } from "../components/LiveSection"
 import { NewsSection } from "../components/NewsSection"
@@ -16,6 +18,7 @@ import { UpcomingTournamentsSection } from "../components/UpcomingTournamentsSec
 
 export function HomePage() {
   const { t } = useTranslation()
+  useFragmentScroll()
 
   return (
     <SiteLayout>
@@ -27,6 +30,8 @@ export function HomePage() {
       <NewsSection articles={news} />
 
       <UpcomingTournamentsSection tournaments={tournaments} />
+
+      <HomeMediaSection />
 
       <PartnershipBanner />
       <section aria-label={t("Logo đối tác")} className="border-b border-line bg-white py-8 md:py-10">

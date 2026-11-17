@@ -19,16 +19,18 @@ export function AlbumViewer({
   const titleId = useId()
   const panelRef = useRef<HTMLDivElement>(null)
   const onCloseRef = useRef(onClose)
+  const pausedRef = useRef(paused)
   onCloseRef.current = onClose
+  pausedRef.current = paused
 
   useEffect(() => {
-    if (paused) return
     const previouslyFocused = document.activeElement as HTMLElement | null
     const previousOverflow = document.body.style.overflow
     document.body.style.overflow = "hidden"
     panelRef.current?.querySelector<HTMLElement>("[data-autofocus]")?.focus()
 
     const onKeyDown = (event: KeyboardEvent) => {
+      if (pausedRef.current) return
       if (event.key === "Escape") {
         event.preventDefault()
         onCloseRef.current()
@@ -54,11 +56,11 @@ export function AlbumViewer({
       document.body.style.overflow = previousOverflow
       previouslyFocused?.focus()
     }
-  }, [paused])
+  }, [])
 
   return (
-    <div className="fixed inset-0 z-[80] flex items-end justify-center sm:items-center sm:p-6">
-      <button type="button" className="absolute inset-0 bg-(--overlay-backdrop)" aria-label={t("Đóng album")} onClick={onClose} />
+    <div className="fixed inset-0 z-[80] flex items-end justify-center sm:items-center sm:p-6" aria-hidden={paused || undefined}>
+      <button type="button" className="absolute inset-0 bg-(--overlay-backdrop)" aria-label={t("Đóng album")} tabIndex={-1} onClick={onClose} />
       <div
         ref={panelRef}
         role="dialog"

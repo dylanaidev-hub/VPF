@@ -201,7 +201,11 @@ export const libraryAlbums: LibraryAlbum[] = [
     images: shots("clb-1", [
       { src: match, alt: "CLB trong nhà.", caption: "Buổi đánh. Minh họa." },
       { src: outdoor, alt: "CLB ngoài trời.", caption: "Ngoài trời. Minh họa." },
-      { src: player, alt: "Thành viên.", caption: "Thành viên. Minh họa." },
+      {
+        src: "/images/partnership/community.jpg",
+        alt: "Sân ngoài trời lúc hoàng hôn",
+        caption: "Sân ngoài trời lúc hoàng hôn. Ảnh minh họa.",
+      },
       { src: match, alt: "Sân CLB.", caption: "Sân CLB. Minh họa." },
       { src: outdoor, alt: "Góc sân CLB.", caption: "Góc sân. Minh họa." },
     ]),
@@ -220,7 +224,11 @@ export const libraryAlbums: LibraryAlbum[] = [
     images: shots("clb-2", [
       { src: outdoor, alt: "Giao lưu.", caption: "Giao lưu. Minh họa." },
       { src: player, alt: "Người chơi CLB.", caption: "Người chơi. Minh họa." },
-      { src: match, alt: "Trong nhà.", caption: "Trong nhà. Minh họa." },
+      {
+        src: "/images/partnership/event.jpg",
+        alt: "Vợt và bóng trên sân trong nhà",
+        caption: "Vợt và bóng trên sân trong nhà. Ảnh minh họa.",
+      },
       { src: outdoor, alt: "Toàn cảnh.", caption: "Toàn cảnh. Minh họa." },
     ]),
   },
@@ -255,7 +263,11 @@ export const libraryAlbums: LibraryAlbum[] = [
     images: shots("clb-4", [
       { src: match, alt: "Cuối tuần.", caption: "Cuối tuần. Minh họa." },
       { src: outdoor, alt: "Ngoài trời.", caption: "Ngoài trời. Minh họa." },
-      { src: player, alt: "Thành viên.", caption: "Thành viên. Minh họa." },
+      {
+        src: "/images/partnership/community.jpg",
+        alt: "Sân ngoài trời lúc hoàng hôn",
+        caption: "Sân ngoài trời lúc hoàng hôn. Ảnh minh họa.",
+      },
       { src: match, alt: "Sân CLB.", caption: "Sân CLB. Minh họa." },
     ]),
   },

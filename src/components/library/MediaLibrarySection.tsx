@@ -1,49 +1,22 @@
 import { useTranslation } from "../../i18n"
-import { useMemo, useState } from "react"
+import { useCallback, useMemo, useState } from "react"
 import { CalendarDays, MapPin, Play } from "lucide-react"
-import { libraryAlbums, libraryMediaTabs, type LibraryAlbum, type LibraryMediaTab } from "../../data/library.mock"
-import type { MediaAlbum, MediaShot } from "../../data/media.mock"
+import { libraryAlbums, libraryMediaTabs, type LibraryMediaTab } from "../../data/library.mock"
+import type { MediaItem } from "../../data/media.mock"
 import { cx } from "../../lib/cx"
 import { sitePath } from "../../lib/site"
 import { useReveal } from "../../lib/useReveal"
-import { AlbumViewer } from "../media/AlbumViewer"
-import { MediaLightbox } from "../media/MediaLightbox"
-import { Dialog } from "../Dialog"
+import { toLibraryMedia } from "../../data/library-media"
+import { MediaViewer } from "../media/MediaViewer"
 
 export function MediaLibrarySection() {
   const { t } = useTranslation()
   const [tab, setTab] = useState<LibraryMediaTab>("Ảnh giải đấu")
-  const [album, setAlbum] = useState<LibraryAlbum | null>(null)
-  const [lightbox, setLightbox] = useState<{ shots: Array<MediaShot & { title?: string }>; index: number } | null>(
-    null,
-  )
-  const [videoNote, setVideoNote] = useState<LibraryAlbum | null>(null)
+  const [selection, setSelection] = useState<MediaItem | null>(null)
+  const closeViewer = useCallback(() => setSelection(null), [])
   const { ref, shown } = useReveal<HTMLElement>()
 
   const visible = useMemo(() => libraryAlbums.filter((item) => item.tab === tab), [tab])
-
-  const openAlbum = (item: LibraryAlbum) => {
-    if (item.tab === "Video") {
-      setVideoNote(item)
-      return
-    }
-    setAlbum(item)
-  }
-
-  const asMediaAlbum = (item: LibraryAlbum): MediaAlbum => ({
-    id: item.id,
-    slug: item.id,
-    title: item.title,
-    description: item.description,
-    type: "album",
-    thumbnail: item.cover,
-    imageAlt: item.coverAlt,
-    imagePosition: item.coverPosition,
-    ratio: "16:9",
-    date: item.date ?? "",
-    images: item.images,
-    illustrative: true,
-  })
 
   return (
     <section
@@ -81,7 +54,7 @@ export function MediaLibrarySection() {
         <ul className="library-album-grid">
           {visible.map((item) => (
             <li key={item.id}>
-              <button type="button" className="library-album-card" onClick={() => openAlbum(item)}>
+              <button type="button" className="library-album-card" onClick={() => setSelection(toLibraryMedia(item))}>
                 <span className="library-album-cover">
                   <img
                     src={sitePath(item.cover)}
@@ -123,44 +96,7 @@ export function MediaLibrarySection() {
         </ul>
       </div>
 
-      {album ? (
-        <AlbumViewer
-          album={asMediaAlbum(album)}
-          paused={lightbox !== null}
-          onClose={() => setAlbum(null)}
-          onOpenShot={(_shot, index) =>
-            setLightbox({
-              shots: album.images.map((image) => ({ ...image, title: album.title })),
-              index,
-            })
-          }
-        />
-      ) : null}
-
-      {lightbox ? (
-        <MediaLightbox
-          shots={lightbox.shots}
-          index={lightbox.index}
-          onIndex={(index) => setLightbox((current) => (current ? { ...current, index } : current))}
-          onClose={() => setLightbox(null)}
-        />
-      ) : null}
-
-      <Dialog open={videoNote !== null} title={videoNote?.title ?? "Video"} onClose={() => setVideoNote(null)}>
-        {videoNote ? (
-          <div>
-            <p className="text-sm font-medium text-brand-strong">{t("Video minh họa")}</p>
-            <p className="mt-2 text-[15px] leading-relaxed text-ink">
-              {t("Chưa có tệp hoặc nguồn phát hợp lệ. Thẻ này dùng để duyệt giao diện danh mục video.")}
-            </p>
-            <p className="mt-3 text-sm text-muted">
-              {videoNote.countLabel}
-              {videoNote.location ? ` · ${videoNote.location}` : ""}
-              {videoNote.date ? ` · ${videoNote.date}` : ""}
-            </p>
-          </div>
-        ) : null}
-      </Dialog>
+      {selection ? <MediaViewer key={selection.id} item={selection} onClose={closeViewer} /> : null}
     </section>
   )
 }
