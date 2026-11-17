@@ -1,9 +1,9 @@
-import type { NewsArticle } from "../types"
+import type { NewsArticle } from "../types.ts"
 
 const demoNote =
   "Đây là bài viết minh họa cho bản demo trang chủ. Nội dung không phải thông cáo hay phát ngôn chính thức của Liên đoàn Pickleball Việt Nam."
 
-type NewsSource = Omit<NewsArticle, "content" | "publishedAt" | "isFeatured" | "illustrative">
+type NewsSource = Omit<NewsArticle, "publishedAt" | "isFeatured" | "illustrative">
 
 /**
  * Nguồn tin duy nhất cho Homepage và trang Tin tức.
@@ -20,12 +20,12 @@ const source: NewsSource[] = [
     date: "2026-07-28",
     excerpt:
       "Đại hội tại Hà Nội bầu Ban Chấp hành 37 người và thông qua Điều lệ cùng phương hướng 2026–2031.",
-    body: [
+    content: [
       "Đại hội tại Hà Nội bầu Ban Chấp hành 37 người và thông qua Điều lệ cùng phương hướng 2026–2031.",
       "Bài này dùng làm tin nổi bật trên trang chủ. Tên nhân sự và diễn biến đại hội trong bản demo không thay cho thông cáo chính thức.",
       demoNote,
     ],
-    image: "/images/match.jpg",
+    thumbnail: "/images/match.jpg",
     imageAlt: "Trận đấu đôi pickleball trên sân trong nhà. Ảnh minh họa cho tin nổi bật.",
     imagePosition: "object-[center_40%]",
     featured: true,
@@ -38,12 +38,12 @@ const source: NewsSource[] = [
     date: "2026-11-02",
     excerpt:
       "Các hoạt động kết nối cộng đồng, nâng cao chất lượng giải đấu và phát triển phong trào tiếp tục được chú trọng.",
-    body: [
+    content: [
       "Các hoạt động kết nối cộng đồng, nâng cao chất lượng giải đấu và phát triển phong trào tiếp tục được chú trọng.",
       "Ở giai đoạn này, trọng tâm được mô tả theo hướng xây nền: câu lạc bộ có đầu mối rõ, giải đấu có cách tổ chức thống nhất, và người chơi mới có lối vào cộng đồng gần nơi mình sinh sống.",
       demoNote,
     ],
-    image: "/images/outdoor.jpg",
+    thumbnail: "/images/outdoor.jpg",
     imageAlt: "Pha đánh bóng pickleball trên sân ngoài trời. Ảnh minh họa.",
     imagePosition: "object-[center_35%]",
     featured: false,
@@ -56,12 +56,12 @@ const source: NewsSource[] = [
     date: "2026-10-21",
     excerpt:
       "Tìm hiểu các yếu tố cần thiết để tổ chức một giải đấu chuyên nghiệp, minh bạch và hiệu quả.",
-    body: [
+    content: [
       "Tìm hiểu các yếu tố cần thiết để tổ chức một giải đấu chuyên nghiệp, minh bạch và hiệu quả.",
       "Một giải chạy ổn thường bắt đầu từ điều lệ rõ, lịch sân công bố sớm, trọng tài thống nhất cách tính điểm, và ban tổ chức có kênh trả lời câu hỏi của vận động viên trước giờ bóng lăn.",
       demoNote,
     ],
-    image: "/images/match.jpg",
+    thumbnail: "/images/match.jpg",
     imageAlt: "Cụm sân pickleball trong nhà. Ảnh minh họa.",
     imagePosition: "object-[72%_center]",
     featured: false,
@@ -74,12 +74,12 @@ const source: NewsSource[] = [
     date: "2026-10-14",
     excerpt:
       "Hoạt động giao lưu và tập luyện thường xuyên giúp kết nối người chơi ở nhiều địa phương.",
-    body: [
+    content: [
       "Hoạt động giao lưu và tập luyện thường xuyên giúp kết nối người chơi ở nhiều địa phương.",
       "Câu lạc bộ là nơi người mới mượn vợt, học luật giao bóng và tìm bạn đánh cùng trình. Khi các nhóm này gặp nhau, phong trào không còn nằm ở một vài sân lớn.",
       demoNote,
     ],
-    image: "/images/player.jpg",
+    thumbnail: "/images/player.jpg",
     imageAlt:
       "Vận động viên pickleball trên sân ngoài trời. Ảnh minh họa, không phải chân dung nhân sự Liên đoàn.",
     imagePosition: "object-[center_15%]",
@@ -92,12 +92,12 @@ const source: NewsSource[] = [
     title: "Một cơ sở dữ liệu cho hội viên, câu lạc bộ và giải đấu",
     date: "2026-10-30",
     excerpt: "Hồ sơ điện tử, đăng ký thi đấu và danh sách câu lạc bộ được gom về một đầu mối.",
-    body: [
+    content: [
       "Hồ sơ điện tử, đăng ký thi đấu và danh sách câu lạc bộ được gom về một đầu mối.",
       "Bài mô tả hướng làm việc của một cơ sở dữ liệu dùng chung. Chưa có hệ thống nào được công bố trên trang này.",
       demoNote,
     ],
-    image: "/images/outdoor.jpg",
+    thumbnail: "/images/outdoor.jpg",
     imageAlt: "Sân pickleball ngoài trời. Ảnh minh họa.",
     imagePosition: "object-center",
     featured: false,
@@ -111,12 +111,12 @@ const source: NewsSource[] = [
     title: "Nâng cao kỹ năng và kiến thức chuyên môn cho người chơi Pickleball",
     date: "2026-10-07",
     excerpt: "Các hoạt động đào tạo góp phần xây dựng nền tảng phát triển bền vững cho bộ môn.",
-    body: [
+    content: [
       "Các hoạt động đào tạo góp phần xây dựng nền tảng phát triển bền vững cho bộ môn.",
       "Buổi tập có thể đi từ cách cầm vợt, chọn vị trí ở lưới, đến cách trọng tài công bố tỉ số.",
       demoNote,
     ],
-    image: "/images/player.jpg",
+    thumbnail: "/images/player.jpg",
     imageAlt: "Vận động viên cầm vợt pickleball. Ảnh minh họa.",
     imagePosition: "object-[center_30%]",
     featured: false,
@@ -131,12 +131,12 @@ const source: NewsSource[] = [
     date: "2026-10-28",
     excerpt:
       "Những trận đấu hấp dẫn và tinh thần giao lưu thể thao tạo nên sức hút của các sự kiện Pickleball.",
-    body: [
+    content: [
       "Những trận đấu hấp dẫn và tinh thần giao lưu thể thao tạo nên sức hút của các sự kiện Pickleball.",
       "Trên sân phong trào, người chơi thường gặp nhau qua nội dung đôi và đôi nam nữ.",
       demoNote,
     ],
-    image: "/images/match.jpg",
+    thumbnail: "/images/match.jpg",
     imageAlt: "Trận đấu đôi pickleball trên sân trong nhà. Ảnh minh họa.",
     imagePosition: "object-center",
     featured: false,
@@ -150,12 +150,12 @@ const source: NewsSource[] = [
     title: "Theo dõi luật và lịch của liên đoàn quốc tế, châu Á",
     date: "2026-09-18",
     excerpt: "Bộ luật và lịch thi đấu quốc tế được theo dõi để cộng đồng trong nước có mốc tham chiếu.",
-    body: [
+    content: [
       "Bộ luật và lịch thi đấu quốc tế được theo dõi để cộng đồng trong nước có mốc tham chiếu.",
       "Bài không thông báo tư cách thành viên hay thay đổi luật nào đã được Liên đoàn ban hành.",
       demoNote,
     ],
-    image: "/images/outdoor.jpg",
+    thumbnail: "/images/outdoor.jpg",
     imageAlt: "Hai người chơi pickleball trên sân ngoài trời. Ảnh minh họa.",
     imagePosition: "object-[center_40%]",
     featured: false,
@@ -169,12 +169,12 @@ const source: NewsSource[] = [
     title: "Pickleball ngày càng thu hút cộng đồng người chơi trẻ",
     date: "2026-10-11",
     excerpt: "Nhịp trận ngắn và sân dễ tiếp cận khiến nhiều bạn trẻ tìm đến bộ môn sau giờ học.",
-    body: [
+    content: [
       "Nhịp trận ngắn và sân dễ tiếp cận khiến nhiều bạn trẻ tìm đến bộ môn sau giờ học.",
       "Đây là quan sát minh họa về phong trào, không phải số liệu người chơi theo độ tuổi.",
       demoNote,
     ],
-    image: "/images/player.jpg",
+    thumbnail: "/images/player.jpg",
     imageAlt: "Vận động viên trẻ cầm vợt pickleball. Ảnh minh họa, không xác định danh tính.",
     imagePosition: "object-[center_20%]",
     featured: false,
@@ -188,12 +188,12 @@ const source: NewsSource[] = [
     title: "Những xu hướng phát triển Pickleball đáng chú ý",
     date: "2026-09-30",
     excerpt: "Sân câu lạc bộ, giải cuối tuần và các buổi tập mở đang định hình cách phong trào lan ra.",
-    body: [
+    content: [
       "Sân câu lạc bộ, giải cuối tuần và các buổi tập mở đang định hình cách phong trào lan ra.",
       "Các xu hướng trong bài là giả định để minh họa giao diện, chưa phải báo cáo của Liên đoàn.",
       demoNote,
     ],
-    image: "/images/match.jpg",
+    thumbnail: "/images/match.jpg",
     imageAlt: "Cụm sân pickleball đang có trận đấu. Ảnh minh họa.",
     imagePosition: "object-[30%_center]",
     featured: false,
@@ -204,7 +204,6 @@ const source: NewsSource[] = [
 
 export const news: NewsArticle[] = source.map((article) => ({
   ...article,
-  content: article.body,
   publishedAt: article.date,
   isFeatured: article.featured,
   illustrative: true,

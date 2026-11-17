@@ -2,17 +2,17 @@ import { useTranslation } from "../../i18n"
 import { ArrowRight } from "lucide-react"
 import type { NewsArticle } from "../../types"
 import { formatViDate } from "../../lib/format"
-import { newsPath } from "../../lib/news"
+import { getNewsDetailUrl } from "../../lib/news"
 import { sitePath } from "../../lib/site"
 import { Badge } from "../Badge"
 
 export function NewsSpotlight({ featured }: { featured: NewsArticle }) {
   const { t } = useTranslation()
   return (
-    <a href={sitePath(newsPath(featured))} className="news-feature group">
+    <a href={sitePath(getNewsDetailUrl(featured))} className="news-feature group">
       <div className="overflow-hidden rounded-2xl bg-paper">
         <img
-          src={sitePath(featured.image)}
+          src={sitePath(featured.thumbnail)}
           alt=""
           width={1600}
           height={900}

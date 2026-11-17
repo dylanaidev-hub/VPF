@@ -35,18 +35,26 @@ export type Statistic = {
   note: string
 }
 
+export type NewsContentBlock =
+  | string
+  | { type: "heading"; text: string }
+  | { type: "list"; items: string[]; ordered?: boolean }
+  | { type: "image"; src: string; alt: string; caption?: string }
+
 export type NewsArticle = {
   id: string
   slug: string
   title: string
   excerpt: string
-  /** Nội dung bài. Cùng mảng với `body` để trang chủ không đổi cách đọc. */
-  content: string[]
-  body: string[]
+  content: NewsContentBlock[]
   category: string
-  image: string
+  thumbnail: string
+  coverImage?: string
   imageAlt: string
   imagePosition?: string
+  author?: string
+  source?: string
+  relatedIds?: string[]
   /** Ngày đăng ISO. Cùng giá trị với `date`. */
   publishedAt: string
   date: string

@@ -1,3 +1,5 @@
+import { isNewsDetailPath } from "./newsRoute"
+
 /** Khớp trang HTML hiện tại. `/` và `/index.html` đều là trang chủ. */
 export function isCurrentPage(href: string) {
   if (typeof window === "undefined" || !href.startsWith("/")) return false
@@ -10,5 +12,6 @@ export function isCurrentPage(href: string) {
   }
   const current = path === "/" ? "/index.html" : path
   const target = href.split("#")[0].split("?")[0] || "/index.html"
+  if (target === "/tintuc.html" && isNewsDetailPath(current)) return true
   return current === target
 }

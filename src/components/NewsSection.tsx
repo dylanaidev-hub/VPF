@@ -1,23 +1,14 @@
 import { useTranslation } from "../i18n"
-import { useState } from "react"
 import { ArrowUpRight } from "lucide-react"
 import type { NewsArticle } from "../types"
-import { formatViDate } from "../lib/format"
 import { selectNewsLayout } from "../lib/news"
-import { Dialog } from "./Dialog"
+import { sitePath } from "../lib/site"
 import { FeaturedNewsCard } from "./FeaturedNewsCard"
 import { NewsCard } from "./NewsCard"
 
-export function NewsSection({
-  articles,
-  onOpen,
-}: {
-  articles: NewsArticle[]
-  onOpen: (article: NewsArticle) => void
-}) {
+export function NewsSection({ articles }: { articles: NewsArticle[] }) {
   const { t } = useTranslation()
-  const [catalogOpen, setCatalogOpen] = useState(false)
-  const { featured, secondary, catalog } = selectNewsLayout(articles)
+  const { featured, secondary, trendingTop } = selectNewsLayout(articles)
 
   if (!featured) return null
 
@@ -37,49 +28,34 @@ export function NewsSection({
               {t("Cập nhật những thông tin mới nhất từ cộng đồng Pickleball Việt Nam.")}
             </p>
           </div>
-          <button
-            type="button"
+          <a
+            href={sitePath("/tintuc.html")}
             className="relative inline-flex min-h-12 shrink-0 items-center justify-center gap-2 self-start rounded-[10px] border border-line bg-white px-5 text-[15px] font-medium text-ink transition-colors duration-200 hover:border-brand hover:bg-brand md:self-auto"
-            onClick={() => setCatalogOpen(true)}
           >
             {t("Tất cả tin tức")}
             <ArrowUpRight className="size-4" aria-hidden />
-          </button>
+          </a>
         </div>
 
         <div className="grid items-stretch gap-6 min-[1200px]:grid-cols-[minmax(0,55fr)_minmax(0,45fr)]">
-          <FeaturedNewsCard article={featured} onOpen={onOpen} />
+          <FeaturedNewsCard article={featured} />
           <div className="grid content-start gap-4 min-[1200px]:h-full min-[1200px]:grid-rows-3">
             {secondary.map((article) => (
-              <NewsCard key={article.id} article={article} onOpen={onOpen} />
+              <NewsCard key={article.id} article={article} />
             ))}
           </div>
         </div>
+        {trendingTop.length ? (
+          <section className="mt-8" aria-labelledby="tin-dang-chu-y">
+            <h3 id="tin-dang-chu-y" className="mb-4 text-xl font-bold text-ink">{t("Tin đang được chú ý")}</h3>
+            <ul className="grid gap-4 md:grid-cols-2 min-[1200px]:grid-cols-3">
+              {trendingTop.map((article) => (
+                <li key={article.id} className="min-w-0"><NewsCard article={article} /></li>
+              ))}
+            </ul>
+          </section>
+        ) : null}
       </div>
-
-      <Dialog open={catalogOpen} title={t("Tất cả tin tức")} onClose={() => setCatalogOpen(false)}>
-        <ul className="divide-y divide-line">
-          {catalog.map((article) => (
-            <li key={article.id}>
-              <button
-                type="button"
-                className="flex w-full flex-col items-start gap-1 py-4 text-left"
-                onClick={() => {
-                  setCatalogOpen(false)
-                  onOpen(article)
-                }}
-              >
-                <span className="text-[12px] font-medium text-muted">
-                  {t(article.category)}
-                  <span aria-hidden> · </span>
-                  <time dateTime={article.date}>{formatViDate(article.date)}</time>
-                </span>
-                <span className="text-base font-semibold leading-snug text-ink">{t(article.title)}</span>
-              </button>
-            </li>
-          ))}
-        </ul>
-      </Dialog>
     </section>
   )
 }

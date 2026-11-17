@@ -1,5 +1,7 @@
+import { news } from "../data/news"
 import type { NewsArticle } from "../types"
 import { foldText } from "./format"
+export { getNewsDetailUrl, getNewsSlug } from "./newsRoute"
 
 export const newsCategories = [
   "Tất cả",
@@ -15,18 +17,42 @@ export type NewsSort = "newest" | "oldest"
 
 export const NEWS_PAGE_SIZE = 9
 
-export function newsPath(article: Pick<NewsArticle, "slug">) {
-  return `/tin-tuc/${article.slug}/`
+export function getNewsBySlug(slug: string | null) {
+  return news.find((article) => article.slug === slug) ?? null
 }
 
-export function articleSlugFromPath(pathname: string) {
-  const match = pathname.match(/\/tin-tuc\/([^/]+)\/?$/)
-  if (!match) return null
-  try {
-    return decodeURIComponent(match[1])
-  } catch {
-    return match[1]
-  }
+export function getNewsContentText(article: NewsArticle) {
+  return article.content.flatMap((block) => {
+    if (typeof block === "string") return [block]
+    if (block.type === "heading") return [block.text]
+    if (block.type === "list") return block.items
+    return block.caption ? [block.alt, block.caption] : [block.alt]
+  })
+}
+
+function newsTopicWords(title: string) {
+  return foldNewsQuery(title).split(/[^a-z0-9]+/).filter((word) => word.length >= 4 && word !== "pickleball")
+}
+
+export function getRelatedNews(article: NewsArticle) {
+  const ids = article.relatedIds ?? []
+  const topicWords = new Set(newsTopicWords(article.title))
+
+  return news.filter((item) => item.id !== article.id)
+    .map((item) => ({
+      item,
+      explicitRank: ids.includes(item.id) ? ids.indexOf(item.id) : ids.length,
+      sameCategory: item.category === article.category ? 1 : 0,
+      overlap: newsTopicWords(item.title).filter((word) => topicWords.has(word)).length,
+    }))
+    .sort((a, b) =>
+      a.explicitRank - b.explicitRank ||
+      b.sameCategory - a.sameCategory ||
+      b.overlap - a.overlap ||
+      b.item.publishedAt.localeCompare(a.item.publishedAt),
+    )
+    .slice(0, 3)
+    .map(({ item }) => item)
 }
 
 export function selectSpotlight(articles: NewsArticle[]) {
@@ -61,17 +87,13 @@ export function filterNews(
 }
 
 export function selectNewsLayout(articles: NewsArticle[]) {
-  const featured = articles.find((item) => item.featured) ?? articles[0]
+  const { featured, trending, trendingTop } = selectSpotlight(articles)
   const rest = articles.filter((item) => item.id !== featured?.id)
-  const trending = rest
-    .filter((item) => item.isTrending)
-    .sort((a, b) => (a.trendingRank ?? Number.MAX_SAFE_INTEGER) - (b.trendingRank ?? Number.MAX_SAFE_INTEGER))
   const trendingIds = new Set(trending.map((item) => item.id))
   const secondary = rest.filter((item) => !trendingIds.has(item.id)).slice(0, 3)
   return {
     featured,
     secondary,
-    trending,
-    catalog: [...articles].sort((a, b) => b.date.localeCompare(a.date)),
+    trendingTop,
   }
 }

@@ -2,29 +2,21 @@ import { useTranslation } from "../i18n"
 import { ArrowRight } from "lucide-react"
 import type { NewsArticle } from "../types"
 import { formatViDate } from "../lib/format"
+import { getNewsDetailUrl } from "../lib/news"
+import { sitePath } from "../lib/site"
 import { Badge } from "./Badge"
 import { NewsImage } from "./NewsImage"
 
-export function NewsCard({
-  article,
-  onOpen,
-}: {
-  article: NewsArticle
-  onOpen: (article: NewsArticle) => void
-}) {
+export function NewsCard({ article }: { article: NewsArticle }) {
   const { t } = useTranslation()
   return (
     <a
-      href={`#${article.slug}`}
-      onClick={(event) => {
-        event.preventDefault()
-        onOpen(article)
-      }}
+      href={sitePath(getNewsDetailUrl(article))}
       className="group flex h-full min-h-[104px] items-stretch gap-3 rounded-2xl border border-line bg-white p-3 transition-[border-color] duration-200 hover:border-brand/70 sm:gap-4"
     >
       <div className="relative w-[88px] shrink-0 self-stretch overflow-hidden rounded-xl bg-paper sm:w-[32%]">
         <NewsImage
-          src={article.image}
+          src={article.thumbnail}
           alt=""
           width={320}
           height={240}

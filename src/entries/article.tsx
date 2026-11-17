@@ -1,24 +1,15 @@
-import { StrictMode, useEffect } from "react"
+import { StrictMode } from "react"
 import { createRoot } from "react-dom/client"
 import { setPageMetadata } from "../i18n"
-import { news } from "../data/news"
-import { articleSlugFromPath } from "../lib/news"
+import { getNewsBySlug, getNewsSlug } from "../lib/news"
 import { ArticlePage } from "../pages/ArticlePage"
 import "../index.css"
 
-function ArticleEntry() {
-  useEffect(() => {
-    const slug = articleSlugFromPath(window.location.pathname)
-    const article = news.find((item) => item.slug === slug)
-    if (!article) return
-    setPageMetadata(`${article.title} – Liên đoàn Pickleball Việt Nam`, article.excerpt)
-  }, [])
-
-  return <ArticlePage />
-}
+const article = getNewsBySlug(getNewsSlug(window.location))
+setPageMetadata(`${article?.title ?? "Không tìm thấy bài viết"} – Liên đoàn Pickleball Việt Nam`, article?.excerpt)
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <ArticleEntry />
+    <ArticlePage article={article} />
   </StrictMode>,
 )

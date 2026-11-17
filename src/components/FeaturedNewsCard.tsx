@@ -2,31 +2,23 @@ import { useTranslation } from "../i18n"
 import { ArrowRight } from "lucide-react"
 import type { NewsArticle } from "../types"
 import { formatViDate } from "../lib/format"
+import { getNewsDetailUrl } from "../lib/news"
+import { sitePath } from "../lib/site"
 import { Badge } from "./Badge"
 import { NewsImage } from "./NewsImage"
 import { StarPattern } from "./StarPattern"
 
-export function FeaturedNewsCard({
-  article,
-  onOpen,
-}: {
-  article: NewsArticle
-  onOpen: (article: NewsArticle) => void
-}) {
+export function FeaturedNewsCard({ article }: { article: NewsArticle }) {
   const { t } = useTranslation()
   const important = article.category === "Tin Liên đoàn"
 
   return (
     <a
-      href={`#${article.slug}`}
-      onClick={(event) => {
-        event.preventDefault()
-        onOpen(article)
-      }}
+      href={sitePath(getNewsDetailUrl(article))}
       className="group relative isolate flex h-full min-h-[440px] overflow-hidden rounded-2xl bg-signal min-[1200px]:min-h-[520px]"
     >
       <NewsImage
-        src={article.image}
+        src={article.thumbnail}
         alt=""
         width={1600}
         height={1000}

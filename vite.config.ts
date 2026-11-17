@@ -4,6 +4,8 @@ import { mkdirSync, readFileSync, writeFileSync } from "node:fs"
 import { resolve } from "node:path"
 import { fileURLToPath } from "node:url"
 import { defineConfig, type Plugin } from "vite"
+import { news } from "./src/data/news.mock.ts"
+import { getNewsDetailUrl, isNewsDetailPath, newsDetailPage } from "./src/lib/newsRoute.ts"
 
 function escapeHtml(value: string) {
   return value
@@ -14,26 +16,30 @@ function escapeHtml(value: string) {
 }
 
 function newsArticlePages(root: string): Plugin {
+  let outDir: string
+  let base: string
   return {
     name: "vpf-news-articles",
+    configResolved(config) {
+      outDir = resolve(config.root, config.build.outDir)
+      base = config.base
+    },
     configureServer(server) {
       server.middlewares.use((req, _res, next) => {
         const pathname = req.url?.split("?")[0] ?? ""
-        if (/^\/tin-tuc\/[^/]+\/?$/.test(pathname)) req.url = "/article.html"
+        const prefix = base !== "/" && pathname.startsWith(base) ? base.slice(0, -1) : ""
+        const route = pathname.slice(prefix.length)
+        if (route !== newsDetailPage && isNewsDetailPath(route)) req.url = prefix + newsDetailPage
         if (/^\/hop-tac\/[^/]+\/?$/.test(pathname)) req.url = "/hop-tac.html"
         next()
       })
     },
     closeBundle() {
-      const templatePath = resolve(root, "dist/article.html")
+      const templatePath = resolve(outDir, newsDetailPage.slice(1))
       const template = readFileSync(templatePath, "utf8")
-      const source = readFileSync(resolve(root, "src/data/news.mock.ts"), "utf8")
-      const articles = [...source.matchAll(/slug:\s*"([^"]+)"[\s\S]*?title:\s*"([^"]+)"[\s\S]*?excerpt:\s*"([^"]+)"/g)].map(
-        (match) => ({ slug: match[1], title: match[2], excerpt: match[3] }),
-      )
-      if (articles.length === 0) throw new Error("Không đọc được slug tin tức từ news.mock.ts")
-      for (const article of articles) {
-        const dir = resolve(root, "dist/tin-tuc", article.slug)
+      for (const article of news) {
+        const canonical = escapeHtml(base + getNewsDetailUrl(article).slice(1))
+        const dir = resolve(outDir, "tin-tuc", article.slug)
         mkdirSync(dir, { recursive: true })
         const html = template
           .replace(
@@ -44,10 +50,11 @@ function newsArticlePages(root: string): Plugin {
             'content="Tin tức Liên đoàn Pickleball Việt Nam."',
             `content="${escapeHtml(article.excerpt)}"`,
           )
+          .replace("</head>", `<link rel="canonical" href="${canonical}" />\n  </head>`)
         writeFileSync(resolve(dir, "index.html"), html)
       }
 
-      const sponsorTemplatePath = resolve(root, "dist/hop-tac.html")
+      const sponsorTemplatePath = resolve(outDir, "hop-tac.html")
       const sponsorTemplate = readFileSync(sponsorTemplatePath, "utf8")
       const sponsorSource = readFileSync(resolve(root, "src/data/partnership.mock.ts"), "utf8")
       const sponsorMatches = [
@@ -55,7 +62,7 @@ function newsArticlePages(root: string): Plugin {
       ].map((match) => ({ slug: match[1], name: match[2], intro: match[3] }))
       if (sponsorMatches.length === 0) throw new Error("Không đọc được slug nhà tài trợ từ partnership.mock.ts")
       for (const sponsor of sponsorMatches) {
-        const dir = resolve(root, "dist/hop-tac", sponsor.slug)
+        const dir = resolve(outDir, "hop-tac", sponsor.slug)
         mkdirSync(dir, { recursive: true })
         const html = sponsorTemplate
           .replace(
@@ -92,6 +99,7 @@ const pages = [
   "congdong",
   "hoptac",
   "timkiem",
+  "chitiet-tintuc",
 ]
 
 export default defineConfig({
@@ -102,7 +110,6 @@ export default defineConfig({
     rollupOptions: {
       input: {
         ...Object.fromEntries(pages.map((name) => [name, resolve(root, `${name}.html`)])),
-        article: resolve(root, "article.html"),
         "hop-tac": resolve(root, "hop-tac.html"),
         "chitiet-giaidau": resolve(root, "chitiet-giaidau.html"),
       },

@@ -9,7 +9,7 @@ import { news } from "../data/news"
 import { sponsorTierLabel, type SponsorProfile } from "../data/partnership.mock"
 import { tournaments } from "../data/tournaments.mock"
 import { formatViDate } from "../lib/format"
-import { newsPath } from "../lib/news"
+import { getNewsDetailUrl } from "../lib/news"
 import { sitePath } from "../lib/site"
 import { tournamentPath } from "../lib/tournaments"
 
@@ -130,9 +130,9 @@ export function SponsorDetailPage({ sponsor }: { sponsor: SponsorProfile }) {
             <ul className="partner-news-grid">
               {relatedNews.map((article) => (
                 <li key={article.id}>
-                  <a href={sitePath(newsPath(article))} className="partner-news-card">
+                  <a href={sitePath(getNewsDetailUrl(article))} className="partner-news-card">
                     <img
-                      src={sitePath(article.image)}
+                      src={sitePath(article.thumbnail)}
                       alt=""
                       width={640}
                       height={360}

@@ -2,7 +2,7 @@ import { useTranslation } from "../../i18n"
 import { X } from "lucide-react"
 import type { NewsArticle } from "../../types"
 import { formatViDate } from "../../lib/format"
-import { newsCategories, newsPath, type NewsCategory, type NewsSort } from "../../lib/news"
+import { newsCategories, getNewsDetailUrl, type NewsCategory, type NewsSort } from "../../lib/news"
 import { sitePath } from "../../lib/site"
 import { Badge } from "../Badge"
 import { Select } from "../Select"
@@ -89,10 +89,10 @@ export function NewsGrid({ articles }: { articles: NewsArticle[] }) {
     <ul className="news-grid">
       {articles.map((article) => (
         <li key={article.id}>
-          <a href={sitePath(newsPath(article))} className="group flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-white">
+          <a href={sitePath(getNewsDetailUrl(article))} className="group flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-white">
             <div className="overflow-hidden">
               <img
-                src={sitePath(article.image)}
+                src={sitePath(article.thumbnail)}
                 alt=""
                 width={640}
                 height={360}

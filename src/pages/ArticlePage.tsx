@@ -1,73 +1,106 @@
 import { useTranslation } from "../i18n"
-import { useMemo } from "react"
-import { news } from "../data/news"
+import type { NewsArticle, NewsContentBlock } from "../types"
 import { formatViDate } from "../lib/format"
-import { articleSlugFromPath } from "../lib/news"
-import { sitePath } from "../lib/site"
+import { getRelatedNews } from "../lib/news"
 import { Breadcrumb } from "../components/Breadcrumb"
+import { Button } from "../components/Button"
+import { NewsCard } from "../components/NewsCard"
+import { NewsImage } from "../components/NewsImage"
+import { SectionHeading } from "../components/SectionHeading"
 import { SiteLayout } from "../components/SiteLayout"
 
-export function ArticlePage() {
+function ArticleBlock({ block }: { block: NewsContentBlock }) {
   const { t } = useTranslation()
-  const article = useMemo(() => {
-    const slug = articleSlugFromPath(window.location.pathname)
-    return news.find((item) => item.slug === slug) ?? null
-  }, [])
+
+  if (typeof block === "string") return <p>{t(block)}</p>
+
+  if (block.type === "heading") {
+    return <h2 className="pt-3 text-xl font-bold leading-snug sm:text-2xl">{t(block.text)}</h2>
+  }
+
+  if (block.type === "list") {
+    const List = block.ordered ? "ol" : "ul"
+    return (
+      <List className={`space-y-2 ps-6 ${block.ordered ? "list-decimal" : "list-disc"}`}>
+        {block.items.map((item, index) => <li key={index}>{t(item)}</li>)}
+      </List>
+    )
+  }
+
+  return (
+    <figure>
+      <NewsImage src={block.src} alt={t(block.alt)} loading="lazy" decoding="async" className="h-auto w-full rounded-xl" />
+      {block.caption ? <figcaption className="mt-2 text-sm text-muted">{t(block.caption)}</figcaption> : null}
+    </figure>
+  )
+}
+
+export function ArticlePage({ article }: { article: NewsArticle | null }) {
+  const { t } = useTranslation()
+  const crumbs = [
+    { label: "Trang chủ", href: "/index.html" },
+    { label: "Tin tức", href: article ? "/tintuc.html" : undefined },
+  ]
+
+  if (!article) {
+    return (
+      <SiteLayout>
+        <div className="page-wrap py-10 md:py-14">
+          <Breadcrumb items={crumbs} />
+          <h1 className="news-page-title mt-6">{t("Không tìm thấy bài viết")}</h1>
+          <p className="mt-4 text-muted">{t("Đường dẫn không khớp bài nào trong nguồn tin hiện tại.")}</p>
+          <Button href="/tintuc.html" className="mt-6">{t("Quay lại Tin tức")}</Button>
+        </div>
+      </SiteLayout>
+    )
+  }
+
+  const related = getRelatedNews(article)
+  const byline = [article.author, article.source ? t(article.source) : undefined].filter(Boolean).join(" · ")
+  const content = article.excerpt && article.content[0] === article.excerpt ? article.content.slice(1) : article.content
 
   return (
     <SiteLayout>
-      <article className="bg-white">
-        <div className="page-wrap py-10 min-[1200px]:py-16">
-          {article ? (
-            <>
-              <Breadcrumb
-                items={[
-                  { label: "Trang chủ", href: "/index.html" },
-                  { label: "Tin tức", href: "/tintuc.html" },
-                  { label: article.title },
-                ]}
-              />
-              <p className="mt-8 text-[13px] font-medium text-brand-strong">
-                {t(article.category)}
-                <span className="text-muted"> · </span>
-                <time dateTime={article.publishedAt} className="text-muted">
-                  {formatViDate(article.publishedAt)}
-                </time>
-              </p>
-              <h1 className="news-page-title mt-4 max-w-4xl text-ink">{t(article.title)}</h1>
-              <p className="mt-4 max-w-2xl text-[15px] leading-relaxed text-muted md:text-base">{t(article.excerpt)}</p>
-              <img
-                src={sitePath(article.image)}
-                alt={t(article.imageAlt)}
-                width={1600}
-                height={900}
-                fetchPriority="high"
-                decoding="async"
-                className={`mt-8 aspect-video w-full rounded-2xl object-cover ${article.imagePosition ?? "object-center"}`}
-              />
-              <div className="mt-8 max-w-2xl space-y-4 text-[15px] leading-relaxed text-ink md:text-base">
-                {article.content.map((paragraph, index) => (
-                  <p key={index}>{t(paragraph)}</p>
-                ))}
-              </div>
-              <p className="mt-10">
-                <a href={sitePath("/tintuc.html")} className="text-[15px] font-medium text-brand-strong">
-                  {t("Về trang tin tức")}
-                </a>
-              </p>
-            </>
-          ) : (
-            <>
-              <h1 className="news-page-title text-ink">{t("Không tìm thấy bài viết")}</h1>
-              <p className="mt-4 text-muted">{t("Đường dẫn không khớp bài nào trong nguồn tin hiện tại.")}</p>
-              <p className="mt-6">
-                <a href={sitePath("/tintuc.html")} className="text-[15px] font-medium text-brand-strong">
-                  {t("Về trang tin tức")}
-                </a>
-              </p>
-            </>
-          )}
+      <article className="page-wrap bg-white py-8 sm:py-10 lg:py-14">
+        <div className="mx-auto max-w-[780px]">
+          <header>
+            <Breadcrumb items={[...crumbs, { label: article.title }]} />
+            <p className="mt-6 text-sm font-semibold text-signal">{t(article.category)}</p>
+            <h1 className="mt-2 text-[clamp(2rem,4vw,3.5rem)] font-bold leading-[1.12] tracking-tight text-ink [overflow-wrap:anywhere]">
+              {t(article.title)}
+            </h1>
+            <p className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-muted">
+              <time dateTime={article.publishedAt}>{formatViDate(article.publishedAt)}</time>
+              {byline ? <span>{byline}</span> : null}
+              {article.illustrative ? <span>{t("Bài viết minh họa")}</span> : null}
+            </p>
+            {article.excerpt ? <p className="mt-5 text-base leading-relaxed text-muted sm:text-lg">{t(article.excerpt)}</p> : null}
+          </header>
+          <NewsImage
+            src={article.coverImage ?? article.thumbnail}
+            alt={t(article.imageAlt)}
+            width={1600}
+            height={900}
+            fetchPriority="high"
+            decoding="async"
+            className={`mt-7 aspect-video w-full rounded-xl bg-paper object-cover ${article.imagePosition ?? "object-center"}`}
+          />
+          <div className="mt-8 space-y-5 text-base leading-[1.75] text-ink [overflow-wrap:anywhere] sm:text-lg">
+            {content.map((block, index) => <ArticleBlock key={index} block={block} />)}
+            {!article.content.length ? <p className="text-muted">{t("Nội dung bài viết chưa được công bố.")}</p> : null}
+          </div>
         </div>
+
+        {related.length ? (
+          <section className="mt-12 border-t border-line pt-8 md:mt-16 md:pt-10" aria-labelledby="tin-lien-quan">
+            <SectionHeading id="tin-lien-quan" title="Tin tức liên quan" />
+            <ul className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+              {related.map((item) => (
+                <li key={item.id} className="min-w-0"><NewsCard article={item} /></li>
+              ))}
+            </ul>
+          </section>
+        ) : null}
       </article>
     </SiteLayout>
   )

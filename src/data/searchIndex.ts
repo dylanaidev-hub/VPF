@@ -1,6 +1,6 @@
 import { formatEventDate, formatViDate } from "../lib/format"
 import { libraryRecordPath } from "../lib/libraryLinks"
-import { newsPath } from "../lib/news"
+import { getNewsDetailUrl, getNewsContentText } from "../lib/news"
 import { sponsorPath } from "../lib/partnership"
 import type { SearchItem } from "../lib/search"
 import { federationNav } from "./aboutFederation.mock"
@@ -24,9 +24,9 @@ export const siteSearchIndex: SearchItem[] = [
     title: article.title,
     description: article.excerpt,
     date: article.publishedAt,
-    keywords: [article.category, ...article.body],
+    keywords: [article.category, ...getNewsContentText(article)],
     meta: `${article.category} · ${formatViDate(article.date)}`,
-    url: newsPath(article),
+    url: getNewsDetailUrl(article),
   })),
   ...tournaments.map<SearchItem>((event) => ({
     id: `tournament-${event.id}`,
