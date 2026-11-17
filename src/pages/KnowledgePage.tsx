@@ -20,7 +20,7 @@ const visibleDocuments = technicalDocuments.flatMap((document) => {
 export function KnowledgePage() {
   return (
     <SiteLayout>
-      <PageHero {...pageHeroes.knowledge} variant="compact" />
+      <PageHero {...pageHeroes.knowledge} />
       <div className="tech-page">
         <div className="page-wrap tech-layout">
           <TechnicalNavigation />

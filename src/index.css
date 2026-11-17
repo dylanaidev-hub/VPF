@@ -1363,51 +1363,6 @@ body {
   }
 }
 
-.page-hero.is-compact {
-  min-height: 0;
-}
-
-.page-hero.is-compact .page-hero-body {
-  isolation: isolate;
-  padding-block: clamp(1.5rem, 3vw, 2.35rem);
-}
-
-.page-hero-compact-mark {
-  position: absolute;
-  z-index: -1;
-  top: 50%;
-  right: 1rem;
-  width: clamp(11rem, 32vw, 20rem);
-  height: auto;
-  translate: 0 -50%;
-  opacity: 0.32;
-  pointer-events: none;
-}
-
-.page-hero.is-compact .page-hero-copy {
-  max-width: none;
-  margin-top: 0;
-}
-
-.page-hero.is-compact .page-hero-title {
-  margin-top: 0.45rem;
-  font-size: clamp(2.05rem, 5vw, 3.1rem);
-  letter-spacing: -0.045em;
-  line-height: 1.15;
-  text-wrap: wrap;
-}
-
-.page-hero.is-compact .page-hero-description {
-  max-width: 42rem;
-  margin-top: 0.6rem;
-  color: #fff5ee;
-  font-size: clamp(0.9rem, 1.6vw, 1rem);
-}
-
-.page-hero.is-compact :is(.page-hero-title, .page-hero-description, .page-hero-kicker, .page-hero-extra, .page-hero-action) {
-  opacity: 1;
-}
-
 .tournament-facts {
   display: grid;
   gap: 1.25rem;
