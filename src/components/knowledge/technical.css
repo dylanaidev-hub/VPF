@@ -3,17 +3,22 @@ html:has(.tech-page) {
 }
 
 .tech-page {
+  --tech-item-divider: #e9e9e9;
+  --tech-item-padding: clamp(1.15rem, 2.2vw, 2rem);
+  --tech-topic-gap: clamp(3rem, 6.7vw, 5rem);
+  --tech-section-gap: clamp(3.5rem, 8.5vw, 7rem);
+  padding-block-end: clamp(3.5rem, 6.5vw, 6rem);
   background: var(--vpf-white);
 }
 
 .tech-nav {
-  padding-block: clamp(1.25rem, 4vw, 3.4rem);
-  border-bottom: 1px solid var(--vpf-line);
+  margin-block-end: var(--tech-topic-gap);
+  padding-block-start: clamp(1.25rem, 4vw, 3.4rem);
 }
 
 .tech-nav ol {
   display: grid;
-  gap: 0 clamp(1.25rem, 3vw, 3rem);
+  gap: clamp(0.5rem, 1.45vw, 1.35rem) clamp(1.25rem, 3vw, 3rem);
   margin: 0;
   padding: 0;
   list-style: none;
@@ -26,7 +31,6 @@ html:has(.tech-page) {
   align-items: center;
   gap: clamp(0.65rem, 1.5vw, 1rem);
   padding-block: 0.6rem;
-  border-bottom: 1px solid var(--vpf-line);
   color: var(--vpf-ink);
   font-size: clamp(0.95rem, 1.35vw, 1.2rem);
   font-weight: 650;
@@ -54,11 +58,10 @@ html:has(.tech-page) {
   display: grid;
   gap: clamp(1rem, 4vw, 3.5rem);
   align-items: start;
-  padding-block: clamp(2.2rem, 4.8vw, 3.65rem);
 }
 
 .tech-section + .tech-section {
-  border-top: 1px solid var(--vpf-line);
+  margin-block-start: var(--tech-section-gap);
 }
 
 .tech-section-body {
@@ -100,24 +103,29 @@ html:has(.tech-page) {
   list-style: none;
 }
 
-.tech-resources > li,
-.tech-training > li {
-  border-top: 1px solid var(--vpf-line);
-}
-
-.tech-resources > li:last-child,
-.tech-training > li:last-child {
-  border-bottom: 1px solid var(--vpf-line);
+.tech-resources > li + li,
+.tech-training > li + li {
+  border-block-start: 1px solid var(--tech-item-divider);
 }
 
 .tech-resources .rulebook--editorial {
   grid-template-columns: minmax(0, 1fr);
   align-items: start;
   gap: 0.55rem 1.2rem;
-  padding: clamp(0.9rem, 1.8vw, 1.35rem) 0.65rem;
+  padding: var(--tech-item-padding) 0.65rem;
   border: 0;
   border-radius: 0;
   background: transparent;
+}
+
+.tech-resources > li:first-child .rulebook--editorial,
+.tech-training > li:first-child {
+  padding-block-start: 0.55rem;
+}
+
+.tech-resources > li:last-child .rulebook--editorial,
+.tech-training > li:last-child {
+  padding-block-end: 0.65rem;
 }
 
 .tech-resources .rulebook--editorial:is(:hover, :focus-within) {
@@ -265,9 +273,7 @@ html:has(.tech-page) {
 }
 
 .tech-empty {
-  padding-block: 1.3rem;
-  border-top: 1px solid var(--vpf-line);
-  border-bottom: 1px solid var(--vpf-line);
+  padding-block: 0.55rem 0.65rem;
 }
 
 .tech-empty h3,
@@ -288,7 +294,7 @@ html:has(.tech-page) {
   display: grid;
   align-items: start;
   gap: 0.65rem;
-  padding-block: 1rem;
+  padding-block: var(--tech-item-padding);
 }
 
 .tech-training dl {
@@ -349,6 +355,11 @@ html:has(.tech-page) {
 }
 
 @media (min-width: 1200px) {
+  .tech-page {
+    --tech-topic-gap: clamp(5rem, 6.6vw, 6rem);
+    --tech-section-gap: clamp(7rem, 8.5vw, 8rem);
+  }
+
   .tech-nav ol {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
