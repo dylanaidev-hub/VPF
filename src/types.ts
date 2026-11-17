@@ -55,6 +55,7 @@ export type NewsArticle = {
   author?: string
   source?: string
   relatedIds?: string[]
+  status?: "published" | "draft" | "scheduled" | "private"
   /** Ngày đăng ISO. Cùng giá trị với `date`. */
   publishedAt: string
   date: string

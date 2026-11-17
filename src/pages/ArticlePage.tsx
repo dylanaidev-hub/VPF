@@ -1,7 +1,10 @@
 import { useTranslation } from "../i18n"
+import { ArrowRight } from "lucide-react"
 import type { NewsArticle, NewsContentBlock } from "../types"
 import { formatViDate } from "../lib/format"
-import { getRelatedNews } from "../lib/news"
+import { sitePath } from "../lib/site"
+import { getNewsDetailUrl, getRelatedNews } from "../lib/news"
+import { ArticleShare } from "../components/ArticleShare"
 import { Breadcrumb } from "../components/Breadcrumb"
 import { Button } from "../components/Button"
 import { NewsCard } from "../components/NewsCard"
@@ -89,19 +92,32 @@ export function ArticlePage({ article }: { article: NewsArticle | null }) {
             {content.map((block, index) => <ArticleBlock key={index} block={block} />)}
             {!article.content.length ? <p className="text-muted">{t("Nội dung bài viết chưa được công bố.")}</p> : null}
           </div>
+          <ArticleShare title={t(article.title)} url={sitePath(getNewsDetailUrl(article))} />
         </div>
+      </article>
 
-        {related.length ? (
-          <section className="mt-12 border-t border-line pt-8 md:mt-16 md:pt-10" aria-labelledby="tin-lien-quan">
-            <SectionHeading id="tin-lien-quan" title="Tin tức liên quan" />
-            <ul className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+      {related.length ? (
+        <section className="bg-paper py-12 md:py-16 lg:py-22" aria-labelledby="tin-lien-quan">
+          <div className="page-wrap">
+            <SectionHeading
+              id="tin-lien-quan"
+              title="Bài viết liên quan"
+              action={
+                <Button variant="text" className="text-(--vpf-logo-red)" href="/tintuc.html">
+                  {t("Xem tất cả")} <ArrowRight className="size-4" aria-hidden />
+                </Button>
+              }
+            />
+            <ul className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
               {related.map((item) => (
-                <li key={item.id} className="min-w-0"><NewsCard article={item} /></li>
+                <li key={item.id} className="min-w-0">
+                  <NewsCard article={item} variant="editorial" />
+                </li>
               ))}
             </ul>
-          </section>
-        ) : null}
-      </article>
+          </div>
+        </section>
+      ) : null}
     </SiteLayout>
   )
 }

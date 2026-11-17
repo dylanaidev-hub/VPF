@@ -32,25 +32,50 @@ function newsTopicWords(title: string) {
   return foldNewsQuery(title).split(/[^a-z0-9]+/).filter((word) => word.length >= 4 && word !== "pickleball")
 }
 
-export function getRelatedNews(article: NewsArticle) {
-  const ids = article.relatedIds ?? []
+export function getRelatedNews(article: NewsArticle, articles: readonly NewsArticle[] = news) {
+  const relatedIds = new Set(article.relatedIds)
   const topicWords = new Set(newsTopicWords(article.title))
+  const now = new Date()
+  const today = new Intl.DateTimeFormat("en-CA", {
+    timeZone: "Asia/Ho_Chi_Minh",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).format(now)
 
-  return news.filter((item) => item.id !== article.id)
+  const ranked = articles
+    .filter((item) => {
+      if (item.id === article.id || item.slug === article.slug) return false
+      if (item.status && item.status !== "published") return false
+
+      const publishedAt = Date.parse(item.publishedAt)
+      if (!Number.isFinite(publishedAt)) return false
+      return /^\d{4}-\d{2}-\d{2}$/.test(item.publishedAt) ? item.publishedAt <= today : publishedAt <= now.getTime()
+    })
     .map((item) => ({
       item,
-      explicitRank: ids.includes(item.id) ? ids.indexOf(item.id) : ids.length,
-      sameCategory: item.category === article.category ? 1 : 0,
-      overlap: newsTopicWords(item.title).filter((word) => topicWords.has(word)).length,
+      sameCategory: Number(item.category === article.category),
+      explicit: Number(relatedIds.has(item.id)),
+      overlap: new Set(newsTopicWords(item.title).filter((word) => topicWords.has(word))).size,
     }))
     .sort((a, b) =>
-      a.explicitRank - b.explicitRank ||
       b.sameCategory - a.sameCategory ||
+      b.explicit - a.explicit ||
       b.overlap - a.overlap ||
       b.item.publishedAt.localeCompare(a.item.publishedAt),
     )
-    .slice(0, 3)
-    .map(({ item }) => item)
+
+  const related: NewsArticle[] = []
+  const seenIds = new Set<string>()
+  const seenSlugs = new Set<string>()
+  for (const { item } of ranked) {
+    if (seenIds.has(item.id) || seenSlugs.has(item.slug)) continue
+    seenIds.add(item.id)
+    seenSlugs.add(item.slug)
+    related.push(item)
+    if (related.length === 3) break
+  }
+  return related
 }
 
 export function selectSpotlight(articles: NewsArticle[]) {
