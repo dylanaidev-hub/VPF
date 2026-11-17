@@ -284,7 +284,7 @@ export const federationCommittee = {
   eyebrow: "Ban Chấp hành",
   title: "Ban Chấp hành Liên đoàn",
   note: "Đội ngũ lãnh đạo và các thành viên tham gia điều hành hoạt động của Liên đoàn.",
-  cta: "Xem toàn bộ Ban Chấp hành",
+  cta: "Xem sơ đồ tổ chức",
   chair: federationChair,
   vices: federationVices,
   members: federationMembers,

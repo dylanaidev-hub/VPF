@@ -115,7 +115,7 @@ function buildExplorerData(): OrgExplorerData {
   }
 
   return {
-    title: "Cơ cấu tổ chức VPF",
+    title: "Sơ đồ tổ chức Liên đoàn",
     description: "Khám phá cơ cấu tổ chức và danh sách thành viên các ban của Liên đoàn.",
     note,
     boardCommitteeId: BOARD_ID,
