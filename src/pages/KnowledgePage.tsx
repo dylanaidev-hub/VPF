@@ -17,21 +17,23 @@ export function KnowledgePage() {
     <SiteLayout>
       <PageHero {...pageHeroes.knowledge} variant="compact" />
       <div className="tech-page">
-        <div className="page-wrap">
+        <div className="page-wrap tech-layout">
           <TechnicalNavigation />
-          {resourceGroups.map((group) => {
-            const documents = group.documents.flatMap((id) => {
-              const document = technicalDocuments.find((item) => item.id === id)
-              return document ? [document] : []
-            })
-            return (
-              <TechnicalSection key={group.id} id={group.id} intro={group.intro}>
-                <TechnicalDocumentList documents={documents} onOpen={setSelection} />
-              </TechnicalSection>
-            )
-          })}
-          <TechnicalLibrary documents={technicalDocuments} onOpen={setSelection} />
-          <TechnicalTraining courses={technicalCourses} />
+          <div className="tech-content">
+            {resourceGroups.map((group) => {
+              const documents = group.documents.flatMap((id) => {
+                const document = technicalDocuments.find((item) => item.id === id)
+                return document ? [document] : []
+              })
+              return (
+                <TechnicalSection key={group.id} id={group.id} intro={group.intro}>
+                  <TechnicalDocumentList documents={documents} onOpen={setSelection} />
+                </TechnicalSection>
+              )
+            })}
+            <TechnicalLibrary documents={technicalDocuments} onOpen={setSelection} />
+            <TechnicalTraining courses={technicalCourses} />
+          </div>
         </div>
       </div>
       <Dialog open={selection !== null} title={selection?.title ?? "Chuyên môn"} onClose={close}>
