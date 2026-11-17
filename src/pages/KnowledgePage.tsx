@@ -1,18 +1,13 @@
-import { useCallback, useState } from "react"
-import { Dialog } from "../components/Dialog"
 import { PageHero } from "../components/PageHero"
 import { SiteLayout } from "../components/SiteLayout"
 import { TechnicalLibrary } from "../components/knowledge/TechnicalLibrary"
 import { TechnicalNavigation } from "../components/knowledge/TechnicalNavigation"
-import { DocumentModalContent, TechnicalDocumentList, TechnicalSection, TechnicalTraining } from "../components/knowledge/TechnicalSections"
+import { TechnicalDocumentList, TechnicalSection, TechnicalTraining } from "../components/knowledge/TechnicalSections"
 import { pageHeroes } from "../data/pageHeroes"
-import { resourceGroups, technicalCourses, technicalDocuments, type TechnicalDocument } from "../data/technicalResources"
+import { resourceGroups, technicalCourses, technicalDocuments } from "../data/technicalResources"
 import "../components/knowledge/technical.css"
 
 export function KnowledgePage() {
-  const [selection, setSelection] = useState<TechnicalDocument | null>(null)
-  const close = useCallback(() => setSelection(null), [])
-
   return (
     <SiteLayout>
       <PageHero {...pageHeroes.knowledge} variant="compact" />
@@ -27,18 +22,15 @@ export function KnowledgePage() {
               })
               return (
                 <TechnicalSection key={group.id} id={group.id} intro={group.intro}>
-                  <TechnicalDocumentList documents={documents} onOpen={setSelection} />
+                  <TechnicalDocumentList documents={documents} />
                 </TechnicalSection>
               )
             })}
-            <TechnicalLibrary documents={technicalDocuments} onOpen={setSelection} />
+            <TechnicalLibrary documents={technicalDocuments} />
             <TechnicalTraining courses={technicalCourses} />
           </div>
         </div>
       </div>
-      <Dialog open={selection !== null} title={selection?.title ?? "Chuyên môn"} onClose={close}>
-        {selection ? <DocumentModalContent document={selection} /> : null}
-      </Dialog>
     </SiteLayout>
   )
 }

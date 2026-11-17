@@ -5,7 +5,7 @@ html:has(.tech-page) {
 .tech-page {
   --tech-item-divider: #e9e9e9;
   --tech-item-padding: clamp(1.15rem, 2.2vw, 2rem);
-  --tech-section-gap: clamp(3.5rem, 8.5vw, 7rem);
+  --tech-section-space: clamp(64px, 5.5vw, 80px);
   padding-block: clamp(1.35rem, 4vw, 3.5rem) clamp(3.5rem, 6.5vw, 6rem);
   background: var(--vpf-white);
 }
@@ -68,7 +68,17 @@ html:has(.tech-page) {
 }
 
 .tech-section + .tech-section {
-  margin-block-start: var(--tech-section-gap);
+  position: relative;
+  margin-block-start: calc(2 * var(--tech-section-space) + 1px);
+}
+
+/* Keep the divider in the gap so anchor navigation lands at the heading. */
+.tech-section + .tech-section::before {
+  position: absolute;
+  inset-block-start: calc(-1 * (var(--tech-section-space) + 1px));
+  inset-inline: 0;
+  border-block-start: 1px solid #e8e8e8;
+  content: "";
 }
 
 .tech-section-body {
@@ -110,79 +120,16 @@ html:has(.tech-page) {
   list-style: none;
 }
 
-.tech-resources > li + li,
 .tech-training > li + li {
   border-block-start: 1px solid var(--tech-item-divider);
 }
 
-.tech-resources .rulebook--editorial {
-  grid-template-columns: minmax(0, 1fr);
-  align-items: start;
-  gap: 0.55rem 1.2rem;
-  padding: var(--tech-item-padding) 0.65rem;
-  border: 0;
-  border-radius: 0;
-  background: transparent;
-}
-
-.tech-resources > li:first-child .rulebook--editorial,
 .tech-training > li:first-child {
   padding-block-start: 0.55rem;
 }
 
-.tech-resources > li:last-child .rulebook--editorial,
 .tech-training > li:last-child {
   padding-block-end: 0.65rem;
-}
-
-.tech-resources .rulebook--editorial:is(:hover, :focus-within) {
-  background: #f8f8f8;
-}
-
-.rulebook--editorial:is(:hover, :focus-within) .rulebook-title {
-  color: var(--vpf-red-700);
-}
-
-.rulebook--editorial .rulebook-category {
-  color: var(--vpf-red-700);
-  font-weight: 650;
-}
-
-.rulebook--editorial .rulebook-title {
-  font-size: clamp(1rem, 1.45vw, 1.2rem);
-}
-
-.rulebook--editorial .rulebook-description {
-  max-width: 42rem;
-}
-
-.tech-resources .rulebook--editorial .rulebook-actions {
-  grid-column: auto;
-  flex-direction: row;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 0 0.9rem;
-}
-
-.tech-resources .rulebook--editorial :is(.rulebook-read, .rulebook-download) {
-  min-height: 44px;
-  padding: 0;
-  border: 0;
-  background: transparent;
-  color: var(--vpf-red-700);
-  font-size: 0.8rem;
-  font-weight: 650;
-  white-space: nowrap;
-}
-
-.rulebook--editorial :is(.rulebook-read, .rulebook-download):hover {
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
-
-.rulebook--editorial .rulebook-status {
-  color: var(--vpf-ink-soft);
-  font-size: 0.76rem;
 }
 
 .tech-filters {
@@ -323,26 +270,6 @@ html:has(.tech-page) {
   justify-self: start;
 }
 
-@media (min-width: 520px) {
-  .tech-resources .rulebook--editorial {
-    grid-template-columns: minmax(0, 1fr) auto;
-  }
-
-  .tech-resources .rulebook--editorial .rulebook-actions {
-    flex-direction: column;
-    align-items: flex-end;
-  }
-
-  .rulebook--editorial .rulebook-status {
-    order: -1;
-    margin-bottom: 0.25rem;
-  }
-
-  .tech-resources .rulebook--editorial :is(.rulebook-read, .rulebook-download) + :is(.rulebook-read, .rulebook-download) {
-    margin-top: 0;
-  }
-}
-
 @media (min-width: 768px) {
   .tech-layout {
     grid-template-columns: minmax(0, 32fr) minmax(0, 68fr);
@@ -413,10 +340,6 @@ html:has(.tech-page) {
 }
 
 @media (min-width: 1024px) {
-  .tech-page {
-    --tech-section-gap: clamp(6.5rem, 8.5vw, 8rem);
-  }
-
   .tech-layout {
     grid-template-columns: minmax(0, 30fr) minmax(0, 70fr);
     gap: clamp(4rem, 5.2vw, 5rem);
@@ -500,24 +423,12 @@ html:has(.tech-page) {
     transition: color 200ms ease;
   }
 
-  .rulebook--editorial .rulebook-title {
-    transition: color 200ms ease;
-  }
-
   .tech-nav svg {
-    transition: translate 200ms ease;
-  }
-
-  .rulebook--editorial .rulebook-read svg {
     transition: translate 200ms ease;
   }
 
   .tech-nav a:is(:hover, :focus-visible) svg {
     translate: 4px 0;
-  }
-
-  .rulebook--editorial:is(:hover, :focus-within) .rulebook-read svg {
-    translate: 3px 0;
   }
 }
 

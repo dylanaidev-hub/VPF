@@ -2,13 +2,13 @@ import { useState } from "react"
 import { ChevronLeft, ChevronRight, Search } from "lucide-react"
 import { documentTypes, type TechnicalDocument } from "../../data/technicalResources"
 import { foldText } from "../../lib/format"
-import { TechnicalDocumentList, TechnicalSection, type OpenTechnicalDocument } from "./TechnicalSections"
+import { TechnicalDocumentList, TechnicalSection } from "./TechnicalSections"
 
 const PAGE_SIZE = 5
 const documentDate = (document: TechnicalDocument) => document.publishedOn ?? document.sampleDate ?? ""
 const normalize = (value: string) => foldText(value).replace(/đ/g, "d").trim()
 
-export function TechnicalLibrary({ documents, onOpen }: { documents: TechnicalDocument[]; onOpen: OpenTechnicalDocument }) {
+export function TechnicalLibrary({ documents }: { documents: TechnicalDocument[] }) {
   const [query, setQuery] = useState("")
   const [type, setType] = useState("")
   const [year, setYear] = useState("")
@@ -79,7 +79,7 @@ export function TechnicalLibrary({ documents, onOpen }: { documents: TechnicalDo
         </div>
 
         {visible.length ? (
-          <TechnicalDocumentList documents={visible} onOpen={onOpen} />
+          <TechnicalDocumentList documents={visible} />
         ) : (
           <div className="tech-empty">
             <h3>Không tìm thấy văn bản phù hợp</h3>

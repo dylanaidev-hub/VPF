@@ -3,11 +3,9 @@ import { technicalSections, type TechnicalCourse, type TechnicalDocument } from 
 import { formatViDate } from "../../lib/format"
 import { useReveal } from "../../lib/useReveal"
 import { Button } from "../Button"
-import { DocumentCard, publishedPdf } from "../DocumentCard"
-import { DocumentReader } from "../DocumentReader"
+import { publishedPdf } from "../DocumentCard"
+import { DocumentRow } from "../DocumentRow"
 import { SectionHeading } from "../SectionHeading"
-
-export type OpenTechnicalDocument = (document: TechnicalDocument) => void
 
 export function TechnicalSection({ id, intro, children }: {
   id: typeof technicalSections[number]["id"]
@@ -29,29 +27,22 @@ export function TechnicalSection({ id, intro, children }: {
   )
 }
 
-export function TechnicalDocumentList({ documents, onOpen }: {
-  documents: readonly TechnicalDocument[]
-  onOpen: OpenTechnicalDocument
-}) {
+export function TechnicalDocumentList({ documents }: { documents: readonly TechnicalDocument[] }) {
   return (
     <ul className="tech-resources">
       {documents.map((document) => {
         const pdf = publishedPdf(document.pdf)
-        const state = !pdf ? "Chưa công bố" : document.source === "demo" ? "Bản mẫu" : "Đã công bố"
+        const status = document.source === "demo" ? "sample" : pdf ? "published" : "draft"
         return (
-          <li key={document.id}>
-            <DocumentCard
-              variant="editorial"
-              category={pdf ? `${document.type} · PDF` : document.type}
-              title={document.title}
-              description={document.description}
-              documentUrl={pdf}
-              downloadUrl={pdf}
-              availabilityStatus={state}
-              actionLabel="Đọc online"
-              onRead={() => onOpen(document)}
-            />
-          </li>
+          <DocumentRow
+            key={document.id}
+            category={document.type}
+            title={document.title}
+            description={document.description}
+            format={pdf ? "PDF" : undefined}
+            status={status}
+            fileUrl={pdf || undefined}
+          />
         )
       })}
     </ul>
@@ -83,16 +74,5 @@ export function TechnicalTraining({ courses }: { courses: readonly TechnicalCour
         </div>
       )}
     </TechnicalSection>
-  )
-}
-
-export function DocumentModalContent({ document }: { document: TechnicalDocument }) {
-  const pdf = publishedPdf(document.pdf)
-  return (
-    <DocumentReader
-      documentUrl={pdf}
-      downloadUrl={pdf}
-      note={document.source === "demo" ? "Tài liệu minh họa, chưa có hiệu lực áp dụng." : undefined}
-    />
   )
 }
