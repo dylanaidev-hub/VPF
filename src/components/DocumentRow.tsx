@@ -18,6 +18,8 @@ type DocumentRowProps = {
 }
 
 export function DocumentRow({ category, title, description, format, status, fileUrl }: DocumentRowProps) {
+  const downloadUrl = status === "draft" ? undefined : fileUrl
+
   return (
     <li className="document-row">
       <div className="document-row-copy">
@@ -26,9 +28,9 @@ export function DocumentRow({ category, title, description, format, status, file
         {description ? <p className="document-row-description">{description}</p> : null}
       </div>
       <div className="document-row-actions">
-        <p className="document-row-status">{statusLabels[status]}</p>
-        {status !== "draft" && fileUrl ? (
-          <Button variant="text" className="document-row-download" href={fileUrl} download aria-label={`Tải xuống: ${title}`}>
+        <p className="document-row-status">{statusLabels[downloadUrl ? status : "draft"]}</p>
+        {downloadUrl ? (
+          <Button variant="text" className="document-row-download" href={downloadUrl} download aria-label={`Tải xuống: ${title}`}>
             <Download size={16} aria-hidden="true" /> Tải xuống
           </Button>
         ) : null}

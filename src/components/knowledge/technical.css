@@ -120,6 +120,11 @@ html:has(.tech-page) {
   list-style: none;
 }
 
+.tech-resources {
+  display: grid;
+  gap: 16px;
+}
+
 .tech-training > li + li {
   border-block-start: 1px solid var(--tech-item-divider);
 }
