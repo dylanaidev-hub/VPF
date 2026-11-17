@@ -52,9 +52,11 @@ export function TechnicalTraining({ courses }: { courses: readonly TrainingCours
   const schedule = courses.toSorted((a, b) =>
     Number(a.endDate < today) - Number(b.endDate < today) || a.startDate.localeCompare(b.startDate),
   )
+  const intro = "Lịch học và tập huấn dành cho người chơi, trọng tài, huấn luyện viên và câu lạc bộ."
+  const demoNote = courses.some((course) => course.source === "demo") ? " Các khóa bên dưới là dữ liệu minh họa." : ""
 
   return (
-    <TechnicalSection id="dao-tao" intro="Lịch học và tập huấn dành cho người chơi, trọng tài, huấn luyện viên và câu lạc bộ.">
+    <TechnicalSection id="dao-tao" intro={intro + demoNote}>
       {schedule.length ? (
         <ul className="training-schedule">
           {schedule.map((course) => (

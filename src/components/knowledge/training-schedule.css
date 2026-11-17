@@ -41,12 +41,6 @@
   gap: 8px;
 }
 
-.training-schedule-badges {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-}
-
 .training-schedule-details h3 {
   color: var(--vpf-ink);
   font-size: 18px;

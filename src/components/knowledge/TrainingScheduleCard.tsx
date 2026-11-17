@@ -17,7 +17,7 @@ function getRegistrationUrl(value?: string) {
 }
 
 export function TrainingScheduleCard({ course }: { course: TrainingCourse }) {
-  const { title, description, startDate, endDate, location, format, audience, registrationStatus, source } = course
+  const { title, description, startDate, endDate, location, format, audience, registrationStatus } = course
   const [year, month, day] = startDate.split("-")
   const { label, tone } = registrationStates[registrationStatus]
   const registrationUrl = getRegistrationUrl(course.registrationUrl)
@@ -29,10 +29,7 @@ export function TrainingScheduleCard({ course }: { course: TrainingCourse }) {
         <span>THG {Number(month)}/{year}</span>
       </div>
       <div className="training-schedule-details">
-        <div className="training-schedule-badges">
-          <Badge tone={tone}>{label}</Badge>
-          {source === "demo" ? <Badge className="border border-line">Lịch minh họa</Badge> : null}
-        </div>
+        <Badge tone={tone} className="justify-self-start">{label}</Badge>
         <h3>{title}</h3>
         <p className="training-schedule-description">{description}</p>
         <dl>
