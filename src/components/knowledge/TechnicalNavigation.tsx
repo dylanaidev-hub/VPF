@@ -101,7 +101,7 @@ export function TechnicalNavigation() {
             <a href={`#${id}`} aria-current={active === id ? "location" : undefined}>
               <span className="tech-topic-number" aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
               <span className="tech-topic-title">{title}</span>
-              <ArrowRight size={19} aria-hidden="true" />
+              <ArrowRight size={20} aria-hidden="true" />
             </a>
           </li>
         ))}
