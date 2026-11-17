@@ -70,7 +70,7 @@ export function Dialog({ open, title, onClose, children }: DialogProps) {
       <button
         type="button"
         aria-label={t("Đóng hộp thoại")}
-        className="absolute inset-0 bg-signal/55"
+        className="absolute inset-0 bg-(--overlay-backdrop)"
         onClick={onClose}
       />
       <div

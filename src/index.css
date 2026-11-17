@@ -1107,6 +1107,16 @@ body {
   align-items: center;
 }
 
+.featured-news__overlay {
+  background-image: linear-gradient(
+    180deg,
+    rgb(0 0 0 / 0%) 20%,
+    rgb(0 0 0 / 20%) 45%,
+    rgb(0 0 0 / 55%) 70%,
+    rgb(0 0 0 / 85%) 100%
+  );
+}
+
 .news-categories {
   display: flex;
   gap: 0.5rem;
@@ -4055,7 +4065,7 @@ button.coach-card:focus-visible {
   flex-direction: column;
   overflow-x: hidden;
   overflow-y: auto;
-  background: var(--vpf-red-500);
+  background-color: var(--overlay-backdrop-strong);
 }
 
 .media-lightbox-body {

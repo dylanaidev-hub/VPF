@@ -31,7 +31,7 @@ export function VideoGallery() {
       </div>
 
       {active && playing ? (
-        <div className="fixed inset-0 z-[90] flex items-center justify-center bg-signal/80 p-4">
+        <div className="fixed inset-0 z-[90] flex items-center justify-center bg-(--overlay-backdrop-strong) p-4">
           <div className="w-full max-w-4xl" role="dialog" aria-modal="true" aria-label={active.title}>
             <div className="mb-3 flex justify-end">
               <button type="button" className="rounded-[10px] border border-white/30 px-4 py-2 text-sm text-white" onClick={() => setActive(null)}>

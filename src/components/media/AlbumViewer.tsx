@@ -58,7 +58,7 @@ export function AlbumViewer({
 
   return (
     <div className="fixed inset-0 z-[80] flex items-end justify-center sm:items-center sm:p-6">
-      <button type="button" className="absolute inset-0 bg-signal/55" aria-label={t("Đóng album")} onClick={onClose} />
+      <button type="button" className="absolute inset-0 bg-(--overlay-backdrop)" aria-label={t("Đóng album")} onClick={onClose} />
       <div
         ref={panelRef}
         role="dialog"

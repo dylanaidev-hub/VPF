@@ -37,7 +37,7 @@ export function MobileNavigation({
       <button
         type="button"
         aria-label={t("Đóng menu")}
-        className="fixed inset-0 top-[76px] z-40 bg-signal/40"
+        className="fixed inset-0 top-[76px] z-40 bg-(--overlay-backdrop)"
         onClick={onClose}
       />
       <nav

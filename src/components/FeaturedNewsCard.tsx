@@ -26,7 +26,7 @@ export function FeaturedNewsCard({ article }: { article: NewsArticle }) {
         className={`absolute inset-0 h-full w-full object-cover transition-transform duration-200 group-hover:scale-[1.03] motion-reduce:transition-none motion-reduce:group-hover:scale-100 ${article.imagePosition ?? "object-center"}`}
       />
       <div
-        className="absolute inset-0 bg-[linear-gradient(180deg,rgba(174,48,51,0.08)_0%,rgba(174,48,51,0.12)_38%,rgba(174,48,51,0.88)_100%)]"
+        className="featured-news__overlay absolute inset-0"
         aria-hidden
       />
       <StarPattern className="vpf-star-mark-card" />

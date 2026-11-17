@@ -527,7 +527,7 @@
 }
 
 .fed-history-modal::backdrop {
-  background: rgb(26 18 19 / 66%);
+  background-color: var(--overlay-backdrop);
 }
 
 .fed-history-modal[data-closing] {
@@ -1938,7 +1938,7 @@
 }
 
 .fed-org-dialog::backdrop {
-  background: rgb(0 0 0 / 58%);
+  background-color: var(--overlay-backdrop);
 }
 
 .fed-org-dialog-head {

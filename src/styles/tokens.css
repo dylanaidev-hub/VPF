@@ -47,6 +47,8 @@
   --vpf-color-text-soft: var(--vpf-ink-soft);
   --vpf-color-rule: var(--vpf-gold-500);
   --vpf-color-border: var(--vpf-line);
+  --overlay-backdrop: rgb(0 0 0 / 65%);
+  --overlay-backdrop-strong: rgb(0 0 0 / 80%);
 
   /* Typography roles */
   --vpf-size-display: clamp(2rem, 4vw, 3.25rem);
