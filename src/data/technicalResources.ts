@@ -207,17 +207,3 @@ export const resourceGroups = [
     documents: ["tieu-chuan-huan-luyen-vpf", "tieu-chuan-huan-luyen", "ke-hoach-buoi-tap"],
   },
 ] as const
-
-export type TechnicalCourse = {
-  id: string
-  title: string
-  audience: string
-  startsOn: string
-  endsOn?: string
-  venue: string
-  status: "Đang mở đăng ký" | "Sắp diễn ra" | "Đã kết thúc" | "Chưa mở đăng ký"
-  registrationUrl?: string
-}
-
-// Add courses after VPF publishes their schedule and registration details.
-export const technicalCourses: TechnicalCourse[] = []

@@ -1,0 +1,127 @@
+.training-schedule {
+  display: grid;
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  container-type: inline-size;
+}
+
+.training-schedule-card {
+  display: grid;
+  align-items: start;
+  gap: 16px;
+  padding: clamp(20px, 2vw, 24px);
+  border: 1px solid #eaeaea;
+  border-radius: 12px;
+  background: var(--vpf-white);
+  overflow-wrap: anywhere;
+}
+
+.training-schedule-date {
+  display: grid;
+  gap: 4px;
+  color: var(--vpf-red-500);
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+}
+
+.training-schedule-date span:first-child {
+  font-size: 36px;
+  line-height: 1;
+}
+
+.training-schedule-date span:last-child {
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.training-schedule-details {
+  display: grid;
+  gap: 8px;
+}
+
+.training-schedule-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.training-schedule-details h3 {
+  color: var(--vpf-ink);
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.training-schedule-description,
+.training-schedule-action p,
+.training-schedule-details dt {
+  color: var(--vpf-ink-soft);
+}
+
+.training-schedule-description,
+.training-schedule-details dl {
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.training-schedule-details dl {
+  display: grid;
+  gap: 6px 16px;
+}
+
+.training-schedule-details dt,
+.training-schedule-action p {
+  font-size: 13px;
+}
+
+.training-schedule-action {
+  display: grid;
+  justify-items: stretch;
+  gap: 6px;
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  @container (min-width: 360px) {
+    .training-schedule-card {
+      grid-template-columns: auto minmax(0, 1fr);
+    }
+
+    .training-schedule-details dl {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .training-schedule-action {
+      grid-column: 2;
+      justify-self: start;
+    }
+  }
+
+  @container (min-width: 620px) {
+    .training-schedule-card {
+      grid-template-columns: auto minmax(0, 1fr) auto;
+      column-gap: 20px;
+    }
+
+    .training-schedule-action {
+      grid-column: 3;
+      align-self: center;
+      justify-self: stretch;
+    }
+  }
+}
+
+@media (hover: hover) {
+  .training-schedule-card:hover {
+    border-color: var(--vpf-line);
+    box-shadow: 0 6px 20px rgb(0 0 0 / 4%);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .training-schedule-card {
+    transition: border-color 200ms ease, box-shadow 200ms ease;
+  }
+}

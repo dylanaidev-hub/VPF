@@ -5,11 +5,13 @@ import { TechnicalLibrary } from "../components/knowledge/TechnicalLibrary"
 import { TechnicalNavigation } from "../components/knowledge/TechnicalNavigation"
 import { TechnicalDocumentList, TechnicalSection, TechnicalTraining } from "../components/knowledge/TechnicalSections"
 import { pageHeroes } from "../data/pageHeroes"
-import { resourceGroups, technicalCourses, technicalDocuments } from "../data/technicalResources"
+import { resourceGroups, technicalDocuments } from "../data/technicalResources"
+import { demoTrainingCourses, trainingCourses } from "../data/trainingSchedule"
 import "../components/knowledge/technical.css"
 
 // Set VITE_TECHNICAL_DEMO_MODE=false at build time for the official library.
 const isDemoMode = (import.meta.env.VITE_TECHNICAL_DEMO_MODE ?? "true") === "true"
+const visibleCourses = isDemoMode && !trainingCourses.length ? demoTrainingCourses : trainingCourses
 const visibleDocuments = technicalDocuments.flatMap((document) => {
   const pdf = publishedPdf(document.pdf) || undefined
   return isDemoMode || pdf ? [{ ...document, pdf }] : []
@@ -35,7 +37,7 @@ export function KnowledgePage() {
               )
             })}
             <TechnicalLibrary documents={visibleDocuments} />
-            <TechnicalTraining courses={technicalCourses} />
+            <TechnicalTraining courses={visibleCourses} />
           </div>
         </div>
       </div>

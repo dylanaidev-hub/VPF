@@ -1,10 +1,10 @@
 import type { ReactNode } from "react"
-import { technicalSections, type TechnicalCourse, type TechnicalDocument } from "../../data/technicalResources"
-import { formatViDate } from "../../lib/format"
+import { technicalSections, type TechnicalDocument } from "../../data/technicalResources"
+import type { TrainingCourse } from "../../data/trainingSchedule"
 import { useReveal } from "../../lib/useReveal"
-import { Button } from "../Button"
 import { DocumentRow } from "../DocumentRow"
 import { SectionHeading } from "../SectionHeading"
+import { TrainingScheduleCard } from "./TrainingScheduleCard"
 
 export function TechnicalSection({ id, intro, children }: {
   id: typeof technicalSections[number]["id"]
@@ -47,22 +47,18 @@ export function TechnicalDocumentList({ documents }: { documents: readonly Techn
   )
 }
 
-export function TechnicalTraining({ courses }: { courses: readonly TechnicalCourse[] }) {
+export function TechnicalTraining({ courses }: { courses: readonly TrainingCourse[] }) {
+  const today = new Intl.DateTimeFormat("sv-SE", { timeZone: "Asia/Ho_Chi_Minh" }).format(new Date())
+  const schedule = courses.toSorted((a, b) =>
+    Number(a.endDate < today) - Number(b.endDate < today) || a.startDate.localeCompare(b.startDate),
+  )
+
   return (
     <TechnicalSection id="dao-tao" intro="Lịch học và tập huấn dành cho người chơi, trọng tài, huấn luyện viên và câu lạc bộ.">
-      {courses.length ? (
-        <ul className="tech-training">
-          {courses.map((course) => (
-            <li key={course.id}>
-              <h3>{course.title}</h3>
-              <dl>
-                <div><dt>Đối tượng</dt><dd>{course.audience}</dd></div>
-                <div><dt>Thời gian</dt><dd><time dateTime={course.startsOn}>{formatViDate(course.startsOn)}</time>{course.endsOn ? <> – <time dateTime={course.endsOn}>{formatViDate(course.endsOn)}</time></> : null}</dd></div>
-                <div><dt>Địa điểm</dt><dd>{course.venue}</dd></div>
-                <div><dt>Trạng thái</dt><dd>{course.status}</dd></div>
-              </dl>
-              {course.status === "Đang mở đăng ký" && course.registrationUrl ? <Button variant="secondary" href={course.registrationUrl}>Đăng ký</Button> : null}
-            </li>
+      {schedule.length ? (
+        <ul className="training-schedule">
+          {schedule.map((course) => (
+            <TrainingScheduleCard key={course.id} course={course} />
           ))}
         </ul>
       ) : (
