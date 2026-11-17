@@ -3,7 +3,6 @@ import { technicalSections, type TechnicalCourse, type TechnicalDocument } from 
 import { formatViDate } from "../../lib/format"
 import { useReveal } from "../../lib/useReveal"
 import { Button } from "../Button"
-import { publishedPdf } from "../DocumentCard"
 import { DocumentRow } from "../DocumentRow"
 import { SectionHeading } from "../SectionHeading"
 
@@ -28,23 +27,22 @@ export function TechnicalSection({ id, intro, children }: {
 }
 
 export function TechnicalDocumentList({ documents }: { documents: readonly TechnicalDocument[] }) {
+  if (!documents.length) return null
+
   return (
     <ul className="tech-resources">
-      {documents.map((document) => {
-        const pdf = publishedPdf(document.pdf)
-        const status = document.source === "demo" ? "sample" : pdf ? "published" : "draft"
-        return (
-          <DocumentRow
-            key={document.id}
-            category={document.type}
-            title={document.title}
-            description={document.description}
-            format={pdf ? "PDF" : undefined}
-            status={status}
-            fileUrl={pdf || undefined}
-          />
-        )
-      })}
+      {documents.map((document) => (
+        <DocumentRow
+          key={document.id}
+          category={document.type}
+          title={document.title}
+          description={document.description}
+          format={document.pdf ? "PDF" : undefined}
+          {...(document.pdf
+            ? { fileUrl: document.pdf }
+            : { unavailableMessage: "Tài liệu demo chưa có file tải xuống" })}
+        />
+      ))}
     </ul>
   )
 }

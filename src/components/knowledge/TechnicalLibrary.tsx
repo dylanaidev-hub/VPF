@@ -40,7 +40,7 @@ export function TechnicalLibrary({ documents }: { documents: TechnicalDocument[]
   }
 
   return (
-    <TechnicalSection id="van-ban-chuyen-mon" intro="Tìm theo tên, số hiệu, loại tài liệu hoặc năm. Tài liệu minh họa có nhãn Bản mẫu.">
+    <TechnicalSection id="van-ban-chuyen-mon" intro="Tìm theo tên, số hiệu, loại tài liệu hoặc năm.">
       <div className="tech-library">
         <div className="tech-filters" role="search" aria-label="Tìm văn bản chuyên môn">
           <label>
@@ -61,7 +61,7 @@ export function TechnicalLibrary({ documents }: { documents: TechnicalDocument[]
             <span>Năm tài liệu</span>
             <select value={year} onChange={(event) => { setYear(event.target.value); setPage(1) }}>
               <option value="">Tất cả năm</option>
-              {years.map((item) => item ? <option key={item}>{item}</option> : <option key="unpublished" value="unpublished">Chưa công bố</option>)}
+              {years.map((item) => item ? <option key={item}>{item}</option> : <option key="unpublished" value="unpublished">Không có năm</option>)}
             </select>
           </label>
           <label>

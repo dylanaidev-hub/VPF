@@ -1,3 +1,4 @@
+import { useState } from "react"
 import { Download } from "lucide-react"
 import { Button } from "./Button"
 import "./document-row.css"
@@ -7,12 +8,14 @@ type DocumentRowProps = {
   title: string
   description?: string
   format?: string
-  status: "published" | "draft" | "sample"
-  fileUrl?: string
-}
+} & (
+  | { fileUrl: string; unavailableMessage?: never }
+  | { fileUrl?: never; unavailableMessage: string }
+)
 
-export function DocumentRow({ category, title, description, format, status, fileUrl }: DocumentRowProps) {
-  const downloadUrl = status === "draft" ? undefined : fileUrl
+export function DocumentRow({ category, title, description, format, fileUrl, unavailableMessage }: DocumentRowProps) {
+  const [showUnavailable, setShowUnavailable] = useState(false)
+  const downloadLabel = <><Download size={16} aria-hidden="true" /> Tải xuống</>
 
   return (
     <li className="document-row">
@@ -21,10 +24,17 @@ export function DocumentRow({ category, title, description, format, status, file
         <h3 className="document-row-title">{title}</h3>
         {description ? <p className="document-row-description">{description}</p> : null}
       </div>
-      {downloadUrl ? (
-        <Button variant="primary" className="document-row-download" href={downloadUrl} download aria-label={`Tải xuống: ${title}`}>
-          <Download size={16} aria-hidden="true" /> Tải xuống
+      {fileUrl ? (
+        <Button variant="primary" className="document-row-download" href={fileUrl} download aria-label={`Tải xuống: ${title}`}>
+          {downloadLabel}
         </Button>
+      ) : (
+        <Button variant="primary" className="document-row-download" onClick={() => setShowUnavailable(true)} aria-label={`Tải xuống: ${title}`}>
+          {downloadLabel}
+        </Button>
+      )}
+      {showUnavailable && unavailableMessage ? (
+        <p className="document-row-notice" role="alert">{unavailableMessage}</p>
       ) : null}
     </li>
   )
