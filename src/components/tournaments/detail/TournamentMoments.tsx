@@ -23,6 +23,7 @@ export function TournamentMoments({
           id: item.id,
           src: item.src,
           alt: item.alt,
+          caption: item.alt,
           title: tournament.name,
         })),
     [gallery, tournament.name],
