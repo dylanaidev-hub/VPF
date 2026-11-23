@@ -14,7 +14,7 @@ function DesktopItem({ item }: { item: NavItem }) {
   const [open, setOpen] = useState(false)
   const menuId = useId()
   const children = item.children ?? []
-  const current = isCurrentPage(item.href)
+  const current = isCurrentPage(item.href) || children.some((child) => isCurrentPage(child.href))
   const linkClass = cx(
     "relative whitespace-nowrap py-2 text-[14px] font-medium text-ink",
     "after:absolute after:inset-x-0 after:-bottom-1 after:h-0.5 after:origin-left after:bg-brand after:transition-transform after:duration-200 motion-reduce:after:transition-none",
@@ -59,17 +59,24 @@ function DesktopItem({ item }: { item: NavItem }) {
       {open ? (
         <div id={menuId} className="absolute left-0 top-full z-40 min-w-60 pt-2">
           <div className="border border-line bg-white p-1.5" role="menu">
-            {children.map((child) => (
-              <a
-                key={child.id}
-                href={sitePath(child.href)}
-                role="menuitem"
-                className="block rounded-lg px-3 py-2.5 text-sm font-medium text-ink hover:bg-paper"
-                onClick={() => setOpen(false)}
-              >
-                {t(child.label)}
-              </a>
-            ))}
+            {children.map((child) => {
+              const childCurrent = isCurrentPage(child.href)
+              return (
+                <a
+                  key={child.id}
+                  href={sitePath(child.href)}
+                  role="menuitem"
+                  className={cx(
+                    "block rounded-lg px-3 py-2.5 text-sm font-medium hover:bg-paper",
+                    childCurrent ? "bg-paper text-brand-strong" : "text-ink",
+                  )}
+                  aria-current={childCurrent ? "page" : undefined}
+                  onClick={() => setOpen(false)}
+                >
+                  {t(child.label)}
+                </a>
+              )
+            })}
           </div>
         </div>
       ) : null}

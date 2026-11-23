@@ -6,9 +6,12 @@ import { TechnicalDocumentList, TechnicalSection, TechnicalTraining } from "../c
 import { pageHeroes } from "../data/pageHeroes"
 import { visibleCourses, visibleDocuments } from "../data/technicalContent"
 import { resourceGroups } from "../data/technicalResources"
+import { useFragmentScroll } from "../lib/useFragmentScroll"
 import "../components/knowledge/technical.css"
 
 export function KnowledgePage() {
+  useFragmentScroll()
+
   return (
     <SiteLayout>
       <PageHero {...pageHeroes.knowledge} />

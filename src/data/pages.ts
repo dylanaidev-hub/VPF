@@ -45,10 +45,20 @@ export const pages = {
     id: "chuyenmon",
     file: "chuyenmon.html",
     eyebrow: "Chuyên môn",
-    title: "Chuyên môn Pickleball",
-    crumb: "Chuyên môn",
-    description: "Luật thi đấu, hệ thống trọng tài, huấn luyện viên và chương trình đào tạo của Liên đoàn Pickleball Việt Nam.",
-    note: "Tài liệu và danh mục chính thức sẽ được đăng khi Liên đoàn công bố.",
+    title: "Tài liệu",
+    crumb: "Tài liệu",
+    description:
+      "Luật thi đấu, trọng tài, huấn luyện viên và chương trình đào tạo của Liên đoàn Pickleball Việt Nam.",
+    note: "Tài liệu chính thức sẽ được đăng khi Liên đoàn công bố.",
+  },
+  teams: {
+    id: "teams",
+    file: "doi-tuyen-van-dong-vien.html",
+    eyebrow: "Chuyên môn",
+    title: "Đội tuyển & Vận động viên",
+    crumb: "Đội tuyển & Vận động viên",
+    description: "Ban huấn luyện và vận động viên theo đợt của Liên đoàn Pickleball Việt Nam.",
+    note: "Danh mục chính thức sẽ được đăng khi Liên đoàn công bố.",
   },
   media: {
     id: "media",
@@ -57,7 +67,7 @@ export const pages = {
     title: "Thư viện & Cộng đồng",
     crumb: "Thư viện & Cộng đồng",
     description:
-      "Khám phá tài nguyên nhận diện, hình ảnh, video và mạng lưới đơn vị, vận động viên Pickleball Việt Nam.",
+      "Khám phá tài nguyên nhận diện, hình ảnh, video và mạng lưới đơn vị thành viên Pickleball Việt Nam.",
     note: "Nội dung đang dùng dữ liệu minh họa để duyệt giao diện — chưa phải thư viện hay danh mục chính thức.",
   },
   hoptac: {

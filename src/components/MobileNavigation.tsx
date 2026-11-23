@@ -76,7 +76,7 @@ function MobileItem({
 }) {
   const { t } = useTranslation()
   const children = item.children ?? []
-  const current = isCurrentPage(item.href)
+  const current = isCurrentPage(item.href) || children.some((child) => isCurrentPage(child.href))
   return (
     <div className="py-1">
       <div className="flex items-center justify-between gap-3">
@@ -107,19 +107,26 @@ function MobileItem({
       </div>
       {children.length >= 2 && expanded ? (
         <ul className="mb-3 ml-1 border-l border-line pl-3">
-          {children.map((child) => (
-            <li key={child.id}>
-              <a
-                href={sitePath(child.href)}
-                className="block py-2.5 text-sm font-medium text-muted hover:text-ink"
-                onClick={() => {
-                  if (child.href.startsWith("#")) onNavigate()
-                }}
-              >
-                {t(child.label)}
-              </a>
-            </li>
-          ))}
+          {children.map((child) => {
+            const childCurrent = isCurrentPage(child.href)
+            return (
+              <li key={child.id}>
+                <a
+                  href={sitePath(child.href)}
+                  className={cx(
+                    "block py-2.5 text-sm font-medium hover:text-ink",
+                    childCurrent ? "text-brand-strong" : "text-muted",
+                  )}
+                  aria-current={childCurrent ? "page" : undefined}
+                  onClick={() => {
+                    if (child.href.startsWith("#")) onNavigate()
+                  }}
+                >
+                  {t(child.label)}
+                </a>
+              </li>
+            )
+          })}
         </ul>
       ) : null}
     </div>

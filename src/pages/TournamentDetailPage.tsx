@@ -1,15 +1,18 @@
 import { setPageMetadata, useTranslation } from "../i18n"
 import { useEffect, useMemo } from "react"
-import { MapPin } from "lucide-react"
 import { tournaments } from "../data/tournaments"
 import { formatEventDate } from "../lib/format"
+import { selectRelatedFromCatalog } from "../lib/tournamentDetail"
 import { sitePath } from "../lib/site"
 import { statusLabel, tournamentSlugFromLocation, withStatus } from "../lib/tournaments"
 import { Badge } from "../components/Badge"
 import { Breadcrumb } from "../components/Breadcrumb"
 import { PageHero } from "../components/PageHero"
 import { SiteLayout } from "../components/SiteLayout"
+import { TournamentHighlights } from "../components/tournaments/detail/TournamentHighlights"
+import { TournamentRelated } from "../components/tournaments/detail/TournamentRelated"
 import { TournamentDetailTabs } from "../components/tournaments/TournamentDetailTabs"
+import "../components/tournaments/tournament-detail.css"
 
 const tone = {
   upcoming: "upcoming",
@@ -24,6 +27,11 @@ export function TournamentDetailPage() {
     if (!slug) return null
     return withStatus(tournaments).find((item) => item.slug === slug) ?? null
   }, [slug])
+
+  const related = useMemo(
+    () => (tournament ? selectRelatedFromCatalog(tournament, tournaments, 3) : []),
+    [tournament],
+  )
 
   useEffect(() => {
     if (!tournament) {
@@ -60,67 +68,46 @@ export function TournamentDetailPage() {
   }
 
   const date = formatEventDate(tournament.startDate, tournament.endDate)
+  const place =
+    tournament.scope === "international" && tournament.country
+      ? `${tournament.location}, ${tournament.country}`
+      : t(tournament.location)
+  const heroDescription = `${date.rangeLabel} · ${place}`
 
   return (
     <SiteLayout>
-      <article className="bg-white">
+      <article className="td-page">
         <PageHero
           variant="detail"
           title={tournament.name}
+          titleId="giai-dau-chi-tiet-tieu-de"
+          description={heroDescription}
           breadcrumbs={[
             { label: "Trang chủ", href: "/index.html" },
             { label: "Giải đấu", href: "/giaidau.html" },
             { label: tournament.name },
           ]}
           beforeTitle={
-            <Badge
-              tone={tone[tournament.status]}
-              className={tournament.status === "ongoing" ? "bg-white text-signal" : undefined}
-            >
-              {t(statusLabel[tournament.status])}
-            </Badge>
+            <div className="flex flex-wrap items-center gap-2">
+              <Badge
+                tone={tone[tournament.status]}
+                className={tournament.status === "ongoing" ? "bg-white text-signal" : undefined}
+              >
+                {t(statusLabel[tournament.status])}
+              </Badge>
+              {tournament.illustrative ? (
+                <Badge tone="important" className="bg-white/15 text-white">
+                  {t("Dữ liệu minh họa")}
+                </Badge>
+              ) : null}
+            </div>
           }
-        >
-          <p className="mt-3 text-sm text-white/85 sm:text-base">
-            <time dateTime={tournament.startDate}>{date.rangeLabel}</time>
-            <span aria-hidden> · </span>
-            {tournament.time}
-          </p>
-          <p className="mt-2 flex items-center gap-2 text-sm text-white/85 sm:text-base">
-            <MapPin className="size-4 shrink-0" aria-hidden />
-            {tournament.venue}, {t(tournament.location)}
-          </p>
-        </PageHero>
-
-        <div className="page-wrap">
-          <p className="border-b border-line py-4 text-sm text-muted">{t(tournament.note)}</p>
-          <dl className="tournament-facts">
-            <div>
-              <dt>{t("Thời gian")}</dt>
-              <dd>
-                {date.rangeLabel}
-                <span className="mt-1 block">{tournament.time}</span>
-              </dd>
-            </div>
-            <div>
-              <dt>{t("Địa điểm")}</dt>
-              <dd>
-                {tournament.venue}
-                <span className="mt-1 block">{t(tournament.location)}</span>
-              </dd>
-            </div>
-            <div>
-              <dt>{t("Đơn vị tổ chức")}</dt>
-              <dd>{tournament.organizer}</dd>
-            </div>
-            <div>
-              <dt>{t("Trạng thái")}</dt>
-              <dd>{t(statusLabel[tournament.status])}</dd>
-            </div>
-          </dl>
-          <div className="py-8 min-[1200px]:py-10">
-            <TournamentDetailTabs tournament={tournament} />
-          </div>
+        />
+        <div className="page-wrap td-shell">
+          <p className="td-note">{t(tournament.note)}</p>
+          <TournamentHighlights tournament={tournament} />
+          <TournamentDetailTabs tournament={tournament} />
+          <TournamentRelated items={related} />
         </div>
       </article>
     </SiteLayout>

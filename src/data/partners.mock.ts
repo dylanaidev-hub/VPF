@@ -1,7 +1,6 @@
 import type { Partner } from "../types"
 
 export const partnership = {
-  eyebrow: "Partnership Hub",
   title: "Đồng hành cùng Pickleball Việt Nam",
   description:
     "Cùng VPF kết nối cộng đồng yêu thể thao, thúc đẩy phong trào Pickleball và tạo ra những giá trị hợp tác bền vững.",
@@ -9,11 +8,11 @@ export const partnership = {
   href: "/hoptac.html#lien-he-hop-tac",
   image: "/images/player.jpg",
   imageAlt: "Vận động viên pickleball trên sân ngoài trời.",
-  pillars: [
-    { id: "thuong-hieu", label: "Thương hiệu", detail: "Nhận diện cạnh hệ sinh thái Pickleball Việt Nam." },
-    { id: "giai-dau", label: "Giải đấu", detail: "Gắn kết với các hoạt động thi đấu trọng điểm." },
-    { id: "truyen-thong", label: "Truyền thông", detail: "Lan tỏa nội dung và câu chuyện thương hiệu." },
-    { id: "cong-dong", label: "Cộng đồng", detail: "Kết nối câu lạc bộ, người chơi và địa phương." },
+  keywords: [
+    { id: "thuong-hieu", label: "Thương hiệu" },
+    { id: "giai-dau", label: "Giải đấu" },
+    { id: "truyen-thong", label: "Truyền thông" },
+    { id: "cong-dong", label: "Cộng đồng" },
   ],
 } as const
 

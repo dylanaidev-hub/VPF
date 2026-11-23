@@ -100,9 +100,17 @@ export const siteSearchIndex: SearchItem[] = [
     id: `federation-${href.slice(1)}`, type: "page", title: label, meta: "Liên đoàn", keywords: [label, "Liên đoàn Pickleball Việt Nam"], url: `/liendoan.html${href}`,
   })),
   ...technicalSections.map<SearchItem>((section) => ({
-    id: `section-${section.id}`, type: "document", title: section.title, meta: "Chuyên môn", url: `/chuyenmon.html#${section.id}`,
+    id: `section-${section.id}`, type: "document", title: section.title, meta: "Tài liệu", url: `/chuyenmon.html#${section.id}`,
   })),
-  ...[brandSection, memberSection, teamsSection, membershipSection].map<SearchItem>((section) => ({
+  {
+    id: `section-${teamsSection.id}`,
+    type: "page",
+    title: teamsSection.title,
+    meta: "Chuyên môn",
+    keywords: ["đội tuyển", "vận động viên", "ban huấn luyện"],
+    url: `/doi-tuyen-van-dong-vien.html#${teamsSection.id}`,
+  },
+  ...[brandSection, memberSection, membershipSection].map<SearchItem>((section) => ({
     id: `section-${section.id}`, type: "page", title: section.title, meta: "Thư viện & Cộng đồng", url: `/thu-vien-cong-dong.html#${section.id}`,
   })),
   { id: "section-anh-video", type: "page", title: "Ảnh & Video", keywords: ["thư viện truyền thông"], url: "/thu-vien-cong-dong.html#anh-video" },

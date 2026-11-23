@@ -80,6 +80,10 @@ export type TournamentCategory = {
   level?: string
   ageGroup?: string
   format?: string
+  entrants?: number
+  rounds?: number
+  status?: string
+  prize?: string
 }
 
 export type TournamentScheduleStatus = "scheduled" | "ongoing" | "finished"
@@ -91,7 +95,14 @@ export type TournamentScheduleItem = {
   time: string
   court: string
   event: string
+  /** Giữ chuỗi gộp cho tương thích; ưu tiên sideA/sideB khi có. */
   participants: string
+  sideA?: string
+  sideB?: string
+  round?: string
+  categoryId?: string
+  score?: string
+  sets?: string[]
   status: TournamentScheduleStatus
 }
 
@@ -103,6 +114,10 @@ export type TournamentResult = {
   score: string
   winner: string
   round: string
+  categoryId?: string
+  matchId?: string
+  sets?: string[]
+  stage?: "group" | "knockout" | "final"
 }
 
 export type TournamentDocument = {
@@ -112,10 +127,72 @@ export type TournamentDocument = {
   href?: string
 }
 
+export type TournamentStats = {
+  athletes: number
+  teams: number
+  matches: number
+  events: number
+}
+
+export type TournamentOverview = {
+  intro: string[]
+  goals?: string
+  audience?: string
+  venueNote?: string
+  dayPlan?: { date: string; title: string; items: string[] }[]
+  prizes?: { place: string; detail: string }[]
+  highlights?: string[]
+}
+
+export type TournamentRuleSection = {
+  id: string
+  title: string
+  paragraphs?: string[]
+  bullets?: string[]
+}
+
+export type TournamentStandingRow = {
+  rank: number
+  name: string
+  played: number
+  won: number
+  lost: number
+  points: number
+}
+
+export type TournamentStanding = {
+  categoryId: string
+  group: string
+  rows: TournamentStandingRow[]
+}
+
+export type TournamentWinner = {
+  categoryId: string
+  categoryName: string
+  champion: string
+  runnerUp: string
+  third?: string[]
+}
+
+export type TournamentGalleryItem = {
+  id: string
+  type: "image" | "video"
+  src: string
+  alt: string
+  poster?: string
+}
+
+export type TournamentContact = {
+  name?: string
+  email?: string
+  phone?: string
+}
+
 /**
  * Giải đấu dùng chung cho Homepage và trang Giải đấu.
  * `status` không lưu trong dữ liệu — tính từ startDate và endDate.
  * Các field `summary`, `thumbnail`, `time`, `detailUrl` giữ cho Homepage.
+ * Field tùy chọn phía dưới phục vụ trang chi tiết (map WordPress ACF sau này).
  */
 export type Tournament = {
   id: string
@@ -153,6 +230,18 @@ export type Tournament = {
   thumbnail: string
   thumbnailAlt: string
   detailUrl: string
+  logo?: string
+  coOrganizer?: string
+  scale?: string
+  audience?: string
+  registrationDeadline?: string
+  contact?: TournamentContact
+  stats?: TournamentStats
+  overview?: TournamentOverview
+  ruleSections?: TournamentRuleSection[]
+  standings?: TournamentStanding[]
+  winners?: TournamentWinner[]
+  gallery?: TournamentGalleryItem[]
 }
 
 export type TournamentView = Tournament & {

@@ -6,5 +6,7 @@ export function libraryRecordAnchor(kind: LibraryRecord, id: string) {
 
 export function libraryRecordPath(kind: LibraryRecord, id: string) {
   const anchor = libraryRecordAnchor(kind, id)
-  return `/thu-vien-cong-dong.html?${kind}=${encodeURIComponent(id)}#${encodeURIComponent(anchor)}`
+  const page =
+    kind === "member" ? "/thu-vien-cong-dong.html" : "/doi-tuyen-van-dong-vien.html"
+  return `${page}?${kind}=${encodeURIComponent(id)}#${encodeURIComponent(anchor)}`
 }

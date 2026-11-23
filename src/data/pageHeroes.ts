@@ -22,16 +22,26 @@ export const pageHeroes = {
   },
   knowledge: {
     titleId: "chuyen-mon-tieu-de",
-    title: "Chuyên môn",
+    title: "Tài liệu",
     description:
       "Hệ thống tài liệu, quy định, hướng dẫn và chương trình đào tạo chuyên môn của Liên đoàn Pickleball Việt Nam.",
-    breadcrumbs: [home, { label: "Chuyên môn" }],
+    breadcrumbs: [home, { label: "Chuyên môn", href: "/chuyenmon.html" }, { label: "Tài liệu" }],
+  },
+  teams: {
+    titleId: "doi-tuyen-trang-tieu-de",
+    title: "Đội tuyển & Vận động viên",
+    description: "Ban huấn luyện và vận động viên theo đợt — dữ liệu minh họa để duyệt giao diện.",
+    breadcrumbs: [
+      home,
+      { label: "Chuyên môn", href: "/chuyenmon.html" },
+      { label: "Đội tuyển & Vận động viên" },
+    ],
   },
   library: {
     titleId: "thu-vien-cong-dong-tieu-de",
     title: "Thư viện & Cộng đồng",
     description:
-      "Khám phá tài nguyên nhận diện, hình ảnh, video và mạng lưới đơn vị, vận động viên Pickleball Việt Nam.",
+      "Khám phá tài nguyên nhận diện, hình ảnh, video và mạng lưới đơn vị thành viên Pickleball Việt Nam.",
     breadcrumbs: [home, { label: "Thư viện & Cộng đồng" }],
   },
   partnership: {

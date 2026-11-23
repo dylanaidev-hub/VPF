@@ -12,7 +12,7 @@ export const libraryPage = {
   eyebrow: "Thư viện & Cộng đồng",
   title: "Thư viện & Cộng đồng",
   description:
-    "Khám phá tài nguyên nhận diện, hình ảnh, video và mạng lưới đơn vị, vận động viên Pickleball Việt Nam.",
+    "Khám phá tài nguyên nhận diện, hình ảnh, video và mạng lưới đơn vị thành viên Pickleball Việt Nam.",
   disclaimer:
     "Nội dung trên trang đang dùng dữ liệu minh họa để duyệt giao diện — chưa phải thư viện hay danh mục chính thức.",
 } as const

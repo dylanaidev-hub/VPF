@@ -94,6 +94,7 @@ const pages = [
   "tintuc",
   "giaidau",
   "chuyenmon",
+  "doi-tuyen-van-dong-vien",
   "thu-vien-cong-dong",
   "media",
   "congdong",

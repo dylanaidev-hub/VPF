@@ -5433,25 +5433,25 @@ button.coach-card:focus-visible {
 .partner-star-ring:nth-child(7) .partner-star-stroke { stroke-opacity: 0.18; }
 
 @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
-  .fed-brand.is-hot .partner-star-ring:nth-child(1) .partner-star-stroke { transition-delay: 0ms; stroke-width: 2.25; }
-  .fed-brand.is-hot .partner-star-ring:nth-child(2) .partner-star-stroke { transition-delay: 70ms; stroke-opacity: 0.96; stroke-width: 2.15; }
-  .fed-brand.is-hot .partner-star-ring:nth-child(3) .partner-star-stroke { transition-delay: 140ms; stroke-opacity: 0.84; stroke-width: 2.1; }
-  .fed-brand.is-hot .partner-star-ring:nth-child(4) .partner-star-stroke { transition-delay: 210ms; stroke-opacity: 0.7; stroke-width: 2.05; }
-  .fed-brand.is-hot .partner-star-ring:nth-child(5) .partner-star-stroke { transition-delay: 280ms; stroke-opacity: 0.56; stroke-width: 2; }
-  .fed-brand.is-hot .partner-star-ring:nth-child(6) .partner-star-stroke { transition-delay: 350ms; stroke-opacity: 0.44; stroke-width: 1.95; }
-  .fed-brand.is-hot .partner-star-ring:nth-child(7) .partner-star-stroke { transition-delay: 420ms; stroke-opacity: 0.34; stroke-width: 1.9; }
+  :is(.fed-brand, .partner-hub).is-hot .partner-star-ring:nth-child(1) .partner-star-stroke { transition-delay: 0ms; stroke-width: 2.25; }
+  :is(.fed-brand, .partner-hub).is-hot .partner-star-ring:nth-child(2) .partner-star-stroke { transition-delay: 70ms; stroke-opacity: 0.96; stroke-width: 2.15; }
+  :is(.fed-brand, .partner-hub).is-hot .partner-star-ring:nth-child(3) .partner-star-stroke { transition-delay: 140ms; stroke-opacity: 0.84; stroke-width: 2.1; }
+  :is(.fed-brand, .partner-hub).is-hot .partner-star-ring:nth-child(4) .partner-star-stroke { transition-delay: 210ms; stroke-opacity: 0.7; stroke-width: 2.05; }
+  :is(.fed-brand, .partner-hub).is-hot .partner-star-ring:nth-child(5) .partner-star-stroke { transition-delay: 280ms; stroke-opacity: 0.56; stroke-width: 2; }
+  :is(.fed-brand, .partner-hub).is-hot .partner-star-ring:nth-child(6) .partner-star-stroke { transition-delay: 350ms; stroke-opacity: 0.44; stroke-width: 1.95; }
+  :is(.fed-brand, .partner-hub).is-hot .partner-star-ring:nth-child(7) .partner-star-stroke { transition-delay: 420ms; stroke-opacity: 0.34; stroke-width: 1.9; }
 
-  .fed-brand.is-hot .partner-star-glow {
+  :is(.fed-brand, .partner-hub).is-hot .partner-star-glow {
     animation: partner-star-ripple 3.2s linear infinite;
   }
 
-  .fed-brand.is-hot .partner-star-ring:nth-child(1) .partner-star-glow { opacity: 0.95; transition-delay: 0ms; animation-delay: 0s; }
-  .fed-brand.is-hot .partner-star-ring:nth-child(2) .partner-star-glow { opacity: 0.82; transition-delay: 90ms; animation-delay: 0.09s; }
-  .fed-brand.is-hot .partner-star-ring:nth-child(3) .partner-star-glow { opacity: 0.7; transition-delay: 180ms; animation-delay: 0.18s; }
-  .fed-brand.is-hot .partner-star-ring:nth-child(4) .partner-star-glow { opacity: 0.58; transition-delay: 270ms; animation-delay: 0.27s; }
-  .fed-brand.is-hot .partner-star-ring:nth-child(5) .partner-star-glow { opacity: 0.46; transition-delay: 360ms; animation-delay: 0.36s; }
-  .fed-brand.is-hot .partner-star-ring:nth-child(6) .partner-star-glow { opacity: 0.36; transition-delay: 450ms; animation-delay: 0.45s; }
-  .fed-brand.is-hot .partner-star-ring:nth-child(7) .partner-star-glow { opacity: 0.28; transition-delay: 540ms; animation-delay: 0.54s; }
+  :is(.fed-brand, .partner-hub).is-hot .partner-star-ring:nth-child(1) .partner-star-glow { opacity: 0.95; transition-delay: 0ms; animation-delay: 0s; }
+  :is(.fed-brand, .partner-hub).is-hot .partner-star-ring:nth-child(2) .partner-star-glow { opacity: 0.82; transition-delay: 90ms; animation-delay: 0.09s; }
+  :is(.fed-brand, .partner-hub).is-hot .partner-star-ring:nth-child(3) .partner-star-glow { opacity: 0.7; transition-delay: 180ms; animation-delay: 0.18s; }
+  :is(.fed-brand, .partner-hub).is-hot .partner-star-ring:nth-child(4) .partner-star-glow { opacity: 0.58; transition-delay: 270ms; animation-delay: 0.27s; }
+  :is(.fed-brand, .partner-hub).is-hot .partner-star-ring:nth-child(5) .partner-star-glow { opacity: 0.46; transition-delay: 360ms; animation-delay: 0.36s; }
+  :is(.fed-brand, .partner-hub).is-hot .partner-star-ring:nth-child(6) .partner-star-glow { opacity: 0.36; transition-delay: 450ms; animation-delay: 0.45s; }
+  :is(.fed-brand, .partner-hub).is-hot .partner-star-ring:nth-child(7) .partner-star-glow { opacity: 0.28; transition-delay: 540ms; animation-delay: 0.54s; }
 }
 
 @keyframes partner-star-ripple {
@@ -5472,8 +5472,8 @@ button.coach-card:focus-visible {
 .partner-hub-inner {
   display: grid;
   align-items: center;
-  gap: 1.75rem;
-  padding-block: 3.5rem;
+  gap: 1.5rem;
+  padding-block: clamp(2.5rem, 4vw, 3.5rem);
 }
 
 .partner-hub-copy {
@@ -5481,27 +5481,48 @@ button.coach-card:focus-visible {
   text-align: left;
 }
 
-.partner-hub-eyebrow {
-  margin: 0 0 0.85rem;
-  color: var(--vpf-gold-300);
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-}
-
 .partner-hub-copy .vpf-section-title {
-  font-size: clamp(2rem, 1.1rem + 2.2vw, 3.5rem);
-  line-height: 1.1;
+  margin: 0;
+  font-size: clamp(1.85rem, 1.1rem + 1.8vw, 3rem);
+  line-height: 1.12;
   text-wrap: balance;
 }
 
 .partner-hub-lead {
-  margin: 1rem 0 0;
+  margin: 0.85rem 0 0;
   max-width: 28rem;
   color: rgb(255 255 255 / 78%);
   font-size: clamp(0.95rem, 0.9rem + 0.2vw, 1.0625rem);
   line-height: 1.65;
+}
+
+.partner-hub-keywords {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, max-content));
+  column-gap: 1.375rem;
+  row-gap: 0.875rem;
+  margin: 1.25rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.partner-hub-keyword {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  color: rgb(255 255 255 / 92%);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+}
+
+.partner-hub-dot {
+  flex: 0 0 auto;
+  width: 0.4rem;
+  height: 0.4rem;
+  border-radius: 999px;
+  background: var(--vpf-gold-500);
 }
 
 .partner-hub-cta {
@@ -5509,154 +5530,39 @@ button.coach-card:focus-visible {
 }
 
 .partner-hub-stage {
-  position: relative;
   display: grid;
-  grid-template: repeat(3, minmax(0, 1fr)) / repeat(3, minmax(0, 1fr));
-  grid-template-areas:
-    ". brand ."
-    "community star media"
-    ". event .";
   place-items: center;
   justify-self: center;
-  width: min(100%, 34rem);
-  min-height: 0;
+  width: min(100%, 22rem);
+  padding: 0.75rem;
   aspect-ratio: 1 / 1;
 }
 
-.partner-hub-orbit {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-}
-
-.partner-hub-orbit-ring,
-.partner-hub-link {
-  vector-effect: non-scaling-stroke;
-  stroke: var(--vpf-gold-300);
-}
-
-.partner-hub-orbit-ring {
-  stroke-width: 1;
-  stroke-opacity: 0.4;
-  stroke-dasharray: 2 4;
-}
-
-.partner-hub-link {
-  stroke-width: 1;
-  stroke-opacity: 0.38;
-  stroke-linecap: round;
-  transition: stroke-opacity 300ms ease, stroke-width 300ms ease;
-}
-
 .partner-hub-star {
-  grid-area: star;
-  z-index: 1;
-  width: 106%;
+  width: 100%;
   height: auto;
-  transition: filter 300ms ease;
-}
-
-.partner-hub-pillar {
-  z-index: 2;
-  width: calc(100% - 0.5rem);
-  padding: 0.65rem clamp(0.4rem, 1vw, 0.95rem);
-  border: 1px solid rgb(255 255 255 / 18%);
-  border-radius: 0.9rem;
-  background: rgb(255 255 255 / 8%);
-  text-align: center;
-  overflow-wrap: anywhere;
-  backdrop-filter: blur(6px);
-  transition: translate 300ms ease, background-color 300ms ease, border-color 300ms ease, box-shadow 300ms ease;
-}
-
-.partner-hub-pillar[data-pillar="thuong-hieu"] { grid-area: brand; }
-.partner-hub-pillar[data-pillar="truyen-thong"] { grid-area: media; }
-.partner-hub-pillar[data-pillar="giai-dau"] { grid-area: event; }
-.partner-hub-pillar[data-pillar="cong-dong"] { grid-area: community; }
-
-.partner-hub-pillar-label {
-  margin: 0;
-  color: var(--vpf-white);
-  font-size: clamp(0.8125rem, 0.73rem + 0.4vw, 0.95rem);
-  font-weight: 700;
-  letter-spacing: -0.01em;
-  line-height: 1.25;
-}
-
-.partner-hub-pillar-detail {
-  margin: 0.35rem 0 0;
-  color: rgb(255 255 255 / 72%);
-  font-size: clamp(0.75rem, 0.72rem + 0.13vw, 0.82rem);
-  line-height: 1.45;
-}
-
-.partner-hub-pillar:is(:hover, :focus-visible) {
-  background: rgb(255 255 255 / 14%);
-  border-color: var(--vpf-gold-300);
-  box-shadow: 0 8px 20px rgb(0 0 0 / 14%);
-}
-
-.partner-hub-stage:has(.partner-hub-pillar:is(:hover, :focus-visible)) .partner-hub-star {
-  filter: brightness(1.2);
-}
-
-.partner-hub-stage:has([data-pillar="thuong-hieu"]:is(:hover, :focus-visible)) [data-link="thuong-hieu"],
-.partner-hub-stage:has([data-pillar="truyen-thong"]:is(:hover, :focus-visible)) [data-link="truyen-thong"],
-.partner-hub-stage:has([data-pillar="giai-dau"]:is(:hover, :focus-visible)) [data-link="giai-dau"],
-.partner-hub-stage:has([data-pillar="cong-dong"]:is(:hover, :focus-visible)) [data-link="cong-dong"] {
-  stroke-opacity: 1;
-  stroke-width: 1.5;
-}
-
-@media (max-width: 767px) {
-  .partner-hub-stage {
-    width: min(calc(100% + 1.5rem), 34rem);
-  }
-}
-
-@media (max-width: 430px) {
-  .partner-hub-stage {
-    margin-block: 1.25rem;
-  }
-
-  /* Keep taller, wrapped cards clear of the star on narrow screens. */
-  .partner-hub-pillar[data-pillar="thuong-hieu"] {
-    align-self: end;
-    margin-bottom: 0.5rem;
-  }
-
-  .partner-hub-pillar[data-pillar="giai-dau"] {
-    align-self: start;
-    margin-top: 0.5rem;
-  }
-}
-
-@media (max-width: 359px) {
-  .partner-hub-stage {
-    margin-block: 2.5rem 1.25rem;
-  }
-
-  .partner-hub-pillar {
-    width: calc(100% - 0.25rem);
-    padding-inline: 0.3rem;
-  }
+  overflow: visible;
 }
 
 @media (min-width: 768px) {
   .partner-hub-inner {
-    grid-template-columns: minmax(0, 45fr) minmax(0, 55fr);
-    gap: clamp(1.5rem, 3vw, 3rem);
-    padding-block: 4.25rem;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+    gap: clamp(1.5rem, 3vw, 2.75rem);
+  }
+
+  .partner-hub-stage {
+    width: min(100%, 26rem);
+    padding: 1rem;
+  }
+}
+
+@media (min-width: 1200px) {
+  .partner-hub-stage {
+    width: min(100%, 28rem);
   }
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .partner-hub-pillar:is(:hover, :focus-visible) {
-    translate: 0 -3px;
-  }
-
   .partner-hub[data-revealed="true"] .partner-hub-inner {
     animation: partner-hub-enter 320ms ease-out;
   }
@@ -5665,14 +5571,6 @@ button.coach-card:focus-visible {
 @keyframes partner-hub-enter {
   from { opacity: 0.78; }
   to { opacity: 1; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .partner-hub-pillar,
-  .partner-hub-link,
-  .partner-hub-star {
-    transition: none;
-  }
 }
 
 /* VPF LIVE ARENA — broadcast frame. Navy is the broadcast field, not a brand token. */

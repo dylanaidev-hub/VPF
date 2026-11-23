@@ -29,7 +29,10 @@ export const navigation: NavItem[] = [
     id: "expertise",
     label: "Chuyên môn",
     href: "/chuyenmon.html",
-    children: [{ id: "framework", label: "Khung chuyên môn", href: "/chuyenmon.html" }],
+    children: [
+      { id: "documents", label: "Tài liệu", href: "/chuyenmon.html" },
+      { id: "teams", label: "Đội tuyển & Vận động viên", href: "/doi-tuyen-van-dong-vien.html" },
+    ],
   },
   { id: "library", label: "Thư viện & Cộng đồng", href: "/thu-vien-cong-dong.html" },
   { id: "partners", label: "Hợp tác", href: "/hoptac.html" },

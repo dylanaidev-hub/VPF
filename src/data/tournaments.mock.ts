@@ -1,18 +1,21 @@
 import { tournamentPath } from "../lib/tournaments"
 import type { Tournament } from "../types"
+import { haNoiTournamentDetail } from "./tournament-ha-noi-detail"
 
 const note =
   "Sự kiện giả định để minh họa giao diện. Không có trong lịch thi đấu chính thức của Liên đoàn Pickleball Việt Nam."
 
 const organizer = "Ban tổ chức minh họa"
 
-type TournamentSource = Omit<
+export type TournamentSourceFields = Omit<
   Tournament,
   "thumbnail" | "thumbnailAlt" | "detailUrl" | "summary" | "scope"
 > & {
   summary: string
   scope?: Tournament["scope"]
 }
+
+type TournamentSource = TournamentSourceFields
 
 /**
  * Cùng danh sách giải với Homepage.
@@ -22,58 +25,7 @@ type TournamentSource = Omit<
 export const tournamentsIllustrative = true
 
 const source: TournamentSource[] = [
-  {
-    id: "mo-rong-ha-noi-2026",
-    slug: "mo-rong-ha-noi-2026",
-    name: "Giải Pickleball Mở rộng Hà Nội 2026",
-    summary:
-      "Giải giả định quy tụ các nhóm chơi khu vực Hà Nội, với nội dung đơn và đôi phong trào trên cụm sân trong nhà.",
-    description:
-      "Giải giả định quy tụ các nhóm chơi khu vực Hà Nội, với nội dung đơn và đôi phong trào trên cụm sân trong nhà. Lịch trong dữ liệu này chỉ để xem cách một trang giải trình bày thông tin.",
-    objective: "Tạo sân chơi cuối tuần cho các nhóm phong trào tại Hà Nội, theo dữ liệu minh họa.",
-    coverImage: "/images/match.jpg",
-    coverImageAlt: "Trận đấu pickleball trong nhà. Ảnh minh họa cho giải giả định tại Hà Nội.",
-    startDate: "2026-11-15",
-    endDate: "2026-11-17",
-    location: "Hà Nội",
-    venue: "Cụm sân minh họa Hà Nội",
-    organizer,
-    time: "08:00 – 17:00",
-    isFeatured: true,
-    illustrative: true,
-    note,
-    categories: [
-      { id: "don-nam", name: "Đơn nam", level: "Phong trào", ageGroup: "Mở", format: "Loại trực tiếp" },
-      { id: "don-nu", name: "Đơn nữ", level: "Phong trào", ageGroup: "Mở", format: "Loại trực tiếp" },
-      { id: "doi-nam-nu", name: "Đôi nam nữ", level: "Phong trào", ageGroup: "Mở", format: "Vòng bảng và loại trực tiếp" },
-    ],
-    schedule: [
-      {
-        id: "hn-1",
-        date: "2026-11-15",
-        time: "08:30",
-        court: "Sân 1",
-        event: "Đơn nam",
-        participants: "Vận động viên minh họa 1 – Vận động viên minh họa 2",
-        status: "scheduled",
-      },
-      {
-        id: "hn-2",
-        date: "2026-11-16",
-        time: "14:00",
-        court: "Sân 3",
-        event: "Đôi nam nữ",
-        participants: "Đội minh họa A – Đội minh họa B",
-        status: "scheduled",
-      },
-    ],
-    results: [],
-    regulations: {
-      summary:
-        "Điều lệ minh họa: mỗi nội dung đánh nhánh thắng, set đấu đến 11 và cách biệt 2. Danh sách vận động viên do ban tổ chức giả định chốt trước ngày thi đấu.",
-      documents: [{ id: "hn-dieu-le", title: "Điều lệ giải minh họa — Hà Nội 2026" }],
-    },
-  },
+  haNoiTournamentDetail,
   {
     id: "cong-dong-tphcm-2026",
     slug: "cong-dong-tphcm-2026",
