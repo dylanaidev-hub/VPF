@@ -1,4 +1,5 @@
 import type { TournamentScheduleItem, TournamentView } from "../types"
+import { parseIsoDate } from "./format"
 import { withStatus } from "./tournaments"
 
 export function matchSides(item: TournamentScheduleItem) {
@@ -11,9 +12,15 @@ export function matchSides(item: TournamentScheduleItem) {
 }
 
 export function relatedTournaments(current: TournamentView, all: TournamentView[], limit = 3) {
+  const currentStart = parseIsoDate(current.startDate).getTime()
+
   return all
     .filter((item) => item.id !== current.id)
-    .sort((a, b) => b.startDate.localeCompare(a.startDate) || a.name.localeCompare(b.name, "vi"))
+    .sort((a, b) => {
+      const distanceA = Math.abs(parseIsoDate(a.startDate).getTime() - currentStart)
+      const distanceB = Math.abs(parseIsoDate(b.startDate).getTime() - currentStart)
+      return distanceA - distanceB || a.startDate.localeCompare(b.startDate) || a.name.localeCompare(b.name, "vi")
+    })
     .slice(0, limit)
 }
 

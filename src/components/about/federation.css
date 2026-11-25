@@ -45,9 +45,13 @@
   line-height: 1.55;
 }
 
-.fed-section,
-.fed-contact {
+.fed-section {
   padding: 4.5rem 0;
+}
+
+.fed-contact {
+  padding: 3rem 0;
+  background: #fff;
 }
 
 .fed-band {
@@ -68,8 +72,7 @@
   }
 }
 
-.fed-band,
-.fed-contact {
+.fed-band {
   background: var(--vpf-canvas);
 }
 
@@ -84,7 +87,12 @@
   }
 }
 
-.fed-contact-grid,
+.fed-contact-grid {
+  display: grid;
+  gap: 2rem;
+  align-items: stretch;
+}
+
 .fed-charter-grid,
 .fed-mandate {
   display: grid;
@@ -375,16 +383,21 @@
     inset: 0 auto auto 0;
     z-index: 60;
     display: inline-flex;
+    width: max-content;
+    max-width: calc(100vw - 16px);
     align-items: center;
-    gap: 0.4rem;
-    padding: 0.4rem 0.7rem;
+    justify-content: center;
+    padding: 10px 20px;
+    border: 0;
     border-radius: 999px;
-    background: var(--vpf-red-500);
-    color: var(--vpf-white);
-    box-shadow: 0 4px 14px rgb(0 0 0 / 16%);
-    font-size: 0.8rem;
-    font-weight: 700;
+    background: #17191d;
+    color: #fff;
+    box-shadow: none;
+    font-family: "Be Vietnam Pro", system-ui, sans-serif;
+    font-size: 14px;
+    font-weight: 600;
     line-height: 1.25;
+    letter-spacing: 0;
     white-space: nowrap;
     opacity: 0;
     visibility: hidden;
@@ -829,8 +842,7 @@
   margin-top: 1.15rem;
 }
 
-.fed-charter dt,
-.fed-contact-list span span {
+.fed-charter dt {
   color: var(--vpf-ink-soft);
   font-size: 12px;
   font-weight: 600;
@@ -998,7 +1010,7 @@
   z-index: 1;
   width: 100%;
   margin-inline: auto;
-  padding-bottom: 3.75rem;
+  padding-bottom: 2.25rem;
   overflow: visible;
 }
 
@@ -1454,63 +1466,73 @@
 .fed-star-tools {
   position: absolute;
   z-index: 6;
-  left: 50%;
-  bottom: 0;
-  display: flex;
-  gap: 0.7rem;
-  opacity: 0;
-  transform: translate(-50%, 10px);
+  inset: 0;
   pointer-events: none;
-  transition:
-    opacity 280ms cubic-bezier(0.22, 1, 0.36, 1),
-    transform 280ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.fed-constellation.is-story .fed-star-tools {
-  opacity: 1;
-  transform: translate(-50%, 0);
-  pointer-events: auto;
-  transition-delay: 240ms;
-}
-
-.fed-constellation.is-return .fed-star-tools {
-  opacity: 0;
-  transform: translate(-50%, 10px);
-  pointer-events: none;
-  transition-delay: 0ms;
-}
-
-.fed-star-tools button {
+.fed-star-nav {
+  position: absolute;
+  top: 50%;
   display: grid;
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   place-items: center;
   padding: 0;
   border: 1px solid rgb(255 255 255 / 42%);
   border-radius: 999px;
   background: transparent;
   color: white;
+  opacity: 0;
+  transform: translateY(-50%) scale(0.92);
+  pointer-events: none;
   cursor: pointer;
   transition:
+    opacity 280ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 280ms cubic-bezier(0.22, 1, 0.36, 1),
     background 200ms ease,
     border-color 200ms ease,
     color 200ms ease;
 }
 
-.fed-star-tools button:hover:not(:disabled) {
+.fed-star-nav.is-prev {
+  right: calc(100% + (var(--star-grow, 1) - 1) * 50% + 0.85rem);
+}
+
+.fed-star-nav.is-next {
+  left: calc(100% + (var(--star-grow, 1) - 1) * 50% + 0.85rem);
+}
+
+.fed-constellation.is-story .fed-star-nav {
+  opacity: 1;
+  transform: translateY(-50%) scale(1);
+  pointer-events: auto;
+  transition-delay: 240ms;
+}
+
+.fed-constellation.is-return .fed-star-nav {
+  opacity: 0;
+  transform: translateY(-50%) scale(0.92);
+  pointer-events: none;
+  transition-delay: 0ms;
+}
+
+.fed-star-nav:hover:not(:disabled) {
   border-color: var(--vpf-logo-orange);
   background: var(--vpf-logo-orange);
   color: white;
 }
 
-.fed-star-tools button:focus-visible {
+.fed-star-nav:focus-visible {
   outline: 2px solid var(--vpf-gold-300);
   outline-offset: 3px;
 }
 
-.fed-star-tools button:disabled {
-  opacity: 0.38;
+.fed-star-nav:disabled {
   cursor: default;
+}
+
+.fed-constellation.is-story .fed-star-nav:disabled {
+  opacity: 0.38;
 }
 
 @keyframes fed-star-in {
@@ -1708,7 +1730,7 @@
   }
 
   .fed-constellation-stage {
-    padding-bottom: 3.5rem;
+    padding-bottom: 2rem;
   }
 
   .fed-constellation-frame {
@@ -1737,13 +1759,12 @@
     font-size: 0.8125rem;
   }
 
-  .fed-star-tools {
-    gap: 0.65rem;
+  .fed-star-nav.is-prev {
+    right: calc(100% + (var(--star-grow, 1) - 1) * 50% + 0.45rem);
   }
 
-  .fed-star-tools button {
-    width: 38px;
-    height: 38px;
+  .fed-star-nav.is-next {
+    left: calc(100% + (var(--star-grow, 1) - 1) * 50% + 0.45rem);
   }
 
   .fed-constellation-dot {
@@ -1757,6 +1778,38 @@
   }
 }
 
+@media (max-width: 419px) {
+  .fed-constellation-stage {
+    padding-bottom: 4.25rem;
+  }
+
+  .fed-star-tools {
+    inset: auto 0 0;
+    display: flex;
+    justify-content: center;
+    gap: 0.85rem;
+  }
+
+  .fed-star-nav {
+    position: static;
+    transform: translateY(8px) scale(0.92);
+  }
+
+  .fed-constellation.is-story .fed-star-nav {
+    transform: translateY(0) scale(1);
+  }
+
+  .fed-constellation.is-return .fed-star-nav {
+    transform: translateY(8px) scale(0.92);
+  }
+
+  .fed-star-nav.is-prev,
+  .fed-star-nav.is-next {
+    left: auto;
+    right: auto;
+  }
+}
+
 @media (min-width: 768px) {
   .fed-vision {
     padding: 88px 0 72px;
@@ -1767,7 +1820,7 @@
   }
 
   .fed-constellation-stage {
-    padding-bottom: 6.25rem;
+    padding-bottom: 2.75rem;
   }
 
   .fed-constellation-frame {
@@ -1784,6 +1837,14 @@
 
   .fed-star-blurb {
     font-size: 0.875rem;
+  }
+
+  .fed-star-nav.is-prev {
+    right: calc(100% + (var(--star-grow, 1) - 1) * 50% + 0.7rem);
+  }
+
+  .fed-star-nav.is-next {
+    left: calc(100% + (var(--star-grow, 1) - 1) * 50% + 0.7rem);
   }
 
   .fed-story-grid {
@@ -1804,8 +1865,8 @@
 
   .fed-constellation-stage {
     max-width: min(68%, 32rem);
-    min-height: 36.25rem;
-    padding-bottom: 8.5rem;
+    min-height: 32rem;
+    padding-bottom: 3rem;
   }
 
   .fed-constellation-frame {
@@ -1825,8 +1886,12 @@
     font-size: 0.9375rem;
   }
 
-  .fed-star-tools {
-    bottom: 0.4rem;
+  .fed-star-nav.is-prev {
+    right: calc(100% + (var(--star-grow, 1) - 1) * 50% + 1.1rem);
+  }
+
+  .fed-star-nav.is-next {
+    left: calc(100% + (var(--star-grow, 1) - 1) * 50% + 1.1rem);
   }
 
   .fed-constellation-label {
@@ -2256,45 +2321,76 @@
   to { opacity: 1; scale: 1; }
 }
 
+.fed-contact-desc {
+  margin: 0.75rem 0 0;
+  max-width: 28rem;
+  color: var(--vpf-ink-soft);
+  font-size: 1rem;
+  line-height: 1.65;
+}
+
+.fed-contact-demo-note {
+  margin: 0.75rem 0 0;
+  max-width: 28rem;
+  color: var(--vpf-ink-soft);
+  font-size: 0.8125rem;
+  line-height: 1.5;
+}
+
 .fed-contact-list {
   display: grid;
-  gap: 0.9rem;
-  margin: 1.25rem 0 1.5rem;
+  gap: 20px;
+  margin: 1.5rem 0 0;
   padding: 0;
   list-style: none;
 }
 
-.fed-contact-list li {
-  display: grid;
-  grid-template-columns: 1.5rem minmax(0, 1fr);
-  gap: 0.75rem;
-  align-items: start;
+.fed-contact-directions {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-top: 1.25rem;
   color: var(--vpf-ink);
-  line-height: 1.5;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
-.fed-contact-list svg {
-  margin-top: 0.15rem;
-  color: var(--vpf-red-500);
+.fed-contact-directions:hover,
+.fed-contact-directions:focus-visible {
+  color: var(--vpf-logo-red);
 }
 
 .fed-map {
+  position: relative;
   overflow: hidden;
-  min-height: 18rem;
-  border-radius: 16px;
+  width: 100%;
+  min-height: 280px;
+  height: 280px;
+  border-radius: 12px;
   background: var(--vpf-line);
+  box-shadow: none;
 }
 
 .fed-map iframe {
   display: block;
   width: 100%;
   height: 100%;
-  min-height: 18rem;
   border: 0;
 }
 
 @media (min-width: 768px) {
-  .fed-contact-grid,
+  .fed-contact {
+    padding: 64px 0;
+  }
+
+  .fed-contact-grid {
+    grid-template-columns: minmax(0, 45fr) minmax(0, 55fr);
+    gap: 48px;
+    align-items: stretch;
+  }
+
   .fed-mandate {
     grid-template-columns: 1fr 1fr;
     align-items: center;
@@ -2309,9 +2405,17 @@
     margin: 0;
   }
 
-  .fed-map,
+  .fed-map {
+    height: auto;
+    min-height: 100%;
+    align-self: stretch;
+  }
+
   .fed-map iframe {
-    min-height: 22rem;
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
   }
 }
 
@@ -2424,12 +2528,22 @@
   .fed-constellation.is-open .fed-star-title,
   .fed-constellation.is-open .fed-star-blurb,
   .fed-constellation.is-open .fed-star-note,
-  .fed-constellation.is-story .fed-star-tools {
+  .fed-constellation.is-story .fed-star-nav {
     opacity: 1;
     clip-path: none;
     scale: 1;
     transition: none;
     animation: none;
+  }
+
+  .fed-constellation.is-story .fed-star-nav {
+    transform: translateY(-50%);
+  }
+
+  @media (max-width: 419px) {
+    .fed-constellation.is-story .fed-star-nav {
+      transform: none;
+    }
   }
 
   .fed-star-title.is-swap,
@@ -2439,7 +2553,7 @@
   .fed-star-shot,
   .fed-constellation-svg,
   .fed-constellation-visual,
-  .fed-star-tools,
+  .fed-star-nav,
   .fed-constellation.is-story .fed-constellation-frame,
   .fed-constellation.is-story,
   .fed-constellation.is-shrink {

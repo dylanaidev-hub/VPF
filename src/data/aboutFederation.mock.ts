@@ -291,19 +291,5 @@ export const federationCommittee = {
   people: [federationChair, ...federationVices, ...federationMembers],
 }
 
-export const federationContact = {
-  id: "lien-he",
-  eyebrow: "Thông tin liên hệ",
-  title: "Liên hệ Liên đoàn",
-  note: "Thông tin để kết nối với Liên đoàn Pickleball Việt Nam.",
-  rows: [
-    { id: "address", label: "Địa chỉ", value: "Hà Nội, Việt Nam — địa điểm minh họa, chưa có số nhà." },
-    { id: "hotline", label: "Hotline", value: "Chưa công bố" },
-    { id: "email", label: "Email", value: "Chưa công bố" },
-    { id: "hours", label: "Giờ làm việc", value: "Chưa công bố" },
-  ],
-  cta: "Đề xuất hợp tác",
-  href: "/hoptac.html#lien-he-hop-tac",
-  mapTitle: "Bản đồ minh họa khu vực Hà Nội, không ghim trụ sở VPF",
-  mapSrc: "https://maps.google.com/maps?q=H%C3%A0%20N%E1%BB%99i%2C%20Vi%E1%BB%87t%20Nam&z=11&output=embed",
-}
+/** @deprecated Dùng federationContactSection + federationContactInfo từ data/contact. */
+export { federationContactSection as federationContact } from "./contact"

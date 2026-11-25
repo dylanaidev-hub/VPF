@@ -1,15 +1,13 @@
 import { useState } from "react"
-import { mediaAlbums, type MediaAlbum, type MediaShot } from "../../data/media.mock"
+import { mediaAlbums, type MediaAlbum } from "../../data/media.mock"
 import { cx } from "../../lib/cx"
 import { sitePath } from "../../lib/site"
 import { formatViDate } from "../../lib/format"
 import { useReveal } from "../../lib/useReveal"
-import { AlbumViewer } from "./AlbumViewer"
-import { MediaLightbox } from "./MediaLightbox"
+import { MediaViewer } from "./MediaViewer"
 
 export function PhotoAlbums() {
   const [album, setAlbum] = useState<MediaAlbum | null>(null)
-  const [lightbox, setLightbox] = useState<{ shots: Array<MediaShot & { title?: string }>; index: number } | null>(null)
   const { ref, shown } = useReveal<HTMLUListElement>()
 
   return (
@@ -57,25 +55,19 @@ export function PhotoAlbums() {
       </div>
 
       {album ? (
-        <AlbumViewer
-          album={album}
-          paused={lightbox !== null}
+        <MediaViewer
+          key={album.id}
+          items={album.images.map((shot) => ({
+            id: shot.id,
+            src: shot.src,
+            alt: shot.alt,
+            title: shot.caption,
+            description: shot.caption,
+            thumbnail: shot.src,
+          }))}
+          title={album.title}
+          description={album.description}
           onClose={() => setAlbum(null)}
-          onOpenShot={(_shot, index) =>
-            setLightbox({
-              shots: album.images.map((shot) => ({ ...shot, title: album.title })),
-              index,
-            })
-          }
-        />
-      ) : null}
-      {lightbox ? (
-        <MediaLightbox
-          shots={lightbox.shots}
-          index={lightbox.index}
-          onIndex={(index) => setLightbox((current) => (current ? { ...current, index } : current))}
-          onClose={() => setLightbox(null)}
-          lockBodyScroll={false}
         />
       ) : null}
     </section>

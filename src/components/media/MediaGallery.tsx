@@ -10,13 +10,12 @@ import {
   type MediaImage,
   type MediaItem,
   type MediaRatio,
-  type MediaShot,
   type MediaVideo,
 } from "../../data/media.mock"
 import { cx } from "../../lib/cx"
 import { sitePath } from "../../lib/site"
 import { useReveal } from "../../lib/useReveal"
-import { MediaLightbox } from "./MediaLightbox"
+import { MediaViewer } from "./MediaViewer"
 import { VideoViewer } from "./VideoViewer"
 
 const pageSize = 12
@@ -38,7 +37,12 @@ export function MediaGallery() {
   const [visibleCount, setVisibleCount] = useState(pageSize)
   const [video, setVideo] = useState<MediaVideo | null>(null)
   const closeVideo = useCallback(() => setVideo(null), [])
-  const [lightbox, setLightbox] = useState<{ shots: Array<MediaShot & { title?: string }>; index: number } | null>(null)
+  const [gallery, setGallery] = useState<{
+    items: Array<{ id: string; src: string; alt: string; title?: string; description?: string; thumbnail?: string }>
+    index: number
+    title?: string
+    description?: string
+  } | null>(null)
   const { ref, shown } = useReveal<HTMLUListElement>()
 
   const visible = useMemo(
@@ -48,13 +52,36 @@ export function MediaGallery() {
   const shownItems = visible.slice(0, visibleCount)
 
   const openImage = (item: MediaImage) => {
-    setLightbox({ shots: [toShot(item)], index: 0 })
+    setGallery({
+      items: [
+        {
+          id: item.id,
+          src: item.thumbnail,
+          alt: item.imageAlt,
+          title: item.title,
+          description: item.description,
+          thumbnail: item.thumbnail,
+        },
+      ],
+      index: 0,
+      title: item.title,
+      description: item.description,
+    })
   }
 
   const openAlbum = (item: MediaAlbum, index = 0) => {
-    setLightbox({
-      shots: item.images.map((shot) => ({ ...shot, title: item.title })),
+    setGallery({
+      items: item.images.map((shot) => ({
+        id: shot.id,
+        src: shot.src,
+        alt: shot.alt,
+        title: shot.caption,
+        description: shot.caption,
+        thumbnail: shot.src,
+      })),
       index,
+      title: item.title,
+      description: item.description,
     })
   }
 
@@ -119,27 +146,17 @@ export function MediaGallery() {
       ) : null}
 
       {video ? <VideoViewer video={video} onClose={closeVideo} /> : null}
-      {lightbox ? (
-        <MediaLightbox
-          shots={lightbox.shots}
-          index={lightbox.index}
-          onIndex={(index) => setLightbox((current) => (current ? { ...current, index } : current))}
-          onClose={() => setLightbox(null)}
+      {gallery ? (
+        <MediaViewer
+          items={gallery.items}
+          initialIndex={gallery.index}
+          title={gallery.title}
+          description={gallery.description}
+          onClose={() => setGallery(null)}
         />
       ) : null}
     </section>
   )
-}
-
-function toShot(item: MediaImage): MediaShot & { title: string } {
-  return {
-    id: item.id,
-    src: item.thumbnail,
-    alt: item.imageAlt,
-    caption: item.description,
-    title: item.title,
-    position: item.imagePosition,
-  }
 }
 
 function MediaTile({ item, onOpen }: { item: MediaItem; onOpen: () => void }) {

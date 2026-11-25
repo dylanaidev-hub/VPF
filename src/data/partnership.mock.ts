@@ -39,6 +39,13 @@ export const impactSection = {
 
 export type SponsorTier = "main" | "gold" | "silver" | "media"
 
+/** Ảnh minh họa cho section Dấu ấn đồng hành. WordPress: gallery ACF / media attachments. */
+export type SponsorHighlight = {
+  id: string
+  src: string
+  alt: string
+}
+
 export type SponsorProfile = {
   id: string
   slug: string
@@ -51,6 +58,8 @@ export type SponsorProfile = {
   statement?: string
   quote?: string
   website?: string
+  /** Preview gallery — ẩn section nếu trống. */
+  highlights?: SponsorHighlight[]
   tournamentSlugs: string[]
   newsSlugs: string[]
   illustrative: true
@@ -79,6 +88,28 @@ export const sponsors: SponsorProfile[] = [
       "Chúng tôi muốn đồng hành cùng phong trào Pickleball Việt Nam qua các giải đấu và hoạt động cộng đồng — nội dung minh họa.",
     quote: "Pickleball cần sân chơi chất lượng và hệ sinh thái bền vững. — Trích dẫn minh họa",
     website: undefined,
+    highlights: [
+      {
+        id: "court-pro-h1",
+        src: "/images/partnership/event.jpg",
+        alt: "Sân pickleball trong nhà. Ảnh minh họa hoạt động đồng hành.",
+      },
+      {
+        id: "court-pro-h2",
+        src: "/images/partnership/community.jpg",
+        alt: "Sân pickleball cộng đồng. Ảnh minh họa hoạt động đồng hành.",
+      },
+      {
+        id: "court-pro-h3",
+        src: "/images/outdoor.webp",
+        alt: "Người chơi trên sân ngoài trời. Ảnh minh họa hoạt động đồng hành.",
+      },
+      {
+        id: "court-pro-h4",
+        src: "/images/partnership/media.jpg",
+        alt: "Bối cảnh truyền thông pickleball. Ảnh minh họa hoạt động đồng hành.",
+      },
+    ],
     tournamentSlugs: ["mo-rong-ha-noi-2026", "cong-dong-tphcm-2026", "giao-luu-da-nang-2026"],
     newsSlugs: [
       "khong-khi-soi-dong-tai-cac-giai-pickleball-phong-trao",
@@ -96,6 +127,23 @@ export const sponsors: SponsorProfile[] = [
     sector: "Thể thao",
     intro: "Nhà tài trợ vàng minh họa cho danh mục logo cấp trung.",
     about: "Hồ sơ minh họa Adidas trên cổng Hợp tác.",
+    highlights: [
+      {
+        id: "ace-h1",
+        src: "/images/partnership/event.jpg",
+        alt: "Sân thi đấu pickleball. Ảnh minh họa hoạt động đồng hành.",
+      },
+      {
+        id: "ace-h2",
+        src: "/images/match.webp",
+        alt: "Trận pickleball trong nhà. Ảnh minh họa hoạt động đồng hành.",
+      },
+      {
+        id: "ace-h3",
+        src: "/images/partnership/community.jpg",
+        alt: "Không gian cộng đồng pickleball. Ảnh minh họa hoạt động đồng hành.",
+      },
+    ],
     tournamentSlugs: ["mo-rong-ha-noi-2026", "dong-doi-mien-nam-2026"],
     newsSlugs: ["khong-khi-soi-dong-tai-cac-giai-pickleball-phong-trao"],
     illustrative: true,
@@ -108,6 +156,18 @@ export const sponsors: SponsorProfile[] = [
     tier: "gold",
     sector: "Thể thao",
     intro: "Nhà tài trợ vàng minh họa.",
+    highlights: [
+      {
+        id: "paddle-h1",
+        src: "/images/partnership/community.jpg",
+        alt: "Sân cộng đồng pickleball. Ảnh minh họa hoạt động đồng hành.",
+      },
+      {
+        id: "paddle-h2",
+        src: "/images/outdoor.webp",
+        alt: "Sân ngoài trời. Ảnh minh họa hoạt động đồng hành.",
+      },
+    ],
     tournamentSlugs: ["cong-dong-tphcm-2026"],
     newsSlugs: [],
     illustrative: true,
@@ -120,6 +180,23 @@ export const sponsors: SponsorProfile[] = [
     tier: "silver",
     sector: "Đồ uống",
     intro: "Nhà tài trợ bạc minh họa.",
+    highlights: [
+      {
+        id: "match-h1",
+        src: "/images/partnership/event.jpg",
+        alt: "Không gian giải đấu pickleball. Ảnh minh họa hoạt động đồng hành.",
+      },
+      {
+        id: "match-h2",
+        src: "/images/partnership/hero.jpg",
+        alt: "Vợt và bóng pickleball. Ảnh minh họa hoạt động đồng hành.",
+      },
+      {
+        id: "match-h3",
+        src: "/images/match.webp",
+        alt: "Trận đấu pickleball. Ảnh minh họa hoạt động đồng hành.",
+      },
+    ],
     tournamentSlugs: ["giao-luu-da-nang-2026"],
     newsSlugs: [],
     illustrative: true,

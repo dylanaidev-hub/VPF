@@ -1,6 +1,6 @@
 import { useTranslation } from "../../i18n"
 import { useEffect, useRef, useState } from "react"
-import { ChevronLeft, ChevronRight, X } from "lucide-react"
+import { ChevronLeft, ChevronRight } from "lucide-react"
 import { federationVision } from "../../data/aboutFederation.mock"
 import { cx } from "../../lib/cx"
 import { sitePath } from "../../lib/site"
@@ -86,11 +86,12 @@ export function FedVision() {
       iy: (dy / length) * 14,
     }
   })
-  const closeRef = useRef<HTMLButtonElement>(null)
+  const interactRef = useRef<HTMLDivElement>(null)
   const triggerRef = useRef<HTMLElement | null>(null)
   const timers = useRef<number[]>([])
   const generation = useRef(0)
   const current = keyword === null ? null : values[keyword]
+  const canDismiss = keyword !== null && phase !== "idle" && phase !== "return" && phase !== "shrink" && phase !== "tips"
 
   const clearTimers = () => {
     timers.current.forEach((id) => window.clearTimeout(id))
@@ -105,15 +106,27 @@ export function FedVision() {
   useEffect(() => () => clearTimers(), [])
 
   useEffect(() => {
-    if (keyword === null) return
+    if (!canDismiss) return
+
     const onKey = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        event.preventDefault()
-        closeStory()
-      }
+      if (event.key !== "Escape") return
+      event.preventDefault()
+      closeStory()
     }
+
+    const onPointerDown = (event: PointerEvent) => {
+      const target = event.target
+      if (!(target instanceof Node)) return
+      if (interactRef.current?.contains(target)) return
+      closeStory()
+    }
+
     window.addEventListener("keydown", onKey)
-    return () => window.removeEventListener("keydown", onKey)
+    document.addEventListener("pointerdown", onPointerDown)
+    return () => {
+      window.removeEventListener("keydown", onKey)
+      document.removeEventListener("pointerdown", onPointerDown)
+    }
   })
 
   const finishClose = (token: number) => {
@@ -205,7 +218,7 @@ export function FedVision() {
           )}
         >
           <div className="fed-constellation-stage">
-            <div className="fed-constellation-frame">
+            <div ref={interactRef} className="fed-constellation-frame">
               <div className="fed-constellation-visual" aria-hidden>
                 <svg className="fed-constellation-svg" viewBox={`0 0 ${STAR_VIEW} ${STAR_VIEW}`} fill="none">
                   <defs>
@@ -307,36 +320,28 @@ export function FedVision() {
                   <p className="fed-sr">{current.imageAlt}</p>
                 </div>
               ) : null}
-            </div>
-            <div className="fed-star-tools" aria-hidden={!telling}>
-              <button
-                type="button"
-                aria-label={t("Giá trị trước")}
-                tabIndex={phase === "open" ? 0 : -1}
-                disabled={phase !== "open"}
-                onClick={() => stepStory(-1)}
-              >
-                <ChevronLeft aria-hidden size={18} />
-              </button>
-              <button
-                ref={closeRef}
-                type="button"
-                aria-label={t("Đóng")}
-                tabIndex={telling ? 0 : -1}
-                disabled={!telling}
-                onClick={closeStory}
-              >
-                <X aria-hidden size={18} />
-              </button>
-              <button
-                type="button"
-                aria-label={t("Giá trị sau")}
-                tabIndex={phase === "open" ? 0 : -1}
-                disabled={phase !== "open"}
-                onClick={() => stepStory(1)}
-              >
-                <ChevronRight aria-hidden size={18} />
-              </button>
+              <div className="fed-star-tools" aria-hidden={!telling}>
+                <button
+                  type="button"
+                  className="fed-star-nav is-prev"
+                  aria-label={t("Giá trị trước")}
+                  tabIndex={phase === "open" ? 0 : -1}
+                  disabled={phase !== "open"}
+                  onClick={() => stepStory(-1)}
+                >
+                  <ChevronLeft aria-hidden size={18} />
+                </button>
+                <button
+                  type="button"
+                  className="fed-star-nav is-next"
+                  aria-label={t("Giá trị sau")}
+                  tabIndex={phase === "open" ? 0 : -1}
+                  disabled={phase !== "open"}
+                  onClick={() => stepStory(1)}
+                >
+                  <ChevronRight aria-hidden size={18} />
+                </button>
+              </div>
             </div>
           </div>
           {compact ? (

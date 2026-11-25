@@ -1,10 +1,12 @@
 import { useTranslation } from "../i18n"
 import { Mail, MapPin, Phone } from "lucide-react"
+import { federationContactInfo } from "../data/contact"
 import { navigation } from "../data/navigation"
+import { site } from "../data/site"
 import { sitePath } from "../lib/site"
-import { site, socialChannels } from "../data/site"
 import { BackToTop } from "./BackToTop"
 import { Logo } from "./Logo"
+import { SocialLinks } from "./SocialLinks"
 
 const discoverIds = ["home", "federation", "news", "tournaments", "partners"]
 const categoryIds = ["expertise", "library"]
@@ -22,8 +24,10 @@ const anchorId: Record<string, string> = {
 
 export function Footer() {
   const { t } = useTranslation()
+  const contact = federationContactInfo
   const office = site.offices[0]
-  const addressUnpublished = !office || office.address.includes("sẽ được công bố")
+  const addressLine = contact.address
+  const showDemoHint = contact.isDemo
 
   return (
     <>
@@ -39,20 +43,7 @@ export function Footer() {
             <p className="mt-3 text-sm leading-relaxed text-vpf-gold-wash">
               {t("Kết nối cộng đồng, phát triển phong trào và đồng hành cùng Pickleball Việt Nam.")}
             </p>
-            <ul className="mt-5 flex gap-2" aria-label={t("Mạng xã hội")}>
-              {socialChannels.map((channel) => (
-                <li key={channel.id}>
-                  <span
-                    role="img"
-                    aria-label={t("footer.socialUnavailable", { name: channel.label })}
-                    title={t("Đường dẫn chính thức chưa được công bố")}
-                    className="grid size-9 place-items-center rounded-lg border border-white/25 text-white transition-colors duration-200 hover:bg-brand/15 motion-reduce:transition-none"
-                  >
-                    <SocialGlyph name={channel.id} />
-                  </span>
-                </li>
-              ))}
-            </ul>
+            <SocialLinks links={contact.socialLinks} tone="dark" className="mt-5" />
           </div>
 
           <div className="footer-nav-pair">
@@ -63,30 +54,51 @@ export function Footer() {
           <div id="lien-he">
             <h2 className="text-[15px] font-semibold">{t("Liên hệ")}</h2>
             <ul className="mt-4 space-y-3 text-sm text-vpf-gold-wash">
-              <li className="flex gap-2.5">
-                <MapPin className="mt-0.5 size-4 shrink-0 text-white" aria-hidden />
-                <span>
-                  <span className="block text-white">
-                    {t("footer.office", { location: office ? `${office.city}, ${t("Việt Nam")}` : t("Chưa công bố") })}
+              {(addressLine || office) && (
+                <li className="flex gap-2.5">
+                  <MapPin className="mt-0.5 size-4 shrink-0 text-white" aria-hidden />
+                  <span>
+                    {addressLine ? (
+                      <span className="block text-white">{addressLine}</span>
+                    ) : (
+                      <span className="block text-white">
+                        {t("footer.office", {
+                          location: office ? `${office.city}, ${t("Việt Nam")}` : t("Chưa công bố"),
+                        })}
+                      </span>
+                    )}
+                    {showDemoHint ? <span className="text-xs">{t("Địa điểm minh họa")}</span> : null}
                   </span>
-                  {addressUnpublished ? <span className="text-xs">{t("Địa điểm minh họa")}</span> : null}
-                  {!addressUnpublished && office ? <span className="block">{office.address}</span> : null}
-                </span>
-              </li>
-              <li className="flex items-center gap-2.5">
-                <Mail className="size-4 shrink-0 text-white" aria-hidden />
-                {site.email ? (
-                  <a href={`mailto:${site.email}`} className="transition-colors duration-200 hover:text-brand">
-                    {site.email}
-                  </a>
-                ) : (
+                </li>
+              )}
+              {contact.email ? (
+                <li className="flex items-center gap-2.5">
+                  <Mail className="size-4 shrink-0 text-white" aria-hidden />
+                  {contact.isDemo ? (
+                    <span>{contact.email}</span>
+                  ) : (
+                    <a href={`mailto:${contact.email}`} className="transition-colors duration-200 hover:text-brand">
+                      {contact.email}
+                    </a>
+                  )}
+                </li>
+              ) : (
+                <li className="flex items-center gap-2.5">
+                  <Mail className="size-4 shrink-0 text-white" aria-hidden />
                   <span>{t("Email: Chưa công bố")}</span>
-                )}
-              </li>
-              <li className="flex items-center gap-2.5">
-                <Phone className="size-4 shrink-0 text-white" aria-hidden />
-                <span>Hotline: {t(site.hotline)}</span>
-              </li>
+                </li>
+              )}
+              {contact.phone ? (
+                <li className="flex items-center gap-2.5">
+                  <Phone className="size-4 shrink-0 text-white" aria-hidden />
+                  <span>Hotline: {contact.phone}</span>
+                </li>
+              ) : (
+                <li className="flex items-center gap-2.5">
+                  <Phone className="size-4 shrink-0 text-white" aria-hidden />
+                  <span>Hotline: {t("Chưa công bố")}</span>
+                </li>
+              )}
             </ul>
           </div>
         </div>
@@ -152,40 +164,4 @@ function linksById(ids: string[]) {
     const item = navigation.find((entry) => entry.id === id)
     return item ? [{ id: item.id, label: item.label, href: item.href }] : []
   })
-}
-
-function SocialGlyph({ name }: { name: "facebook" | "youtube" | "instagram" }) {
-  if (name === "facebook") {
-    return (
-      <svg viewBox="0 0 24 24" className="size-4" aria-hidden>
-        <path
-          fill="currentColor"
-          d="M14.5 8.5V6.8c0-.7.5-1 1.2-1H17V3h-2.1C12.4 3 11 4.5 11 6.6v1.9H9v2.7h2V21h3.5v-9.8h2.3l.4-2.7h-2.7Z"
-        />
-      </svg>
-    )
-  }
-  if (name === "youtube") {
-    return (
-      <svg viewBox="0 0 24 24" className="size-4" aria-hidden>
-        <path
-          fill="currentColor"
-          d="M22 12.2s0-3.2-.4-4.6c-.2-.9-.9-1.6-1.8-1.8C18.2 5.4 12 5.4 12 5.4s-6.2 0-7.8.4c-.9.2-1.6.9-1.8 1.8C2 9 2 12.2 2 12.2s0 3.2.4 4.6c.2.9.9 1.6 1.8 1.8 1.6.4 7.8.4 7.8.4s6.2 0 7.8-.4c.9-.2 1.6-.9 1.8-1.8.4-1.4.4-4.6.4-4.6ZM10.2 15.4V9l5.2 3.2-5.2 3.2Z"
-        />
-      </svg>
-    )
-  }
-  return (
-    <svg viewBox="0 0 24 24" className="size-4" aria-hidden>
-      <path
-        fill="currentColor"
-        d="M12 7.2A4.8 4.8 0 1 0 12 16.8 4.8 4.8 0 0 0 12 7.2Zm0 7.9a3.1 3.1 0 1 1 0-6.2 3.1 3.1 0 0 1 0 6.2Z"
-      />
-      <path
-        fill="currentColor"
-        d="M16.7 3H7.3A4.3 4.3 0 0 0 3 7.3v9.4A4.3 4.3 0 0 0 7.3 21h9.4a4.3 4.3 0 0 0 4.3-4.3V7.3A4.3 4.3 0 0 0 16.7 3Zm2.7 13.7a2.7 2.7 0 0 1-2.7 2.7H7.3a2.7 2.7 0 0 1-2.7-2.7V7.3A2.7 2.7 0 0 1 7.3 4.6h9.4a2.7 2.7 0 0 1 2.7 2.7v9.4Z"
-      />
-      <circle cx="17.4" cy="6.6" r="0.9" fill="currentColor" />
-    </svg>
-  )
 }

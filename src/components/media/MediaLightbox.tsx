@@ -2,29 +2,40 @@ import { useTranslation } from "../../i18n"
 import { useEffect, useId, useRef } from "react"
 import { ChevronLeft, ChevronRight, X } from "lucide-react"
 import type { MediaShot } from "../../data/media.mock"
+import { useRegisterModalPresence } from "../../lib/modalPresence"
 import { sitePath } from "../../lib/site"
 import { useReducedMotion } from "../../lib/useReducedMotion"
 
-type LightboxShot = MediaShot & { title?: string }
+export type LightboxShot = MediaShot & {
+  title?: string
+  description?: string
+  thumbnail?: string
+}
 
 export function MediaLightbox({
   shots,
   index,
   onIndex,
   onClose,
-  dismissOnBackdrop = false,
+  galleryTitle,
+  dismissOnBackdrop = true,
   lockBodyScroll = true,
 }: {
   shots: LightboxShot[]
   index: number
   onIndex: (index: number) => void
   onClose: () => void
+  /** Kept for callers / a11y label; not rendered in the viewer UI. */
+  galleryTitle?: string
+  /** Kept for API compatibility; not rendered in the viewer UI. */
+  galleryDescription?: string
   dismissOnBackdrop?: boolean
   lockBodyScroll?: boolean
 }) {
   const { t } = useTranslation()
   const titleId = useId()
   const reduce = useReducedMotion()
+  useRegisterModalPresence(true)
   const closeRef = useRef<HTMLButtonElement>(null)
   const panelRef = useRef<HTMLDivElement>(null)
   const thumbsRef = useRef<HTMLDivElement>(null)
@@ -40,6 +51,12 @@ export function MediaLightbox({
   const shot = shots[index]
   const total = shots.length
   const multiple = total > 1
+  const accessibleTitle =
+    galleryTitle?.trim() ||
+    shot?.title?.trim() ||
+    shot?.caption?.trim() ||
+    shot?.alt?.trim() ||
+    "Xem ảnh"
 
   useEffect(() => {
     const previouslyFocused = document.activeElement as HTMLElement | null
@@ -89,7 +106,7 @@ export function MediaLightbox({
     return () => {
       document.removeEventListener("keydown", onKeyDown)
       if (lockBodyScroll) document.body.style.overflow = previousOverflow
-      previouslyFocused?.focus()
+      previouslyFocused?.focus({ preventScroll: true })
     }
   }, [lockBodyScroll, total])
 
@@ -118,25 +135,32 @@ export function MediaLightbox({
       aria-labelledby={titleId}
       onClick={(event) => {
         if (!dismissOnBackdrop || !(event.target instanceof Element)) return
-        if (!event.target.closest("button, .media-lightbox-photo, .media-viewer__details, .media-lightbox-thumbs")) {
+        if (!event.target.closest("button, .media-lightbox-photo, .media-lightbox-thumbs, .media-viewer__header")) {
           onClose()
         }
       }}
     >
-      <div className="flex items-center justify-between gap-3 px-4 py-3 text-white md:px-6">
-        <p className="media-viewer__counter" aria-live="polite">
-          {String(index + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}
+      <h2 id={titleId} className="sr-only">
+        {t(accessibleTitle)}
+      </h2>
+      {multiple ? (
+        <p className="sr-only" aria-live="polite">
+          {index + 1} / {total}
         </p>
+      ) : null}
+
+      <div className="media-viewer__header">
         <button
           ref={closeRef}
           type="button"
-          className="media-viewer__close grid size-11 place-items-center rounded-[10px] border border-white/30"
+          className="media-viewer__close"
           aria-label={t("Đóng ảnh")}
           onClick={onClose}
         >
           <X className="size-5" aria-hidden />
         </button>
       </div>
+
       <div className="media-lightbox-body">
         {multiple ? (
           <button
@@ -158,6 +182,7 @@ export function MediaLightbox({
             <ChevronRight className="size-5" aria-hidden />
           </button>
         ) : null}
+
         <div
           className="media-viewer__content"
           onTouchStart={(event) => {
@@ -174,16 +199,12 @@ export function MediaLightbox({
           }}
         >
           <img key={shot.id} src={sitePath(shot.src)} alt={t(shot.alt)} className="media-lightbox-photo" />
-          <div className="media-viewer__details">
-            <p id={titleId} className="media-viewer__title">
-              {t(shot.title ?? shot.caption)}
-            </p>
-            {shot.title ? <p className="media-viewer__description">{t(shot.caption)}</p> : null}
-          </div>
+
           {multiple ? (
             <div ref={thumbsRef} className="media-lightbox-thumbs media-viewer__thumbnails" role="list" aria-label={t("Ảnh trong bộ")}>
               {shots.map((item, itemIndex) => {
                 const active = itemIndex === index
+                const thumbSrc = item.thumbnail ?? item.src
                 return (
                   <button
                     key={item.id}
@@ -192,10 +213,10 @@ export function MediaLightbox({
                     role="listitem"
                     className="media-lightbox-thumb"
                     aria-current={active ? "true" : undefined}
-                    aria-label={`${t("Ảnh")} ${String(itemIndex + 1).padStart(2, "0")}: ${t(item.title ?? item.caption)}`}
+                    aria-label={`${t("Ảnh")} ${itemIndex + 1}: ${t(item.title ?? item.caption ?? item.alt)}`}
                     onClick={() => onIndex(itemIndex)}
                   >
-                    <img src={sitePath(item.src)} alt="" />
+                    <img src={sitePath(thumbSrc)} alt="" />
                   </button>
                 )
               })}

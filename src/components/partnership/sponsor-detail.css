@@ -1,0 +1,293 @@
+/* Partner Spotlight – Minimal Editorial (trang chi tiết nhà tài trợ) */
+
+.sponsor-spotlight {
+  --ss-ink: #17191d;
+  --ss-muted: #6b7280;
+  --ss-red: #be1e2d;
+  --ss-orange: #f7941d;
+  --ss-surface: #ffffff;
+  --ss-soft: #f5f6f7;
+  --ss-radius: 10px;
+  background: var(--ss-surface);
+  color: var(--ss-ink);
+  font-family: "Be Vietnam Pro", system-ui, sans-serif;
+}
+
+.sponsor-spotlight-brand {
+  padding-top: 2rem;
+}
+
+.sponsor-spotlight-brand-grid {
+  display: grid;
+  gap: 1.25rem;
+  align-items: center;
+}
+
+.sponsor-spotlight-tier {
+  margin: 0;
+  color: var(--ss-red);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.sponsor-spotlight-meta {
+  margin: 0.45rem 0 0;
+  color: var(--ss-muted);
+  font-size: 0.9375rem;
+  line-height: 1.5;
+}
+
+.sponsor-spotlight-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-top: 0.85rem;
+  color: var(--ss-ink);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color 160ms ease;
+}
+
+.sponsor-spotlight-link:hover,
+.sponsor-spotlight-link:focus-visible {
+  color: var(--ss-red);
+}
+
+.sponsor-spotlight-note {
+  margin: 0.75rem 0 0;
+  color: var(--ss-muted);
+  font-size: 0.8125rem;
+  line-height: 1.5;
+}
+
+.sponsor-spotlight-logo-panel {
+  display: grid;
+  place-items: center;
+  min-height: 8.5rem;
+  padding: 1.35rem 1.25rem;
+  border-radius: var(--ss-radius);
+  background: var(--ss-soft);
+}
+
+.sponsor-spotlight-logo {
+  display: block;
+  width: auto;
+  max-width: min(100%, 12.5rem);
+  height: auto;
+  max-height: 4.75rem;
+  object-fit: contain;
+}
+
+.sponsor-spotlight-section {
+  padding: 2rem 0;
+}
+
+.sponsor-spotlight-section + .sponsor-spotlight-section {
+  border-top: 1px solid #ececed;
+}
+
+.sponsor-spotlight-about {
+  display: grid;
+  gap: 1rem 2.5rem;
+}
+
+.sponsor-spotlight-heading {
+  margin: 0;
+  color: var(--ss-ink);
+  font-size: clamp(1.25rem, 2vw, 1.5rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+}
+
+.sponsor-spotlight-body {
+  display: grid;
+  gap: 0.85rem;
+  max-width: 40rem;
+}
+
+.sponsor-spotlight-body p {
+  margin: 0;
+  color: var(--ss-muted);
+  font-size: 0.9875rem;
+  line-height: 1.7;
+}
+
+.sponsor-spotlight-gallery {
+  display: grid;
+  gap: 0.65rem;
+  margin: 1.15rem 0 0;
+  padding: 0;
+  list-style: none;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.sponsor-spotlight-shot {
+  display: block;
+  overflow: hidden;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  border-radius: var(--ss-radius);
+  background: var(--ss-soft);
+  cursor: pointer;
+}
+
+.sponsor-spotlight-shot img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  transition: transform 220ms ease;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .sponsor-spotlight-shot:hover img,
+  .sponsor-spotlight-shot:focus-visible img {
+    transform: scale(1.03);
+  }
+}
+
+.sponsor-spotlight-shot:focus-visible {
+  outline: 2px solid var(--ss-orange);
+  outline-offset: 2px;
+}
+
+.sponsor-spotlight-others {
+  display: grid;
+  gap: 0.75rem;
+  margin: 1.15rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.partner-spotlight-item {
+  display: grid;
+  grid-template-columns: 5.5rem minmax(0, 1fr);
+  gap: 0.85rem;
+  align-items: center;
+  min-height: 4.25rem;
+  padding: 0.55rem 0.15rem;
+  text-decoration: none;
+  transition: opacity 160ms ease;
+}
+
+.partner-spotlight-item:hover,
+.partner-spotlight-item:focus-visible {
+  opacity: 0.82;
+}
+
+.partner-spotlight-item-logo {
+  display: grid;
+  place-items: center;
+  height: 3.5rem;
+  padding: 0.45rem;
+  border-radius: 8px;
+  background: var(--ss-soft);
+}
+
+.partner-spotlight-item-logo img {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  max-height: 2.25rem;
+  height: auto;
+  object-fit: contain;
+}
+
+.partner-spotlight-item-copy {
+  display: grid;
+  gap: 0.15rem;
+  min-width: 0;
+}
+
+.partner-spotlight-item-name {
+  color: var(--ss-ink);
+  font-size: 0.9875rem;
+  font-weight: 650;
+  line-height: 1.3;
+}
+
+.partner-spotlight-item-tier {
+  color: var(--ss-muted);
+  font-size: 0.8125rem;
+  line-height: 1.35;
+}
+
+.sponsor-spotlight-section:last-of-type {
+  padding-bottom: 2.5rem;
+}
+
+.sponsor-spotlight-rise {
+  opacity: 1;
+  transform: none;
+}
+
+@media (min-width: 640px) {
+  .sponsor-spotlight-gallery {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .sponsor-spotlight-gallery[data-count="4"] {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .sponsor-spotlight-others {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 768px) {
+  .sponsor-spotlight-brand-grid {
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    gap: 1.75rem;
+  }
+
+  .sponsor-spotlight-logo-panel {
+    min-height: 9.5rem;
+    padding: 1.75rem 1.5rem;
+  }
+
+  .sponsor-spotlight-logo {
+    max-width: min(100%, 14rem);
+    max-height: 5.5rem;
+  }
+
+  .sponsor-spotlight-section {
+    padding: 2.5rem 0;
+  }
+
+  .sponsor-spotlight-about {
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+    align-items: start;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .sponsor-spotlight-rise {
+    opacity: 0;
+    transform: translateY(10px);
+    transition:
+      opacity 420ms ease,
+      transform 420ms ease;
+  }
+
+  .sponsor-spotlight-rise.is-in {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (max-width: 639px) {
+  .sponsor-spotlight-logo-panel {
+    order: -1;
+  }
+
+  .sponsor-spotlight-brand-grid {
+    grid-template-columns: 1fr;
+  }
+}

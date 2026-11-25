@@ -16,7 +16,7 @@ export function TournamentRelated({ items }: { items: TournamentView[] }) {
       </div>
       <div className="td-related-grid">
         {items.map((item) => (
-          <TournamentCard key={item.id} tournament={item} />
+          <TournamentCard key={item.id} tournament={item} variant="compact" />
         ))}
       </div>
     </section>

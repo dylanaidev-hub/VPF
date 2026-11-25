@@ -3,8 +3,8 @@ import { useId, useState } from "react"
 import { federationHistory } from "../../data/aboutFederation.mock"
 import { cx } from "../../lib/cx"
 import { useReveal } from "../../lib/useReveal"
+import { MediaViewer } from "../media/MediaViewer"
 import { Timeline } from "./Timeline"
-import { MilestoneGalleryModal } from "./MilestoneGalleryModal"
 
 export function FedTimeline() {
   const { t } = useTranslation()
@@ -31,16 +31,25 @@ export function FedTimeline() {
           galleryId={galleryId}
           galleryOpen={galleryOpen}
           onSelect={(id) => {
+            const next = milestones.find((item) => item.id === id)
             setActiveMilestone(id)
-            setGalleryOpen(true)
+            setGalleryOpen(Boolean(next?.images.length))
           }}
         />
       </div>
-      {galleryOpen && milestone ? (
-        <MilestoneGalleryModal
+      {galleryOpen && milestone && milestone.images.length > 0 ? (
+        <MediaViewer
           key={milestone.id}
-          id={galleryId}
-          milestone={milestone}
+          items={milestone.images.map((image) => ({
+            id: image.id,
+            src: image.src,
+            alt: image.alt,
+            title: image.caption,
+            description: image.caption,
+            thumbnail: image.src,
+          }))}
+          title={milestone.title}
+          description={`${milestone.date}. ${milestone.description}`}
           onClose={() => setGalleryOpen(false)}
         />
       ) : null}

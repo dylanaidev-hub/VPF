@@ -2,7 +2,7 @@ import { useTranslation } from "../../../i18n"
 import { useMemo, useState } from "react"
 import type { TournamentView } from "../../../types"
 import { sitePath } from "../../../lib/site"
-import { MediaLightbox } from "../../media/MediaLightbox"
+import { MediaViewer } from "../../media/MediaViewer"
 
 export function TournamentMoments({
   tournament,
@@ -15,7 +15,7 @@ export function TournamentMoments({
   const gallery = tournament.gallery ?? []
   const [index, setIndex] = useState<number | null>(null)
 
-  const shots = useMemo(
+  const items = useMemo(
     () =>
       gallery
         .filter((item) => item.type === "image")
@@ -23,10 +23,10 @@ export function TournamentMoments({
           id: item.id,
           src: item.src,
           alt: item.alt,
-          caption: item.alt,
-          title: tournament.name,
+          title: item.alt,
+          thumbnail: item.poster ?? item.src,
         })),
-    [gallery, tournament.name],
+    [gallery],
   )
 
   if (!gallery.length) return null
@@ -51,7 +51,7 @@ export function TournamentMoments({
             <button
               type="button"
               className="td-moment"
-              onClick={() => setIndex(Math.min(itemIndex, shots.length - 1))}
+              onClick={() => setIndex(Math.min(itemIndex, items.length - 1))}
               aria-label={item.alt}
             >
               <img src={sitePath(item.poster ?? item.src)} alt="" loading="lazy" />
@@ -59,8 +59,14 @@ export function TournamentMoments({
           </li>
         ))}
       </ul>
-      {index != null && shots.length ? (
-        <MediaLightbox shots={shots} index={index} onIndex={setIndex} onClose={() => setIndex(null)} />
+      {index != null && items.length ? (
+        <MediaViewer
+          items={items}
+          initialIndex={index}
+          title={tournament.name}
+          description={t("Hình ảnh minh họa từ giải — không phải thư viện chính thức.")}
+          onClose={() => setIndex(null)}
+        />
       ) : null}
     </section>
   )

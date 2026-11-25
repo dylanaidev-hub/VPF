@@ -1,50 +1,126 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { createPortal } from "react-dom"
-import type { MediaItem } from "../../data/media.mock"
-import { AlbumViewer } from "./AlbumViewer"
-import { MediaLightbox } from "./MediaLightbox"
+import {
+  isMediaAlbum,
+  isMediaImage,
+  type MediaItem,
+} from "../../data/media.mock"
+import { MediaLightbox, type LightboxShot } from "./MediaLightbox"
 import { VideoViewer } from "./VideoViewer"
 
-export function MediaViewer({ item, onClose }: { item: MediaItem; onClose: () => void }) {
-  const [albumIndex, setAlbumIndex] = useState<number | null>(null)
+export type MediaViewerItem = {
+  id: string
+  src: string
+  alt: string
+  title?: string
+  description?: string
+  thumbnail?: string
+}
 
-  if (item.type === "video") {
-    return createPortal(<VideoViewer video={item} onClose={onClose} />, document.body)
-  }
+type GalleryProps = {
+  items: MediaViewerItem[]
+  initialIndex?: number
+  title?: string
+  description?: string
+  isOpen?: boolean
+  onClose: () => void
+  dismissOnBackdrop?: boolean
+}
 
-  if (item.type === "image") {
-    const shot = {
-      id: item.id,
-      src: item.thumbnail,
-      alt: item.imageAlt,
-      title: item.title,
-      caption: item.description,
-    }
-    return createPortal(
-      <MediaLightbox shots={[shot]} index={0} onIndex={() => {}} onClose={onClose} dismissOnBackdrop />,
-      document.body,
+type MediaItemProps = {
+  item: MediaItem
+  onClose: () => void
+}
+
+export function MediaViewer(props: GalleryProps | MediaItemProps) {
+  if ("item" in props) return <MediaItemViewer item={props.item} onClose={props.onClose} />
+  return <GalleryViewer {...props} />
+}
+
+function GalleryViewer({
+  items,
+  initialIndex = 0,
+  title,
+  description,
+  isOpen = true,
+  onClose,
+  dismissOnBackdrop = true,
+}: GalleryProps) {
+  const [index, setIndex] = useState(clampIndex(initialIndex, items.length))
+
+  useEffect(() => {
+    setIndex(clampIndex(initialIndex, items.length))
+  }, [initialIndex, items])
+
+  if (!isOpen || items.length === 0) return null
+
+  const shots: LightboxShot[] = items.map((item) => ({
+    id: item.id,
+    src: item.src,
+    alt: item.alt,
+    caption: item.description?.trim() || item.title?.trim() || item.alt,
+    title: item.title,
+    description: item.description,
+    thumbnail: item.thumbnail,
+  }))
+
+  return createPortal(
+    <MediaLightbox
+      shots={shots}
+      index={index}
+      onIndex={setIndex}
+      onClose={onClose}
+      galleryTitle={title}
+      galleryDescription={description}
+      dismissOnBackdrop={dismissOnBackdrop}
+    />,
+    document.body,
+  )
+}
+
+function MediaItemViewer({ item, onClose }: MediaItemProps) {
+  if (isMediaImage(item)) {
+    return (
+      <GalleryViewer
+        items={[
+          {
+            id: item.id,
+            src: item.thumbnail,
+            alt: item.imageAlt,
+            title: item.title,
+            description: item.description,
+            thumbnail: item.thumbnail,
+          },
+        ]}
+        title={item.title}
+        description={item.description}
+        onClose={onClose}
+      />
     )
   }
 
-  return createPortal(
-    <>
-      <AlbumViewer
-        album={item}
-        paused={albumIndex !== null}
+  if (isMediaAlbum(item)) {
+    return (
+      <GalleryViewer
+        items={item.images.map((shot) => ({
+          id: shot.id,
+          src: shot.src,
+          alt: shot.alt,
+          title: shot.caption || item.title,
+          description: shot.caption,
+          thumbnail: shot.src,
+        }))}
+        title={item.title}
+        description={item.description}
         onClose={onClose}
-        onOpenShot={(_shot, index) => setAlbumIndex(index)}
       />
-      {albumIndex !== null ? (
-        <MediaLightbox
-          shots={item.images.map((shot) => ({ ...shot, title: item.title }))}
-          index={albumIndex}
-          onIndex={setAlbumIndex}
-          onClose={() => setAlbumIndex(null)}
-          dismissOnBackdrop
-          lockBodyScroll={false}
-        />
-      ) : null}
-    </>,
-    document.body,
-  )
+    )
+  }
+
+  return <VideoViewer video={item} onClose={onClose} />
+}
+
+function clampIndex(index: number, length: number) {
+  if (length <= 0) return 0
+  return Math.min(Math.max(index, 0), length - 1)
 }

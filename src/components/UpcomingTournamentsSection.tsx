@@ -1,15 +1,10 @@
 import { useTranslation } from "../i18n"
-import { ArrowRight, ArrowUpRight } from "lucide-react"
-import type { Tournament, TournamentView } from "../types"
-import { formatEventDate } from "../lib/format"
+import { ArrowUpRight } from "lucide-react"
+import type { Tournament } from "../types"
 import { sitePath } from "../lib/site"
-import { selectTournamentSpotlight, statusLabel, tournamentStart } from "../lib/tournaments"
-import { cx } from "../lib/cx"
+import { selectTournamentSpotlight } from "../lib/tournaments"
 import { FeaturedTournament, useTournamentClock } from "./FeaturedTournament"
-
-function phaseOf(item: Pick<Tournament, "startDate" | "time">, now: Date) {
-  return now.getTime() >= tournamentStart(item).getTime() ? "ongoing" : "upcoming"
-}
+import { TournamentCard } from "./TournamentCard"
 
 export function UpcomingTournamentsSection({
   tournaments,
@@ -45,7 +40,7 @@ export function UpcomingTournamentsSection({
                 <ol className="vpf-hub-timeline">
                   {timeline.map((item) => (
                     <li key={item.id}>
-                      <TimelineEvent tournament={item} now={now} />
+                      <TournamentCard tournament={item} variant="compact" />
                     </li>
                   ))}
                 </ol>
@@ -60,29 +55,5 @@ export function UpcomingTournamentsSection({
         )}
       </div>
     </section>
-  )
-}
-
-function TimelineEvent({ tournament, now }: { tournament: TournamentView; now: Date }) {
-  const { t } = useTranslation()
-  const date = formatEventDate(tournament.startDate, tournament.endDate)
-  const phase = phaseOf(tournament, now)
-
-  return (
-    <a className={cx("vpf-hub-event", phase === "ongoing" && "is-live")} href={sitePath(tournament.detailUrl)}>
-      <span className="vpf-hub-date">
-        <span className="vpf-hub-day">{date.day}</span>
-        <span className="vpf-hub-month">{t(date.month)}</span>
-        <span className="vpf-hub-year">{date.year}</span>
-      </span>
-      <span className="vpf-hub-event-copy">
-        <span className="vpf-hub-event-name">{tournament.name}</span>
-        <span className="vpf-hub-event-city">{t(tournament.location)}</span>
-        <span className={cx("vpf-hub-event-status", phase === "ongoing" ? "is-live" : "is-upcoming")}>
-          {t(statusLabel[phase])}
-        </span>
-      </span>
-      <ArrowRight className="vpf-hub-arrow size-4" aria-hidden />
-    </a>
   )
 }

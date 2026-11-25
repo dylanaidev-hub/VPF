@@ -1,4 +1,5 @@
 import { isNewsDetailPath } from "./newsRoute"
+import { isPartnershipNavPath } from "./partnership"
 
 /** Khớp trang HTML hiện tại. `/` và `/index.html` đều là trang chủ. */
 export function isCurrentPage(href: string) {
@@ -13,5 +14,7 @@ export function isCurrentPage(href: string) {
   const current = path === "/" ? "/index.html" : path
   const target = href.split("#")[0].split("?")[0] || "/index.html"
   if (target === "/tintuc.html" && isNewsDetailPath(current)) return true
+  if ((target === "/hoptac.html" || target === "/hop-tac.html") && isPartnershipNavPath(current)) return true
+  if (target === "/giaidau.html" && current === "/chitiet-giaidau.html") return true
   return current === target
 }

@@ -1,7 +1,6 @@
 import { useTranslation } from "../../i18n"
 import { useEffect, useRef, useState, type PointerEvent } from "react"
 import { createPortal } from "react-dom"
-import { Images } from "lucide-react"
 import type { FederationMilestone } from "../../data/aboutFederation.mock"
 import { sitePath } from "../../lib/site"
 import { useReducedMotion } from "../../lib/useReducedMotion"
@@ -141,7 +140,6 @@ export function Timeline({ milestones, activeMilestone, galleryId, galleryOpen, 
       </div>
       {createPortal(
         <span ref={cursorRef} className="fed-milestone-cursor" aria-hidden="true">
-          <Images size={15} />
           {t("Xem ảnh")}
         </span>,
         document.body,
